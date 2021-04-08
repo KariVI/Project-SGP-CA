@@ -27,12 +27,12 @@ public class MinuteDAO implements IMinuteDAO {
                         try{
                             
                             PreparedStatement insertMinuteStatment;
-                            insertMinuteStatment = connectionDataBase.prepareStatement("INSERT INTO Minuta(nota,estado,pendiente,idReunion) VALUES(?,?,?,?) ");
+                            insertMinuteStatment = connectionDataBase.prepareStatement("INSERT INTO Minuta(nota, estado, pendiente, idReunion) VALUES(?,?,?,?) ");
                             insertMinuteStatment.setString(1, minute.getNote());
                             insertMinuteStatment.setString(2,  minute.getSate());
                             insertMinuteStatment.setString(3, minute.getDue());
                             insertMinuteStatment.setInt(4, idMeeting);
-                            
+                            System.out.println(minute.getNote());
                             insertMinuteStatment.executeUpdate();
                             
                             connectorDataBase.disconnect();

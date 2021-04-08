@@ -44,12 +44,12 @@ public class MinuteDAOTest {
     @Test
     public void testSaveMinute() {
         System.out.println("saveMinute");
-        Minute minute = new Minute("Esta es una nota","","Esto es un pendiente");
-        int idMeeting = 0;
+        Minute minute = new Minute("Esta es una nota","Estado","Esto es un pendiente");
+        int idMeeting = 1;
         MinuteDAO instance = new MinuteDAO();
         instance.saveMinute(minute, idMeeting);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       
     }
     
 }
