@@ -14,10 +14,10 @@ import java.util.logging.Logger;
  *
  * @author Mariana
  */
-public class ProjectDAO implements IProjectDAO{
+public class ProjectDAO implements IProjectDAO {
 
         @Override
-        public void save(Project project) {
+        public void save(Project project) throws SQLException {
                     try{
                         Connector connectorDataBase = new Connector();
                         Connection connectionDataBase = connectorDataBase.getConnection();

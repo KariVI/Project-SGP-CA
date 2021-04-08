@@ -15,7 +15,7 @@ public class Connector {
         private String userPassword = "password";
 
         public void connect() throws ClassNotFoundException  {
-                connection=null;
+                connection = null;
                 try{
                      Class.forName("com.mysql.cj.jdbc.Driver");
                     this.connection = DriverManager.getConnection(url, userName, userPassword);
