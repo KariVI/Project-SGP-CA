@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public class ProjectDAO implements IProjectDAO {
 
         @Override
-        public void save(Project project) throws SQLException {
+        public void save(Project project) {
                     try{
                         Connector connectorDataBase = new Connector();
                         Connection connectionDataBase = connectorDataBase.getConnection();

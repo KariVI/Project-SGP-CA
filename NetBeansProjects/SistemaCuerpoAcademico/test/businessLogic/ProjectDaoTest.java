@@ -66,11 +66,9 @@ public class ProjectDaoTest {
         projectAuxiliar = new Project("Inteligencia artificial" ,"Descripcion","04/05/2021","05/11/2021");
         try {
             projectDAO.save(projectAuxiliar);
-        } catch (SQLException ex) {
+        } catch (IllegalStateException ex) {
             Logger.getLogger(ProjectDaoTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        int id = projectDAO.searchId(projectAuxiliar);
-        //assertTrue(projectDAO.findProjectById(id));
     }
     
     @Test

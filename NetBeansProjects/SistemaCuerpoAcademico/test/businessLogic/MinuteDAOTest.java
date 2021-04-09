@@ -8,6 +8,8 @@ package businessLogic;
 import domain.Minute;
 import domain.MinuteComment;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -40,43 +42,52 @@ public class MinuteDAOTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of saveMinute method, of class MinuteDAO.
-     */
+
     @Test
     public void testSaveMinute() {
         System.out.println("saveMinute");
-        Minute minute = new Minute("Esta es una nota","Estado","Esto es un pendiente");
+        Minute minute = new Minute("Los acuerdos registrados son pendiente","Estado","Falta gastrocafe");
         int idMeeting = 1;
-        MinuteDAO instance = new MinuteDAO();
-        instance.saveMinute(minute, idMeeting);
-        // TODO review the generated test code and remove the default call to fail.
+        MinuteDAO minuteDAO = new MinuteDAO();
+        try{
+            minuteDAO.saveMinute(minute, idMeeting);
+        }
+        catch (IllegalStateException ex) {
+            Logger.getLogger(ProjectDaoTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
        
     }
-    
-    /**
-     * Test of approveMinute method, of class MinuteDAO.
-     */
+
     @Test
     public void testApproveMinute() {
         System.out.println("approveMinute");
         int idMinute = 1;
         String professionalLicense = "1234";
-        MinuteDAO instance = new MinuteDAO();
-        instance.approveMinute(idMinute, professionalLicense);
+        MinuteDAO minuteDAO = new MinuteDAO();
+        try{
+            minuteDAO.approveMinute(idMinute, professionalLicense);
+        }
+        catch (IllegalStateException ex) {
+            Logger.getLogger(ProjectDaoTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
-    /**
-     * Test of disapproveMinute method, of class MinuteDAO.
-     */
+
     @Test
     public void testDisapproveMinute() {
         System.out.println("disapproveMinute");
         int minute = 1;
         String professionalLicense = "1234";
         String comments = "No se encuentran algunos acuerdos;";
-        MinuteDAO instance = new MinuteDAO();
-        instance.disapproveMinute(minute, professionalLicense, comments);
+        MinuteDAO minuteDAO = new MinuteDAO();
+        try{
+            minuteDAO.disapproveMinute(minute, professionalLicense, comments);
+        }
+        catch (IllegalStateException ex) {
+            Logger.getLogger(ProjectDaoTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     
     @Test

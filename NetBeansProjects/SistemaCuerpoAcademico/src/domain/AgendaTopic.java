@@ -9,13 +9,22 @@ public class AgendaTopic {
     private String startTime;
     private String finishTime;
     private int idAgendaTopic;
+    private String ProfessionalLicense;
 
-    public AgendaTopic(String topicName, String startTime, String finishTime){
+    public AgendaTopic(String topicName, String startTime, String finishTime, String ProfessionalLicense){
+        this.topicName = topicName;
+        this.startTime = startTime;
+        this.finishTime = finishTime;
+        this.ProfessionalLicense = ProfessionalLicense;
+    }
+    
+    public AgendaTopic(int idAgendaTopic, String topicName, String startTime, String finishTime, String ProfessionalLicense){
+        this.idAgendaTopic = idAgendaTopic;
         this.topicName = topicName;
         this.startTime = startTime;
         this.finishTime = finishTime;
     }
-
+    
     public int getIdAgendaTopic(){
         return idAgendaTopic;
     }
@@ -46,5 +55,13 @@ public class AgendaTopic {
 
     public void setFinishTime(String finishTime){
         this.finishTime = finishTime;
+    }
+    
+    public String getProfessionalLicense(){
+        return ProfessionalLicense;
+    }
+
+    public void setProfessionalLicense(String ProfessionalLicense){
+        this.ProfessionalLicense = ProfessionalLicense;
     }
 }
