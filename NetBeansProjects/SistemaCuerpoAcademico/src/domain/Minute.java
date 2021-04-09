@@ -10,12 +10,19 @@ public class Minute {
     private String due;
     private int idMinute;
 
+    public Minute(int idMinute, String note, String state, String due ){
+        this.idMinute = idMinute;
+        this.note = note;
+        this.state = state;
+        this.due = due;
+    }
+    
     public Minute(String note, String state, String due ){
         this.note = note;
         this.state = state;
         this.due = due;
     }
-
+    
     public int getIdMinute(){
         return idMinute;
     }

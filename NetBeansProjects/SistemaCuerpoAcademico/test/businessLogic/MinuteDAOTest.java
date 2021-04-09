@@ -6,6 +6,8 @@
 package businessLogic;
 
 import domain.Minute;
+import domain.MinuteComment;
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -52,4 +54,45 @@ public class MinuteDAOTest {
        
     }
     
+    /**
+     * Test of approveMinute method, of class MinuteDAO.
+     */
+    @Test
+    public void testApproveMinute() {
+        System.out.println("approveMinute");
+        int idMinute = 1;
+        String professionalLicense = "1234";
+        MinuteDAO instance = new MinuteDAO();
+        instance.approveMinute(idMinute, professionalLicense);
+    }
+
+    /**
+     * Test of disapproveMinute method, of class MinuteDAO.
+     */
+    @Test
+    public void testDisapproveMinute() {
+        System.out.println("disapproveMinute");
+        int minute = 1;
+        String professionalLicense = "1234";
+        String comments = "No se encuentran algunos acuerdos;";
+        MinuteDAO instance = new MinuteDAO();
+        instance.disapproveMinute(minute, professionalLicense, comments);
+    }
+    
+    @Test
+    public void testGetMinutes() {
+        System.out.println("getMinutes");
+        MinuteDAO instanceMinute = new MinuteDAO();
+        ArrayList<Minute> result = instanceMinute.getMinutes();
+        assertNotNull(result);
+    }  
+    
+    @Test
+    public void testGetMinutesComments() {
+        System.out.println("getMinutesComments");
+        int idMinute = 1;
+        MinuteDAO instance = new MinuteDAO();
+        ArrayList<MinuteComment> result = instance.getMinutesComments(idMinute);
+        assertNotNull(result);
+    }
 }
