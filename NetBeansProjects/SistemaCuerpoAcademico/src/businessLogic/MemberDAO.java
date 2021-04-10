@@ -23,8 +23,6 @@ public class MemberDAO implements IMemberDAO{
             preparedStatement.setString(1, member.getProfessionalLicense());
             preparedStatement.setString(2, member.getName());
             preparedStatement.setString(3, member.getRole());
-            preparedStatement.setString(4, member.getMaxDegreeStudy());
-            preparedStatement.setString(5, member.getEmail());
             preparedStatement.setString(6, groupAcademic.getKey());
             preparedStatement.executeUpdate();
             connectorDataBase.disconnect();
@@ -49,8 +47,6 @@ public class MemberDAO implements IMemberDAO{
             PreparedStatement preparedStatement = connectionDataBase.prepareStatement(selectLicenseMember);
             preparedStatement.setString(1, member.getName());          
             preparedStatement.setString(2, member.getRole());
-            preparedStatement.setString(3, member.getMaxDegreeStudy());
-            preparedStatement.setString(4, member.getEmail());
             
             resultSet=preparedStatement.executeQuery();
             if(resultSet.next()){
@@ -86,7 +82,7 @@ public class MemberDAO implements IMemberDAO{
                 String maxDegreeStudy = resultSet.getString("gradoMaximo");
                 String email =resultSet.getString("correo");
                
-                memberAuxiliar = new Member(professionalLicense, name, role, maxDegreeStudy, email);
+                //memberAuxiliar = new Member(professionalLicense, name, role, maxDegreeStudy, email);
             }
                 connectorDataBase.disconnect();
                 

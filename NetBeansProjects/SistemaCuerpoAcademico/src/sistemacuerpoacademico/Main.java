@@ -1,6 +1,5 @@
 
 package sistemacuerpoacademico;
-
 import businessLogic.MeetingDAO;
 import businessLogic.MinuteDAO;
 import domain.Meeting;

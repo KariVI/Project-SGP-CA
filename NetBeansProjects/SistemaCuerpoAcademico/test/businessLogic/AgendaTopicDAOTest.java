@@ -9,10 +9,6 @@ import domain.AgendaTopic;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -21,26 +17,6 @@ import static org.junit.Assert.*;
  * @author Mariana
  */
 public class AgendaTopicDAOTest {
-    
-    public AgendaTopicDAOTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void testSave() {
         System.out.println("save");
@@ -55,12 +31,13 @@ public class AgendaTopicDAOTest {
         }
 
     }
-
+    
+    @Test
     public void testGetAgendaTopics() {
         System.out.println("getAgendaTopics");
         int idMeeting = 1;
         AgendaTopicDAO agendaTopicDAO = new AgendaTopicDAO();
-        ArrayList<AgendaTopic> result = agendaTopicDAO.getAgendaTopics(idMeeting);
+        ArrayList<AgendaTopic > result = agendaTopicDAO.getAgendaTopics(idMeeting);
         assertNotNull(result);
     }
     

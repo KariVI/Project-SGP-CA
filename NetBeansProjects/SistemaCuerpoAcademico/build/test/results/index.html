@@ -23,7 +23,7 @@
     <div class="top-banner-root">
       <span class="top-banner-title-font">Test results</span>
       <br/>
-      <span class="top-banner-font-1">1 suite, 1 failed test</span>
+      <span class="top-banner-font-1">1 suite</span>
     </div> <!-- top-banner-root -->
     <div class="navigator-root">
       <div class="navigator-suite-header">
@@ -37,7 +37,7 @@
         <div class="rounded-window">
           <div class="suite-header light-rounded-window-top">
             <a href="#" class="navigator-link" panel-name="suite-SistemaCuerpoAcademico">
-              <span class="suite-name border-failed">SistemaCuerpoAcademico</span>
+              <span class="suite-name border-passed">SistemaCuerpoAcademico</span>
             </a> <!-- navigator-link -->
           </div> <!-- suite-header light-rounded-window-top -->
           <div class="navigator-suite-content">
@@ -90,21 +90,7 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">1 method, 1 failed,   </span>
-                  </li>
-                  <li>
-                    <span class="method-list-title failed">Failed methods</span>
-                    <span class="show-or-hide-methods failed">
-                      <a href="#" panel-name="suite-SistemaCuerpoAcademico" class="hide-methods failed suite-SistemaCuerpoAcademico"> (hide)</a> <!-- hide-methods failed suite-SistemaCuerpoAcademico -->
-                      <a href="#" panel-name="suite-SistemaCuerpoAcademico" class="show-methods failed suite-SistemaCuerpoAcademico"> (show)</a> <!-- show-methods failed suite-SistemaCuerpoAcademico -->
-                    </span>
-                    <div class="method-list-content failed suite-SistemaCuerpoAcademico">
-                      <span>
-                        <img width="3%" src="failed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-SistemaCuerpoAcademico" title="businessLogic.MemberDAOTest" hash-for-method="testGetMemberByLicense">testGetMemberByLicense</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
-                    </div> <!-- method-list-content failed suite-SistemaCuerpoAcademico -->
+                    <span class="method-stats">0 methods,   </span>
                   </li>
                 </ul>
               </div> <!-- suite-section-content -->
@@ -116,43 +102,6 @@
     <div class="wrapper">
       <div class="main-panel-root">
         <div panel-name="suite-SistemaCuerpoAcademico" class="panel SistemaCuerpoAcademico">
-          <div class="suite-SistemaCuerpoAcademico-class-failed">
-            <div class="main-panel-header rounded-window-top">
-              <img src="failed.png"/>
-              <span class="class-name">businessLogic.MemberDAOTest</span>
-            </div> <!-- main-panel-header rounded-window-top -->
-            <div class="main-panel-content rounded-window-bottom">
-              <div class="method">
-                <div class="method-content">
-                  <a name="testGetMemberByLicense">
-                  </a> <!-- testGetMemberByLicense -->
-                  <span class="method-name">testGetMemberByLicense</span>
-                  <div class="stack-trace">java.lang.AssertionError
-	at org.junit.Assert.fail(Assert.java:86)
-	at org.junit.Assert.assertTrue(Assert.java:41)
-	at org.junit.Assert.assertTrue(Assert.java:52)
-	at businessLogic.MemberDAOTest.testGetMemberByLicense(MemberDAOTest.java:45)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
-	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
-	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
-	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
-	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
-	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
-	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
-	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
-	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
-... Removed 21 stack frames
-</div> <!-- stack-trace -->
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-            </div> <!-- main-panel-content rounded-window-bottom -->
-          </div> <!-- suite-SistemaCuerpoAcademico-class-failed -->
         </div> <!-- panel SistemaCuerpoAcademico -->
         <div panel-name="test-xml-SistemaCuerpoAcademico" class="panel">
           <div class="main-panel-header rounded-window-top">
@@ -162,15 +111,11 @@
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;!DOCTYPE suite SYSTEM &quot;http://testng.org/testng-1.0.dtd&quot;&gt;
 &lt;suite name=&quot;SistemaCuerpoAcademico&quot;&gt;
-  &lt;test name=&quot;businessLogic.MemberDAOTest&quot; junit=&quot;true&quot; preserve-order=&quot;false&quot;&gt;
+  &lt;test name=&quot;TestNG tests&quot; preserve-order=&quot;false&quot;&gt;
     &lt;classes&gt;
-      &lt;class name=&quot;businessLogic.MemberDAOTest&quot;&gt;
-        &lt;methods&gt;
-          &lt;include name=&quot;testGetMemberByLicense&quot;/&gt;
-        &lt;/methods&gt;
-      &lt;/class&gt; &lt;!-- businessLogic.MemberDAOTest --&gt;
+      &lt;class name=&quot;businessLogic.AgendaTopicDAOTest&quot;/&gt;
     &lt;/classes&gt;
-  &lt;/test&gt; &lt;!-- businessLogic.MemberDAOTest --&gt;
+  &lt;/test&gt; &lt;!-- TestNG tests --&gt;
 &lt;/suite&gt; &lt;!-- SistemaCuerpoAcademico --&gt;
             </pre>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -182,7 +127,7 @@
           <div class="main-panel-content rounded-window-bottom">
             <ul>
               <li>
-                <span class="test-name">businessLogic.MemberDAOTest (1 class)</span>
+                <span class="test-name">TestNG tests (1 class)</span>
               </li>
             </ul>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -208,16 +153,11 @@ data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(1);
-data.setCell(0, 0, 0)
-data.setCell(0, 1, 'testGetMemberByLicense')
-data.setCell(0, 2, 'businessLogic.MemberDAOTest')
-data.setCell(0, 3, 2402);
+data.addRows(0);
 window.suiteTableData['SistemaCuerpoAcademico']= { tableData: data, tableDiv: 'times-div-SistemaCuerpoAcademico'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 2 seconds</span>
               <div id="times-div-SistemaCuerpoAcademico">
               </div> <!-- times-div-SistemaCuerpoAcademico -->
             </div> <!-- times-div -->
@@ -242,14 +182,6 @@ return data;
             <span class="header-content">Methods in chronological order</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
-            <div class="chronological-class">
-              <div class="chronological-class-name">businessLogic.MemberDAOTest</div> <!-- chronological-class-name -->
-              <div class="test-method">
-                <img src="failed.png">
-                </img>
-                <span class="method-name">testGetMemberByLicense</span>
-                <span class="method-start">0 ms</span>
-              </div> <!-- test-method -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
       </div> <!-- main-panel-root -->
