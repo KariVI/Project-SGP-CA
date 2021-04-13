@@ -4,8 +4,8 @@ import domain.Project;
 import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import org.junit.Test;
 
 /**
@@ -58,9 +58,7 @@ public class ProjectDaoTest {
         ProjectDAO projectDAO= new ProjectDAO();
         Project projectAuxiliar;
         projectAuxiliar = new Project("Inteligencia artificial" ,"Descripcion","04/05/2021","05/11/2021");
-        projectDAO.save(projectAuxiliar);
-        int id = projectDAO.searchId(projectAuxiliar);
-        assertTrue(projectDAO.findProjectById(id));
+        assertTrue(projectDAO.save(projectAuxiliar));
     }
     
     @Test
@@ -76,8 +74,6 @@ public class ProjectDaoTest {
         System.out.println("getProjects");
         ProjectDAO instance = new ProjectDAO();
         ArrayList<Project> result = instance.getProjects();
-        if(result == null){
-            fail("List project empty");
-        }   
+        assertNotNull(result);
     }  
 }

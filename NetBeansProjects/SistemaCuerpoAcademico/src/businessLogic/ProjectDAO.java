@@ -9,15 +9,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import log.Log;
 
 /**
  *
  * @author Mariana
  */
-public class ProjectDAO implements IProjectDAO{
+public class ProjectDAO implements IProjectDAO {
 
         @Override
-        public void save(Project project) {
+        public boolean save(Project project) {
+                boolean saveSuccess = false;
                     try{
                         Connector connectorDataBase = new Connector();
                         Connection connectionDataBase = connectorDataBase.getConnection();
@@ -33,12 +35,14 @@ public class ProjectDAO implements IProjectDAO{
                             insertProjectStatment.executeUpdate();
                             
                             connectorDataBase.disconnect();
+                            saveSuccess = true;
                         }catch(SQLException sqlException) {
                             throw new IllegalStateException("Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
                         Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    return saveSuccess;
         }
         
         @Override

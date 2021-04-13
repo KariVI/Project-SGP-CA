@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import log.Log;
 
 public class Connector {
         private Connection connection;
@@ -15,12 +16,13 @@ public class Connector {
         private String userPassword = "password";
 
         public void connect() throws ClassNotFoundException  {
-                connection=null;
+                connection = null;
                 try{
                      Class.forName("com.mysql.cj.jdbc.Driver");
                     this.connection = DriverManager.getConnection(url, userName, userPassword);
                     
                 } catch (SQLException sqlException ) {
+                     Log.logException(sqlException);
                    throw new IllegalStateException("DataBase connection failed ", sqlException);
                 } 
         } 
@@ -36,6 +38,7 @@ public class Connector {
                                 try{
                                   connection.close();
                                 }catch(SQLException sqlException) {
+                                       
                                         throw new IllegalStateException("DataBase connection failed ", sqlException);
                                 }
 
