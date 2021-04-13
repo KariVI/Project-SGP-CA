@@ -1,9 +1,5 @@
 package domain;
 
-/**
- *
- * @author Mariana
- */
 public class Agreement {
     private String period;
     private String description;

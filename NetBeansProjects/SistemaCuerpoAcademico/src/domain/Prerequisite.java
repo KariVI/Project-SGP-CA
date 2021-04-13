@@ -28,6 +28,13 @@ public class Prerequisite {
         this.description=description;
     }
     
+    public Member getMandated(){
+        return mandated;
+    }
+    
+    public void setMandated(Member mandated){ 
+        this.mandated=mandated;
+    }
     public boolean equals(Object object){
         return false;
     }
