@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="DESKTOP-A884PK0" name="businessLogic.PrerequisiteDAOTest" skipped="0" tests="1" time="1.164" timestamp="2021-04-03T19:56:41">
+<testsuite errors="0" failures="0" hostname="DESKTOP-A884PK0" name="businessLogic.PrerequisiteDAOTest" skipped="0" tests="1" time="1.643" timestamp="2021-04-13T05:12:31">
   <properties>
     <property name="netbeans.autoupdate.country" value="MX" />
     <property name="javafx.binarycss" value="false" />
-    <property name="javac.test.classpath" value="C:\Program Files\Java\jdk1.8.0_241\jre/lib/javaws.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/deploy.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/plugin.jar:C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.23.jar:build/classes:C:\Program Files\NetBeans 8.2\platform\modules\ext\junit-4.12.jar:C:\Program Files\NetBeans 8.2\platform\modules\ext\hamcrest-core-1.3.jar" />
+    <property name="javac.test.classpath" value="C:\Program Files\Java\jdk1.8.0_241\jre/lib/javaws.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/deploy.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/plugin.jar:C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.23.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-core-2.14.1.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-api-2.14.1.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-1.2-api-2.14.1.jar:build/classes:C:\Program Files\NetBeans 8.2\platform\modules\ext\junit-4.12.jar:C:\Program Files\NetBeans 8.2\platform\modules\ext\hamcrest-core-1.3.jar" />
     <property name="manifest.custom.codebase" value="*" />
-    <property name="javac.test.sourcepath" value="C:\Users\jack-\Documents\GitHub\SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\empty" />
+    <property name="javac.test.sourcepath" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\empty" />
     <property name="javac.includes" value="businessLogic/PrerequisiteDAOTest.java" />
     <property name="ant.core.lib" value="C:\Program Files\NetBeans 8.2\extide\ant\lib\ant.jar" />
     <property name="javadoc.windowtitle" value="" />
     <property name="javafx.preloader.enabled" value="false" />
-    <property name="user.dir" value="C:\Users\jack-\Documents\GitHub\SGP-CA\NetBeansProjects\SistemaCuerpoAcademico" />
+    <property name="user.dir" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico" />
     <property name="java.vm.version" value="25.241-b07" />
     <property name="libs.MySQLDriver.classpath" value="C:\Program Files\NetBeans 8.2\ide\modules\ext\mysql-connector-java-5.1.23-bin.jar" />
     <property name="libs.eclipselinkmodelgen.src" value="" />
@@ -47,7 +47,7 @@
     <property name="user.name" value="kari" />
     <property name="copylibs.rebase" value="true" />
     <property name="libs.swing-layout.maven-pom" value="" />
-    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner businessLogic.PrerequisiteDAOTest methods=testGetPrerequisiteDescription skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\jack-\Documents\GitHub\SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\test\results\TEST-businessLogic.PrerequisiteDAOTest.xml crashfile=C:\Users\jack-\Documents\GitHub\SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\junitvmwatcher4462131473261588378.properties propsfile=C:\Users\jack-\Documents\GitHub\SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\junit7205699739309577499.properties" />
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner businessLogic.PrerequisiteDAOTest methods=testUpdatePrerequisites skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\test\results\TEST-businessLogic.PrerequisiteDAOTest.xml crashfile=C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\junitvmwatcher4042926866120844960.properties propsfile=C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\junit208577370259627591.properties" />
     <property name="build.classes.dir" value="build/classes" />
     <property name="netbeans.accept_license_class" value="org.netbeans.license.AcceptLicense" />
     <property name="build.sysclasspath" value="ignore" />
@@ -60,8 +60,9 @@
     <property name="includes" value="**" />
     <property name="user.country" value="MX" />
     <property name="manifest.file" value="manifest.mf" />
+    <property name="file.reference.log4j-core-2.14.1.jar" value="..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-core-2.14.1.jar" />
     <property name="javadoc.encoding" value="UTF-8" />
-    <property name="javac.classpath" value="C:\Program Files\Java\jdk1.8.0_241\jre/lib/javaws.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/deploy.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/plugin.jar:C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.23.jar" />
+    <property name="javac.classpath" value="C:\Program Files\Java\jdk1.8.0_241\jre/lib/javaws.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/deploy.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/plugin.jar:C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.23.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-core-2.14.1.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-api-2.14.1.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-1.2-api-2.14.1.jar" />
     <property name="libs.spring-framework400.classpath" value="C:\Program Files\NetBeans 8.2\ide\modules\org-apache-commons-logging.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\cglib-2.2.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-aop-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-aspects-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-beans-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-build-src-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-context-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-context-support-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-core-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-expression-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-framework-bom-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-instrument-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-instrument-tomcat-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-jdbc-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-jms-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-messaging-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-orm-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-oxm-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-test-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-tx-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-web-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-webmvc-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-webmvc-portlet-4.0.1.RELEASE.jar;C:\Program Files\NetBeans 8.2\java\modules\ext\spring-4\spring-websocket-4.0.1.RELEASE.jar" />
     <property name="debug-transport" value="dt_shmem" />
     <property name="netbeans.home" value="C:\Program Files\NetBeans 8.2\platform" />
@@ -69,7 +70,7 @@
     <property name="javac.modulepath" value="" />
     <property name="javafx.deploy.includeDT" value="true" />
     <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_241\jre\lib\endorsed" />
-    <property name="test.method" value="testGetPrerequisiteDescription" />
+    <property name="test.method" value="testUpdatePrerequisites" />
     <property name="netbeans.dynamic.classpath" value="C:\Program Files\NetBeans 8.2\platform\core\asm-all-5.0.1.jar;C:\Program Files\NetBeans 8.2\platform\core\core-base.jar;C:\Program Files\NetBeans 8.2\platform\core\core.jar;C:\Program Files\NetBeans 8.2\platform\core\org-netbeans-libs-asm.jar;C:\Program Files\NetBeans 8.2\platform\core\org-openide-filesystems-compat8.jar;C:\Program Files\NetBeans 8.2\platform\core\org-openide-filesystems.jar;C:\Program Files\NetBeans 8.2\platform\core\locale\core-base_ja.jar;C:\Program Files\NetBeans 8.2\platform\core\locale\core-base_pt_BR.jar;C:\Program Files\NetBeans 8.2\platform\core\locale\core-base_ru.jar;C:\Program Files\NetBeans 8.2\platform\core\locale\core-base_zh_CN.jar;C:\Program Files\NetBeans 8.2\platform\core\locale\core_ja.jar;C:\Program Files\NetBeans 8.2\platform\core\locale\core_pt_BR.jar;C:\Program Files\NetBeans 8.2\platform\core\locale\core_ru.jar;C:\Program Files\NetBeans 8.2\platform\core\locale\core_zh_CN.jar;C:\Program Files\NetBeans 8.2\platform\core\locale\org-netbeans-libs-asm_ja.jar;C:\Program Files\NetBeans 8.2\platform\core\locale\org-netbeans-libs-asm_pt_BR.jar;C:\Program Files\NetBeans 8.2\platform\core\locale\org-netbeans-libs-asm_ru.jar;C:\Program Files\NetBeans 8.2\platform\core\locale\org-netbeans-libs-asm_zh_CN.jar;C:\Program Files\NetBeans 8.2\platform\core\locale\org-openide-filesystems-compat8_ja.jar;C:\Program Files\NetBeans 8.2\platform\core\locale\org-openide-filesystems-compat8_pt_BR.jar;C:\Program Files\NetBeans 8.2\platform\core\locale\org-openide-filesystems-compat8_ru.jar;C:\Program Files\NetBeans 8.2\platform\core\locale\org-openide-filesystems-compat8_zh_CN.jar;C:\Program Files\NetBeans 8.2\platform\core\locale\org-openide-filesystems_ja.jar;C:\Program Files\NetBeans 8.2\platform\core\locale\org-openide-filesystems_pt_BR.jar;C:\Program Files\NetBeans 8.2\platform\core\locale\org-openide-filesystems_ru.jar;C:\Program Files\NetBeans 8.2\platform\core\locale\org-openide-filesystems_zh_CN.jar;C:\Program Files\NetBeans 8.2\nb\core\org-netbeans-upgrader.jar;C:\Program Files\NetBeans 8.2\nb\core\locale\core_nb.jar;C:\Program Files\NetBeans 8.2\nb\core\locale\core_nb_ja.jar;C:\Program Files\NetBeans 8.2\nb\core\locale\core_nb_pt_BR.jar;C:\Program Files\NetBeans 8.2\nb\core\locale\core_nb_ru.jar;C:\Program Files\NetBeans 8.2\nb\core\locale\core_nb_zh_CN.jar;C:\Program Files\NetBeans 8.2\nb\core\locale\org-netbeans-upgrader_ja.jar;C:\Program Files\NetBeans 8.2\nb\core\locale\org-netbeans-upgrader_pt_BR.jar;C:\Program Files\NetBeans 8.2\nb\core\locale\org-netbeans-upgrader_ru.jar;C:\Program Files\NetBeans 8.2\nb\core\locale\org-netbeans-upgrader_zh_CN.jar" />
     <property name="jnlp.enabled" value="false" />
     <property name="java.vm.specification.version" value="1.8" />
@@ -84,9 +85,10 @@
     <property name="javac.debug" value="true" />
     <property name="javadoc.splitindex" value="true" />
     <property name="file.separator" value="\" />
-    <property name="javac.includesfile.binary" value="C:\Users\jack-\Documents\GitHub\SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\null2121235095" />
+    <property name="javac.includesfile.binary" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\null901607862" />
     <property name="libs.junit_4.maven-pom" value="" />
-    <property name="javac.test.processorpath" value="C:\Program Files\Java\jdk1.8.0_241\jre/lib/javaws.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/deploy.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/plugin.jar:C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.23.jar:build/classes:C:\Program Files\NetBeans 8.2\platform\modules\ext\junit-4.12.jar:C:\Program Files\NetBeans 8.2\platform\modules\ext\hamcrest-core-1.3.jar" />
+    <property name="mkdist.disabled" value="false" />
+    <property name="javac.test.processorpath" value="C:\Program Files\Java\jdk1.8.0_241\jre/lib/javaws.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/deploy.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/plugin.jar:C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.23.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-core-2.14.1.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-api-2.14.1.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-1.2-api-2.14.1.jar:build/classes:C:\Program Files\NetBeans 8.2\platform\modules\ext\junit-4.12.jar:C:\Program Files\NetBeans 8.2\platform\modules\ext\hamcrest-core-1.3.jar" />
     <property name="netbeans.buildnumber" value="201609300101" />
     <property name="libs.JWSAntTasks.javadoc" value="" />
     <property name="build.generated.sources.dir" value="build/generated-sources" />
@@ -95,12 +97,13 @@
     <property name="sun.java.launcher" value="SUN_STANDARD" />
     <property name="libs.hibernate4-persistencemodelgen.javadoc" value="" />
     <property name="libs.jaxb.javadoc" value="C:\Program Files\NetBeans 8.2\ide\docs\jaxb-api-doc.zip" />
-    <property name="javac.includes.binary" value="C:\Users\jack-\Documents\GitHub\SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\test\classes\businessLogic\PrerequisiteDAOTest.class" />
+    <property name="javac.includes.binary" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\test\classes\businessLogic\PrerequisiteDAOTest.class" />
     <property name="ant.home" value="C:\Program Files\NetBeans 8.2\extide\ant" />
     <property name="libs.junit_4.src" value="C:\Program Files\NetBeans 8.2\platform\docs\junit-4.12-sources.jar" />
     <property name="javafx.run.height" value="600" />
     <property name="libs.testng.classpath" value="C:\Program Files\NetBeans 8.2\platform\modules\ext\testng-6.8.1-dist.jar" />
     <property name="libs.absolutelayout.maven-pom" value="" />
+    <property name="file.reference.log4j-api-2.14.1.jar" value="..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-api-2.14.1.jar" />
     <property name="ant.java.version" value="1.8" />
     <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_241\jre\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\jack-\AppData\Local\Programs\Python\Python38-32\Scripts\;C:\Users\jack-\AppData\Local\Programs\Python\Python38-32\;C:\Users\jack-\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk1.8.0_241\bin;C:\Users\jack-\AppData\Local\Programs\Microsoft VS Code\bin;C:\ProgramData\kari\GitHubDesktop\bin;." />
     <property name="javadoc.author" value="false" />
@@ -108,7 +111,7 @@
     <property name="libs.spring-framework400.src" value="" />
     <property name="libs.PostgreSQLDriver.src" value="" />
     <property name="sun.arch.data.model" value="64" />
-    <property name="basedir" value="C:\Users\jack-\Documents\GitHub\SGP-CA\NetBeansProjects\SistemaCuerpoAcademico" />
+    <property name="basedir" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico" />
     <property name="libs.jpa20-persistence.maven-pom" value="" />
     <property name="jar.compress" value="false" />
     <property name="path.separator" value=";" />
@@ -125,7 +128,7 @@
     <property name="test.binaryincludes" value="&lt;nothing&gt;" />
     <property name="manifest.available" value="true" />
     <property name="libs.spring-framework300.maven-pom" value="" />
-    <property name="run.test.classpath" value="C:\Program Files\Java\jdk1.8.0_241\jre/lib/javaws.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/deploy.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/plugin.jar:C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.23.jar:build/classes:C:\Program Files\NetBeans 8.2\platform\modules\ext\junit-4.12.jar:C:\Program Files\NetBeans 8.2\platform\modules\ext\hamcrest-core-1.3.jar:build/test/classes" />
+    <property name="run.test.classpath" value="C:\Program Files\Java\jdk1.8.0_241\jre/lib/javaws.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/deploy.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/plugin.jar:C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.23.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-core-2.14.1.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-api-2.14.1.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-1.2-api-2.14.1.jar:build/classes:C:\Program Files\NetBeans 8.2\platform\modules\ext\junit-4.12.jar:C:\Program Files\NetBeans 8.2\platform\modules\ext\hamcrest-core-1.3.jar:build/test/classes" />
     <property name="ant.project.invoked-targets" value="test-single-method" />
     <property name="test.binaryexcludes" value="" />
     <property name="libs.swing-layout.javadoc" value="C:\Program Files\NetBeans 8.2\platform\docs\swing-layout-1.0.4-doc.zip" />
@@ -145,7 +148,7 @@
     <property name="libs.JAXB-ENDORSED.javadoc" value="" />
     <property name="libs.JWSAntTasks.classpath" value="C:\Program Files\NetBeans 8.2\java\ant\extra\org-netbeans-modules-javawebstart-anttasks.jar" />
     <property name="libs.spring-framework300.src" value="" />
-    <property name="empty.dir" value="C:\Users\jack-\Documents\GitHub\SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\empty" />
+    <property name="empty.dir" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\empty" />
     <property name="javafx.deploy.backgroundupdate" value="false" />
     <property name="javafx.disable.concurrent.runs" value="false" />
     <property name="test.binarytestincludes" value="" />
@@ -154,7 +157,7 @@
     <property name="javadoc.preview" value="true" />
     <property name="libs.jpa20-persistence.javadoc" value="C:\Program Files\NetBeans 8.2\java\modules\ext\docs\javax.persistence-2.1.0-doc.zip" />
     <property name="java.home" value="C:\Program Files\Java\jdk1.8.0_241\jre" />
-    <property name="debug.test.classpath" value="C:\Program Files\Java\jdk1.8.0_241\jre/lib/javaws.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/deploy.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/plugin.jar:C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.23.jar:build/classes:C:\Program Files\NetBeans 8.2\platform\modules\ext\junit-4.12.jar:C:\Program Files\NetBeans 8.2\platform\modules\ext\hamcrest-core-1.3.jar:build/test/classes" />
+    <property name="debug.test.classpath" value="C:\Program Files\Java\jdk1.8.0_241\jre/lib/javaws.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/deploy.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/plugin.jar:C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.23.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-core-2.14.1.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-api-2.14.1.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-1.2-api-2.14.1.jar:build/classes:C:\Program Files\NetBeans 8.2\platform\modules\ext\junit-4.12.jar:C:\Program Files\NetBeans 8.2\platform\modules\ext\hamcrest-core-1.3.jar:build/test/classes" />
     <property name="netbeans.importclass" value="org.netbeans.upgrade.AutoUpgrade" />
     <property name="ant.project.default-target" value="default" />
     <property name="annotation.processing.run.all.processors" value="true" />
@@ -167,7 +170,7 @@
     <property name="http.nonProxyHosts" value="localhost|127.0.0.1|DESKTOP-A884PK0" />
     <property name="libs.junit_4.javadoc" value="C:\Program Files\NetBeans 8.2\platform\docs\junit-4.12-javadoc.jar" />
     <property name="javac.test.modulepath" value="" />
-    <property name="run.classpath" value="dist/SistemaCuerpoAcademico.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/javaws.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/deploy.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/plugin.jar:C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.23.jar:build/classes" />
+    <property name="run.classpath" value="dist/SistemaCuerpoAcademico.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/javaws.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/deploy.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/plugin.jar:C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.23.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-core-2.14.1.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-api-2.14.1.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-1.2-api-2.14.1.jar:build/classes" />
     <property name="jna.boot.library.name" value="jnidispatch-422" />
     <property name="sun.awt.datatransfer.timeout" value="1000" />
     <property name="libs.jpa2-persistence.maven-pom" value="" />
@@ -178,10 +181,10 @@
     <property name="javac.deprecation" value="false" />
     <property name="javadoc.use" value="true" />
     <property name="sun.java2d.noddraw" value="true" />
-    <property name="javac.processorpath" value="C:\Program Files\Java\jdk1.8.0_241\jre/lib/javaws.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/deploy.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/plugin.jar:C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.23.jar" />
+    <property name="javac.processorpath" value="C:\Program Files\Java\jdk1.8.0_241\jre/lib/javaws.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/deploy.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/plugin.jar:C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.23.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-core-2.14.1.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-api-2.14.1.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-1.2-api-2.14.1.jar" />
     <property name="libs.hamcrest.maven-pom" value="" />
     <property name="javac.compilerargs" value="" />
-    <property name="ant.file" value="C:\Users\jack-\Documents\GitHub\SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build.xml" />
+    <property name="ant.file" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build.xml" />
     <property name="libs.beans-binding.maven-pom" value="" />
     <property name="libs.hibernate4-support.javadoc" value="C:\Program Files\NetBeans 8.2\java\modules\ext\docs\javax.persistence-2.1.0-doc.zip" />
     <property name="libs.beans-binding.src" value="" />
@@ -190,7 +193,7 @@
     <property name="org.openide.major.version" value="IDE/1" />
     <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM" />
     <property name="javafx.preloader.jar.filename" value="" />
-    <property name="ant.file.SistemaCuerpoAcademico" value="C:\Users\jack-\Documents\GitHub\SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build.xml" />
+    <property name="ant.file.SistemaCuerpoAcademico" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build.xml" />
     <property name="netbeans.user" value="C:\Users\jack-\AppData\Roaming\NetBeans\8.2" />
     <property name="javadoc.additionalparam" value="" />
     <property name="java.io.tmpdir" value="C:\Users\jack-\AppData\Local\Temp\" />
@@ -202,7 +205,8 @@
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_241\jre\bin" />
     <property name="have.sources" value="true" />
     <property name="libs.hamcrest.javadoc" value="" />
-    <property name="debug.classpath" value="dist/SistemaCuerpoAcademico.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/javaws.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/deploy.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/plugin.jar:C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.23.jar:build/classes" />
+    <property name="debug.classpath" value="dist/SistemaCuerpoAcademico.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/javaws.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/deploy.jar:C:\Program Files\Java\jdk1.8.0_241\jre/lib/plugin.jar:C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.23.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-core-2.14.1.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-api-2.14.1.jar:..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-1.2-api-2.14.1.jar:build/classes" />
+    <property name="javac.external.vm" value="false" />
     <property name="javadoc.private" value="false" />
     <property name="test.src.dir" value="test" />
     <property name="ap.processors.internal" value="" />
@@ -243,7 +247,7 @@
     <property name="libs.eclipselinkmodelgen.maven-pom" value="" />
     <property name="ant.file.type.jfx-impl" value="file" />
     <property name="libs.eclipselinkmodelgen.javadoc" value="" />
-    <property name="ant.file.jfx-impl" value="C:\Users\jack-\Documents\GitHub\SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\nbproject\jfx-impl.xml" />
+    <property name="ant.file.jfx-impl" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\nbproject\jfx-impl.xml" />
     <property name="netbeans.home+have.tests" value="true" />
     <property name="annotation.processing.processor.options" value="" />
     <property name="libs.testng.maven-pom" value="" />
@@ -251,7 +255,7 @@
     <property name="jdk.launcher.addexports.5" value="java.management/sun.management=ALL-UNNAMED" />
     <property name="jdk.launcher.addexports.4" value="java.desktop/com.sun.java.swing.plaf.windows=ALL-UNNAMED" />
     <property name="jdk.launcher.addexports.3" value="java.desktop/sun.awt.im=ALL-UNNAMED" />
-    <property name="work.dir" value="C:\Users\jack-\Documents\GitHub\SGP-CA\NetBeansProjects\SistemaCuerpoAcademico" />
+    <property name="work.dir" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico" />
     <property name="jdk.launcher.addexports.2" value="java.desktop/java.awt.peer=ALL-UNNAMED" />
     <property name="compile.on.save.unsupported.javafx" value="true" />
     <property name="libs.jaxb.classpath" value="C:\Program Files\NetBeans 8.2\ide\modules\ext\jaxb\jaxb-impl.jar;C:\Program Files\NetBeans 8.2\ide\modules\ext\jaxb\jaxb-xjc.jar;C:\Program Files\NetBeans 8.2\ide\modules\ext\jaxb\jaxb1-impl.jar;C:\Program Files\NetBeans 8.2\ide\modules\ext\jaxb\activation.jar;C:\Program Files\NetBeans 8.2\ide\modules\ext\jaxb\api\jaxb-api.jar;C:\Program Files\NetBeans 8.2\ide\modules\ext\jaxb\api\jsr173_1.0_api.jar" />
@@ -271,7 +275,7 @@
     <property name="junit.forkmode" value="perTest" />
     <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.8.0_241\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_241\jre\classes" />
     <property name="javac.target" value="1.8" />
-    <property name="built-jar.properties" value="C:\Users\jack-\Documents\GitHub\SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\built-jar.properties" />
+    <property name="built-jar.properties" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\built-jar.properties" />
     <property name="ant.file.type.SistemaCuerpoAcademico" value="file" />
     <property name="build.test.classes.dir" value="build/test/classes" />
     <property name="src.dir" value="src" />
@@ -288,16 +292,17 @@
     <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob" />
     <property name="default.javac.source" value="1.8" />
     <property name="debug-transport-by-os" value="dt_shmem" />
-    <property name="libs.MySQLDriver.src" value="" />
     <property name="sun.jnu.encoding" value="Cp1252" />
+    <property name="libs.MySQLDriver.src" value="" />
     <property name="run.test.jvmargs" value="" />
     <property name="build.test.results.dir" value="build/test/results" />
     <property name="java.runtime.version" value="1.8.0_241-b07" />
     <property name="default.javac.target" value="1.8" />
-    <property name="ant.file.SistemaCuerpoAcademico-impl" value="C:\Users\jack-\Documents\GitHub\SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\nbproject\build-impl.xml" />
+    <property name="ant.file.SistemaCuerpoAcademico-impl" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\nbproject\build-impl.xml" />
     <property name="libs.junit_4.classpath" value="C:\Program Files\NetBeans 8.2\platform\modules\ext\junit-4.12.jar" />
     <property name="user.timezone" value="" />
     <property name="nb.junit.single" value="true" />
+    <property name="do.jar" value="true" />
     <property name="netbeans.dirs" value="C:\Program Files\NetBeans 8.2\nb;C:\Program Files\NetBeans 8.2\ergonomics;C:\Program Files\NetBeans 8.2\ide;C:\Program Files\NetBeans 8.2\extide;C:\Program Files\NetBeans 8.2\java;C:\Program Files\NetBeans 8.2\apisupport;C:\Program Files\NetBeans 8.2\webcommon;C:\Program Files\NetBeans 8.2\websvccommon;C:\Program Files\NetBeans 8.2\enterprise;C:\Program Files\NetBeans 8.2\mobility;C:\Program Files\NetBeans 8.2\profiler;C:\Program Files\NetBeans 8.2\python;C:\Program Files\NetBeans 8.2\php;C:\Program Files\NetBeans 8.2\identity;C:\Program Files\NetBeans 8.2\harness;C:\Program Files\NetBeans 8.2\cnd;C:\Program Files\NetBeans 8.2\cndext;C:\Program Files\NetBeans 8.2\dlight;C:\Program Files\NetBeans 8.2\groovy;C:\Program Files\NetBeans 8.2\extra;C:\Program Files\NetBeans 8.2\javacard;C:\Program Files\NetBeans 8.2\javafx" />
     <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.8.0_241\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext" />
     <property name="endorsed.classpath" value="" />
@@ -305,14 +310,14 @@
     <property name="excludes" value="" />
     <property name="libs.jpa2-persistence.javadoc" value="C:\Program Files\NetBeans 8.2\java\modules\ext\docs\javax.persistence-2.1.0-doc.zip" />
     <property name="apple.laf.useScreenMenuBar" value="true" />
-    <property name="java.class.path" value="C:\Program Files\Java\jdk1.8.0_241\jre\lib\javaws.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\deploy.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\plugin.jar;C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.23.jar;C:\Users\jack-\Documents\GitHub\SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\classes;C:\Program Files\NetBeans 8.2\platform\modules\ext\junit-4.12.jar;C:\Program Files\NetBeans 8.2\platform\modules\ext\hamcrest-core-1.3.jar;C:\Users\jack-\Documents\GitHub\SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\test\classes;C:\Program Files\NetBeans 8.2\extide\ant\lib\ant-launcher.jar;C:\Program Files\NetBeans 8.2\extide\ant\lib\ant.jar;C:\Program Files\NetBeans 8.2\extide\ant\lib\ant-junit.jar;C:\Program Files\NetBeans 8.2\extide\ant\lib\ant-junit4.jar" />
+    <property name="java.class.path" value="C:\Program Files\Java\jdk1.8.0_241\jre\lib\javaws.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\deploy.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\plugin.jar;C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.23.jar;C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\classes;C:\Program Files\NetBeans 8.2\platform\modules\ext\junit-4.12.jar;C:\Program Files\NetBeans 8.2\platform\modules\ext\hamcrest-core-1.3.jar;C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\test\classes;C:\Program Files\NetBeans 8.2\extide\ant\lib\ant-launcher.jar;C:\Program Files\NetBeans 8.2\extide\ant\lib\ant.jar;C:\Program Files\NetBeans 8.2\extide\ant\lib\ant-junit.jar;C:\Program Files\NetBeans 8.2\extide\ant\lib\ant-junit4.jar" />
     <property name="libs.absolutelayout.src" value="" />
     <property name="libs.jpa20-persistence.classpath" value="C:\Program Files\NetBeans 8.2\java\modules\ext\eclipselink\javax.persistence_2.1.0.v201304241213.jar" />
     <property name="os.version" value="10.0" />
     <property name="application.args" value="" />
     <property name="manifest.custom.permissions" value="" />
-    <property name="main.class.available" value="true" />
     <property name="sun.awt.enableExtraMouseButtons" value="true" />
+    <property name="main.class.available" value="true" />
     <property name="sun.desktop" value="windows" />
     <property name="libs.hibernate4-persistence.src" value="" />
     <property name="libs.hibernate4-support.maven-pom" value="" />
@@ -333,6 +338,7 @@
     <property name="libs.testng.javadoc" value="C:\Program Files\NetBeans 8.2\platform\docs\testng-6.8.1-javadoc.zip" />
     <property name="user.script" value="" />
     <property name="libs.PostgreSQLDriver.classpath" value="C:\Program Files\NetBeans 8.2\ide\modules\ext\postgresql-9.4.1209.jar" />
+    <property name="file.reference.log4j-1.2-api-2.14.1.jar" value="..\..\..\..\..\Downloads\apache-log4j-2.14.1-bin\apache-log4j-2.14.1-bin\log4j-1.2-api-2.14.1.jar" />
     <property name="libs.hibernate4-persistencemodelgen.classpath" value="C:\Program Files\NetBeans 8.2\java\modules\ext\hibernate4\hibernate-jpamodelgen-4.3.1.Final.jar" />
     <property name="annotation.processing.source.output" value="build/generated-sources/ap-source-output" />
     <property name="main.class" value="com.javafx.main.Main" />
@@ -347,8 +353,8 @@
     <property name="platform.active" value="default_platform" />
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit" />
   </properties>
-  <testcase classname="businessLogic.PrerequisiteDAOTest" name="testGetPrerequisiteDescription" time="1.07" />
-  <system-out><![CDATA[getPrerequisiteDescription
+  <testcase classname="businessLogic.PrerequisiteDAOTest" name="testUpdatePrerequisites" time="1.525" />
+  <system-out><![CDATA[updatePrerequisites
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<<<<<<< HEAD
 <testsuite errors="0" failures="0" hostname="MacBook-Pro-de-M.local" name="dataaccess.ConnectorTest" skipped="0" tests="1" time="2.269" timestamp="2021-04-09T16:39:55">
+=======
+<testsuite errors="0" failures="0" hostname="DESKTOP-A884PK0" name="dataaccess.ConnectorTest" skipped="0" tests="1" time="1.207" timestamp="2021-04-08T04:50:34">
+>>>>>>> KarinaChanges
   <properties>
     <property name="netbeans.autoupdate.country" value="XL" />
     <property name="javafx.binarycss" value="false" />
     <property name="javac.test.classpath" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/jre/lib/javaws.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/jre/lib/deploy.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/jre/lib/plugin.jar:/Users/Mariana/Downloads/mysql-connector-java-8.0.23 (1).jar:/Users/Mariana/Downloads/mysql-connector-java-8.0.23 (1).jar:build/classes:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/modules/ext/junit-4.12.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/modules/ext/hamcrest-core-1.3.jar" />
     <property name="manifest.custom.codebase" value="*" />
+<<<<<<< HEAD
     <property name="javac.test.sourcepath" value="/Users/Mariana/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/build/empty" />
+=======
+    <property name="javac.test.sourcepath" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\empty" />
+>>>>>>> KarinaChanges
     <property name="javac.includes" value="dataaccess/ConnectorTest.java" />
     <property name="ant.core.lib" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/extide/ant/lib/ant.jar" />
     <property name="javadoc.windowtitle" value="" />
     <property name="javafx.preloader.enabled" value="false" />
+<<<<<<< HEAD
     <property name="user.dir" value="/Users/Mariana/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico" />
     <property name="java.vm.version" value="25.111-b14" />
     <property name="libs.MySQLDriver.classpath" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/ide/modules/ext/mysql-connector-java-5.1.23-bin.jar" />
+=======
+    <property name="user.dir" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico" />
+    <property name="java.vm.version" value="25.241-b07" />
+    <property name="libs.MySQLDriver.classpath" value="C:\Program Files\NetBeans 8.2\ide\modules\ext\mysql-connector-java-5.1.23-bin.jar" />
+>>>>>>> KarinaChanges
     <property name="libs.eclipselinkmodelgen.src" value="" />
     <property name="javadoc.notree" value="false" />
     <property name="netbeans.autoupdate.version" value="1.23" />
@@ -21,10 +35,16 @@
     <property name="libs.javac-api.src" value="" />
     <property name="javafx.enabled" value="true" />
     <property name="javadoc.noindex" value="false" />
+<<<<<<< HEAD
     <property name="libs.jpa2-persistence.classpath" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/java/modules/ext/hibernate4/hibernate-jpa-2.1-api-1.0.0.Final.jar" />
     <property name="sun.os.patch.level" value="unknown" />
     <property name="auxiliary.org-netbeans-modules-projectapi.issue214819_5f_fx_5f_enabled" value="true" />
     <property name="file.reference.mysql-connector-java-8.0.23.jar" value="/Users/Mariana/Downloads/mysql-connector-java-8.0.23 (1).jar" />
+=======
+    <property name="libs.jpa2-persistence.classpath" value="C:\Program Files\NetBeans 8.2\java\modules\ext\hibernate4\hibernate-jpa-2.1-api-1.0.0.Final.jar" />
+    <property name="sun.os.patch.level" value="" />
+    <property name="file.reference.mysql-connector-java-8.0.23.jar" value="C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.23.jar" />
+>>>>>>> KarinaChanges
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
     <property name="nb.show.statistics.ui" value="usageStatisticsEnabled" />
     <property name="netbeans.autoupdate.variant" value="" />
@@ -47,7 +67,11 @@
     <property name="user.name" value="Mariana" />
     <property name="copylibs.rebase" value="true" />
     <property name="libs.swing-layout.maven-pom" value="" />
+<<<<<<< HEAD
     <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner dataaccess.ConnectorTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,/Users/Mariana/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/build/test/results/TEST-dataaccess.ConnectorTest.xml crashfile=/Users/Mariana/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/build/junitvmwatcher4345159747974531773.properties propsfile=/Users/Mariana/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/build/junit2722444733538575748.properties" />
+=======
+    <property name="sun.java.command" value="org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner dataaccess.ConnectorTest skipNonTests=false filtertrace=true haltOnError=false haltOnFailure=false showoutput=true outputtoformatters=true logfailedtests=true threadid=0 logtestlistenerevents=true formatter=org.apache.tools.ant.taskdefs.optional.junit.BriefJUnitResultFormatter formatter=org.apache.tools.ant.taskdefs.optional.junit.XMLJUnitResultFormatter,C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\test\results\TEST-dataaccess.ConnectorTest.xml crashfile=C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\junitvmwatcher5699171294326547547.properties propsfile=C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\junit3291295868987073539.properties" />
+>>>>>>> KarinaChanges
     <property name="build.classes.dir" value="build/classes" />
     <property name="netbeans.accept_license_class" value="org.netbeans.license.AcceptLicense" />
     <property name="build.sysclasspath" value="ignore" />
@@ -87,8 +111,13 @@
     <property name="jar.index.metainf" value="false" />
     <property name="javac.debug" value="true" />
     <property name="javadoc.splitindex" value="true" />
+<<<<<<< HEAD
     <property name="file.separator" value="/" />
     <property name="javac.includesfile.binary" value="/Users/Mariana/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/null2027597064" />
+=======
+    <property name="file.separator" value="\" />
+    <property name="javac.includesfile.binary" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\null1588267409" />
+>>>>>>> KarinaChanges
     <property name="libs.junit_4.maven-pom" value="" />
     <property name="javac.test.processorpath" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/jre/lib/javaws.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/jre/lib/deploy.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/jre/lib/plugin.jar:/Users/Mariana/Downloads/mysql-connector-java-8.0.23 (1).jar:/Users/Mariana/Downloads/mysql-connector-java-8.0.23 (1).jar:build/classes:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/modules/ext/junit-4.12.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/modules/ext/hamcrest-core-1.3.jar" />
     <property name="netbeans.buildnumber" value="201609300101" />
@@ -97,10 +126,17 @@
     <property name="libs.eclipselinkmodelgen.classpath" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/java/modules/ext/eclipselink/org.eclipse.persistence.jpa.modelgen_2.5.2.v20140319-9ad6abd.jar" />
     <property name="sun.java.launcher" value="SUN_STANDARD" />
     <property name="libs.hibernate4-persistencemodelgen.javadoc" value="" />
+<<<<<<< HEAD
     <property name="libs.jaxb.javadoc" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/ide/docs/jaxb-api-doc.zip" />
     <property name="javac.includes.binary" value="/Users/Mariana/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/build/test/classes/dataaccess/ConnectorTest.class" />
     <property name="ant.home" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/extide/ant" />
     <property name="libs.junit_4.src" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/docs/junit-4.12-sources.jar" />
+=======
+    <property name="libs.jaxb.javadoc" value="C:\Program Files\NetBeans 8.2\ide\docs\jaxb-api-doc.zip" />
+    <property name="javac.includes.binary" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\test\classes\dataaccess\ConnectorTest.class" />
+    <property name="ant.home" value="C:\Program Files\NetBeans 8.2\extide\ant" />
+    <property name="libs.junit_4.src" value="C:\Program Files\NetBeans 8.2\platform\docs\junit-4.12-sources.jar" />
+>>>>>>> KarinaChanges
     <property name="javafx.run.height" value="600" />
     <property name="libs.testng.classpath" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/modules/ext/testng-6.8.1-dist.jar" />
     <property name="libs.absolutelayout.maven-pom" value="" />
@@ -111,7 +147,11 @@
     <property name="libs.spring-framework400.src" value="" />
     <property name="libs.PostgreSQLDriver.src" value="" />
     <property name="sun.arch.data.model" value="64" />
+<<<<<<< HEAD
     <property name="basedir" value="/Users/Mariana/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico" />
+=======
+    <property name="basedir" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico" />
+>>>>>>> KarinaChanges
     <property name="libs.jpa20-persistence.maven-pom" value="" />
     <property name="jar.compress" value="false" />
     <property name="path.separator" value=":" />
@@ -150,7 +190,11 @@
     <property name="libs.JAXB-ENDORSED.javadoc" value="" />
     <property name="libs.JWSAntTasks.classpath" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/java/ant/extra/org-netbeans-modules-javawebstart-anttasks.jar" />
     <property name="libs.spring-framework300.src" value="" />
+<<<<<<< HEAD
     <property name="empty.dir" value="/Users/Mariana/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/build/empty" />
+=======
+    <property name="empty.dir" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\empty" />
+>>>>>>> KarinaChanges
     <property name="javafx.deploy.backgroundupdate" value="false" />
     <property name="javafx.disable.concurrent.runs" value="false" />
     <property name="test.binarytestincludes" value="" />
@@ -187,7 +231,11 @@
     <property name="javac.processorpath" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/jre/lib/javaws.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/jre/lib/deploy.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/jre/lib/plugin.jar:/Users/Mariana/Downloads/mysql-connector-java-8.0.23 (1).jar:/Users/Mariana/Downloads/mysql-connector-java-8.0.23 (1).jar" />
     <property name="libs.hamcrest.maven-pom" value="" />
     <property name="javac.compilerargs" value="" />
+<<<<<<< HEAD
     <property name="ant.file" value="/Users/Mariana/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/build.xml" />
+=======
+    <property name="ant.file" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build.xml" />
+>>>>>>> KarinaChanges
     <property name="libs.beans-binding.maven-pom" value="" />
     <property name="libs.hibernate4-support.javadoc" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/java/modules/ext/docs/javax.persistence-2.1.0-doc.zip" />
     <property name="file.reference.mysql-connector-java-8.0.23__1_.jar" value="/Users/Mariana/Downloads/mysql-connector-java-8.0.23 (1).jar" />
@@ -197,8 +245,13 @@
     <property name="org.openide.major.version" value="IDE/1" />
     <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM" />
     <property name="javafx.preloader.jar.filename" value="" />
+<<<<<<< HEAD
     <property name="ant.file.SistemaCuerpoAcademico" value="/Users/Mariana/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/build.xml" />
     <property name="netbeans.user" value="/Users/Mariana/Library/Application Support/NetBeans/8.2" />
+=======
+    <property name="ant.file.SistemaCuerpoAcademico" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build.xml" />
+    <property name="netbeans.user" value="C:\Users\jack-\AppData\Roaming\NetBeans\8.2" />
+>>>>>>> KarinaChanges
     <property name="javadoc.additionalparam" value="" />
     <property name="java.io.tmpdir" value="/var/folders/3p/dg_9v7m570lg631c_v_jrq7m0000gn/T/" />
     <property name="java.vendor.url" value="http://java.oracle.com/" />
@@ -249,12 +302,24 @@
     <property name="libs.eclipselinkmodelgen.maven-pom" value="" />
     <property name="ant.file.type.jfx-impl" value="file" />
     <property name="libs.eclipselinkmodelgen.javadoc" value="" />
+<<<<<<< HEAD
     <property name="ant.file.jfx-impl" value="/Users/Mariana/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/nbproject/jfx-impl.xml" />
+=======
+    <property name="ant.file.jfx-impl" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\nbproject\jfx-impl.xml" />
+>>>>>>> KarinaChanges
     <property name="netbeans.home+have.tests" value="true" />
     <property name="annotation.processing.processor.options" value="" />
     <property name="libs.testng.maven-pom" value="" />
     <property name="libs.jaxb.src" value="" />
+<<<<<<< HEAD
     <property name="work.dir" value="/Users/Mariana/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico" />
+=======
+    <property name="jdk.launcher.addexports.5" value="java.management/sun.management=ALL-UNNAMED" />
+    <property name="jdk.launcher.addexports.4" value="java.desktop/com.sun.java.swing.plaf.windows=ALL-UNNAMED" />
+    <property name="jdk.launcher.addexports.3" value="java.desktop/sun.awt.im=ALL-UNNAMED" />
+    <property name="work.dir" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico" />
+    <property name="jdk.launcher.addexports.2" value="java.desktop/java.awt.peer=ALL-UNNAMED" />
+>>>>>>> KarinaChanges
     <property name="compile.on.save.unsupported.javafx" value="true" />
     <property name="libs.jaxb.classpath" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/ide/modules/ext/jaxb/jaxb-impl.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/ide/modules/ext/jaxb/jaxb-xjc.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/ide/modules/ext/jaxb/jaxb1-impl.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/ide/modules/ext/jaxb/activation.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/ide/modules/ext/jaxb/api/jaxb-api.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/ide/modules/ext/jaxb/api/jsr173_1.0_api.jar" />
     <property name="do.depend" value="false" />
@@ -273,7 +338,11 @@
     <property name="user.country.format" value="MX" />
     <property name="sun.boot.class.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/jre/classes" />
     <property name="javac.target" value="1.8" />
+<<<<<<< HEAD
     <property name="built-jar.properties" value="/Users/Mariana/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/build/built-jar.properties" />
+=======
+    <property name="built-jar.properties" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\built-jar.properties" />
+>>>>>>> KarinaChanges
     <property name="ant.file.type.SistemaCuerpoAcademico" value="file" />
     <property name="build.test.classes.dir" value="build/test/classes" />
     <property name="src.dir" value="src" />
@@ -281,7 +350,6 @@
     <property name="annotation.processing.enabled" value="true" />
     <property name="libs.jpa2-persistence.src" value="" />
     <property name="libs.jpa20-persistence.src" value="" />
-    <property name="ignore.failing.tests" value="true" />
     <property name="javafx.enable.concurrent.external.runs" value="false" />
     <property name="javafx.deploy.embedJNLP" value="true" />
     <property name="dist.dir" value="dist" />
@@ -289,16 +357,26 @@
     <property name="javac.fork" value="false" />
     <property name="java.awt.printerjob" value="sun.lwawt.macosx.CPrinterJob" />
     <property name="default.javac.source" value="1.8" />
+<<<<<<< HEAD
     <property name="debug-transport-by-os" value="dt_socket" />
     <property name="sun.jnu.encoding" value="UTF-8" />
+=======
+    <property name="debug-transport-by-os" value="dt_shmem" />
+>>>>>>> KarinaChanges
     <property name="libs.MySQLDriver.src" value="" />
+    <property name="sun.jnu.encoding" value="Cp1252" />
     <property name="run.test.jvmargs" value="" />
     <property name="java.runtime.version" value="1.8.0_111-b14" />
     <property name="build.test.results.dir" value="build/test/results" />
     <property name="jna.platform.library.path" value="/usr/lib:/usr/lib" />
     <property name="default.javac.target" value="1.8" />
+<<<<<<< HEAD
     <property name="ant.file.SistemaCuerpoAcademico-impl" value="/Users/Mariana/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/nbproject/build-impl.xml" />
     <property name="libs.junit_4.classpath" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/modules/ext/junit-4.12.jar" />
+=======
+    <property name="libs.junit_4.classpath" value="C:\Program Files\NetBeans 8.2\platform\modules\ext\junit-4.12.jar" />
+    <property name="ant.file.SistemaCuerpoAcademico-impl" value="C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\nbproject\build-impl.xml" />
+>>>>>>> KarinaChanges
     <property name="user.timezone" value="" />
     <property name="nb.junit.single" value="false" />
     <property name="netbeans.dirs" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/nb:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/ergonomics:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/ide:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/extide:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/java:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/apisupport:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/webcommon:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/websvccommon:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/enterprise:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/mobility:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/profiler:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/python:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/php:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/identity:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/harness:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/cnd:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/cndext:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/dlight:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/groovy:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/extra:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/javacard:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/javafx:" />
@@ -308,9 +386,13 @@
     <property name="excludes" value="" />
     <property name="libs.jpa2-persistence.javadoc" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/java/modules/ext/docs/javax.persistence-2.1.0-doc.zip" />
     <property name="apple.laf.useScreenMenuBar" value="true" />
+<<<<<<< HEAD
     <property name="java.class.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/jre/lib/javaws.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/jre/lib/deploy.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home/jre/lib/plugin.jar:/Users/Mariana/Downloads/mysql-connector-java-8.0.23 (1).jar:/Users/Mariana/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/build/classes:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/modules/ext/junit-4.12.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/platform/modules/ext/hamcrest-core-1.3.jar:/Users/Mariana/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/build/test/classes:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/extide/ant/lib/ant-launcher.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/extide/ant/lib/ant.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/extide/ant/lib/ant-junit.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/extide/ant/lib/ant-junit4.jar" />
     <property name="addExports:java.desktop/java.awt.peer" value="ALL-UNNAMED" />
     <property name="addExports:java.desktop/com.sun.beans.editors" value="ALL-UNNAMED" />
+=======
+    <property name="java.class.path" value="C:\Program Files\Java\jdk1.8.0_241\jre\lib\javaws.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\deploy.jar;C:\Program Files\Java\jdk1.8.0_241\jre\lib\plugin.jar;C:\Program Files (x86)\MySQL\Connector J 8.0\mysql-connector-java-8.0.23.jar;C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\classes;C:\Program Files\NetBeans 8.2\platform\modules\ext\junit-4.12.jar;C:\Program Files\NetBeans 8.2\platform\modules\ext\hamcrest-core-1.3.jar;C:\Users\jack-\Documents\GitHub\Project-SGP-CA\NetBeansProjects\SistemaCuerpoAcademico\build\test\classes;C:\Program Files\NetBeans 8.2\extide\ant\lib\ant-launcher.jar;C:\Program Files\NetBeans 8.2\extide\ant\lib\ant.jar;C:\Program Files\NetBeans 8.2\extide\ant\lib\ant-junit.jar;C:\Program Files\NetBeans 8.2\extide\ant\lib\ant-junit4.jar" />
+>>>>>>> KarinaChanges
     <property name="libs.absolutelayout.src" value="" />
     <property name="libs.jpa20-persistence.classpath" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/java/modules/ext/eclipselink/javax.persistence_2.1.0.v201304241213.jar" />
     <property name="os.version" value="10.16" />
@@ -321,8 +403,13 @@
     <property name="libs.hibernate4-persistence.src" value="" />
     <property name="libs.hibernate4-support.maven-pom" value="" />
     <property name="javafx.deploy.allowoffline" value="true" />
+<<<<<<< HEAD
     <property name="libs.JAXB-ENDORSED.classpath" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/ide/modules/ext/jaxb/api/jaxb-api.jar" />
     <property name="nb.internal.action.name" value="test.single" />
+=======
+    <property name="libs.JAXB-ENDORSED.classpath" value="C:\Program Files\NetBeans 8.2\ide\modules\ext\jaxb\api\jaxb-api.jar" />
+    <property name="nb.internal.action.name" value="run.single" />
+>>>>>>> KarinaChanges
     <property name="run.test.modulepath" value="" />
     <property name="libs.eclipselink.classpath" value="/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/java/modules/ext/eclipselink/eclipselink.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/java/modules/ext/eclipselink/javax.persistence_2.1.0.v201304241213.jar:/Applications/NetBeans/NetBeans 8.2.app/Contents/Resources/NetBeans/java/modules/ext/eclipselink/org.eclipse.persistence.jpa.jpql_2.5.2.v20140319-9ad6abd.jar" />
     <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment" />
@@ -351,7 +438,11 @@
     <property name="platform.active" value="default_platform" />
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit" />
   </properties>
+<<<<<<< HEAD
   <testcase classname="dataaccess.ConnectorTest" name="testDataBaseConnection" time="1.943" />
+=======
+  <testcase classname="dataaccess.ConnectorTest" name="testDataBaseConnection" time="1.13" />
+>>>>>>> KarinaChanges
   <system-out><![CDATA[Conexion exitosa
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>

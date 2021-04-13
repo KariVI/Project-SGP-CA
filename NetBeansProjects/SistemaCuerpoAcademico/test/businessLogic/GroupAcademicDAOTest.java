@@ -46,6 +46,4 @@ public class GroupAcademicDAOTest {
         assertTrue( groupAcademicExpected.equals(groupAcademic));
     }
 
- 
-
 }

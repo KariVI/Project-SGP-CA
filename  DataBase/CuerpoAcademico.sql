@@ -159,6 +159,9 @@ primary key(cedula,idReunion), foreign key(idReunion)
 references Reunion(idReunion), foreign key(cedula) 
 references Miembro(cedula));
 
+use cuerpoacademico;
+select * from reunion;
+select * from prerequisito;
 /*create user 'integrante'@'localhost' identified by 'password';
 Grant SELECT, UPDATE, DELETE, INSERT on cuerpoAcademico.* TO 'integrante'@'localhost'; /
 

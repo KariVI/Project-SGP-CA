@@ -1,11 +1,15 @@
 
 package businessLogic;
 
+import domain.Member;
 import domain.Prerequisite;
 
 public interface IPrerequisiteDAO {
-        public void savePrerequisites(Prerequisite prerequisite, int idReunion);
-        public String getPrerequisiteDescription(int id);
+        public boolean savePrerequisites(Prerequisite prerequisite, int idMeeting);
+        public String getPrerequisiteDescription(int id, int idMeeting);
+        public int getId(Prerequisite prerequisite, int idMeeting);
+        public boolean updatePrerequisite(int id, Prerequisite prerequisite);
+
 
 
     

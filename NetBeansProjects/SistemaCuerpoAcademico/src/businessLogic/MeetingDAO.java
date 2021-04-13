@@ -14,18 +14,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MeetingDAO implements IMeetingDAO{
-    private Meeting newMeeting;
 
-
-    public void setMeeting( Meeting meeting){  
-        newMeeting=meeting;
-    }
-    
-    public Meeting getMeeting(){
-        return newMeeting;
-    }
-    
-    public void save(Meeting meeting) {      
+    public boolean save(Meeting meeting) {    
+        boolean saveSuccess=false;
             try {
                 Connector connectorDataBase=new Connector();
                 Connection connectionDataBase = connectorDataBase.getConnection();
@@ -39,12 +30,14 @@ public class MeetingDAO implements IMeetingDAO{
                 preparedStatement.setString(4, "Registrada");
                 
                 preparedStatement.executeUpdate();
+                saveSuccess=true;
                 connectorDataBase.disconnect();
             } catch (SQLException sqlException) {
                 throw new IllegalStateException("DataBase connection failed ", sqlException);
             } catch (ClassNotFoundException ex) {
             Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return saveSuccess;
         
     } 
 
@@ -148,11 +141,65 @@ public class MeetingDAO implements IMeetingDAO{
                     return meetingList;
         }
 
-    @Override
-    public void addAssistant(Member member) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     public boolean addAssistant(int idMeeting, String enrollment, String role) {
+         boolean addAssistantSuccess=false;
+         try {
+                Connector connectorDataBase=new Connector();
+                Connection connectionDataBase = connectorDataBase.getConnection();
+                String insertMeeting = "INSERT INTO ParticipaReunion(idReunion,cedula, rol) VALUES (?,?,?)";
+            
+                PreparedStatement preparedStatement = connectionDataBase.prepareStatement(insertMeeting);
+                
+                preparedStatement.setInt(1, idMeeting);
+                preparedStatement.setString(2, enrollment);
+                preparedStatement.setString(3, role);
+                addAssistantSuccess=true;
+                
+                preparedStatement.executeUpdate();
+                connectorDataBase.disconnect();
+            } catch (SQLException sqlException) {
+                throw new IllegalStateException("DataBase connection failed ", sqlException);
+            } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return addAssistantSuccess;
+    }
+   
+     
+     
+   public Member getAssistant(int idMeeting, String profesionalLicense){
+        Member assistant=null;
+      try{
+        Connector connectorDataBase = new Connector();
+        Connection connectionDataBase = connectorDataBase.getConnection();
+        String queryNameAssistant="SELECT Miembro.nombre, Miembro.cedula FROM ParticipaReunion, Miembro where ParticipaReunion.cedula=Miembro.cedula and idReunion=? and ParticipaReunion.cedula=?; ";
+        try{
+            PreparedStatement preparedStatement;
+            preparedStatement = connectionDataBase.prepareStatement(queryNameAssistant);
+            preparedStatement.setInt(1, idMeeting);
+            preparedStatement.setString(2, profesionalLicense);
+            ResultSet resultSet;
+
+            resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()){
+                String name = resultSet.getString(1);
+                String professionalLicense=resultSet.getString(2);
+                assistant=new Member(professionalLicense, name);
+            }
+
+            connectorDataBase.disconnect();
+
+        }catch(SQLException sqlException) {
+            throw new IllegalStateException("Parameter index ", sqlException);
+        }
+        }catch(ClassNotFoundException ex) {
+                        Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return assistant;
     }
     
+
 }
 
 

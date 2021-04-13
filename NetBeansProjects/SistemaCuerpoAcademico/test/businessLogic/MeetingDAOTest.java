@@ -2,6 +2,7 @@
 package businessLogic;
 
 import domain.Meeting;
+import domain.Member;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -52,12 +53,8 @@ public class MeetingDAOTest {
     public void testSave(){
         MeetingDAO meetingDAO= new MeetingDAO();
         Meeting meetingAuxiliar;
-        meetingAuxiliar = new Meeting("Planeación del próximo seminario" ,"05/06/2021","14:30");
-        meetingDAO.save(meetingAuxiliar);
-        System.out.println("Insercion exitosa");
-        int id=meetingDAO.searchId(meetingAuxiliar);
-        
-        assertTrue(meetingDAO.findMeetingById(id));
+        meetingAuxiliar = new Meeting("Planeación del próximo seminario" ,"05/06/2021","14:30");   
+        assertTrue( meetingDAO.save(meetingAuxiliar));
     }
    
     @Test
@@ -80,6 +77,35 @@ public class MeetingDAOTest {
         
         assertFalse(meetingExpected. equals(meetingResult ));
         
+    }
+        
+    @Test    
+    public void testgetAssistant(){ 
+      MeetingDAO meetingDAO= new MeetingDAO();
+      Member memberExpected= new Member("8325134","Juan Carlos Perez Arriaga");
+      Member memberResult= meetingDAO.getAssistant(1, "8325134");
+      
+      assertTrue(memberExpected.equals(memberResult));
+    }
+    
+    @Test
+    public void testgetAssistantFailed(){ 
+      MeetingDAO meetingDAO= new MeetingDAO();
+      Member memberExpected= new Member("7938268","Maria Karen Cortes Verdin");
+      Member memberResult= meetingDAO.getAssistant(1,"7938268");
+      
+      assertFalse(memberExpected.equals(memberResult));
+    }
+        
+    @Test
+    public void testAddAssistant(){
+        MeetingDAO meetingDAO= new MeetingDAO();
+        String enrollment= "7938268";
+        int idMeeting=1;
+        String role="Lider";
+        assertTrue(meetingDAO.addAssistant(idMeeting, enrollment, role));
+        
+    
     }
     
 }
