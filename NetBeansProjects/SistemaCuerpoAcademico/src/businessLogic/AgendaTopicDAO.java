@@ -2,7 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+
 package businessLogic;
 
 import dataaccess.Connector;
@@ -15,14 +15,12 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Mariana
- */
+
 public class AgendaTopicDAO implements IAgendaTopic {
 
     @Override
-    public void save(AgendaTopic agendaTopic, int idMeeting) {
+    public boolean save(AgendaTopic agendaTopic, int idMeeting) {
+                    boolean saveSuccess = false;
                     try{
                         Connector connectorDataBase = new Connector();
                         Connection connectionDataBase = connectorDataBase.getConnection();
@@ -39,12 +37,14 @@ public class AgendaTopicDAO implements IAgendaTopic {
                             insertAgendaTopicStatment.executeUpdate();
                             
                             connectorDataBase.disconnect();
+                            saveSuccess = true;
                         }catch(SQLException sqlException) {
                             throw new IllegalStateException("Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
                         Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
-                    }                  
+                    }    
+                    return saveSuccess;
     }
 
     @Override
@@ -84,3 +84,4 @@ public class AgendaTopicDAO implements IAgendaTopic {
     }
     
 }
+ */

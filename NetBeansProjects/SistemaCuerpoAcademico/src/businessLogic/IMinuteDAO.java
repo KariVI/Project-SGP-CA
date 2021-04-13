@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @author Mariana
  */
 public interface IMinuteDAO {
-    public void saveMinute(Minute minute, int idMeeting);
+    public boolean saveMinute(Minute minute, int idMeeting);
     public void approveMinute(int idMinute, String professionalLicense);
     public void disapproveMinute(int idMinute, String professionalLicense, String comments);
     public ArrayList<Minute>  getMinutes();

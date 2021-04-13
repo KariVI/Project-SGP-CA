@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import log.Log;
 
 /**
  *
@@ -23,7 +24,8 @@ import java.util.logging.Logger;
 public class MinuteDAO implements IMinuteDAO {
 
     @Override
-    public void saveMinute(Minute minute, int idMeeting) {
+    public boolean saveMinute(Minute minute, int idMeeting) {
+                    boolean saveSuccess = false;
                     try{
                         Connector connectorDataBase = new Connector();
                         Connection connectionDataBase = connectorDataBase.getConnection();
@@ -38,12 +40,16 @@ public class MinuteDAO implements IMinuteDAO {
                             insertMinuteStatment.executeUpdate();
                             
                             connectorDataBase.disconnect();
+                             saveSuccess = true;
                         }catch(SQLException sqlException) {
-                            throw new IllegalStateException("Parameter index ", sqlException);
+                            Log.logException(sqlException);
+                           
+                            //throw new IllegalStateException("Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
                         Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    return saveSuccess;
     }
 
     @Override
@@ -153,7 +159,8 @@ public class MinuteDAO implements IMinuteDAO {
                             connectorDataBase.disconnect();
                            
                         }catch(SQLException sqlException) {
-                            throw new IllegalStateException("Parameter index ", sqlException);
+                            Log.logException(sqlException);
+                           // throw new IllegalStateException("Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
                         Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);

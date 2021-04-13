@@ -9,7 +9,7 @@ import java.sql.SQLException;
  * @author Mariana
  */
 public interface IProjectDAO {
-      public void save(Project project);
+      public boolean save(Project project);
       public ArrayList<Project>  getProjects();
       public int searchId(Project project);
       public boolean findProjectById(int idProject);

@@ -49,13 +49,7 @@ public class MinuteDAOTest {
         Minute minute = new Minute("Los acuerdos registrados son pendiente","Estado","Falta gastrocafe");
         int idMeeting = 1;
         MinuteDAO minuteDAO = new MinuteDAO();
-        try{
-            minuteDAO.saveMinute(minute, idMeeting);
-        }
-        catch (IllegalStateException ex) {
-            Logger.getLogger(ProjectDaoTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
+        assertTrue(minuteDAO.saveMinute(minute, idMeeting)); 
     }
 
     @Test
@@ -69,8 +63,7 @@ public class MinuteDAOTest {
         }
         catch (IllegalStateException ex) {
             Logger.getLogger(ProjectDaoTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }     
     }
 
 
@@ -87,7 +80,6 @@ public class MinuteDAOTest {
         catch (IllegalStateException ex) {
             Logger.getLogger(ProjectDaoTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
     
     @Test

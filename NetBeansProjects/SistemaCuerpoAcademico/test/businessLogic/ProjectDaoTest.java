@@ -1,18 +1,12 @@
 package businessLogic;
 
 import domain.Project;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import org.junit.Test;
-import static org.junit.runners.model.MultipleFailureException.assertEmpty;
 
 /**
  *
@@ -64,11 +58,7 @@ public class ProjectDaoTest {
         ProjectDAO projectDAO= new ProjectDAO();
         Project projectAuxiliar;
         projectAuxiliar = new Project("Inteligencia artificial" ,"Descripcion","04/05/2021","05/11/2021");
-        try {
-            projectDAO.save(projectAuxiliar);
-        } catch (IllegalStateException ex) {
-            Logger.getLogger(ProjectDaoTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        assertTrue(projectDAO.save(projectAuxiliar));
     }
     
     @Test
