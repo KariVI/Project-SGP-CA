@@ -38,15 +38,4 @@ public class Prerequisite {
     public boolean equals(Object object){
         return false;
     }
-
-    public Member getMandated() {
-        return this.mandated;
-    }
-    
-    public void setMandated(Member mandated){
-        this.mandated=mandated;
-        
-    }
-    
-
 }

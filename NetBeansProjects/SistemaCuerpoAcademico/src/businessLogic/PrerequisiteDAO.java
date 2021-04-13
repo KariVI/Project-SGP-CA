@@ -12,10 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PrerequisiteDAO implements IPrerequisiteDAO{
-<<<<<<< HEAD
-    @Override
-    public void savePrerequisites(Prerequisite prerequisite, int idReunion) {
-=======
+
+
 
     public int searchId(Prerequisite prerequisite, int idMeeting) {
         Integer idAuxiliar=0;
@@ -47,7 +45,6 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
     public boolean savePrerequisites(Prerequisite prerequisite, int idMeeting) {
         String professionalLicense= prerequisite.getMandated().getProfessionalLicense();
         boolean saveSuccess=false;
->>>>>>> KarinaChanges
         try {
                 Connector connectorDataBase=new Connector();
                 Connection connectionDataBase = connectorDataBase.getConnection();
@@ -69,9 +66,6 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
         }
         return saveSuccess;
     }
-
-
-
 
     public String getPrerequisiteDescription(int id, int idMeeting) {
         String description=" ";
