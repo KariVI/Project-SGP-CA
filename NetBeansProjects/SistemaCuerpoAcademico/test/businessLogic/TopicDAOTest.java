@@ -3,8 +3,6 @@ package businessLogic;
 
 import domain.Topic;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
