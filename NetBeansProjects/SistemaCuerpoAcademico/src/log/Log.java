@@ -11,15 +11,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-/**
-*
-* @author David
-*/
+
 public class Log {
 
-    // Preparamos el log para cada paquete del proyecto, esto con el fin de capturar cada log
-// que se genere e irlo pasando al nivel superior hasta que encuentren un handler que los
-    // maneje
+
     private static Logger LOG_LOGIC ;
     private static Logger LOGGER ;
     public static void setLogic(){
@@ -46,19 +41,13 @@ public class Log {
         } catch (SecurityException ex) {
             LOGGER.log(Level.SEVERE, "Error de Seguridad");
         }
-}
+    }
 
-/**
-* Esta funcion nos permite convertir el stackTrace en un String, necesario para poder imprimirlos al log debido a
-* cambios en como Java los maneja internamente
-* @param e Excepcion de la que queremos el StackTrace
-* @return StackTrace de la excepcion en forma de String
-*/
-public static String getStackTrace(Exception e) {
+    public static String getStackTrace(Exception e) {
     StringWriter sWriter = new StringWriter();
     PrintWriter pWriter = new PrintWriter(sWriter);
     e.printStackTrace(pWriter);
     return sWriter.toString();
-}
+    }
 }
 

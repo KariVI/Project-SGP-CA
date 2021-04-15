@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package businessLogic;
 
 import dataaccess.Connector;
@@ -13,9 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import log.Log;
+import log.BusinessException;
 
 /**
  *
@@ -24,7 +18,7 @@ import log.Log;
 public class MinuteDAO implements IMinuteDAO {
 
     @Override
-    public boolean saveMinute(Minute minute, int idMeeting) {
+    public boolean saveMinute(Minute minute, int idMeeting)throws BusinessException {
                     boolean saveSuccess = false;
                     try{
                         Connector connectorDataBase = new Connector();
@@ -42,18 +36,16 @@ public class MinuteDAO implements IMinuteDAO {
                             connectorDataBase.disconnect();
                              saveSuccess = true;
                         }catch(SQLException sqlException) {
-                            Log.logException(sqlException);
-                           
-                            //throw new IllegalStateException("Parameter index ", sqlException);
+                            throw new BusinessException("Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
-                        Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+                        Log.logException(ex);
                     }
                     return saveSuccess;
     }
 
     @Override
-    public void approveMinute(int idMinute, String professionalLicense) {
+    public void approveMinute(int idMinute, String professionalLicense)throws BusinessException{
                     try{
                         Connector connectorDataBase = new Connector();
                         Connection connectionDataBase = connectorDataBase.getConnection();
@@ -68,15 +60,15 @@ public class MinuteDAO implements IMinuteDAO {
                             
                             connectorDataBase.disconnect();
                         }catch(SQLException sqlException) {
-                            throw new IllegalStateException("Parameter index ", sqlException);
+                            throw new BusinessException("Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
-                        Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+                        Log.logException(ex);
                     }
     }
 
     @Override
-    public void disapproveMinute(int idMinute, String professionalLicense, String comments) {
+    public void disapproveMinute(int idMinute, String professionalLicense, String comments)throws BusinessException {
                     try{
                         Connector connectorDataBase = new Connector();
                         Connection connectionDataBase = connectorDataBase.getConnection();
@@ -93,14 +85,14 @@ public class MinuteDAO implements IMinuteDAO {
                             
                             connectorDataBase.disconnect();
                         }catch(SQLException sqlException) {
-                            throw new IllegalStateException("Parameter index ", sqlException);
+                            throw new BusinessException("Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
-                        Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+                        Log.logException(ex);
                     }
     }
     @Override
-    public ArrayList<Minute>  getMinutes(){
+    public ArrayList<Minute>  getMinutes() throws BusinessException{
                      ArrayList<Minute> minuteList = new ArrayList<>();
                      try{
                         Connector connectorDataBase = new Connector();
@@ -125,16 +117,16 @@ public class MinuteDAO implements IMinuteDAO {
                             connectorDataBase.disconnect();
                            
                         }catch(SQLException sqlException) {
-                            throw new IllegalStateException("Parameter index ", sqlException);
+                            throw new BusinessException("Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
-                        Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+                        Log.logException(ex);
                     }
                     return minuteList;  
     }
     
     @Override
-    public ArrayList<MinuteComment>  getMinutesComments(int idMinute){
+    public ArrayList<MinuteComment>  getMinutesComments(int idMinute) throws BusinessException{
                      ArrayList<MinuteComment> commentList = new ArrayList<>();
                      try{
                         Connector connectorDataBase = new Connector();
@@ -159,12 +151,12 @@ public class MinuteDAO implements IMinuteDAO {
                             connectorDataBase.disconnect();
                            
                         }catch(SQLException sqlException) {
-                            Log.logException(sqlException);
-                           // throw new IllegalStateException("Parameter index ", sqlException);
+                            throw new BusinessException("Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
-                        Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+                        Log.logException(ex);
                     }
+                     
                     return commentList;  
     }
 

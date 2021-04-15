@@ -7,19 +7,29 @@ package businessLogic;
 
 import dataaccess.Connector;
 import domain.Topic;
+import log.BusinessException;
+import log.Log;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+<<<<<<< Updated upstream
 import log.BusinessException;
 import log.Log;
+=======
+
+>>>>>>> Stashed changes
 
 
 public class TopicDAO implements ITopic {
 
     @Override
+<<<<<<< Updated upstream
     public boolean save(Topic agendaTopic, int idMeeting)throw BusinessException {
+=======
+    public boolean save(Topic agendaTopic, int idMeeting)throws BusinessException {
+>>>>>>> Stashed changes
                     boolean saveSuccess = false;
                     try{
                         Connector connectorDataBase = new Connector();
@@ -39,16 +49,27 @@ public class TopicDAO implements ITopic {
                             connectorDataBase.disconnect();
                             saveSuccess = true;
                         }catch(SQLException sqlException) {
+<<<<<<< Updated upstream
                             throw new BusinessException"Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
                         Log.logException(ex);
+=======
+                            throw new BusinessException("Parameter index ", sqlException);
+                        }
+                    }catch(ClassNotFoundException ex) {
+                            Log.logException(ex);
+>>>>>>> Stashed changes
                     }    
                     return saveSuccess;
     }
 
     @Override
+<<<<<<< Updated upstream
     public ArrayList<Topic> getAgendaTopics(int idMeeting)throws BusinessException {
+=======
+    public ArrayList<Topic> getAgendaTopics(int idMeeting) throws BusinessException {
+>>>>>>> Stashed changes
                      ArrayList<Topic> agendaList = new ArrayList<>();
                      try{
                         Connector connectorDataBase = new Connector();
