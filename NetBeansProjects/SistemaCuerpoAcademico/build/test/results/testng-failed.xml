@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Failed suite [SistemaCuerpoAcademico]">
-  <test name="businessLogic.MinuteDAOTest(failed)" junit="true">
+  <test name="businessLogic.MeetingDAOTest(failed)" junit="true">
     <classes>
-      <class name="businessLogic.MinuteDAOTest">
+      <class name="businessLogic.MeetingDAOTest">
         <methods>
-          <include name="testSaveMinute"/>
+          <include name="testSave"/>
         </methods>
-      </class> <!-- businessLogic.MinuteDAOTest -->
+      </class> <!-- businessLogic.MeetingDAOTest -->
     </classes>
-  </test> <!-- businessLogic.MinuteDAOTest(failed) -->
+  </test> <!-- businessLogic.MeetingDAOTest(failed) -->
 </suite> <!-- Failed suite [SistemaCuerpoAcademico] -->

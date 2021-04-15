@@ -3,6 +3,7 @@ package businessLogic;
 
 import domain.Meeting;
 import domain.Member;
+import log.BusinessException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -50,7 +51,7 @@ public class MeetingDAOTest {
     
     
     @Test
-    public void testSave(){
+    public void testSave() throws BusinessException{
         MeetingDAO meetingDAO= new MeetingDAO();
         Meeting meetingAuxiliar;
         meetingAuxiliar = new Meeting("Planeación del próximo seminario" ,"05/06/2021","14:30");   

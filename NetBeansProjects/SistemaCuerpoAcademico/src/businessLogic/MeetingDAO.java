@@ -12,10 +12,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import log.BusinessException;
 
 public class MeetingDAO implements IMeetingDAO{
 
-    public boolean save(Meeting meeting) {    
+    public boolean save(Meeting meeting) throws BusinessException  {    
         boolean saveSuccess=false;
             try {
                 Connector connectorDataBase=new Connector();
@@ -33,7 +34,7 @@ public class MeetingDAO implements IMeetingDAO{
                 saveSuccess=true;
                 connectorDataBase.disconnect();
             } catch (SQLException sqlException) {
-                throw new IllegalStateException("DataBase connection failed ", sqlException);
+                throw new BusinessException("DataBase connection failed ", sqlException);
             } catch (ClassNotFoundException ex) {
             Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
