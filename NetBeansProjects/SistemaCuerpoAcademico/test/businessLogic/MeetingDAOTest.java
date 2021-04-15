@@ -11,7 +11,7 @@ public class MeetingDAOTest {
 
     @Test
     
-    public void testSearchId(){ 
+    public void testSearchId() throws BusinessException{ 
         MeetingDAO meetingDAO= new MeetingDAO();
         Meeting meetingAuxiliar;
         meetingAuxiliar = new Meeting("Revisión de avances en proyectos actuales" ,"04/05/2021","11:30");
@@ -22,7 +22,7 @@ public class MeetingDAOTest {
     }
     
     @Test
-    public void testSearchIdNotFound(){ 
+    public void testSearchIdNotFound() throws BusinessException{ 
         MeetingDAO meetingDAO= new MeetingDAO();
         Meeting meetingAuxiliar;
         meetingAuxiliar = new Meeting("Lanzamiento FEIBook" ,"11/11/2020","12:30");
@@ -32,7 +32,7 @@ public class MeetingDAOTest {
     }
     
     @Test
-    public void testFindMeetingById(){  
+    public void testFindMeetingById() throws BusinessException{  
         MeetingDAO meetingDAO= new MeetingDAO();
         Meeting meetingAuxiliar;
         meetingAuxiliar = new Meeting("Revisión de avances en proyectos actuales" ,"04/05/2021","11:30");
@@ -41,7 +41,7 @@ public class MeetingDAOTest {
     }
     
     @Test
-    public void testFindMeetingByIdNotFound(){  
+    public void testFindMeetingByIdNotFound() throws BusinessException{  
         MeetingDAO meetingDAO= new MeetingDAO();
         Meeting meetingAuxiliar;
         meetingAuxiliar = new Meeting("Lanzamiento FEIBook" ,"11/11/2020","12:30");
@@ -59,7 +59,7 @@ public class MeetingDAOTest {
     }
    
     @Test
-    public void testGetMeetingById(){
+    public void testGetMeetingById() throws BusinessException{
         MeetingDAO meetingDAO= new MeetingDAO();
         Meeting meetingExpected;
         meetingExpected = new Meeting(1, "Revisión de avances en proyectos actuales" ,"04/05/2021","11:30", "Registrada");
@@ -70,7 +70,7 @@ public class MeetingDAOTest {
     }
     
     @Test
-        public void testGetMeetingByIdNotFound(){
+        public void testGetMeetingByIdNotFound() throws BusinessException{
         MeetingDAO meetingDAO= new MeetingDAO();
         Meeting meetingExpected;
         meetingExpected = new Meeting(1, "Revisión de avances en proyectos actuales" ,"04/05/2021","11:30", "Registrada");
@@ -81,7 +81,7 @@ public class MeetingDAOTest {
     }
         
     @Test    
-    public void testgetAssistant(){ 
+    public void testgetAssistant() throws BusinessException{ 
       MeetingDAO meetingDAO= new MeetingDAO();
       Member memberExpected= new Member("8325134","Juan Carlos Perez Arriaga");
       Member memberResult= meetingDAO.getAssistant(1, "8325134");
@@ -90,7 +90,7 @@ public class MeetingDAOTest {
     }
     
     @Test
-    public void testgetAssistantFailed(){ 
+    public void testgetAssistantFailed() throws BusinessException{ 
       MeetingDAO meetingDAO= new MeetingDAO();
       Member memberExpected= new Member("7938268","Maria Karen Cortes Verdin");
       Member memberResult= meetingDAO.getAssistant(1,"7938268");
@@ -99,7 +99,7 @@ public class MeetingDAOTest {
     }
         
     @Test
-    public void testAddAssistant(){
+    public void testAddAssistant() throws BusinessException{
         MeetingDAO meetingDAO= new MeetingDAO();
         String enrollment= "7938268";
         int idMeeting=1;

@@ -32,7 +32,7 @@ public class Log {
     public static void logException(Exception exception) {
         setLogic();
         try {
-            Handler fileHandler = new FileHandler("./bitacora.log", false);
+            Handler fileHandler = new FileHandler("./bitacora.log", true);
             
             SimpleFormatter simpleFormatter = new SimpleFormatter();
             fileHandler.setFormatter(simpleFormatter);

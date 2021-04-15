@@ -72,7 +72,7 @@ public class GroupAcademic {
      return lgacs;
     }
     
-        public boolean equals(Object object){
+    public boolean equals(Object object){
         boolean value=false;
             if (object instanceof GroupAcademic) {
             GroupAcademic groupCompare = (GroupAcademic) object;

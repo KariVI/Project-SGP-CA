@@ -2,8 +2,9 @@
 package businessLogic;
 
 import domain.GroupAcademic;
+import log.BusinessException;
 
 public interface IGroupAcademicDAO {
-    public void save(GroupAcademic groupAcademic);
-    public GroupAcademic getGroupAcademicById(String key);
+    public boolean save(GroupAcademic groupAcademic) throws BusinessException;
+    public GroupAcademic getGroupAcademicById(String key)throws BusinessException;
 }

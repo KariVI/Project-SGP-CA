@@ -10,9 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import log.BusinessException;
+import log.Log;
 
 public class MeetingDAO implements IMeetingDAO{
 
@@ -36,13 +35,13 @@ public class MeetingDAO implements IMeetingDAO{
             } catch (SQLException sqlException) {
                 throw new BusinessException("DataBase connection failed ", sqlException);
             } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                Log.logException(ex);
+            }
         return saveSuccess;
         
     } 
 
-    public int searchId(Meeting meeting) {
+    public int searchId(Meeting meeting) throws BusinessException {
         Integer idAuxiliar=0;
         try{
             Connector connectorDataBase=new Connector();
@@ -61,9 +60,9 @@ public class MeetingDAO implements IMeetingDAO{
             }
                 connectorDataBase.disconnect();
         }catch(SQLException sqlException) {
-            throw new IllegalStateException("DataBase connection failed ", sqlException);
+            throw new BusinessException("DataBase connection failed ", sqlException);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
         return idAuxiliar;
     }
@@ -76,7 +75,7 @@ public class MeetingDAO implements IMeetingDAO{
        return value;
     }
 
-    public Meeting getMeetingById(int idMeeting) {
+    public Meeting getMeetingById(int idMeeting) throws BusinessException  {
         Meeting meetingAuxiliar = null;
         try{
             Connector connectorDataBase=new Connector();
@@ -99,9 +98,9 @@ public class MeetingDAO implements IMeetingDAO{
             }
                 connectorDataBase.disconnect();
         }catch(SQLException sqlException) {
-            throw new IllegalStateException("DataBase connection failed ", sqlException);
+            throw new BusinessException("DataBase connection failed ", sqlException);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
         return meetingAuxiliar;
         
@@ -137,12 +136,12 @@ public class MeetingDAO implements IMeetingDAO{
                             throw new IllegalStateException("Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
-                        Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
+                        Log.logException(ex);
                     }
                     return meetingList;
         }
 
-     public boolean addAssistant(int idMeeting, String enrollment, String role) {
+     public boolean addAssistant(int idMeeting, String enrollment, String role) throws BusinessException  {
          boolean addAssistantSuccess=false;
          try {
                 Connector connectorDataBase=new Connector();
@@ -159,16 +158,16 @@ public class MeetingDAO implements IMeetingDAO{
                 preparedStatement.executeUpdate();
                 connectorDataBase.disconnect();
             } catch (SQLException sqlException) {
-                throw new IllegalStateException("DataBase connection failed ", sqlException);
+                throw new BusinessException("DataBase connection failed ", sqlException);
             } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                Log.logException(ex);
+            }
         return addAssistantSuccess;
     }
    
      
      
-   public Member getAssistant(int idMeeting, String profesionalLicense){
+   public Member getAssistant(int idMeeting, String profesionalLicense)throws BusinessException  {
         Member assistant=null;
       try{
         Connector connectorDataBase = new Connector();
@@ -192,10 +191,10 @@ public class MeetingDAO implements IMeetingDAO{
             connectorDataBase.disconnect();
 
         }catch(SQLException sqlException) {
-            throw new IllegalStateException("Parameter index ", sqlException);
+           throw new BusinessException("DataBase connection failed ", sqlException);
         }
         }catch(ClassNotFoundException ex) {
-                        Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
+           Log.logException(ex);
         }
         return assistant;
     }

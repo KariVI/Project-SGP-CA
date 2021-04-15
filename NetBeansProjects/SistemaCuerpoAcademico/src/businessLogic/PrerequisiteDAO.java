@@ -2,20 +2,19 @@
 package businessLogic;
 
 import dataaccess.Connector;
-import domain.Member;
 import domain.Prerequisite;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import log.BusinessException;
+import log.Log;
 
 public class PrerequisiteDAO implements IPrerequisiteDAO{
 
 
 
-    public int searchId(Prerequisite prerequisite, int idMeeting) {
+    public int searchId(Prerequisite prerequisite, int idMeeting) throws BusinessException {
         Integer idAuxiliar=0;
         try{
             Connector connectorDataBase=new Connector();
@@ -33,16 +32,15 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
             }
                 connectorDataBase.disconnect();
         }catch(SQLException sqlException) {
-            throw new IllegalStateException("DataBase connection failed ", sqlException);
+            throw new BusinessException("DataBase connection failed ", sqlException);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
         return idAuxiliar;
     }
     
 
-    
-    public boolean savePrerequisites(Prerequisite prerequisite, int idMeeting) {
+    public boolean savePrerequisites(Prerequisite prerequisite, int idMeeting) throws BusinessException {
         String professionalLicense= prerequisite.getMandated().getProfessionalLicense();
         boolean saveSuccess=false;
         try {
@@ -60,14 +58,14 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
                 connectorDataBase.disconnect();
                 saveSuccess=true;
             } catch (SQLException sqlException) {
-                throw new IllegalStateException("DataBase connection failed ", sqlException);
+                throw new BusinessException("DataBase connection failed ", sqlException);
             } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+               Log.logException(ex);
+            }
         return saveSuccess;
     }
 
-    public String getPrerequisiteDescription(int id, int idMeeting) {
+    public String getPrerequisiteDescription(int id, int idMeeting) throws BusinessException {
         String description=" ";
         try{
             Connector connectorDataBase=new Connector();
@@ -86,15 +84,15 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
             }
                 connectorDataBase.disconnect();
         }catch(SQLException sqlException) {
-            throw new IllegalStateException("DataBase connection failed ", sqlException);
+            throw new BusinessException("DataBase connection failed ", sqlException);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
         return description;
     }
 
  
-     public boolean updatePrerequisite(int id, Prerequisite prerequisite){
+     public boolean updatePrerequisite(int id, Prerequisite prerequisite) throws BusinessException{
          boolean updateSuccess=false;
          String professionalLicense= prerequisite.getMandated().getProfessionalLicense();
        
@@ -112,15 +110,15 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
             updateSuccess=true;
             connectorDataBase.disconnect();
         }catch(SQLException sqlException) {
-            throw new IllegalStateException("DataBase connection failed ", sqlException);
+            throw new BusinessException("DataBase connection failed ", sqlException);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
         return updateSuccess;
      }
  
 
-    public int getId(Prerequisite prerequisite, int idMeeting) {
+    public int getId(Prerequisite prerequisite, int idMeeting) throws BusinessException {
         Integer idAuxiliar=0;
         try{
             Connector connectorDataBase=new Connector();
@@ -139,9 +137,9 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
             }
                 connectorDataBase.disconnect();
         }catch(SQLException sqlException) {
-            throw new IllegalStateException("DataBase connection failed ", sqlException);
+            throw new BusinessException("DataBase connection failed ", sqlException);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
         return idAuxiliar;
    

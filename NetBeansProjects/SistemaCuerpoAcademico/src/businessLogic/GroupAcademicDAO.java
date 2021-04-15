@@ -9,10 +9,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import log.BusinessException;
+import log.Log;
 
 public class GroupAcademicDAO implements IGroupAcademicDAO {
 
-    public void save(GroupAcademic groupAcademic) {
+    public boolean save(GroupAcademic groupAcademic) throws BusinessException {
+        boolean value=false;
             try {
                 Connector connectorDataBase=new Connector();
                 Connection connectionDataBase = connectorDataBase.getConnection();
@@ -29,15 +32,17 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
                 
                 
                 preparedStatement.executeUpdate();
+                value=true;
                 connectorDataBase.disconnect();
             } catch (SQLException sqlException) {
-                throw new IllegalStateException("DataBase connection failed ", sqlException);
+                throw new BusinessException("DataBase connection failed ", sqlException);
             } catch (ClassNotFoundException ex) {
-               Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
+               Log.logException(ex);
             }
+        return value;
     }
  
-    public GroupAcademic getGroupAcademicById(String key ) {
+    public GroupAcademic getGroupAcademicById(String key ) throws BusinessException{
         GroupAcademic groupAcademicAuxiliar = null;
         try{
             Connector connectorDataBase=new Connector();
@@ -60,9 +65,9 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
             }
                 connectorDataBase.disconnect();
         }catch(SQLException sqlException) {
-            throw new IllegalStateException("DataBase connection failed ", sqlException);
+            throw new BusinessException("DataBase connection failed ", sqlException);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
         return groupAcademicAuxiliar;
         

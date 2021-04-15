@@ -7,6 +7,7 @@ package businessLogic;
 
 import domain.Member;
 import domain.Prerequisite;
+import log.BusinessException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -19,7 +20,7 @@ public class PrerequisiteDAOTest {
 
     
      @Test
-    public void testGetPrerequisiteDescription() {
+    public void testGetPrerequisiteDescription() throws BusinessException {
         System.out.println("getPrerequisiteDescription");
         int id = 2;
         PrerequisiteDAO instance = new PrerequisiteDAO();
@@ -30,7 +31,7 @@ public class PrerequisiteDAOTest {
     }
     
     @Test
-    public void testGetPrerequisiteDescriptionFailed() {
+    public void testGetPrerequisiteDescriptionFailed() throws BusinessException {
         System.out.println("getPrerequisiteDescriptionFailed");
         int id = 3;
         PrerequisiteDAO instance = new PrerequisiteDAO();
@@ -41,7 +42,7 @@ public class PrerequisiteDAOTest {
     }
     
     @Test
-    public void testsearchId() {
+    public void testsearchId() throws BusinessException {
         System.out.println("searchId");
         int idExpected = 2;
         PrerequisiteDAO prerequisiteDAO = new PrerequisiteDAO();
@@ -51,7 +52,7 @@ public class PrerequisiteDAOTest {
     }
     
     @Test
-    public void testsearchNotFoundId() {
+    public void testsearchNotFoundId() throws BusinessException {
         System.out.println("searchIdNotFound");
         int idExpected = 1;
         PrerequisiteDAO prerequisiteDAO = new PrerequisiteDAO();
@@ -61,7 +62,7 @@ public class PrerequisiteDAOTest {
     }
     
     @Test
-    public void testSavePrerequisites() {
+    public void testSavePrerequisites() throws BusinessException {
         System.out.println("savePrerequisites");
         Prerequisite prerequisite = new Prerequisite ("Presentacion de anteproyectos");
         Member assistant= new Member("7938268", "Maria Karen Cortes Verdin", "Responsable");
@@ -74,7 +75,7 @@ public class PrerequisiteDAOTest {
     }
 
     @Test
-       public void testUpdatePrerequisites() {
+       public void testUpdatePrerequisites() throws BusinessException {
         System.out.println("updatePrerequisites");
         Prerequisite prerequisite = new Prerequisite ("Aprobar GastroCafe");
         Member assistant= new Member("7938268", "Maria Karen Cortes Verdin", "Responsable");

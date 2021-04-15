@@ -6,7 +6,7 @@ public class LGAC {
    private String description;
   
    
-    LGAC(String name, String description){  
+    public LGAC(String name, String description){  
         this.name=name;
         this.description=description;
     }
@@ -26,4 +26,15 @@ public class LGAC {
     public void setDescription(String description){ 
         this.description=description;
     }
+    
+    public boolean equals(Object object){
+        boolean value=false;
+            if (object instanceof LGAC) {
+            LGAC lgacCompare = (LGAC) object;
+            if( (this.name.equals(lgacCompare.getName()) ) && (this.description.equals(lgacCompare.getDescription())) ) {
+                value=true;
+            }
+        }  
+        return value;
+    } 
 }

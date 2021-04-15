@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="SistemaCuerpoAcademico" duration-ms="2489" started-at="2021-04-15T02:53:42Z" finished-at="2021-04-15T02:53:44Z">
+  <suite name="SistemaCuerpoAcademico" duration-ms="1109" started-at="2021-04-15T04:43:10Z" finished-at="2021-04-15T04:43:11Z">
     <groups>
     </groups>
-    <test name="businessLogic.MeetingDAOTest" duration-ms="2489" started-at="2021-04-15T02:53:42Z" finished-at="2021-04-15T02:53:44Z">
-      <class name="businessLogic.MeetingDAOTest">
-        <test-method status="PASS" signature="testSave()[pri:0, instance:testSave(businessLogic.MeetingDAOTest)]" name="testSave" duration-ms="2234" started-at="2021-04-14T21:53:42Z" finished-at="2021-04-14T21:53:44Z">
+    <test name="businessLogic.PreliminarProjectDAOTest" duration-ms="1109" started-at="2021-04-15T04:43:10Z" finished-at="2021-04-15T04:43:11Z">
+      <class name="businessLogic.PreliminarProjectDAOTest">
+        <test-method status="PASS" signature="testGetId()[pri:0, instance:testGetId(businessLogic.PreliminarProjectDAOTest)]" name="testGetId" duration-ms="967" started-at="2021-04-14T23:43:10Z" finished-at="2021-04-14T23:43:11Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testSave -->
-      </class> <!-- businessLogic.MeetingDAOTest -->
-    </test> <!-- businessLogic.MeetingDAOTest -->
+        </test-method> <!-- testGetId -->
+      </class> <!-- businessLogic.PreliminarProjectDAOTest -->
+    </test> <!-- businessLogic.PreliminarProjectDAOTest -->
   </suite> <!-- SistemaCuerpoAcademico -->
 </testng-results>
