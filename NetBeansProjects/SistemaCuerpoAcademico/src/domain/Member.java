@@ -10,20 +10,25 @@ public class Member {
     private String degree;
     private String nameDegree;
     private String universityName;
+    private String keyGroupAcademic;
+    private String state;
 
-    public Member(String professionalLicense, String name, String role ) {
+    public Member(String professionalLicense, String name, String role, String keyGroupAcademic) {
         this.professionalLicense = professionalLicense;
         this.name = name;
         this.role = role;
+        this.keyGroupAcademic = keyGroupAcademic;
     }
 
-    public Member(String professionalLicense, String name, String role, String degree, String nameDegree, String universityName) {
+    public Member(String professionalLicense, String name, String role, String degree, String nameDegree, String universityName, String keyGroupAcademic) {
         this.professionalLicense = professionalLicense;
         this.name = name;
         this.role = role;
         this.nameDegree = nameDegree;
         this.degree = degree;
         this.universityName = universityName;
+        this.keyGroupAcademic = keyGroupAcademic;
+
     }
     
     @Override
@@ -100,5 +105,20 @@ public class Member {
     public String getUniversityName(){
         return universityName;
     }
-
+    
+    public void setState(String state){
+        this.state = state;
+    }
+    
+    public String getState(){
+        return state;
+    }
+    
+    public void setKeyGroupAcademic(String keyGroupAcademic){
+        this.keyGroupAcademic = keyGroupAcademic;
+    }
+    
+    public String getKeyGroupAcademic(){
+        return keyGroupAcademic;
+    }
 }

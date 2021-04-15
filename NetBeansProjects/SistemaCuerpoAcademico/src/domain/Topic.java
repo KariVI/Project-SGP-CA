@@ -13,8 +13,9 @@ public class Topic {
     private String topicName;
     private String startTime;
     private String finishTime;
-    private int idAgendaTopic;
+    private int idTopic;
     private String ProfessionalLicense;
+    private int idMeeting;
 
     public Topic(String topicName, String startTime, String finishTime, String ProfessionalLicense){
         this.topicName = topicName;
@@ -23,19 +24,20 @@ public class Topic {
         this.ProfessionalLicense = ProfessionalLicense;
     }
     
-    public Topic(int idAgendaTopic, String topicName, String startTime, String finishTime, String ProfessionalLicense){
-        this.idAgendaTopic = idAgendaTopic;
+    public Topic(int idTopic, String topicName, String startTime, String finishTime, String ProfessionalLicense, int idMeeting){
+        this.idTopic = idTopic;
         this.topicName = topicName;
         this.startTime = startTime;
         this.finishTime = finishTime;
+        this.idMeeting = idMeeting;
     }
     
-    public int getIdAgendaTopic(){
-        return idAgendaTopic;
+    public int getidTopic(){
+        return idTopic;
     }
 
-    public void setIdAgendaTopic(int idAgendaTopic){
-        this.idAgendaTopic = idAgendaTopic;
+    public void setidTopic(int idTopic){
+        this.idTopic = idTopic;
     }
 
     public String getTopicName(){
@@ -68,5 +70,13 @@ public class Topic {
 
     public void setProfessionalLicense(String ProfessionalLicense){
         this.ProfessionalLicense = ProfessionalLicense;
+    }
+    
+    public int getIdMeeting(){
+        return idMeeting;
+    }
+    
+    public void setIdMeeting(int idMeeting){
+        this.idMeeting = idMeeting;
     }
 }

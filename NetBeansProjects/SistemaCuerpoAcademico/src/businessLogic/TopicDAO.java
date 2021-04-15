@@ -12,14 +12,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import log.BusinessException;
+import log.Log;
 
 
 public class TopicDAO implements ITopic {
 
     @Override
-    public boolean save(Topic agendaTopic, int idMeeting) {
+    public boolean save(Topic agendaTopic, int idMeeting)throw BusinessException {
                     boolean saveSuccess = false;
                     try{
                         Connector connectorDataBase = new Connector();
@@ -39,16 +39,16 @@ public class TopicDAO implements ITopic {
                             connectorDataBase.disconnect();
                             saveSuccess = true;
                         }catch(SQLException sqlException) {
-                            throw new IllegalStateException("Parameter index ", sqlException);
+                            throw new BusinessException"Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
-                        Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+                        Log.logException(ex);
                     }    
                     return saveSuccess;
     }
 
     @Override
-    public ArrayList<Topic> getAgendaTopics(int idMeeting) {
+    public ArrayList<Topic> getAgendaTopics(int idMeeting)throws BusinessException {
                      ArrayList<Topic> agendaList = new ArrayList<>();
                      try{
                         Connector connectorDataBase = new Connector();
@@ -68,17 +68,17 @@ public class TopicDAO implements ITopic {
                                 String topicName = agendaResultSet.getString("tema");
                                 String startTime = agendaResultSet.getString("horaInicio");
                                 String finishTime = agendaResultSet.getString("horaFin");
-                                Topic agendaData = new Topic(idTopic, topicName, startTime, finishTime,ProfessionalLicense);
+                                Topic agendaData = new Topic(idTopic, topicName, startTime, finishTime,ProfessionalLicense, idMeeting);
                                 agendaList.add(agendaData);
                             }
                               
                             connectorDataBase.disconnect();
                            
                         }catch(SQLException sqlException) {
-                            throw new IllegalStateException("Parameter index ", sqlException);
+                            throw new BusinessException("Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
-                        Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+                        Log.logException(ex);
                     }
                     return agendaList;  
     }
