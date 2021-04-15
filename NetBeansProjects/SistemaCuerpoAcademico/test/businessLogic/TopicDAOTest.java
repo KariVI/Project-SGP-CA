@@ -5,11 +5,11 @@ import domain.Topic;
 import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;
-
+import log.BusinessException;
 
 public class TopicDAOTest {
     @Test
-    public void testSave() {
+    public void testSave() throws BusinessException{
         System.out.println("save");
         Topic agendaTopic = new Topic("Tema gatrocafe","11:00","12:00","1234");
         int idMeeting = 1;
@@ -18,7 +18,7 @@ public class TopicDAOTest {
     }
     
     @Test
-    public void testGetAgendaTopics() {
+    public void testGetAgendaTopics()throws BusinessException {
         System.out.println("getAgendaTopics");
         int idMeeting = 1;
         TopicDAO agendaTopicDAO = new TopicDAO();

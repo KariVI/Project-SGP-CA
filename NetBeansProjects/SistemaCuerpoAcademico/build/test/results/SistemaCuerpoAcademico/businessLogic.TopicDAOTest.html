@@ -57,9 +57,9 @@ function toggleAllBoxes() {
 <tr>
 <td>Tests passed/Failed/Skipped:</td><td>1/1/0</td>
 </tr><tr>
-<td>Started on:</td><td>Tue Apr 13 00:08:55 CDT 2021</td>
+<td>Started on:</td><td>Wed Apr 14 23:35:53 CDT 2021</td>
 </tr>
-<tr><td>Total time:</td><td>1 seconds (1709 ms)</td>
+<tr><td>Total time:</td><td>3 seconds (3029 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -76,9 +76,9 @@ function toggleAllBoxes() {
 </tr>
 <tr>
 <td title='businessLogic.TopicDAOTest.testSave()'><b>testSave</b><br>Test class: businessLogic.TopicDAOTest</td>
-<td><div><pre>java.lang.IllegalStateException: Parameter index 
-	at businessLogic.TopicDAO.save(TopicDAO.java:42)
-	at businessLogic.TopicDAOTest.testSave(TopicDAOTest.java:19)
+<td><div><pre>log.BusinessException: Parameter index 
+	at businessLogic.TopicDAO.save(TopicDAO.java:43)
+	at businessLogic.TopicDAOTest.testSave(TopicDAOTest.java:17)
 	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
 	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
 	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
@@ -94,20 +94,10 @@ function toggleAllBoxes() {
 	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
 	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
 	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
-Caused by: java.sql.SQLException: Parameter index out of range (5 &gt; number of parameters, which is 4).
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129)
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:89)
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:63)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.checkBounds(ClientPreparedStatement.java:1372)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.getCoreParameterIndex(ClientPreparedStatement.java:1385)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.setString(ClientPreparedStatement.java:1752)
-	at businessLogic.TopicDAO.save(TopicDAO.java:35)
-	... 37 more
-... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace530737374", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace530737374'><pre>java.lang.IllegalStateException: Parameter index 
-	at businessLogic.TopicDAO.save(TopicDAO.java:42)
-	at businessLogic.TopicDAOTest.testSave(TopicDAOTest.java:19)
+... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1337335626", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1337335626'><pre>log.BusinessException: Parameter index 
+	at businessLogic.TopicDAO.save(TopicDAO.java:43)
+	at businessLogic.TopicDAOTest.testSave(TopicDAOTest.java:17)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -144,18 +134,8 @@ Caused by: java.sql.SQLException: Parameter index out of range (5 &gt; number of
 	at org.testng.TestNG.run(TestNG.java:1057)
 	at org.testng.TestNG.privateMain(TestNG.java:1364)
 	at org.testng.TestNG.main(TestNG.java:1333)
-Caused by: java.sql.SQLException: Parameter index out of range (5 &gt; number of parameters, which is 4).
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129)
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:89)
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:63)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.checkBounds(ClientPreparedStatement.java:1372)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.getCoreParameterIndex(ClientPreparedStatement.java:1385)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.setString(ClientPreparedStatement.java:1752)
-	at businessLogic.TopicDAO.save(TopicDAO.java:35)
-	... 37 more
 </pre></div></td>
-<td>1</td>
+<td>2</td>
 <td>testSave(businessLogic.TopicDAOTest)</td></tr>
 </table><p>
 <table width='100%' border='1' class='invocation-passed'>

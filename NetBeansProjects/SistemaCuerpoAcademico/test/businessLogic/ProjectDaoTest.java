@@ -7,7 +7,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
-
+import log.BusinessException;
 /**
  *
  * @author Mariana
@@ -16,7 +16,7 @@ public class ProjectDaoTest {
    
   
     @Test
-    public void testSearchId(){ 
+    public void testSearchId() throws BusinessException{ 
       ProjectDAO projectDAO= new ProjectDAO();
       Project projectAuxiliar;
       projectAuxiliar = new Project("Inteligencia artificial" ,"Descripcion","04/05/2021","05/11/2021");
@@ -26,7 +26,7 @@ public class ProjectDaoTest {
     }
     
     @Test
-    public void testSearchIdNotFound(){ 
+    public void testSearchIdNotFound() throws BusinessException{ 
       ProjectDAO projectDAO= new ProjectDAO();
       Project projectAuxiliar;
       projectAuxiliar = new Project("Inteligencia" ,"Descripcion","04/05/2021","05/11/2021");
@@ -36,7 +36,7 @@ public class ProjectDaoTest {
     }
     
     @Test
-    public void testFindProjectById(){
+    public void testFindProjectById() throws BusinessException{
         ProjectDAO projectDAO= new ProjectDAO();
         Project projectAuxiliar;
         projectAuxiliar = new Project("Inteligencia artificial" ,"Descripcion","04/05/2021","05/11/2021");
@@ -45,7 +45,7 @@ public class ProjectDaoTest {
     }
 
     @Test
-    public void testFindProjectByIdNotFound(){
+    public void testFindProjectByIdNotFound() throws BusinessException{
         ProjectDAO projectDAO= new ProjectDAO();
         Project projectAuxiliar;
         projectAuxiliar = new Project("Inteligencia" ,"Descripcion","04/05/2021","05/11/2021");
@@ -54,7 +54,7 @@ public class ProjectDaoTest {
     }
 
     @Test
-    public void testSave(){
+    public void testSave() throws BusinessException{
         ProjectDAO projectDAO= new ProjectDAO();
         Project projectAuxiliar;
         projectAuxiliar = new Project("Inteligencia artificial" ,"Descripcion","04/05/2021","05/11/2021");
@@ -62,7 +62,7 @@ public class ProjectDaoTest {
     }
     
     @Test
-    public void testGetProjectById(){
+    public void testGetProjectById() throws BusinessException{
         ProjectDAO projectDAO= new ProjectDAO();
         Project projectExpected = new Project(1,"Inteligencia artificial" ,"Descripcion","04/05/2021","05/11/2021");
         Project projectActual = projectDAO.getProjectById(1);
@@ -70,7 +70,7 @@ public class ProjectDaoTest {
     }
     
     @Test
-    public void testGetProjects() {
+    public void testGetProjects() throws BusinessException {
         System.out.println("getProjects");
         ProjectDAO instance = new ProjectDAO();
         ArrayList<Project> result = instance.getProjects();

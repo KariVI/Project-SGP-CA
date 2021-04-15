@@ -141,9 +141,9 @@
                   <a name="testSave">
                   </a> <!-- testSave -->
                   <span class="method-name">testSave</span>
-                  <div class="stack-trace">java.lang.IllegalStateException: Parameter index 
-	at businessLogic.TopicDAO.save(TopicDAO.java:42)
-	at businessLogic.TopicDAOTest.testSave(TopicDAOTest.java:19)
+                  <div class="stack-trace">log.BusinessException: Parameter index 
+	at businessLogic.TopicDAO.save(TopicDAO.java:43)
+	at businessLogic.TopicDAOTest.testSave(TopicDAOTest.java:17)
 	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
 	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
 	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
@@ -159,16 +159,6 @@
 	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
 	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
 	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
-Caused by: java.sql.SQLException: Parameter index out of range (5 &gt; number of parameters, which is 4).
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129)
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:89)
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:63)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.checkBounds(ClientPreparedStatement.java:1372)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.getCoreParameterIndex(ClientPreparedStatement.java:1385)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.setString(ClientPreparedStatement.java:1752)
-	at businessLogic.TopicDAO.save(TopicDAO.java:35)
-	... 37 more
 ... Removed 21 stack frames
 </div> <!-- stack-trace -->
                 </div> <!-- method-content -->
@@ -245,16 +235,16 @@ data.addRows(2);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'testSave')
 data.setCell(0, 2, 'businessLogic.TopicDAOTest')
-data.setCell(0, 3, 1298);
+data.setCell(0, 3, 2205);
 data.setCell(1, 0, 1)
 data.setCell(1, 1, 'testGetAgendaTopics')
 data.setCell(1, 2, 'businessLogic.TopicDAOTest')
-data.setCell(1, 3, 60);
+data.setCell(1, 3, 245);
 window.suiteTableData['SistemaCuerpoAcademico']= { tableData: data, tableDiv: 'times-div-SistemaCuerpoAcademico'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 1 seconds</span>
+              <span class="suite-total-time">Total running time: 2 seconds</span>
               <div id="times-div-SistemaCuerpoAcademico">
               </div> <!-- times-div-SistemaCuerpoAcademico -->
             </div> <!-- times-div -->
@@ -289,7 +279,7 @@ return data;
               </div> <!-- test-method -->
               <div class="test-method">
                 <span class="method-name">testGetAgendaTopics</span>
-                <span class="method-start">1301 ms</span>
+                <span class="method-start">2216 ms</span>
               </div> <!-- test-method -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

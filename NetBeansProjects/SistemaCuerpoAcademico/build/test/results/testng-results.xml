@@ -2,20 +2,20 @@
 <testng-results skipped="0" failed="1" total="2" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="SistemaCuerpoAcademico" duration-ms="1709" started-at="2021-04-13T05:08:55Z" finished-at="2021-04-13T05:08:56Z">
+  <suite name="SistemaCuerpoAcademico" duration-ms="3029" started-at="2021-04-15T04:35:53Z" finished-at="2021-04-15T04:35:56Z">
     <groups>
     </groups>
-    <test name="businessLogic.TopicDAOTest" duration-ms="1709" started-at="2021-04-13T05:08:55Z" finished-at="2021-04-13T05:08:56Z">
+    <test name="businessLogic.TopicDAOTest" duration-ms="3029" started-at="2021-04-15T04:35:53Z" finished-at="2021-04-15T04:35:56Z">
       <class name="businessLogic.TopicDAOTest">
-        <test-method status="FAIL" signature="testSave()[pri:0, instance:testSave(businessLogic.TopicDAOTest)]" name="testSave" duration-ms="1298" started-at="2021-04-13T00:08:55Z" finished-at="2021-04-13T00:08:56Z">
-          <exception class="java.lang.IllegalStateException">
+        <test-method status="FAIL" signature="testSave()[pri:0, instance:testSave(businessLogic.TopicDAOTest)]" name="testSave" duration-ms="2205" started-at="2021-04-14T23:35:54Z" finished-at="2021-04-14T23:35:56Z">
+          <exception class="log.BusinessException">
             <message>
               <![CDATA[Parameter index ]]>
             </message>
             <full-stacktrace>
-              <![CDATA[java.lang.IllegalStateException: Parameter index 
-	at businessLogic.TopicDAO.save(TopicDAO.java:42)
-	at businessLogic.TopicDAOTest.testSave(TopicDAOTest.java:19)
+              <![CDATA[log.BusinessException: Parameter index 
+	at businessLogic.TopicDAO.save(TopicDAO.java:43)
+	at businessLogic.TopicDAOTest.testSave(TopicDAOTest.java:17)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -52,23 +52,13 @@
 	at org.testng.TestNG.run(TestNG.java:1057)
 	at org.testng.TestNG.privateMain(TestNG.java:1364)
 	at org.testng.TestNG.main(TestNG.java:1333)
-Caused by: java.sql.SQLException: Parameter index out of range (5 > number of parameters, which is 4).
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129)
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:89)
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:63)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.checkBounds(ClientPreparedStatement.java:1372)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.getCoreParameterIndex(ClientPreparedStatement.java:1385)
-	at com.mysql.cj.jdbc.ClientPreparedStatement.setString(ClientPreparedStatement.java:1752)
-	at businessLogic.TopicDAO.save(TopicDAO.java:35)
-	... 37 more
 ]]>
             </full-stacktrace>
-          </exception> <!-- java.lang.IllegalStateException -->
+          </exception> <!-- log.BusinessException -->
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testSave -->
-        <test-method status="PASS" signature="testGetAgendaTopics()[pri:0, instance:testGetAgendaTopics(businessLogic.TopicDAOTest)]" name="testGetAgendaTopics" duration-ms="60" started-at="2021-04-13T00:08:56Z" finished-at="2021-04-13T00:08:56Z">
+        <test-method status="PASS" signature="testGetAgendaTopics()[pri:0, instance:testGetAgendaTopics(businessLogic.TopicDAOTest)]" name="testGetAgendaTopics" duration-ms="245" started-at="2021-04-14T23:35:56Z" finished-at="2021-04-14T23:35:56Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testGetAgendaTopics -->
