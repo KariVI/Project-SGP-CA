@@ -15,15 +15,14 @@ public class Connector {
         private String userName = "integrante";
         private String userPassword = "password";
 
-        public void connect() throws ClassNotFoundException  {
+        public void connect() throws ClassNotFoundException {
                 connection = null;
                 try{
                      Class.forName("com.mysql.cj.jdbc.Driver");
-                    this.connection = DriverManager.getConnection(url, userName, userPassword);
+                     this.connection = DriverManager.getConnection(url, userName, userPassword);
                     
                 } catch (SQLException sqlException ) {
                      Log.logException(sqlException);
-                   throw new IllegalStateException("DataBase connection failed ", sqlException);
                 } 
         } 
          
@@ -32,17 +31,15 @@ public class Connector {
                 return connection;
         }
 
-        public void disconnect() throws SQLException {
+        public void disconnect() {
                 if(connection != null) {
+                    try {
                         if(!connection.isClosed()) {
-                                try{
-                                  connection.close();
-                                }catch(SQLException sqlException) {
-                                       
-                                        throw new IllegalStateException("DataBase connection failed ", sqlException);
-                                }
-
+                             connection.close(); 
                         }
+                    } catch (SQLException ex) {
+                        Log.logException(ex);
+                    }
 
                 }
         }

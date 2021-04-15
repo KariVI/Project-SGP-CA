@@ -9,21 +9,21 @@ package domain;
  *
  * @author Mariana
  */
-public class AgendaTopic {
+public class Topic {
     private String topicName;
     private String startTime;
     private String finishTime;
     private int idAgendaTopic;
     private String ProfessionalLicense;
 
-    public AgendaTopic(String topicName, String startTime, String finishTime, String ProfessionalLicense){
+    public Topic(String topicName, String startTime, String finishTime, String ProfessionalLicense){
         this.topicName = topicName;
         this.startTime = startTime;
         this.finishTime = finishTime;
         this.ProfessionalLicense = ProfessionalLicense;
     }
     
-    public AgendaTopic(int idAgendaTopic, String topicName, String startTime, String finishTime, String ProfessionalLicense){
+    public Topic(int idAgendaTopic, String topicName, String startTime, String finishTime, String ProfessionalLicense){
         this.idAgendaTopic = idAgendaTopic;
         this.topicName = topicName;
         this.startTime = startTime;

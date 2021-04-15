@@ -2,11 +2,11 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
-
+*/
 package businessLogic;
 
 import dataaccess.Connector;
-import domain.AgendaTopic;
+import domain.Topic;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,10 +16,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class AgendaTopicDAO implements IAgendaTopic {
+public class TopicDAO implements ITopic {
 
     @Override
-    public boolean save(AgendaTopic agendaTopic, int idMeeting) {
+    public boolean save(Topic agendaTopic, int idMeeting) {
                     boolean saveSuccess = false;
                     try{
                         Connector connectorDataBase = new Connector();
@@ -48,8 +48,8 @@ public class AgendaTopicDAO implements IAgendaTopic {
     }
 
     @Override
-    public ArrayList<AgendaTopic> getAgendaTopics(int idMeeting) {
-                     ArrayList<AgendaTopic> agendaList = new ArrayList<>();
+    public ArrayList<Topic> getAgendaTopics(int idMeeting) {
+                     ArrayList<Topic> agendaList = new ArrayList<>();
                      try{
                         Connector connectorDataBase = new Connector();
                         Connection connectionDataBase = connectorDataBase.getConnection();
@@ -68,7 +68,7 @@ public class AgendaTopicDAO implements IAgendaTopic {
                                 String topicName = agendaResultSet.getString("tema");
                                 String startTime = agendaResultSet.getString("horaInicio");
                                 String finishTime = agendaResultSet.getString("horaFin");
-                                AgendaTopic agendaData = new AgendaTopic(idTopic, topicName, startTime, finishTime,ProfessionalLicense);
+                                Topic agendaData = new Topic(idTopic, topicName, startTime, finishTime,ProfessionalLicense);
                                 agendaList.add(agendaData);
                             }
                               
@@ -84,4 +84,4 @@ public class AgendaTopicDAO implements IAgendaTopic {
     }
     
 }
- */
+ 
