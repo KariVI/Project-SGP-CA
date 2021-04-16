@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package businessLogic;
 
 import domain.Member;
@@ -84,6 +80,12 @@ public class PrerequisiteDAOTest {
         assertTrue(prerequisiteDAO.updatePrerequisite(3,prerequisite) );
         
     }
-    
-
+       
+    @Test
+    public void testDelete() throws BusinessException{
+        System.out.println("delete");
+        int idPrerequisite=4;
+        PrerequisiteDAO prerequisiteDAO = new PrerequisiteDAO();
+        assertTrue(prerequisiteDAO.delete(idPrerequisite));
+    }
 }

@@ -34,4 +34,20 @@ public class PreliminarProjectDAOTest {
         System.out.println(result);
         assertEquals(expectedResult, result);
     }
+    
+    @Test
+      public void testGetIdFailed() throws Exception {
+        System.out.println("getId");
+        PreliminarProject preliminarProject = new PreliminarProject ("Revisión Sistemática de la Literatura de Software para la Gestión automatizada de Restaurantes",
+        "La vigilancia tecnológica es importante en el desarrollo de un producto tecnológico ya que\n" +
+        "permite identificar amenazas y oportunidades en el desarrollo de una nueva solución. La\n" +
+        "vigilancia tecnológica es la identificación y análisis de las tendencias de solución a un\n" +
+        "problema; consiste en la síntesis del estado del arte con base en artículos y patentes",
+        "13/01/2021", "13/07/2021");
+        PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
+        int expectedResult = 8;
+        int result = preliminarProjectDAO.getId(preliminarProject);
+        System.out.println(result);
+        assertNotEquals(expectedResult, result);
+    }
 }

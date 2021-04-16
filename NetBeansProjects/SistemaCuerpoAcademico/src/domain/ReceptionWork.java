@@ -11,14 +11,16 @@ public class ReceptionWork {
     private String dateStart;
     private String dateEnd;
     private String actualState;
+    private PreliminarProject preliminarProject;
     
     
-    public ReceptionWork(String title, String type, String description, String dateStart, String dateEnd){
+    public ReceptionWork(String title, String type, String description, String dateStart, String dateEnd, String actualState){
         this.title=title;
         this.type=type;
         this.description=description;
         this.dateStart=dateStart;
         this.dateEnd=dateEnd;
+        this.actualState=actualState;
          
     }
     
@@ -78,6 +80,13 @@ public class ReceptionWork {
         this.type=type;
     }
     
+    public PreliminarProject getPreliminarProject(){
+        return preliminarProject;
+    }
+    
+    public void setPreliminarProject(PreliminarProject preliminarProject){ 
+        this.preliminarProject=preliminarProject;
+    }
     
 }
 

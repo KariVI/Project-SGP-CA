@@ -19,8 +19,6 @@ public class Meeting {
       this.subject= subject;
       this.date= date;
       this.hourStart= hourStart;
-      listPrerequisites= new ArrayList<Prerequisite> ();
-      
     }
     public Meeting (int key, String subject, String date, String hourStart, String state){
       this.key=key;
@@ -31,6 +29,8 @@ public class Meeting {
       listPrerequisites= new ArrayList<Prerequisite> ();
       
     }
+
+    
      public int getKey(){
         return key;
     }

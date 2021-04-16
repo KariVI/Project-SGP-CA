@@ -14,4 +14,5 @@ public interface IMeetingDAO {
     public Meeting getMeetingById(int id) throws BusinessException;
     public boolean addAssistant(int idMeeting, String enrollment, String role) throws BusinessException;
     public Member getAssistant(int idMeeting, String profesionalLicense) throws BusinessException;
+    public boolean update(Meeting meeting) throws BusinessException;
 }

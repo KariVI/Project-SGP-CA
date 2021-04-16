@@ -145,4 +145,25 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
    
     }
 
+    @Override
+    public boolean delete(int idPrerequisite) throws BusinessException{
+        boolean deleteSucess=false;
+        try{
+            Connector connectorDataBase=new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String selectIdPrerequisite = "DELETE FROM Prerequisito where idPrerequisito=?";
+     
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement(selectIdPrerequisite);
+            preparedStatement.setInt(1, idPrerequisite);
+            preparedStatement.executeUpdate();
+            deleteSucess=true;
+            connectorDataBase.disconnect();         
+        }catch(SQLException sqlException) {
+            throw new BusinessException("DataBase connection failed ", sqlException);
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return deleteSucess;
+    }
+
 }

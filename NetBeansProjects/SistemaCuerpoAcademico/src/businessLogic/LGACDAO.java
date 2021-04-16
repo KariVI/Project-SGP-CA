@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import log.BusinessException;
 import log.Log;
@@ -62,5 +61,30 @@ public class LGACDAO implements ILGACDAO {
             throw new BusinessException("DataBase connection failed ", sqlException);
         }
         return lgacAuxiliar;
+    }
+
+   
+    public boolean update(String beforeName, LGAC lgac) throws BusinessException {
+        boolean updateSucess=false;
+        Connector connectorDataBase=new Connector();
+        try {
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String updateLgac = "UPDATE LGAC set nombre=?,descripcion=? where nombre=?";
+            
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement(updateLgac);
+            preparedStatement.setString(1, lgac.getName());
+            preparedStatement.setString(2, lgac.getDescription());
+            preparedStatement.setString(3,beforeName);
+                
+            preparedStatement.executeUpdate();
+            updateSucess=true;  
+            connectorDataBase.disconnect();
+        }catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        } catch (SQLException sqlException) {
+           throw new BusinessException("DataBase connection failed ", sqlException);
+            
+        }
+        return updateSucess;
     }
 }

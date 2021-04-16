@@ -109,6 +109,15 @@ public class MeetingDAOTest {
     
     }
     
+    @Test
+    public void testUpdate() throws BusinessException{  
+        MeetingDAO meetingDAO= new MeetingDAO();
+        Meeting meeting;
+        meeting= new Meeting( "Organizar agenda de actividades del seminario" ,"15 /05/2021","15:30"); 
+        meeting.setKey(3);
+        assertTrue(meetingDAO.update(meeting));
+    }
+    
 }
 
 
