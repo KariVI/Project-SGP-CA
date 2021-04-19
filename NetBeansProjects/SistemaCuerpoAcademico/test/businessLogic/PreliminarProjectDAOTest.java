@@ -36,7 +36,7 @@ public class PreliminarProjectDAOTest {
     }
     
     @Test
-      public void testGetIdFailed() throws Exception {
+      public void testGetIdFailed() throws BusinessException {
         System.out.println("getId");
         PreliminarProject preliminarProject = new PreliminarProject ("Revisión Sistemática de la Literatura de Software para la Gestión automatizada de Restaurantes",
         "La vigilancia tecnológica es importante en el desarrollo de un producto tecnológico ya que\n" +
@@ -49,5 +49,15 @@ public class PreliminarProjectDAOTest {
         int result = preliminarProjectDAO.getId(preliminarProject);
         System.out.println(result);
         assertNotEquals(expectedResult, result);
+    }
+      
+    @Test
+    public void testUpdate() throws BusinessException{
+        System.out.println("update");
+        PreliminarProjectDAO preliminarProjectDAO=new PreliminarProjectDAO();
+        PreliminarProject preliminarProject= new PreliminarProject("Métricas de Cohesión y Acoplamiento", "La facilidad de evolución permite al software adaptarse a distintas necesidades conforme pasa el tiempo y suceden cambios tanto en el mercado como en la organización",
+        "13/09/2020" , "17/05/2021");
+        int id=8;
+        assertTrue(preliminarProjectDAO.update(id, preliminarProject));
     }
 }

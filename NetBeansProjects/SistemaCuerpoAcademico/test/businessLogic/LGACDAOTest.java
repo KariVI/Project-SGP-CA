@@ -43,5 +43,13 @@ public class LGACDAOTest {
         assertFalse(expected.equals(result));
        
     }
+    @Test
+    public void testUpdate() throws BusinessException {
+      System.out.println("update");
+      LGAC lgac;
+      lgac = new LGAC("Aplicaciones de las técnicas estadísticas",  "Se orienta al estudio de los diversos métodos para el muestreo");
+      LGACDAO lgacDAO = new LGACDAO(); 
+      assertTrue(lgacDAO.update("Aplicaciones de las técnicas estadísticas", lgac));
+    }
     
 }

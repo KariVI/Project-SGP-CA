@@ -65,5 +65,31 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
         }
         return id;
     }
+
+    @Override
+    public boolean update(int id,PreliminarProject preliminarProject) throws BusinessException {
+        boolean updateSucess=false;
+        try{
+            Connector connectorDataBase=new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String updatePreliminarProject = "UPDATE Anteproyecto set titulo=? , descripcion=?, fechaInicio=?, fechaFin=? where idAnteproyecto=?";
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement(updatePreliminarProject );
+            preparedStatement.setString(1, preliminarProject.getTitle());
+            preparedStatement.setString(2, preliminarProject.getDescription());
+            preparedStatement.setString(3, preliminarProject.getDateStart());
+            preparedStatement.setString(4, preliminarProject.getDateEnd());
+            preparedStatement.setInt(5, id);
+            
+            preparedStatement.executeUpdate();
+            connectorDataBase.disconnect();
+            updateSucess=true;
+        }catch(SQLException sqlException){
+         throw new BusinessException("DataBase connection failed ", sqlException);
+        }catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        
+        return updateSucess;
+    }
     
 }
