@@ -71,9 +71,8 @@ public class ProjectDaoTest {
     
     @Test
     public void testGetProjects() throws BusinessException {
-        System.out.println("getProjects");
-        ProjectDAO instance = new ProjectDAO();
-        ArrayList<Project> result = instance.getProjects();
+        ProjectDAO projectDAO = new ProjectDAO();
+        ArrayList<Project> result = projectDAO.getProjects();
         assertNotNull(result);
     }  
 }
