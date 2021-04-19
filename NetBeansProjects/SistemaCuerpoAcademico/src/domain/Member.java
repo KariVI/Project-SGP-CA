@@ -6,29 +6,40 @@ public class Member {
     private String professionalLicense;
     private String name;
     private String role;
-    private int year;
+    private int degreeYear;
     private String degree;
     private String nameDegree;
     private String universityName;
     private String keyGroupAcademic;
     private String state;
 
-    public Member(String professionalLicense, String name, String role, String keyGroupAcademic) {
-        this.professionalLicense = professionalLicense;
+    public Member( String name, String role, String degree, String keyGroupAcademic) {
+        this.degree = degree;
         this.name = name;
         this.role = role;
         this.keyGroupAcademic = keyGroupAcademic;
     }
 
-    public Member(String professionalLicense, String name, String role, String degree, String nameDegree, String universityName, String keyGroupAcademic) {
+    public Member(String professionalLicense, String name, String role, String degree, String nameDegree, String universityName, int degreeYear, String state,String keyGroupAcademic) {
         this.professionalLicense = professionalLicense;
         this.name = name;
         this.role = role;
         this.nameDegree = nameDegree;
         this.degree = degree;
         this.universityName = universityName;
+        this.degreeYear = degreeYear;
+        this.state = state;
         this.keyGroupAcademic = keyGroupAcademic;
-
+    }
+    
+    public Member(String professionalLicense, String name, String role, String degree, String nameDegree, String universityName, int degreeYear) {
+        this.professionalLicense = professionalLicense;
+        this.name = name;
+        this.role = role;
+        this.nameDegree = nameDegree;
+        this.degree = degree;
+        this.universityName = universityName;
+        this.degreeYear = degreeYear;
     }
     
     @Override
@@ -36,9 +47,9 @@ public class Member {
         boolean value=false;
             if (object instanceof Member) {
             Member memberCompare = (Member) object;
-            if( (this.professionalLicense.equals(memberCompare.getProfessionalLicense()) && this.name.equals(memberCompare.getName())) &&
-            this.role.equals(memberCompare.getRole())){
-            } else {
+            if ((this.professionalLicense.equals(memberCompare.getProfessionalLicense())) && (this.name.equals(memberCompare.getName())) &&
+            (this.role.equals(memberCompare.getRole())) && (this.degree.equals(memberCompare.getDegree())) && (this.nameDegree.equals(memberCompare.getNameDegree())) &&
+            (this.universityName.equals(memberCompare.getUniversityName())) && (this.degreeYear == memberCompare.getDegreeYear())){
                 value=true;
             }
         }  
@@ -51,7 +62,7 @@ public class Member {
         hash = 67 * hash + Objects.hashCode(this.professionalLicense);
         hash = 67 * hash + Objects.hashCode(this.name);
         hash = 67 * hash + Objects.hashCode(this.role);
-        hash = 67 * hash + this.year;
+        hash = 67 * hash + this.degreeYear;
         hash = 67 * hash + Objects.hashCode(this.degree);
         hash = 67 * hash + Objects.hashCode(this.nameDegree);
         hash = 67 * hash + Objects.hashCode(this.universityName);
@@ -120,5 +131,13 @@ public class Member {
     
     public String getKeyGroupAcademic(){
         return keyGroupAcademic;
+    }
+    
+    public void setDegreeYear(int degreeYear){
+        this.degreeYear = degreeYear;
+    }
+    
+    public int getDegreeYear(){
+        return degreeYear;
     }
 }
