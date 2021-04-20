@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class TopicDAO implements ITopic {
 
     @Override
-    public boolean save(Topic agendaTopic, int idMeeting)throws BusinessException {
+    public boolean save(Topic agendaTopic)throws BusinessException {
                     boolean saveSuccess = false;
                     try{
                         Connector connectorDataBase = new Connector();
@@ -29,7 +29,7 @@ public class TopicDAO implements ITopic {
                             
                             PreparedStatement insertAgendaTopicStatment;
                             insertAgendaTopicStatment = connectionDataBase.prepareStatement("INSERT INTO TemaAgenda(idReunion, tema, horaInicio, horaFin, cedula) VALUES(?,?,?,?) ");
-                            insertAgendaTopicStatment.setInt(1, idMeeting);
+                            insertAgendaTopicStatment.setInt(1, agendaTopic.getIdMeeting());
                             insertAgendaTopicStatment.setString(2,  agendaTopic.getTopicName());
                             insertAgendaTopicStatment.setString(3, agendaTopic.getStartTime());
                             insertAgendaTopicStatment.setString(4, agendaTopic.getFinishTime());

@@ -17,7 +17,7 @@ public class Topic {
     private String ProfessionalLicense;
     private int idMeeting;
 
-    public Topic(String topicName, String startTime, String finishTime, String ProfessionalLicense){
+    public Topic(String topicName, String startTime, String finishTime, String ProfessionalLicense, int idMeeting){
         this.topicName = topicName;
         this.startTime = startTime;
         this.finishTime = finishTime;

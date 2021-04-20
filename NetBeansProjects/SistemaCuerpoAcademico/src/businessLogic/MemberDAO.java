@@ -12,7 +12,7 @@ import log.Log;
 public class MemberDAO implements IMemberDAO{
 
     @Override
-    public boolean saveMember(Member member, String KeyGroupAcademic) throws BusinessException{
+    public boolean saveMember(Member member) throws BusinessException{
         boolean saveSuccess = false;
         try {
             
@@ -28,7 +28,7 @@ public class MemberDAO implements IMemberDAO{
             preparedStatement.setString(6, member.getUniversityName());
             preparedStatement.setInt(7, member.getDegreeYear());
             preparedStatement.setString(8, "Activo");
-            preparedStatement.setString(9, KeyGroupAcademic);
+            preparedStatement.setString(9, member.getKeyGroupAcademic());
             preparedStatement.executeUpdate();
             connectorDataBase.disconnect();
             

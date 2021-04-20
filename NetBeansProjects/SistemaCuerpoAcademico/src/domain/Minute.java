@@ -9,6 +9,7 @@ public class Minute {
     private String state;
     private String due;
     private int idMinute;
+    private int idMeeting;
 
     public Minute(int idMinute, String note, String state, String due ){
         this.idMinute = idMinute;
@@ -17,7 +18,7 @@ public class Minute {
         this.due = due;
     }
     
-    public Minute(String note, String state, String due ){
+    public Minute(String note, String state, String due, int idMeeting ){
         this.note = note;
         this.state = state;
         this.due = due;
@@ -52,5 +53,13 @@ public class Minute {
     
     public void setDue(String due){
         this.due = due;
+    }
+    
+    public int getIdMeeting(){
+        return idMeeting;
+    }
+    
+    public void setIdMeeting(int idMeeting){
+        this.idMeeting = idMeeting;
     }
 }

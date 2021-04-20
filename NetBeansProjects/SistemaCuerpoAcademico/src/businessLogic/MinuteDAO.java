@@ -18,7 +18,7 @@ import log.BusinessException;
 public class MinuteDAO implements IMinuteDAO {
 
     @Override
-    public boolean saveMinute(Minute minute, int idMeeting)throws BusinessException {
+    public boolean saveMinute(Minute minute)throws BusinessException {
                     boolean saveSuccess = false;
                     try{
                         Connector connectorDataBase = new Connector();
@@ -30,7 +30,7 @@ public class MinuteDAO implements IMinuteDAO {
                             insertMinuteStatment.setString(1, minute.getNote());
                             insertMinuteStatment.setString(2,  minute.getSate());
                             insertMinuteStatment.setString(3, minute.getDue());
-                            insertMinuteStatment.setInt(4, idMeeting);
+                            insertMinuteStatment.setInt(4, minute.getIdMeeting());
                             insertMinuteStatment.executeUpdate();
                             
                             connectorDataBase.disconnect();

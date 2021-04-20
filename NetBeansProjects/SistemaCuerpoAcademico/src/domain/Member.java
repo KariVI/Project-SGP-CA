@@ -13,14 +13,7 @@ public class Member {
     private String keyGroupAcademic;
     private String state;
 
-    public Member( String name, String role, String degree, String keyGroupAcademic) {
-        this.degree = degree;
-        this.name = name;
-        this.role = role;
-        this.keyGroupAcademic = keyGroupAcademic;
-    }
-
-    public Member(String professionalLicense, String name, String role, String degree, String nameDegree, String universityName, int degreeYear, String state,String keyGroupAcademic) {
+  public Member(String professionalLicense, String name, String role, String degree, String nameDegree, String universityName, int degreeYear,String state, String keyGroupAcademic) {
         this.professionalLicense = professionalLicense;
         this.name = name;
         this.role = role;
@@ -29,6 +22,17 @@ public class Member {
         this.universityName = universityName;
         this.degreeYear = degreeYear;
         this.state = state;
+        this.keyGroupAcademic = keyGroupAcademic;
+    }
+
+    public Member(String professionalLicense, String name, String role, String degree, String nameDegree, String universityName, int degreeYear,String keyGroupAcademic) {
+        this.professionalLicense = professionalLicense;
+        this.name = name;
+        this.role = role;
+        this.nameDegree = nameDegree;
+        this.degree = degree;
+        this.universityName = universityName;
+        this.degreeYear = degreeYear;
         this.keyGroupAcademic = keyGroupAcademic;
     }
     

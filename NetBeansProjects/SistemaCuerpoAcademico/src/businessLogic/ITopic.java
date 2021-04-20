@@ -6,6 +6,6 @@ import java.util.ArrayList;
 import log.BusinessException;
 
 public interface ITopic {
-      public boolean save(Topic agendaTopic, int idMeeting) throws BusinessException;
+      public boolean save(Topic agendaTopic) throws BusinessException;
       public ArrayList<Topic>  getAgendaTopics(int idReunion) throws BusinessException;
 }

@@ -19,10 +19,9 @@ public class MemberDAOTest {
     @Test
     public void testSaveMember() throws BusinessException {
         System.out.println("saveMember");
-        Member member = new Member("4065161", "Maria de los Angeles Arenas Valdes","Colaborador","Maestria","Maestria en ciencias de la computacion","Fundacion Arturo Rosenbulth",1999);
-        String KeyGroupAcademic = "1491";
+        Member member = new Member("4065161", "Maria de los Angeles Arenas Valdes","Colaborador","Maestria","Maestria en ciencias de la computacion","Fundacion Arturo Rosenbulth",1999,"1491");
         MemberDAO memberDAO = new MemberDAO();
-        assertTrue(memberDAO.saveMember(member, KeyGroupAcademic));
+        assertTrue(memberDAO.saveMember(member));
     }
 
  

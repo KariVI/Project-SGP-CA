@@ -22,10 +22,9 @@ public class MinuteDAOTest {
     @Test
     public void testSaveMinute() throws BusinessException {
         System.out.println("saveMinute");
-        Minute minute = new Minute("Los acuerdos registrados son pendiente","Estado","Falta gastrocafe");
-        int idMeeting = 1;
+        Minute minute = new Minute("Los acuerdos registrados son pendiente","Estado","Falta gastrocafe",1);
         MinuteDAO minuteDAO = new MinuteDAO();
-        assertTrue(minuteDAO.saveMinute(minute, idMeeting)); 
+        assertTrue(minuteDAO.saveMinute(minute)); 
     }
 
     @Test
