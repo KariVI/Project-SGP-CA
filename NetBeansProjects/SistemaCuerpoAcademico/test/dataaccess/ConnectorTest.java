@@ -7,9 +7,7 @@ import org.junit.Test;
 
 public class ConnectorTest {
 
-    public ConnectorTest() {
 
-    }
     @Test
     public void testDataBaseConnection(){
         Connector connector = new Connector();

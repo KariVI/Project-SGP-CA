@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 public class GroupAcademicDAO implements IGroupAcademicDAO {
 
+    @Override
     public void save(GroupAcademic groupAcademic) {
             try {
                 Connector connectorDataBase=new Connector();
