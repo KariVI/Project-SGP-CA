@@ -33,11 +33,11 @@ public class Topic {
         this.idMeeting = idMeeting;
     }
     
-    public int getidTopic(){
+    public int getIdTopic(){
         return idTopic;
     }
 
-    public void setidTopic(int idTopic){
+    public void setIdTopic(int idTopic){
         this.idTopic = idTopic;
     }
 

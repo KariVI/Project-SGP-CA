@@ -102,6 +102,26 @@ public class TopicDAO implements ITopic {
         
         return updateSucess;
     }
+    
+    @Override
+    public boolean delete(Topic topic) throws BusinessException{
+        boolean deleteSucess=false;
+        try{
+            Connector connectorDataBase=new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("DELETE FROM Tema where idTema = ? and idReunion = ? ");
+            preparedStatement.setInt(1, topic.getIdTopic());
+            preparedStatement.setInt(2, topic.getIdMeeting());
+            preparedStatement.executeUpdate();
+            deleteSucess=true;
+            connectorDataBase.disconnect();         
+        }catch(SQLException sqlException) {
+            throw new BusinessException("DataBase connection failed ", sqlException);
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return deleteSucess;
+    }
  
 }
  

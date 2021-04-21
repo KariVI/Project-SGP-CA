@@ -32,5 +32,13 @@ public class TopicDAOTest {
         TopicDAO topicDAO = new TopicDAO();
         assertTrue(topicDAO.update(1, newTopic));
     }
+
+    @Test 
+    public void testDelete() throws BusinessException {
+        System.out.println("delete");
+        Topic topic = new Topic(1,"Tema gastrocafe","12:00","13:00","4065161",1);
+        TopicDAO topicDAO = new TopicDAO();
+        assertTrue(topicDAO.delete(topic));
+    }
     
 }

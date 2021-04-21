@@ -45,4 +45,14 @@ public class AgreementDAOTest {
         AgreementDAO agreementDAO = new AgreementDAO();
         assertTrue(agreementDAO.update(newAgreement));
     }
+    
+    @Test 
+    public void testDelete() throws BusinessException {
+        System.out.println("delete");
+        int idMinute = 1;
+        String professionalLicense = "4065161";
+        Agreement agreement = new Agreement("Septiembre 2021","Realizar reunión para evaliación",1,idMinute,professionalLicense);
+        AgreementDAO agreementDAO = new AgreementDAO();
+        assertTrue(agreementDAO.delete(agreement));
+    }
 }

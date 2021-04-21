@@ -102,5 +102,25 @@ public class AgreementDAO implements IAgreement{
         }
         
         return updateSucess;
+    }
+    
+    @Override
+    public boolean delete(Agreement agreement) throws BusinessException{
+        boolean deleteSucess=false;
+        try{
+            Connector connectorDataBase=new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("DELETE FROM Acuerdo where idAcuerdo = ? and idMinuta = ? ");
+            preparedStatement.setInt(1, agreement.getIdAgreement());
+            preparedStatement.setInt(2, agreement.getIdMinute());
+            preparedStatement.executeUpdate();
+            deleteSucess=true;
+            connectorDataBase.disconnect();         
+        }catch(SQLException sqlException) {
+            throw new BusinessException("DataBase connection failed ", sqlException);
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return deleteSucess;
     }    
 }

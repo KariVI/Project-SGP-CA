@@ -9,4 +9,5 @@ public interface IAgreement {
     public boolean saveAgreement(Agreement agreement)throws BusinessException;
      public ArrayList<Agreement>  getAgreements()throws BusinessException;
      public boolean update(Agreement newAgreement) throws BusinessException;
+     public boolean delete(Agreement agreement) throws BusinessException;
 }
