@@ -73,4 +73,12 @@ public class MinuteDAOTest {
         ArrayList<MinuteComment> result = instance.getMinutesComments(idMinute);
         assertNotNull(result);
     }
+
+    @Test 
+    public void testUpdate() throws BusinessException {
+        System.out.println("update");
+        Minute newMinute = new Minute(1,"Los acuerdos registrados son pendiente","Completado","Falta gastrocafe",1);
+        MinuteDAO minuteDAO = new MinuteDAO();
+        assertTrue(minuteDAO.update(newMinute));
+    }
 }

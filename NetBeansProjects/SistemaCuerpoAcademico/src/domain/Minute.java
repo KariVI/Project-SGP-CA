@@ -11,17 +11,19 @@ public class Minute {
     private int idMinute;
     private int idMeeting;
 
-    public Minute(int idMinute, String note, String state, String due ){
+    public Minute(int idMinute, String note, String state, String due, int idMeeting ){
         this.idMinute = idMinute;
         this.note = note;
         this.state = state;
         this.due = due;
+        this.idMeeting = idMeeting;
     }
     
     public Minute(String note, String state, String due, int idMeeting ){
         this.note = note;
         this.state = state;
         this.due = due;
+        this.idMeeting = idMeeting;
     }
     
     public int getIdMinute(){

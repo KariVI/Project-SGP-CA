@@ -38,6 +38,7 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
             }
     }
  
+    @Override
     public GroupAcademic getGroupAcademicById(String key ) {
         GroupAcademic groupAcademicAuxiliar = null;
         try{

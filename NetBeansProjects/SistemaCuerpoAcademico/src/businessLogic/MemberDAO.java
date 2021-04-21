@@ -1,6 +1,5 @@
 package businessLogic;
 import domain.Member;
-import domain.GroupAcademic;
 import dataaccess.Connector;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -95,7 +94,7 @@ public class MemberDAO implements IMemberDAO{
                 String state = resultSet.getString("estado");
                 String key = resultSet.getString("clave");
                 
-                memberAuxiliar = new Member(professionalLicense, name, role, degree, nameDegree, nameUniversity, year, state, key);
+                memberAuxiliar = new Member(professionalLicense, name, role, degree, nameDegree, nameUniversity, year,state,key);
             }
                 connectorDataBase.disconnect();
                 
@@ -115,4 +114,33 @@ public class MemberDAO implements IMemberDAO{
        }
        return value;
     }
+    
+
+    public boolean update(Member newMember) throws BusinessException {
+        boolean updateSucess = false;
+        Connector connectorDataBase=new Connector();
+        try {
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("UPDATE Miembro set  nombre = ? , rol = ?, grado = ?, nombreGrado = ?, universidad = ? , anio = ?, estado = ?, clave = ? where cedula = ? ");
+            preparedStatement.setString(1, newMember.getName());
+            preparedStatement.setString(2, newMember.getRole());
+            preparedStatement.setString(3, newMember.getDegree());
+            preparedStatement.setString(4, newMember.getNameDegree());
+            preparedStatement.setString(5,newMember.getUniversityName());
+            preparedStatement.setInt(6, newMember.getDegreeYear());
+            preparedStatement.setString(7, newMember.getState());
+            preparedStatement.setString(8, newMember.getKeyGroupAcademic());
+            preparedStatement.setString(9, newMember.getProfessionalLicense());
+            
+            preparedStatement.executeUpdate();
+            updateSucess=true;  
+            connectorDataBase.disconnect();
+        }catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        } catch (SQLException sqlException) {
+           throw new BusinessException("DataBase connection failed ", sqlException);
+        }
+      
+        return updateSucess;
+    }    
 }

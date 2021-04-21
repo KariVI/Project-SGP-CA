@@ -110,7 +110,8 @@ public class MinuteDAO implements IMinuteDAO {
                                 String note = minuteResultSet.getString("nota");
                                 String due = minuteResultSet.getString("pendiente");
                                 String state = minuteResultSet.getString("estado");
-                                Minute minute = new Minute(idMinute, note, state, due);
+                                int idMeeting = minuteResultSet.getInt("idReunion");
+                                Minute minute = new Minute(idMinute, note, state, due,idMeeting);
                                 minuteList.add(minute);
                             }
                               
@@ -159,5 +160,29 @@ public class MinuteDAO implements IMinuteDAO {
                      
                     return commentList;  
     }
-
+    
+    @Override
+    public boolean update(Minute newMinute) throws BusinessException {
+        boolean updateSucess = false;
+        Connector connectorDataBase=new Connector();
+        try {
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("UPDATE Minuta set  nota = ? , estado = ?, pendiente = ?, idReunion = ? where idMinuta = ? ");
+                preparedStatement.setString(1, newMinute.getNote());
+                preparedStatement.setString(2,  newMinute.getSate());
+                preparedStatement.setString(3,newMinute.getDue());
+                preparedStatement.setInt(4, newMinute.getIdMeeting());
+                preparedStatement.setInt(5, newMinute.getIdMinute());
+            
+            preparedStatement.executeUpdate();
+            updateSucess=true;  
+            connectorDataBase.disconnect();
+        }catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        } catch (SQLException sqlException) {
+           throw new BusinessException("DataBase connection failed ", sqlException);
+        }
+      
+        return updateSucess;
+    } 
 }

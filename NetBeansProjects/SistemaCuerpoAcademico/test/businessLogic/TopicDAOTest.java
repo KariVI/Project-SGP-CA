@@ -11,9 +11,9 @@ public class TopicDAOTest {
     @Test
     public void testSave() throws BusinessException{
         System.out.println("save");
-        Topic agendaTopic = new Topic("Tema gastrocafe","11:00","12:00","1234",1);
-        TopicDAO agendaTopicDAO = new TopicDAO();
-        assertTrue(agendaTopicDAO.save(agendaTopic));
+        Topic topic = new Topic("Tema gastrocafe","11:00","12:00","4065161",1);
+        TopicDAO topicDAO = new TopicDAO();
+        assertTrue(topicDAO.save(topic));
     }
     
     @Test
@@ -23,6 +23,14 @@ public class TopicDAOTest {
         TopicDAO agendaTopicDAO = new TopicDAO();
         ArrayList<Topic > result = agendaTopicDAO.getAgendaTopics(idMeeting);
         assertNotNull(result);
+    }
+    
+    @Test 
+    public void testUpdate() throws BusinessException {
+        System.out.println("update");
+        Topic newTopic = new Topic("Tema gastrocafe","12:00","13:00","4065161",1);
+        TopicDAO topicDAO = new TopicDAO();
+        assertTrue(topicDAO.update(1, newTopic));
     }
     
 }

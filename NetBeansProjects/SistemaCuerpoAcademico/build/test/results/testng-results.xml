@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="SistemaCuerpoAcademico" duration-ms="1892" started-at="2021-04-19T22:48:42Z" finished-at="2021-04-19T22:48:44Z">
+  <suite name="SistemaCuerpoAcademico" duration-ms="1020" started-at="2021-04-21T17:34:29Z" finished-at="2021-04-21T17:34:30Z">
     <groups>
     </groups>
-    <test name="businessLogic.AgreementDAOTest" duration-ms="1892" started-at="2021-04-19T22:48:42Z" finished-at="2021-04-19T22:48:44Z">
-      <class name="businessLogic.AgreementDAOTest">
-        <test-method status="PASS" signature="testSaveAgreement()[pri:0, instance:testSaveAgreement(businessLogic.AgreementDAOTest)]" name="testSaveAgreement" duration-ms="1659" started-at="2021-04-19T17:48:42Z" finished-at="2021-04-19T17:48:44Z">
+    <test name="businessLogic.ProjectDaoTest" duration-ms="1020" started-at="2021-04-21T17:34:29Z" finished-at="2021-04-21T17:34:30Z">
+      <class name="businessLogic.ProjectDaoTest">
+        <test-method status="PASS" signature="testUpdate()[pri:0, instance:testUpdate(businessLogic.ProjectDaoTest)]" name="testUpdate" duration-ms="790" started-at="2021-04-21T12:34:30Z" finished-at="2021-04-21T12:34:30Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testSaveAgreement -->
-      </class> <!-- businessLogic.AgreementDAOTest -->
-    </test> <!-- businessLogic.AgreementDAOTest -->
+        </test-method> <!-- testUpdate -->
+      </class> <!-- businessLogic.ProjectDaoTest -->
+    </test> <!-- businessLogic.ProjectDaoTest -->
   </suite> <!-- SistemaCuerpoAcademico -->
 </testng-results>

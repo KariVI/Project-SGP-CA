@@ -75,4 +75,12 @@ public class ProjectDaoTest {
         ArrayList<Project> result = projectDAO.getProjects();
         assertNotNull(result);
     }  
+    
+    @Test 
+    public void testUpdate() throws BusinessException {
+        System.out.println("update");
+        Project newProject = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021");
+        ProjectDAO projectDAO = new ProjectDAO();
+        assertTrue(projectDAO.update(newProject));
+    }
 }

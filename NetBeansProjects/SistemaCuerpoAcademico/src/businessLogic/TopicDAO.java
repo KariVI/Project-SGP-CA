@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
-*/
 package businessLogic;
 
 import dataaccess.Connector;
@@ -21,69 +16,92 @@ public class TopicDAO implements ITopic {
 
     @Override
     public boolean save(Topic agendaTopic)throws BusinessException {
-                    boolean saveSuccess = false;
-                    try{
-                        Connector connectorDataBase = new Connector();
-                        Connection connectionDataBase = connectorDataBase.getConnection();
-                        try{
-                            
-                            PreparedStatement insertAgendaTopicStatment;
-                            insertAgendaTopicStatment = connectionDataBase.prepareStatement("INSERT INTO TemaAgenda(idReunion, tema, horaInicio, horaFin, cedula) VALUES(?,?,?,?) ");
-                            insertAgendaTopicStatment.setInt(1, agendaTopic.getIdMeeting());
-                            insertAgendaTopicStatment.setString(2,  agendaTopic.getTopicName());
-                            insertAgendaTopicStatment.setString(3, agendaTopic.getStartTime());
-                            insertAgendaTopicStatment.setString(4, agendaTopic.getFinishTime());
-                            insertAgendaTopicStatment.setString(5, agendaTopic.getProfessionalLicense());
-                  
-                            insertAgendaTopicStatment.executeUpdate();
-                            
-                            connectorDataBase.disconnect();
-                            saveSuccess = true;
-                        }catch(SQLException sqlException) {
-                            throw new BusinessException("Parameter index ", sqlException);
-                        }
-                    }catch(ClassNotFoundException ex) {
-                            Log.logException(ex);
-
-                    }    
-                    return saveSuccess;
+        boolean saveSuccess = false;
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            try{
+                PreparedStatement insertAgendaTopicStatment;
+                insertAgendaTopicStatment = connectionDataBase.prepareStatement("INSERT INTO Tema(idReunion, tema, horaInicio, horaFin, cedula) VALUES(?,?,?,?,?) ");
+                insertAgendaTopicStatment.setInt(1, agendaTopic.getIdMeeting());
+                insertAgendaTopicStatment.setString(2,  agendaTopic.getTopicName());
+                insertAgendaTopicStatment.setString(3, agendaTopic.getStartTime());
+                insertAgendaTopicStatment.setString(4, agendaTopic.getFinishTime());
+                insertAgendaTopicStatment.setString(5, agendaTopic.getProfessionalLicense());
+                insertAgendaTopicStatment.executeUpdate();
+                connectorDataBase.disconnect();
+                saveSuccess = true;
+            }catch(SQLException sqlException) {
+                throw new BusinessException("Parameter index ", sqlException);
+            }
+                
+        }catch(ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+            
+        return saveSuccess;
     }
 
     @Override
     public ArrayList<Topic> getAgendaTopics(int idMeeting) throws BusinessException {
-                     ArrayList<Topic> agendaList = new ArrayList<>();
-                     try{
-                        Connector connectorDataBase = new Connector();
-                        Connection connectionDataBase = connectorDataBase.getConnection();
-                        try{
+        ArrayList<Topic> agendaList = new ArrayList<>();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            try{
                             
-                            PreparedStatement getAgendaStatment;
-                            getAgendaStatment = connectionDataBase.prepareStatement("SELECT * FROM TemaAgenda where idReunion = ?");
-                            getAgendaStatment.setInt(1,idMeeting);
-                            ResultSet agendaResultSet;
+                PreparedStatement getAgendaStatment;
+                getAgendaStatment = connectionDataBase.prepareStatement("SELECT * FROM Tema where idReunion = ?");
+                getAgendaStatment.setInt(1,idMeeting);
+                ResultSet agendaResultSet;                    
+                agendaResultSet = getAgendaStatment.executeQuery();
                             
-                            agendaResultSet = getAgendaStatment.executeQuery();
-                            
-                            while(agendaResultSet.next()){
-                                int idTopic = agendaResultSet.getInt("idTema");
-                                String ProfessionalLicense = agendaResultSet.getString("cedula");
-                                String topicName = agendaResultSet.getString("tema");
-                                String startTime = agendaResultSet.getString("horaInicio");
-                                String finishTime = agendaResultSet.getString("horaFin");
-                                Topic agendaData = new Topic(idTopic, topicName, startTime, finishTime,ProfessionalLicense, idMeeting);
-                                agendaList.add(agendaData);
-                            }
-                              
-                            connectorDataBase.disconnect();
-                           
-                        }catch(SQLException sqlException) {
-                            throw new BusinessException("Parameter index ", sqlException);
-                        }
-                    }catch(ClassNotFoundException ex) {
-                        Log.logException(ex);
-                    }
-                    return agendaList;  
+                while(agendaResultSet.next()){
+                    int idTopic = agendaResultSet.getInt("idTema");
+                    String ProfessionalLicense = agendaResultSet.getString("cedula");
+                    String topicName = agendaResultSet.getString("tema");
+                    String startTime = agendaResultSet.getString("horaInicio");
+                    String finishTime = agendaResultSet.getString("horaFin");
+                    Topic agendaData = new Topic(idTopic, topicName, startTime, finishTime,ProfessionalLicense, idMeeting);
+                    agendaList.add(agendaData);
+                }
+                             
+                connectorDataBase.disconnect();                         
+            }catch(SQLException sqlException) {
+                throw new BusinessException("Parameter index ", sqlException);
+            }
+        }catch(ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+                   
+        return agendaList;  
     }
-    
+       
+    @Override
+    public boolean update(int idTopic, Topic newTopic) throws BusinessException {
+        boolean updateSucess = false;
+        Connector connectorDataBase=new Connector();
+        try {
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("UPDATE Tema set idReunion = ?, tema = ?, horaInicio = ?, horaFin = ?, cedula = ? WHERE idTema = ? ");
+            preparedStatement.setInt(1, newTopic.getIdMeeting());
+            preparedStatement.setString(2, newTopic.getTopicName());
+            preparedStatement.setString(3, newTopic.getStartTime());
+            preparedStatement.setString(4, newTopic.getFinishTime());
+            preparedStatement.setString(5, newTopic.getProfessionalLicense());
+            preparedStatement.setInt(6, idTopic);
+                
+            preparedStatement.executeUpdate();
+            updateSucess=true;  
+            connectorDataBase.disconnect();
+        }catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        } catch (SQLException sqlException) {
+           throw new BusinessException("DataBase connection failed ", sqlException);
+        }
+        
+        return updateSucess;
+    }
+ 
 }
  

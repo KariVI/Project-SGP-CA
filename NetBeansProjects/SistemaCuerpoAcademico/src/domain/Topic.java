@@ -22,6 +22,7 @@ public class Topic {
         this.startTime = startTime;
         this.finishTime = finishTime;
         this.ProfessionalLicense = ProfessionalLicense;
+        this.idMeeting = idMeeting;
     }
     
     public Topic(int idTopic, String topicName, String startTime, String finishTime, String ProfessionalLicense, int idMeeting){

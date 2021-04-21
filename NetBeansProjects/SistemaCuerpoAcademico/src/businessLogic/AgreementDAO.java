@@ -18,7 +18,7 @@ import log.Log;
 public class AgreementDAO implements IAgreement{
 
     @Override
-    public boolean saveAgreement(Agreement agreement, int idMinute, String professionalLicense) throws BusinessException {
+    public boolean saveAgreement(Agreement agreement) throws BusinessException {
                     boolean saveSuccess = false;
                     try{
                         Connector connectorDataBase = new Connector();
@@ -29,8 +29,8 @@ public class AgreementDAO implements IAgreement{
                             insertAgreementStatment = connectionDataBase.prepareStatement("INSERT INTO Acuerdo(periodo,descripcion,idMinuta,cedula) VALUES(?,?,?,?) ");
                             insertAgreementStatment.setString(1, agreement.getPeriod());
                             insertAgreementStatment.setString(2,  agreement.getDescription());
-                            insertAgreementStatment.setInt(3, idMinute);
-                            insertAgreementStatment.setString(4, professionalLicense);
+                            insertAgreementStatment.setInt(3, agreement.getIdMinute());
+                            insertAgreementStatment.setString(4, agreement.getProfessionalLicense());
                             
                             insertAgreementStatment.executeUpdate();
                             
@@ -80,4 +80,27 @@ public class AgreementDAO implements IAgreement{
                     return agreementList;  
     }
     
+    @Override
+    public boolean update(Agreement newAgreement) throws BusinessException {
+        boolean updateSucess = false;
+        Connector connectorDataBase=new Connector();
+        try {
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("UPDATE Acuerdo set periodo = ?, descripcion = ?, idMinuta = ?, cedula = ? WHERE idAcuerdo = ? ");
+            preparedStatement.setString(1, newAgreement.getPeriod());
+            preparedStatement.setString(2,  newAgreement.getDescription());
+            preparedStatement.setInt(3, newAgreement.getIdMinute());
+            preparedStatement.setString(4, newAgreement.getProfessionalLicense());
+            preparedStatement.setInt(5, newAgreement.getIdAgreement());     
+            preparedStatement.executeUpdate();
+            updateSucess=true;  
+            connectorDataBase.disconnect();
+        }catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        } catch (SQLException sqlException) {
+           throw new BusinessException("DataBase connection failed ", sqlException);
+        }
+        
+        return updateSucess;
+    }    
 }

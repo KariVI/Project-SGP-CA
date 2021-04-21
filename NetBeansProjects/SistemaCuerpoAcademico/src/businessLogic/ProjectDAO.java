@@ -151,4 +151,29 @@ public class ProjectDAO implements IProjectDAO {
                     }
                     return project;  
         }
+        
+    @Override
+    public boolean update(Project newProject) throws BusinessException {
+        boolean updateSucess = false;
+        Connector connectorDataBase=new Connector();
+        try {
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("UPDATE Proyecto set titulo = ?, descripcion = ?, fechaInicio = ?, fechaFin = ? WHERE idProyecto = ? ");
+            preparedStatement.setString(1, newProject.getTitle());
+            preparedStatement.setString(2, newProject.getDescription());
+            preparedStatement.setString(3, newProject.getStartDate());
+            preparedStatement.setString(4, newProject.getFinishDate());
+            preparedStatement.setInt(5, newProject.getIdProject());
+                
+            preparedStatement.executeUpdate();
+            updateSucess=true;  
+            connectorDataBase.disconnect();
+        }catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        } catch (SQLException sqlException) {
+           throw new BusinessException("DataBase connection failed ", sqlException);
+        }
+        
+        return updateSucess;
+    }
 }

@@ -2,7 +2,6 @@ package businessLogic;
 
 import domain.Project;
 import java.util.ArrayList;
-import java.sql.SQLException;
 import log.BusinessException;
 /**
  *
@@ -14,4 +13,5 @@ public interface IProjectDAO {
       public int searchId(Project project) throws BusinessException;
       public boolean findProjectById(int idProject);
       public Project getProjectById(int idProject) throws BusinessException;
+      public boolean update(Project newProject) throws BusinessException;
 }

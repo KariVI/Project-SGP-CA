@@ -21,4 +21,5 @@ public interface IMinuteDAO {
     public void disapproveMinute(int idMinute, String professionalLicense, String comments)throws BusinessException;
     public ArrayList<Minute>  getMinutes()throws BusinessException;
     public ArrayList<MinuteComment>  getMinutesComments(int idMinute) throws BusinessException;
+    public boolean update(Minute newMinute) throws BusinessException;
 }

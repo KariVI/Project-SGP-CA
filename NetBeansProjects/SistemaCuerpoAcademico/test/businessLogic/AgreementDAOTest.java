@@ -23,9 +23,9 @@ public class AgreementDAOTest {
         AgreementDAO agreementDAO= new AgreementDAO();
         Agreement agreementAuxiliar;
         int idMinute = 1;
-        String professionaLicense = "4065161";
-        agreementAuxiliar = new Agreement("Septiembre 2020","Realizar reunión para evaliación");
-        assertTrue(agreementDAO.saveAgreement(agreementAuxiliar, idMinute,professionaLicense));
+        String professionalLicense = "4065161";
+        agreementAuxiliar = new Agreement("Septiembre 2020","Realizar reunión para evaliación", idMinute,professionalLicense);
+        assertTrue(agreementDAO.saveAgreement(agreementAuxiliar));
     }
     
     @Test
@@ -34,5 +34,15 @@ public class AgreementDAOTest {
         ArrayList<Agreement> result = agreementDAO.getAgreements();
         assertNotNull(result);
     }
- 
+    
+    @Test 
+    public void testUpdate() throws BusinessException {
+        System.out.println("update");
+        int idMinute = 1;
+        String professionalLicense = "4065161";
+        Agreement newAgreement;
+        newAgreement = new Agreement("Septiembre 2021","Realizar reunión para evaliación",1,idMinute,professionalLicense);
+        AgreementDAO agreementDAO = new AgreementDAO();
+        assertTrue(agreementDAO.update(newAgreement));
+    }
 }

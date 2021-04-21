@@ -19,10 +19,13 @@ public class Agreement {
         this.professionalLicense = professionalLicense;
     }
     
-    public Agreement(String period, String description){
+    public Agreement(String period, String description,int idMinute, String professionalLicense ){
         this.period = period;
         this.description = description;
+        this.idMinute = idMinute;
+        this.professionalLicense = professionalLicense;
     }
+    
     public int getIdAgreement(){
         return idAgreement;
     }
@@ -44,6 +47,22 @@ public class Agreement {
 
     public void setDescription(String description){
         this.description = description;
+    }
+    
+    public int getIdMinute(){
+        return idMinute;
+    }
+    
+    public void setIdMinute(int idMinute){
+        this.idMinute = idMinute;
+    }
+    
+    public String getProfessionalLicense(){
+        return professionalLicense;
+    }
+    
+    public void setProfessionalLicense(String professionalLicense){
+        this.professionalLicense = professionalLicense;
     }
 
 }
