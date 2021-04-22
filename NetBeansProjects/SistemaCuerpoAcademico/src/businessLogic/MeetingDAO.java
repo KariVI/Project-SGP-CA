@@ -107,38 +107,32 @@ public class MeetingDAO implements IMeetingDAO{
     }
 
       public ArrayList<Meeting>  getMeetings(){
-                     ArrayList<Meeting> meetingList = new ArrayList<>();
-                     try{
-                        Connector connectorDataBase = new Connector();
-                        Connection connectionDataBase = connectorDataBase.getConnection();
-                        String queryMeeting="SELECT * FROM Reunion";
-                        try{
+        ArrayList<Meeting> meetingList = new ArrayList<>();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String queryMeeting="SELECT * FROM Reunion";
 
-                            PreparedStatement preparedStatement;
-                            preparedStatement = connectionDataBase.prepareStatement(queryMeeting);
-                            ResultSet resultSet;
-
-                            resultSet = preparedStatement.executeQuery();
-
-                            while(resultSet.next()){
-                                int keyMeeting=resultSet.getInt(1);
-                                String subject = resultSet.getString("asunto");
-                                String hourStart = resultSet.getString("hora");
-                                String date = resultSet.getString("fecha");
-                                String state= resultSet.getString("estado");
-                                Meeting meetingAuxiliar = new Meeting(keyMeeting,subject, hourStart, date, state);
-                                meetingList.add(meetingAuxiliar);
-                            }
-
-                            connectorDataBase.disconnect();
-
-                        }catch(SQLException sqlException) {
-                            throw new IllegalStateException("Parameter index ", sqlException);
-                        }
-                    }catch(ClassNotFoundException ex) {
+               PreparedStatement preparedStatement;
+               preparedStatement = connectionDataBase.prepareStatement(queryMeeting);
+               ResultSet resultSet;
+               resultSet = preparedStatement.executeQuery();
+               while(resultSet.next()){
+                    int keyMeeting=resultSet.getInt(1);
+                    String subject = resultSet.getString("asunto");
+                    String hourStart = resultSet.getString("hora");
+                    String date = resultSet.getString("fecha");
+                    String state= resultSet.getString("estado");
+                    Meeting meetingAuxiliar = new Meeting(keyMeeting,subject, hourStart, date, state);
+                    meetingList.add(meetingAuxiliar);
+                }
+                connectorDataBase.disconnect();
+            }catch(SQLException sqlException) {
+                   throw new IllegalStateException("Parameter index ", sqlException);         
+            }catch(ClassNotFoundException ex) {
                         Log.logException(ex);
-                    }
-                    return meetingList;
+            }
+            return meetingList;
         }
 
      public boolean addAssistant(int idMeeting, String enrollment, String role) throws BusinessException  {
@@ -222,8 +216,7 @@ public class MeetingDAO implements IMeetingDAO{
                 Log.logException(ex);
             }
         return updateSuccess;  
-    }
-    
+    }    
 
 }
 

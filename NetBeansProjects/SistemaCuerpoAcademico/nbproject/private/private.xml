@@ -7,8 +7,11 @@
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/ILGACDAO.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/test/businessLogic/LGACDAOTest.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/GroupAcademicDAO.java</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/domain/Prerequisite.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/test/businessLogic/ReceptionWorkDAOTest.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/test/businessLogic/ProjectDaoTest.java</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/MinuteDAO.java</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/ProjectDAO.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/test/businessLogic/PrerequisiteDAOTest.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/IPrerequisiteDAO.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/test/businessLogic/GroupAcademicDAOTest.java</file>
@@ -17,11 +20,13 @@
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/test/businessLogic/PreliminarProjectDAOTest.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/log/Log.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/domain/GroupAcademic.java</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/IProjectDAO.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/test/businessLogic/MemberDAOTest.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/log/BusinessException.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/domain/ReceptionWork.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/IGroupAcademicDAO.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/ReceptionWorkDAO.java</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/IAgendaTopic.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/MemberDAO.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/PreliminarProjectDAO.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/MeetingDAO.java</file>

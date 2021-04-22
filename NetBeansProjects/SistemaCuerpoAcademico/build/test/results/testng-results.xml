@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="SistemaCuerpoAcademico" duration-ms="1100" started-at="2021-04-19T22:40:25Z" finished-at="2021-04-19T22:40:26Z">
+  <suite name="SistemaCuerpoAcademico" duration-ms="1114" started-at="2021-04-22T03:40:32Z" finished-at="2021-04-22T03:40:33Z">
     <groups>
     </groups>
-    <test name="businessLogic.PreliminarProjectDAOTest" duration-ms="1100" started-at="2021-04-19T22:40:25Z" finished-at="2021-04-19T22:40:26Z">
-      <class name="businessLogic.PreliminarProjectDAOTest">
-        <test-method status="PASS" signature="testUpdate()[pri:0, instance:testUpdate(businessLogic.PreliminarProjectDAOTest)]" name="testUpdate" duration-ms="952" started-at="2021-04-19T17:40:25Z" finished-at="2021-04-19T17:40:26Z">
+    <test name="businessLogic.ReceptionWorkDAOTest" duration-ms="1114" started-at="2021-04-22T03:40:32Z" finished-at="2021-04-22T03:40:33Z">
+      <class name="businessLogic.ReceptionWorkDAOTest">
+        <test-method status="PASS" signature="testGetReceptionWorkById()[pri:0, instance:testGetReceptionWorkById(businessLogic.ReceptionWorkDAOTest)]" name="testGetReceptionWorkById" duration-ms="973" started-at="2021-04-21T22:40:32Z" finished-at="2021-04-21T22:40:33Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testUpdate -->
-      </class> <!-- businessLogic.PreliminarProjectDAOTest -->
-    </test> <!-- businessLogic.PreliminarProjectDAOTest -->
+        </test-method> <!-- testGetReceptionWorkById -->
+      </class> <!-- businessLogic.ReceptionWorkDAOTest -->
+    </test> <!-- businessLogic.ReceptionWorkDAOTest -->
   </suite> <!-- SistemaCuerpoAcademico -->
 </testng-results>

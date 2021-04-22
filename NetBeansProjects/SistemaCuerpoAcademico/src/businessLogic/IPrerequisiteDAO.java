@@ -3,6 +3,7 @@ package businessLogic;
 
 import domain.Member;
 import domain.Prerequisite;
+import java.util.ArrayList;
 import log.BusinessException;
 
 public interface IPrerequisiteDAO {
@@ -11,6 +12,7 @@ public interface IPrerequisiteDAO {
         public int getId(Prerequisite prerequisite, int idMeeting) throws BusinessException;
         public boolean updatePrerequisite(int id, Prerequisite prerequisite) throws BusinessException;
         public boolean delete(int idPrerequisite)throws BusinessException;
+        public ArrayList<Prerequisite> getPrerequisites(int idMeeting) throws BusinessException;
 
 
 

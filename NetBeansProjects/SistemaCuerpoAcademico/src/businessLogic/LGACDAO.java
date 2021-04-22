@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 import log.BusinessException;
 import log.Log;
 
@@ -87,4 +87,30 @@ public class LGACDAO implements ILGACDAO {
         }
         return updateSucess;
     }
+    
+    public ArrayList<LGAC>  getLGACs(){
+        ArrayList<LGAC> lgacList = new ArrayList<>();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String queryLgac="SELECT * FROM LGAC";
+
+               PreparedStatement preparedStatement;
+               preparedStatement = connectionDataBase.prepareStatement(queryLgac);
+               ResultSet resultSet;
+               resultSet = preparedStatement.executeQuery();
+               while(resultSet.next()){
+                    String name = resultSet.getString("nombre");
+                    String description = resultSet.getString("descripcion");
+                    LGAC lgacAuxiliar = new LGAC(name,description);
+                    lgacList.add(lgacAuxiliar);
+                }
+                connectorDataBase.disconnect();
+            }catch(SQLException sqlException) {
+                   throw new IllegalStateException("Parameter index ", sqlException);         
+            }catch(ClassNotFoundException ex) {
+                        Log.logException(ex);
+            }
+            return lgacList;
+        }
 }

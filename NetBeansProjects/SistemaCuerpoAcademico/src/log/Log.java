@@ -37,11 +37,11 @@ public class Log {
         }
 }
     
-public static String getStackTrace(Exception e) {
-    StringWriter stringWriter = new StringWriter();
-    PrintWriter printWriter = new PrintWriter(stringWriter);
-    e.printStackTrace(printWriter);
-    return stringWriter.toString();
-}
+    public static String getStackTrace(Exception e) {
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        e.printStackTrace(printWriter);
+        return stringWriter.toString();
+    }
 }
 

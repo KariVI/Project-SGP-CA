@@ -3,6 +3,7 @@ package businessLogic;
 
 import domain.Member;
 import domain.Prerequisite;
+import java.util.ArrayList;
 import log.BusinessException;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -87,5 +88,17 @@ public class PrerequisiteDAOTest {
         int idPrerequisite=4;
         PrerequisiteDAO prerequisiteDAO = new PrerequisiteDAO();
         assertTrue(prerequisiteDAO.delete(idPrerequisite));
+    }
+    
+    @Test 
+    public void testGetPrerequisites() throws BusinessException{
+      System.out.println("getPrerequisites");
+      int idExpected=1;
+      PrerequisiteDAO prerequisiteDAO = new PrerequisiteDAO();
+      ArrayList<Prerequisite> prerequisites;
+      prerequisites=prerequisiteDAO.getPrerequisites(1);
+      int result=prerequisites.get(0).getKey();
+      assertEquals(idExpected, result);
+      
     }
 }

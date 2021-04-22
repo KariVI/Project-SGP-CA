@@ -2,6 +2,7 @@
 package businessLogic;
 
 import domain.LGAC;
+import java.util.ArrayList;
 import log.BusinessException;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -52,4 +53,13 @@ public class LGACDAOTest {
       assertTrue(lgacDAO.update("Aplicaciones de las técnicas estadísticas", lgac));
     }
     
+    @Test
+    public void testGetLGACs()throws BusinessException{
+        ArrayList<LGAC> arrayLgac;
+        LGACDAO lgacDAO=new LGACDAO();
+        arrayLgac=lgacDAO.getLGACs();
+        String nameExpected="Evaluación del modelo de calidad de seguridad para arquitecturas de software ";
+        String result=arrayLgac.get(0).getName();
+        assertEquals(nameExpected, result);
+    }
 }

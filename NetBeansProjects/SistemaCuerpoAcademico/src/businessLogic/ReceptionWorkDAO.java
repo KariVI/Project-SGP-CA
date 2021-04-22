@@ -5,6 +5,7 @@ import dataaccess.Connector;
 import domain.ReceptionWork;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import log.BusinessException;
 import log.Log;
@@ -69,6 +70,39 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
             Log.logException(ex);
         }
         return updateSuccess;
+    }
+
+    @Override
+    public ReceptionWork getReceptionWorkById(int id) throws BusinessException {
+        ReceptionWork receptionWork=null;
+        Connector connectorDataBase=new Connector();
+
+        try {
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String query="SELECT * from TrabajoRecepcional where idTrabajoRecepcional=?";
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet;
+            resultSet=preparedStatement.executeQuery();
+            if(resultSet.next()){   
+                //String title, String type, String description, String dateStart, String dateEnd, String actualState
+                int idReceptionWork= resultSet.getInt(1);
+                String title= resultSet.getString("titulo");
+                String type= resultSet.getString("tipo");
+                String description=resultSet.getString("descripcion");
+                String dateStart= resultSet.getString("fechaInicio");
+                String dateEnd= resultSet.getString("fechaFin");
+                String actualState= resultSet.getString("estadoActual");
+                receptionWork=new ReceptionWork(title,type, description, dateStart, dateEnd, actualState);
+                receptionWork.setKey(idReceptionWork);
+            }
+            
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        } catch (SQLException sqlException) {
+            throw new BusinessException("DataBase connection failed ", sqlException);
+        }
+        return receptionWork;
     }
     
 }

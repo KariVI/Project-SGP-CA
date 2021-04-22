@@ -3,6 +3,7 @@ package businessLogic;
 
 import domain.Meeting;
 import domain.Member;
+import java.util.ArrayList;
 import log.BusinessException;
 
 
@@ -15,4 +16,5 @@ public interface IMeetingDAO {
     public boolean addAssistant(int idMeeting, String enrollment, String role) throws BusinessException;
     public Member getAssistant(int idMeeting, String profesionalLicense) throws BusinessException;
     public boolean update(Meeting meeting) throws BusinessException;
+    public ArrayList<Meeting>  getMeetings();
 }

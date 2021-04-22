@@ -2,6 +2,7 @@
 package businessLogic;
 
 import domain.PreliminarProject;
+import java.util.ArrayList;
 import log.BusinessException;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -59,5 +60,19 @@ public class PreliminarProjectDAOTest {
         "13/09/2020" , "17/05/2021");
         int id=8;
         assertTrue(preliminarProjectDAO.update(id, preliminarProject));
+    }
+    
+    @Test
+    public void testGetPreliminarProjects() throws BusinessException {  
+        System.out.println("getPreliminarProjects");
+        PreliminarProjectDAO preliminarProjectDAO=new PreliminarProjectDAO();
+        ArrayList<PreliminarProject> preliminarProjects;
+        preliminarProjects=preliminarProjectDAO.getPreliminarProjects();
+        int idExpected=1;
+        System.out.println(preliminarProjects.get(0).getKey());
+        int result= preliminarProjects.get(0).getKey();
+       assertEquals(idExpected, result);
+        
+        
     }
 }

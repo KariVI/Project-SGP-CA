@@ -2,11 +2,13 @@
 package businessLogic;
 
 import dataaccess.Connector;
+import domain.Member;
 import domain.Prerequisite;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import log.BusinessException;
 import log.Log;
 
@@ -145,7 +147,6 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
    
     }
 
-    @Override
     public boolean delete(int idPrerequisite) throws BusinessException{
         boolean deleteSucess=false;
         try{
@@ -165,5 +166,38 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
         }
         return deleteSucess;
     }
+    
+     public ArrayList<Prerequisite> getPrerequisites(int idMeeting) throws BusinessException{
+        ArrayList<Prerequisite> prerequisiteList = new ArrayList<>();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String queryPrerequisite="SELECT * FROM Prerequisito where idReunion=?";
+
+               PreparedStatement preparedStatement;
+               preparedStatement = connectionDataBase.prepareStatement(queryPrerequisite);
+               preparedStatement.setInt(1, idMeeting);
+               ResultSet resultSet;
+               resultSet = preparedStatement.executeQuery();
+               while(resultSet.next()){
+                    int key=resultSet.getInt(1);
+                    
+                    String description = resultSet.getString("descripcion");
+                    String professionalLicense= resultSet.getString("cedula");
+                    Prerequisite prerequisiteAuxiliar = new Prerequisite(description);
+                    prerequisiteAuxiliar.setKey(key);
+                    prerequisiteList.add(prerequisiteAuxiliar);
+                    
+                }
+                connectorDataBase.disconnect();
+            }catch(SQLException sqlException) {
+                   throw new BusinessException("Database failed ", sqlException);         
+            }catch(ClassNotFoundException ex) {
+                        Log.logException(ex);
+            }
+            return prerequisiteList;
+        }
+     
+     
 
 }

@@ -45,7 +45,19 @@ public class ReceptionWorkDAOTest {
         ReceptionWorkDAO instance = new ReceptionWorkDAO();
         boolean result = instance.update(id, receptionWork);
         assertTrue( result);
-        
+    }
+    
+    @Test
+    public void testGetReceptionWorkById() throws BusinessException{
+        int id=2;
+        ReceptionWork receptionWork = new ReceptionWork("Análisis comparativo de métodos de evaluación de arquitecturas de software guiado por ESSENCE 1.2",
+        "Práctico técnico","Resultados de la investigación y aplicación de ESSENCE 1.2 en distintas arquitecturas de software enfocadas a proyectos guiados",
+        "14/06/2020","01/02/2021", "Concluido");
+        receptionWork.setKey(id);
+        ReceptionWorkDAO instance = new ReceptionWorkDAO();  
+        System.out.println(instance.getReceptionWorkById(id).getKey());
+        assertTrue(receptionWork.equals(instance.getReceptionWorkById(id)));
+    
     }
     
 }

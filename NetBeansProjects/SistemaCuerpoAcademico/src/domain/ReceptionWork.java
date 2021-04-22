@@ -88,5 +88,21 @@ public class ReceptionWork {
         this.preliminarProject=preliminarProject;
     }
     
+    public boolean equals(Object object){
+        boolean value=false;
+            if (object instanceof ReceptionWork) {
+            ReceptionWork receptionWorkCompare = (ReceptionWork) object;
+            if( (this.key==receptionWorkCompare.getKey() )
+               && ( this.title.equals(receptionWorkCompare.getTitle())) 
+               && ( this.dateStart.equals(receptionWorkCompare.getDateStart()) )  
+               && (this.dateEnd.equals(receptionWorkCompare.getDateEnd()) )
+               &&(this.actualState.equals(receptionWorkCompare.getActualState()) ) 
+               && (this.type.equals(receptionWorkCompare.getType()) )) {
+                value=true;
+            }
+
+        }  
+        return value;
+    }
 }
 

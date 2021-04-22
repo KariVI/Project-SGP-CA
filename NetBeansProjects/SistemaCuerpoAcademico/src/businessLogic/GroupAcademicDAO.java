@@ -8,8 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import log.BusinessException;
 import log.Log;
 
@@ -33,8 +31,8 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
                 
                 
                 preparedStatement.executeUpdate();
-                value=true;
                 connectorDataBase.disconnect();
+                value=true;
             } catch (SQLException sqlException) {
                 throw new BusinessException("DataBase connection failed ", sqlException);
             } catch (ClassNotFoundException ex) {
@@ -75,10 +73,51 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
     }  
 
     @Override
-    public boolean addLGAC(LGAC lgac) throws BusinessException {
+    public boolean addLGAC(GroupAcademic groupAcademic,LGAC lgac) throws BusinessException {
         boolean addSucess=false;
-        
+        Connector connectorDataBase=new Connector();
+        try {
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String addLGAC="INSERT INTO CuerpoLGAC (claveCuerpoAcademico, nombreLGAC) values (?,?)";
+            PreparedStatement preparedStatement= connectionDataBase.prepareStatement(addLGAC);
+            preparedStatement.setString(1, groupAcademic.getKey());
+            preparedStatement.setString(2, lgac.getName());
+            preparedStatement.executeUpdate();
+            connectorDataBase.disconnect();
+            addSucess=true;       
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        } catch (SQLException sqlException) {
+             throw new BusinessException("DataBase connection failed ", sqlException);
+        }
         return addSucess;
+    }
+
+ 
+    public boolean update(String lastKey, GroupAcademic groupAcademic) throws BusinessException {
+        boolean updateSucess=false;
+        Connector connectorDataBase=new Connector();
+        try {
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String updateLgac = "UPDATE CuerpoAcademico set nombre=?, objetivo=?, mision=?, vision=?, gradoConsolidacion=? where clave=?";
+            
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement(updateLgac);
+            preparedStatement.setString(1, groupAcademic.getName());
+            preparedStatement.setString(2, groupAcademic.getObjetive());
+            preparedStatement.setString(3, groupAcademic.getMission());
+            preparedStatement.setString(4, groupAcademic.getVision());
+            preparedStatement.setString(5, groupAcademic.getConsolidationGrade());
+            preparedStatement.setString(6, lastKey);
+                
+            preparedStatement.executeUpdate();
+            updateSucess=true;  
+            connectorDataBase.disconnect();
+        }catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        } catch (SQLException sqlException) {
+           throw new BusinessException("DataBase connection failed ", sqlException);
+        }
+        return updateSucess;
     }
     
 }

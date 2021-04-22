@@ -2,7 +2,6 @@ package businessLogic;
 
 import domain.Project;
 import java.util.ArrayList;
-import java.sql.SQLException;
 
 /**
  *

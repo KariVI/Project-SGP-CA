@@ -3,6 +3,7 @@ package businessLogic;
 
 import domain.Meeting;
 import domain.Member;
+import java.util.ArrayList;
 import log.BusinessException;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -118,6 +119,15 @@ public class MeetingDAOTest {
         assertTrue(meetingDAO.update(meeting));
     }
     
+    @Test
+    public void testGetMeetings()throws BusinessException{
+        ArrayList<Meeting> arrayMeetings;
+        MeetingDAO meetingDAO=new MeetingDAO();
+        arrayMeetings=meetingDAO.getMeetings();
+        int idExpected=1;
+        int result=arrayMeetings.get(0).getKey();
+        assertEquals(idExpected, result);
+    }
 }
 
 
