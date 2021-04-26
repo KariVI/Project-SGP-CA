@@ -2,6 +2,7 @@
 package dataaccess;
 
 
+import log.BusinessException;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 
@@ -11,7 +12,7 @@ public class ConnectorTest {
 
     }
     @Test
-    public void testDataBaseConnection(){
+    public void testDataBaseConnection() throws BusinessException{
         Connector connector = new Connector();
         try {
             connector.connect();
