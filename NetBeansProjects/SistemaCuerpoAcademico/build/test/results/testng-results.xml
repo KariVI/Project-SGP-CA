@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="SistemaCuerpoAcademico" duration-ms="1328" started-at="2021-04-23T18:03:37Z" finished-at="2021-04-23T18:03:38Z">
+  <suite name="SistemaCuerpoAcademico" duration-ms="1180" started-at="2021-04-26T14:43:37Z" finished-at="2021-04-26T14:43:38Z">
     <groups>
     </groups>
-    <test name="businessLogic.MeetingDAOTest" duration-ms="1328" started-at="2021-04-23T18:03:37Z" finished-at="2021-04-23T18:03:38Z">
-      <class name="businessLogic.MeetingDAOTest">
-        <test-method status="PASS" signature="testChangeState()[pri:0, instance:testChangeState(businessLogic.MeetingDAOTest)]" name="testChangeState" duration-ms="1154" started-at="2021-04-23T13:03:37Z" finished-at="2021-04-23T13:03:38Z">
+    <test name="businessLogic.StudentDAOTest" duration-ms="1180" started-at="2021-04-26T14:43:37Z" finished-at="2021-04-26T14:43:38Z">
+      <class name="businessLogic.StudentDAOTest">
+        <test-method status="PASS" signature="testGetByEnrollmentFailed()[pri:0, instance:testGetByEnrollmentFailed(businessLogic.StudentDAOTest)]" name="testGetByEnrollmentFailed" duration-ms="960" started-at="2021-04-26T09:43:37Z" finished-at="2021-04-26T09:43:38Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testChangeState -->
-      </class> <!-- businessLogic.MeetingDAOTest -->
-    </test> <!-- businessLogic.MeetingDAOTest -->
+        </test-method> <!-- testGetByEnrollmentFailed -->
+      </class> <!-- businessLogic.StudentDAOTest -->
+    </test> <!-- businessLogic.StudentDAOTest -->
   </suite> <!-- SistemaCuerpoAcademico -->
 </testng-results>

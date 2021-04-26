@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Failed suite [SistemaCuerpoAcademico]">
-  <test name="businessLogic.PreliminarProjectDAOTest(failed)" junit="true">
+  <test name="businessLogic.StudentDAOTest(failed)" junit="true">
     <classes>
-      <class name="businessLogic.PreliminarProjectDAOTest">
+      <class name="businessLogic.StudentDAOTest">
         <methods>
-          <include name="testGetPreliminarProject"/>
+          <include name="testGetByEnrollmentFailed"/>
         </methods>
-      </class> <!-- businessLogic.PreliminarProjectDAOTest -->
+      </class> <!-- businessLogic.StudentDAOTest -->
     </classes>
-  </test> <!-- businessLogic.PreliminarProjectDAOTest(failed) -->
+  </test> <!-- businessLogic.StudentDAOTest(failed) -->
 </suite> <!-- Failed suite [SistemaCuerpoAcademico] -->

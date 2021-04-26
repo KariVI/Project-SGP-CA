@@ -1,12 +1,15 @@
 
 package domain;
 
+import java.util.ArrayList;
+
 public class PreliminarProject {
-      private int key;
+    private int key;
     private String title;
     private String description;
     private String dateStart;
     private String dateEnd;
+    private ArrayList<Student> students;
 
     
     
