@@ -3,6 +3,7 @@ package businessLogic;
 
 import domain.PreliminarProject;
 import domain.ReceptionWork;
+import java.util.ArrayList;
 import log.BusinessException;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -55,8 +56,42 @@ public class ReceptionWorkDAOTest {
         "14/06/2020","01/02/2021", "Concluido");
         receptionWork.setKey(id);
         ReceptionWorkDAO instance = new ReceptionWorkDAO();  
-        System.out.println(instance.getReceptionWorkById(id).getKey());
         assertTrue(receptionWork.equals(instance.getReceptionWorkById(id)));
+    
+    }
+    
+    @Test
+     public void testGetReceptionWorks() throws BusinessException {  
+        System.out.println("getPreliminarProjects");
+        ReceptionWorkDAO receptionWorkDAO=new ReceptionWorkDAO();
+        ArrayList<ReceptionWork> receptionWorks;
+        receptionWorks=receptionWorkDAO.getReceptionWorks();
+        int idExpected=1;
+        int result= receptionWorks.get(0).getKey();
+        assertEquals(idExpected, result);
+    }
+    @Test
+    public void testGetId() throws BusinessException{
+        int id=2;
+        ReceptionWork receptionWork = new ReceptionWork("Análisis comparativo de métodos de evaluación de arquitecturas de software guiado por ESSENCE 1.2",
+        "Práctico técnico","Resultados de la investigación y aplicación de ESSENCE 1.2 en distintas arquitecturas de software enfocadas a proyectos guiados",
+        "14/06/2020","01/02/2021", "Concluido");
+        receptionWork.setKey(id);
+        ReceptionWorkDAO instance = new ReceptionWorkDAO();  
+        int  result=instance.getId(receptionWork);
+        assertEquals(id,result);
+    
+    }
+     @Test
+    public void testGetIdFailed() throws BusinessException{
+        int id=50;
+        ReceptionWork receptionWork = new ReceptionWork("VaraAppX: Aplicación móvil para registro de datos detallados sobre varamientos de mamíferos marinos",
+        "Práctico técnico","Aplicación enfocada al registro de datos sobre varamientos mamiferos",
+        "20/12/2019","20/08/2020", "Concluido");
+        receptionWork.setKey(id);
+        ReceptionWorkDAO instance = new ReceptionWorkDAO();  
+        int  result=instance.getId(receptionWork);
+        assertNotEquals(id,result);
     
     }
     

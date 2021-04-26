@@ -218,6 +218,30 @@ public class MeetingDAO implements IMeetingDAO{
         return updateSuccess;  
     }    
 
+    @Override
+    public boolean changeState(Meeting meeting) throws BusinessException {
+          boolean updateSuccess=false;
+            try {
+                Connector connectorDataBase=new Connector();
+                Connection connectionDataBase = connectorDataBase.getConnection();
+                String updateMeeting = "UPDATE Reunion set estado=?  where idReunion=?";
+            
+                PreparedStatement preparedStatement = connectionDataBase.prepareStatement(updateMeeting);
+                
+                preparedStatement.setString(1, meeting.getState());
+                preparedStatement.setInt(2, meeting.getKey());
+                
+                preparedStatement.executeUpdate();
+                updateSuccess=true;
+                connectorDataBase.disconnect();
+            } catch (SQLException sqlException) {
+                throw new BusinessException("DataBase connection failed ", sqlException);
+            } catch (ClassNotFoundException ex) {
+                Log.logException(ex);
+            }
+        return updateSuccess;    
+    }
+
 }
 
 

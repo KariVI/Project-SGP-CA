@@ -69,10 +69,17 @@ public class PreliminarProjectDAOTest {
         ArrayList<PreliminarProject> preliminarProjects;
         preliminarProjects=preliminarProjectDAO.getPreliminarProjects();
         int idExpected=1;
-        System.out.println(preliminarProjects.get(0).getKey());
         int result= preliminarProjects.get(0).getKey();
        assertEquals(idExpected, result);
-        
-        
+    }
+    
+    @Test
+    public void testGetPreliminarProject() throws BusinessException {
+        PreliminarProject preliminarProject = new PreliminarProject ("Revisión de la Literatura acerca de Varamiento de Mamíferos Marinos",
+        "Revisión de la Literatura acerca de Varamiento de Mamíferos Marinos",
+        "13/01/2021", "13/07/2021");
+        preliminarProject.setKey(6);
+        PreliminarProjectDAO preliminarProjectDAO=new PreliminarProjectDAO();
+        assertTrue(preliminarProject.equals(preliminarProjectDAO.getById(6)));
     }
 }

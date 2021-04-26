@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="SistemaCuerpoAcademico" duration-ms="1114" started-at="2021-04-22T03:40:32Z" finished-at="2021-04-22T03:40:33Z">
+  <suite name="SistemaCuerpoAcademico" duration-ms="1328" started-at="2021-04-23T18:03:37Z" finished-at="2021-04-23T18:03:38Z">
     <groups>
     </groups>
-    <test name="businessLogic.ReceptionWorkDAOTest" duration-ms="1114" started-at="2021-04-22T03:40:32Z" finished-at="2021-04-22T03:40:33Z">
-      <class name="businessLogic.ReceptionWorkDAOTest">
-        <test-method status="PASS" signature="testGetReceptionWorkById()[pri:0, instance:testGetReceptionWorkById(businessLogic.ReceptionWorkDAOTest)]" name="testGetReceptionWorkById" duration-ms="973" started-at="2021-04-21T22:40:32Z" finished-at="2021-04-21T22:40:33Z">
+    <test name="businessLogic.MeetingDAOTest" duration-ms="1328" started-at="2021-04-23T18:03:37Z" finished-at="2021-04-23T18:03:38Z">
+      <class name="businessLogic.MeetingDAOTest">
+        <test-method status="PASS" signature="testChangeState()[pri:0, instance:testChangeState(businessLogic.MeetingDAOTest)]" name="testChangeState" duration-ms="1154" started-at="2021-04-23T13:03:37Z" finished-at="2021-04-23T13:03:38Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testGetReceptionWorkById -->
-      </class> <!-- businessLogic.ReceptionWorkDAOTest -->
-    </test> <!-- businessLogic.ReceptionWorkDAOTest -->
+        </test-method> <!-- testChangeState -->
+      </class> <!-- businessLogic.MeetingDAOTest -->
+    </test> <!-- businessLogic.MeetingDAOTest -->
   </suite> <!-- SistemaCuerpoAcademico -->
 </testng-results>

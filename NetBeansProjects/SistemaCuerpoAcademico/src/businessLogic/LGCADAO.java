@@ -2,7 +2,7 @@
 package businessLogic;
 
 import dataaccess.Connector;
-import domain.LGAC;
+import domain.LGCA;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,9 +12,9 @@ import log.BusinessException;
 import log.Log;
 
 
-public class LGACDAO implements ILGACDAO {
+public class LGCADAO implements ILGCADAO {
     
-    public boolean save(LGAC lgac) throws BusinessException{
+    public boolean save(LGCA lgac) throws BusinessException{
         boolean value=false;
         Connector connectorDataBase=new Connector();
         try {
@@ -38,8 +38,8 @@ public class LGACDAO implements ILGACDAO {
     }
 
     @Override
-    public LGAC getLgacByName(String name) throws BusinessException {
-        LGAC lgacAuxiliar=null;
+    public LGCA getLgacByName(String name) throws BusinessException {
+        LGCA lgacAuxiliar=null;
         Connector connectorDataBase=new Connector();
         try {
             Connection connectionDataBase = connectorDataBase.getConnection();
@@ -52,7 +52,7 @@ public class LGACDAO implements ILGACDAO {
             if(resultSet.next()){   
                 String nameLgac= resultSet.getString("nombre");
                 String description=resultSet.getString("descripcion");
-                lgacAuxiliar=new LGAC(nameLgac, description);
+                lgacAuxiliar=new LGCA(nameLgac, description);
             }
             
         } catch (ClassNotFoundException ex) {
@@ -64,7 +64,7 @@ public class LGACDAO implements ILGACDAO {
     }
 
    
-    public boolean update(String beforeName, LGAC lgac) throws BusinessException {
+    public boolean update(String beforeName, LGCA lgac) throws BusinessException {
         boolean updateSucess=false;
         Connector connectorDataBase=new Connector();
         try {
@@ -88,8 +88,8 @@ public class LGACDAO implements ILGACDAO {
         return updateSucess;
     }
     
-    public ArrayList<LGAC>  getLGACs(){
-        ArrayList<LGAC> lgacList = new ArrayList<>();
+    public ArrayList<LGCA>  getLGACs(){
+        ArrayList<LGCA> lgacList = new ArrayList<>();
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
@@ -102,7 +102,7 @@ public class LGACDAO implements ILGACDAO {
                while(resultSet.next()){
                     String name = resultSet.getString("nombre");
                     String description = resultSet.getString("descripcion");
-                    LGAC lgacAuxiliar = new LGAC(name,description);
+                    LGCA lgacAuxiliar = new LGCA(name,description);
                     lgacList.add(lgacAuxiliar);
                 }
                 connectorDataBase.disconnect();

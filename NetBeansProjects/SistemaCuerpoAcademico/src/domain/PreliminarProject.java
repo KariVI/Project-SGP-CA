@@ -57,5 +57,19 @@ public class PreliminarProject {
     public void setDateEnd(String dateEnd){ 
         this.dateEnd=dateEnd;
     }
-      
+    
+    public boolean equals(Object object){
+        boolean value=false;
+            if (object instanceof PreliminarProject) {
+            PreliminarProject preliminarProjectCompare = (PreliminarProject) object;
+            if( (this.key==preliminarProjectCompare.getKey() )
+               && ( this.title.equals(preliminarProjectCompare.getTitle())) 
+               && ( this.dateStart.equals(preliminarProjectCompare.getDateStart()) )  
+               && (this.dateEnd.equals(preliminarProjectCompare.getDateEnd()) )) {
+                value=true;
+            }
+
+        }  
+        return value;
+    }
 }

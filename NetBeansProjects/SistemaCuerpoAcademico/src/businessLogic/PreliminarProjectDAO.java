@@ -99,10 +99,10 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
-            String queryLgac="SELECT * FROM Anteproyecto";
+            String queryPreliminarProject="SELECT * FROM Anteproyecto";
 
                PreparedStatement preparedStatement;
-               preparedStatement = connectionDataBase.prepareStatement(queryLgac);
+               preparedStatement = connectionDataBase.prepareStatement(queryPreliminarProject);
                ResultSet resultSet;
                resultSet = preparedStatement.executeQuery();
                while(resultSet.next()){

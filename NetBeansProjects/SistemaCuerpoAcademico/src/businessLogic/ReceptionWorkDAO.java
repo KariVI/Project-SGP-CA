@@ -7,13 +7,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import log.BusinessException;
 import log.Log;
 
 
 public class ReceptionWorkDAO implements IReceptionWorkDAO {
 
-    @Override
     public boolean save(ReceptionWork receptionWork) throws BusinessException {
         boolean value=false;
         int idPreliminarProject= receptionWork.getPreliminarProject().getKey();
@@ -85,7 +85,6 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
             ResultSet resultSet;
             resultSet=preparedStatement.executeQuery();
             if(resultSet.next()){   
-                //String title, String type, String description, String dateStart, String dateEnd, String actualState
                 int idReceptionWork= resultSet.getInt(1);
                 String title= resultSet.getString("titulo");
                 String type= resultSet.getString("tipo");
@@ -103,6 +102,66 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
             throw new BusinessException("DataBase connection failed ", sqlException);
         }
         return receptionWork;
+    }
+
+
+    public int getId(ReceptionWork receptionWork) throws BusinessException {
+        Integer id= 0;
+        try{
+            Connector connectorDataBase=new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            ResultSet resultSet;
+            String selectId = "SELECT idTrabajoRecepcional from  TrabajoRecepcional where titulo=? and descripcion=? and tipo=? and fechaInicio=? and fechaFin=?;";
+     
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement(selectId);
+            preparedStatement.setString(1, receptionWork.getTitle());
+            preparedStatement.setString(2, receptionWork.getDescription());
+            preparedStatement.setString(3, receptionWork.getType());
+            preparedStatement.setString(4, receptionWork.getDateStart());
+            preparedStatement.setString(5, receptionWork.getDateEnd());      
+            resultSet=preparedStatement.executeQuery();
+           
+            if(resultSet.next()){
+                id=Integer.parseInt(resultSet.getString("idTrabajoRecepcional"));
+            }
+            connectorDataBase.disconnect();
+        }catch(SQLException sqlException) {
+            throw new BusinessException("DataBase connection failed ", sqlException);
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return id;
+    }
+    public ArrayList<ReceptionWork> getReceptionWorks() throws BusinessException {
+        ArrayList<ReceptionWork> receptionWorkList = new ArrayList<>();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String queryReceptionWork="SELECT * FROM TrabajoRecepcional";
+
+               PreparedStatement preparedStatement;
+               preparedStatement = connectionDataBase.prepareStatement(queryReceptionWork);
+               ResultSet resultSet;
+               resultSet = preparedStatement.executeQuery();
+               while(resultSet.next()){
+                   int key= resultSet.getInt(1);
+                    String title = resultSet.getString("titulo");
+                    String description = resultSet.getString("descripcion");
+                    String type = resultSet.getString("tipo");
+                    String dateStart=resultSet.getString("fechaInicio");
+                    String dateEnd=resultSet.getString("fechaFin");
+                    String actualState = resultSet.getString("estadoActual");
+                    ReceptionWork receptionWorkAuxiliar = new ReceptionWork(title,type, description, dateStart, dateEnd, actualState);
+                    receptionWorkAuxiliar.setKey(key);
+                    receptionWorkList.add(receptionWorkAuxiliar);
+                }
+                connectorDataBase.disconnect();
+            }catch(SQLException sqlException) {
+                   throw new BusinessException("Database failed ", sqlException);         
+            }catch(ClassNotFoundException ex) {
+                        Log.logException(ex);
+            }
+            return receptionWorkList;
     }
     
 }

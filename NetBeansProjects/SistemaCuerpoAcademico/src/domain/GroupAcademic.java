@@ -8,7 +8,7 @@ public class GroupAcademic {
     private String objetive;
     private String mission;
     private String vision;
-    private LGAC lgacs[];
+    private LGCA lgacs[];
     public static int indexLgacs=0;
 
     public GroupAcademic(String key, String name, String objetive, String consolidationGrade, String mission, String vision) {
@@ -68,7 +68,7 @@ public class GroupAcademic {
         this.vision=vision;
     }
     
-    public LGAC[] getLGAC(){
+    public LGCA[] getLGAC(){
      return lgacs;
     }
     

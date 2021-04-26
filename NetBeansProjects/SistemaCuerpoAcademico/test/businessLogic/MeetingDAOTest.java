@@ -128,6 +128,13 @@ public class MeetingDAOTest {
         int result=arrayMeetings.get(0).getKey();
         assertEquals(idExpected, result);
     }
+    
+    @Test
+    public void testChangeState() throws BusinessException{
+        Meeting meeting= new Meeting(4,"Actualizar plan de trabajo de la LIS","13:00","11/05/2021", "Proxima");
+        MeetingDAO meetingDAO= new MeetingDAO();
+        assertTrue(meetingDAO.changeState(meeting));
+    }
 }
 
 
