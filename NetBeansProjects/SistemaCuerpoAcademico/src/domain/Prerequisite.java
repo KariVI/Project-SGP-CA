@@ -39,14 +39,7 @@ public class Prerequisite {
         return false;
     }
 
-    public Member getMandated() {
-        return this.mandated;
-    }
-    
-    public void setMandated(Member mandated){
-        this.mandated=mandated;
-        
-    }
+
     
 
 }
