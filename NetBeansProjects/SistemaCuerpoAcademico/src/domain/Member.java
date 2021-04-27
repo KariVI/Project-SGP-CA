@@ -101,7 +101,7 @@ public class Member {
         return universityName;
     }
 
-    private String getProfessionalLicense() {
+    public String getProfessionalLicense() {
         return professionalLicense;
     }
 
