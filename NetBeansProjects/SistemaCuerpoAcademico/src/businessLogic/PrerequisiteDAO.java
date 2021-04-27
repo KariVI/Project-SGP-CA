@@ -15,7 +15,6 @@ import log.Log;
 public class PrerequisiteDAO implements IPrerequisiteDAO{
 
 
-
     public int searchId(Prerequisite prerequisite, int idMeeting) throws BusinessException {
         Integer idAuxiliar=0;
         try{

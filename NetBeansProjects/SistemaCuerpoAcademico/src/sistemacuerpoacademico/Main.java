@@ -1,4 +1,5 @@
 
+
 package sistemacuerpoacademico;
 import businessLogic.MeetingDAO;
 import businessLogic.MinuteDAO;
@@ -16,4 +17,3 @@ public class Main {
 
 }
     
-
