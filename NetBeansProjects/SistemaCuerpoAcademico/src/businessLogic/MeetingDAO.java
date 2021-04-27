@@ -106,7 +106,7 @@ public class MeetingDAO implements IMeetingDAO{
         
     }
 
-      public ArrayList<Meeting>  getMeetings(){
+    public ArrayList<Meeting>  getMeetings(){
         ArrayList<Meeting> meetingList = new ArrayList<>();
         try{
             Connector connectorDataBase = new Connector();

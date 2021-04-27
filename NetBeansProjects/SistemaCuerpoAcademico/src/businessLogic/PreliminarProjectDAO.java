@@ -2,6 +2,7 @@
 package businessLogic;
 
 import dataaccess.Connector;
+import domain.Member;
 import domain.PreliminarProject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -152,6 +153,34 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
             throw new BusinessException("DataBase connection failed ", sqlException);
         }
         return preliminarProject;
+    }
+
+  
+    public boolean addColaborators(PreliminarProject preliminarProject) throws BusinessException {
+        boolean addColaboratorSuccess=false;
+        int idPreliminarProject=preliminarProject.getKey();
+        ArrayList<Member> colaborators= preliminarProject.getMembers();
+         try {
+                Connector connectorDataBase=new Connector();
+                Connection connectionDataBase = connectorDataBase.getConnection();
+                String insertColaborators = "INSERT INTO Colabora(idAnteproyecto,cedula,rol) VALUES (?,?,?)";
+                int i=0;
+                while(i< colaborators.size()){
+                    PreparedStatement preparedStatement = connectionDataBase.prepareStatement(insertColaborators);
+                    preparedStatement.setInt(1, idPreliminarProject);
+                    preparedStatement.setString(2, colaborators.get(i).getProfessionalLicense());
+                    preparedStatement.setString(3, colaborators.get(i).getRole());
+                    preparedStatement.executeUpdate();
+                    addColaboratorSuccess=true; 
+                    i++;
+                } 
+               connectorDataBase.disconnect();
+            } catch (SQLException sqlException) {
+                throw new BusinessException("DataBase connection failed ", sqlException);
+            } catch (ClassNotFoundException ex) {
+                Log.logException(ex);
+            }
+        return addColaboratorSuccess;
     }
     
 }

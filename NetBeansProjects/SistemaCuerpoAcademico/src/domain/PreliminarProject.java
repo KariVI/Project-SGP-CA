@@ -2,6 +2,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class PreliminarProject {
     private int key;
@@ -10,7 +11,7 @@ public class PreliminarProject {
     private String dateStart;
     private String dateEnd;
     private ArrayList<Student> students;
-
+    private ArrayList<Member> members;
     
     
     public PreliminarProject(String title, String description, String dateStart, String dateEnd){
@@ -18,6 +19,8 @@ public class PreliminarProject {
         this.description=description;
         this.dateStart=dateStart;
         this.dateEnd=dateEnd;
+        students=new ArrayList();
+        members=new ArrayList();
          
     }
     
@@ -61,7 +64,57 @@ public class PreliminarProject {
         this.dateEnd=dateEnd;
     }
     
-    public boolean equals(Object object){
+   
+    
+    public Member getMember( String licenseProfessional){
+        Member assistant=null;
+        for (int i=0; i<  members.size() ; i++  ){
+            Member auxiliar= members.get(i);
+            if (auxiliar.getProfessionalLicense().equals(licenseProfessional)){
+               assistant=auxiliar;
+            }
+        }
+        return assistant;
+    }
+    
+    public ArrayList<Member> getMembers(){
+        return  members;
+    }
+    
+    public void addMember(Member member){ 
+         members.add(member);
+    }
+    
+        public Student getStudent( String enrollment){
+        Student student=null;
+        for (int i=0; i<  students.size() ; i++  ){
+            Student auxiliar= students.get(i);
+            if (auxiliar.getEnrollment().equals(enrollment)){
+               student=auxiliar;
+            }
+        }
+        return student;
+    }
+    
+    public ArrayList<Student> getStudent(){
+        return  students;
+    }
+    
+    public void addStudent(Student student){ 
+         students.add(student);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + this.key;
+        hash = 71 * hash + Objects.hashCode(this.title);
+        hash = 71 * hash + Objects.hashCode(this.dateStart);
+        hash = 71 * hash + Objects.hashCode(this.dateEnd);
+        return hash;
+    }
+    
+     public boolean equals(Object object){
         boolean value=false;
             if (object instanceof PreliminarProject) {
             PreliminarProject preliminarProjectCompare = (PreliminarProject) object;

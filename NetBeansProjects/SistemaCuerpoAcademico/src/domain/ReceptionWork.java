@@ -1,6 +1,8 @@
 
 package domain;
 
+import java.util.ArrayList;
+
 
 public class ReceptionWork {
     
@@ -12,6 +14,8 @@ public class ReceptionWork {
     private String dateEnd;
     private String actualState;
     private PreliminarProject preliminarProject;
+    private ArrayList<Student> students;
+    private ArrayList<Member> members;
     
     
     public ReceptionWork(String title, String type, String description, String dateStart, String dateEnd, String actualState){
@@ -87,6 +91,34 @@ public class ReceptionWork {
     public void setPreliminarProject(PreliminarProject preliminarProject){ 
         this.preliminarProject=preliminarProject;
     }
+    
+     public ArrayList<Member> getMember(){
+        return  members;
+    }
+    
+    public void addAssistant(Member assistant){ 
+         members.add(assistant);
+    }
+    
+        public Student getStudent( String enrollment){
+        Student student=null;
+        for (int i=0; i<  students.size() ; i++  ){
+            Student auxiliar= students.get(i);
+            if (auxiliar.getEnrollment().equals(enrollment)){
+               student=auxiliar;
+            }
+        }
+        return student;
+    }
+    
+    public ArrayList<Student> getStudent(){
+        return  students;
+    }
+    
+    public void addStudent(Student student){ 
+         students.add(student);
+    }
+    
     
     public boolean equals(Object object){
         boolean value=false;

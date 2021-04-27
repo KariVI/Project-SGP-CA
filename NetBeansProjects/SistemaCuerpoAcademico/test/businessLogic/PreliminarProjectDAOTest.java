@@ -1,6 +1,7 @@
 
 package businessLogic;
 
+import domain.Member;
 import domain.PreliminarProject;
 import java.util.ArrayList;
 import log.BusinessException;
@@ -81,5 +82,20 @@ public class PreliminarProjectDAOTest {
         preliminarProject.setKey(6);
         PreliminarProjectDAO preliminarProjectDAO=new PreliminarProjectDAO();
         assertTrue(preliminarProject.equals(preliminarProjectDAO.getById(6)));
+    }
+    
+    @Test
+    public void testAddColaborator()throws BusinessException{   
+        PreliminarProject preliminarProject = new PreliminarProject ("Revisión de la Literatura acerca de Varamiento de Mamíferos Marinos",
+        "Revisión de la Literatura acerca de Varamiento de Mamíferos Marinos",
+        "13/01/2021", "13/07/2021");
+        preliminarProject.setKey(6);
+         Member member= new Member("8325134","Juan Carlos Perez Arriaga","Director");
+        Member memberAdd= new Member("7938268","Maria Karen Cortes Verdin", "Colaborador");
+        preliminarProject.addMember(member);
+        preliminarProject.addMember(memberAdd);
+  
+        PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
+        assertTrue(preliminarProjectDAO.addColaborators(preliminarProject));
     }
 }
