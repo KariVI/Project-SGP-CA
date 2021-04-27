@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package businessLogic;
 
 import dataaccess.Connector;
@@ -13,9 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import log.Log;
+import log.BusinessException;
 
 /**
  *
@@ -24,7 +18,7 @@ import log.Log;
 public class MinuteDAO implements IMinuteDAO {
 
     @Override
-    public boolean saveMinute(Minute minute, int idMeeting) {
+    public boolean saveMinute(Minute minute)throws BusinessException {
                     boolean saveSuccess = false;
                     try{
                         Connector connectorDataBase = new Connector();
@@ -36,24 +30,22 @@ public class MinuteDAO implements IMinuteDAO {
                             insertMinuteStatment.setString(1, minute.getNote());
                             insertMinuteStatment.setString(2,  minute.getSate());
                             insertMinuteStatment.setString(3, minute.getDue());
-                            insertMinuteStatment.setInt(4, idMeeting);
+                            insertMinuteStatment.setInt(4, minute.getIdMeeting());
                             insertMinuteStatment.executeUpdate();
                             
                             connectorDataBase.disconnect();
                              saveSuccess = true;
                         }catch(SQLException sqlException) {
-                            Log.logException(sqlException);
-                           
-                            //throw new IllegalStateException("Parameter index ", sqlException);
+                            throw new BusinessException("Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
-                        Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+                        Log.logException(ex);
                     }
                     return saveSuccess;
     }
 
     @Override
-    public void approveMinute(int idMinute, String professionalLicense) {
+    public void approveMinute(int idMinute, String professionalLicense)throws BusinessException{
                     try{
                         Connector connectorDataBase = new Connector();
                         Connection connectionDataBase = connectorDataBase.getConnection();
@@ -68,15 +60,15 @@ public class MinuteDAO implements IMinuteDAO {
                             
                             connectorDataBase.disconnect();
                         }catch(SQLException sqlException) {
-                            throw new IllegalStateException("Parameter index ", sqlException);
+                            throw new BusinessException("Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
-                        Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+                        Log.logException(ex);
                     }
     }
 
     @Override
-    public void disapproveMinute(int idMinute, String professionalLicense, String comments) {
+    public void disapproveMinute(int idMinute, String professionalLicense, String comments)throws BusinessException {
                     try{
                         Connector connectorDataBase = new Connector();
                         Connection connectionDataBase = connectorDataBase.getConnection();
@@ -93,14 +85,14 @@ public class MinuteDAO implements IMinuteDAO {
                             
                             connectorDataBase.disconnect();
                         }catch(SQLException sqlException) {
-                            throw new IllegalStateException("Parameter index ", sqlException);
+                            throw new BusinessException("Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
-                        Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+                        Log.logException(ex);
                     }
     }
     @Override
-    public ArrayList<Minute>  getMinutes(){
+    public ArrayList<Minute>  getMinutes() throws BusinessException{
                      ArrayList<Minute> minuteList = new ArrayList<>();
                      try{
                         Connector connectorDataBase = new Connector();
@@ -118,23 +110,24 @@ public class MinuteDAO implements IMinuteDAO {
                                 String note = minuteResultSet.getString("nota");
                                 String due = minuteResultSet.getString("pendiente");
                                 String state = minuteResultSet.getString("estado");
-                                Minute minute = new Minute(idMinute, note, state, due);
+                                int idMeeting = minuteResultSet.getInt("idReunion");
+                                Minute minute = new Minute(idMinute, note, state, due,idMeeting);
                                 minuteList.add(minute);
                             }
                               
                             connectorDataBase.disconnect();
                            
                         }catch(SQLException sqlException) {
-                            throw new IllegalStateException("Parameter index ", sqlException);
+                            throw new BusinessException("Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
-                        Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+                        Log.logException(ex);
                     }
                     return minuteList;  
     }
     
     @Override
-    public ArrayList<MinuteComment>  getMinutesComments(int idMinute){
+    public ArrayList<MinuteComment>  getMinutesComments(int idMinute) throws BusinessException{
                      ArrayList<MinuteComment> commentList = new ArrayList<>();
                      try{
                         Connector connectorDataBase = new Connector();
@@ -159,13 +152,37 @@ public class MinuteDAO implements IMinuteDAO {
                             connectorDataBase.disconnect();
                            
                         }catch(SQLException sqlException) {
-                            Log.logException(sqlException);
-                           // throw new IllegalStateException("Parameter index ", sqlException);
+                            throw new BusinessException("Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
-                        Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+                        Log.logException(ex);
                     }
+                     
                     return commentList;  
     }
-
+    
+    @Override
+    public boolean update(Minute newMinute) throws BusinessException {
+        boolean updateSucess = false;
+        Connector connectorDataBase=new Connector();
+        try {
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("UPDATE Minuta set  nota = ? , estado = ?, pendiente = ?, idReunion = ? where idMinuta = ? ");
+                preparedStatement.setString(1, newMinute.getNote());
+                preparedStatement.setString(2,  newMinute.getSate());
+                preparedStatement.setString(3,newMinute.getDue());
+                preparedStatement.setInt(4, newMinute.getIdMeeting());
+                preparedStatement.setInt(5, newMinute.getIdMinute());
+            
+            preparedStatement.executeUpdate();
+            updateSucess=true;  
+            connectorDataBase.disconnect();
+        }catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        } catch (SQLException sqlException) {
+           throw new BusinessException("DataBase connection failed ", sqlException);
+        }
+      
+        return updateSucess;
+    } 
 }

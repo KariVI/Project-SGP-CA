@@ -1,4 +1,5 @@
 
+
 package log;
 
 public class BusinessException extends Exception {

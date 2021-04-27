@@ -23,7 +23,9 @@ public class Log {
     public static void logException(Exception exception) {
         setLogic();
         try {
+
             Handler fileHandler = new FileHandler("./bitacora.log", true);           
+
             SimpleFormatter simpleFormatter = new SimpleFormatter();
             fileHandler.setFormatter(simpleFormatter);           
             LOG_LOGIC.addHandler(fileHandler);
@@ -35,6 +37,7 @@ public class Log {
         } catch (SecurityException ex) {
             LOGGER.log(Level.SEVERE, "Error de Seguridad");
         }
+
 }
     
     public static String getStackTrace(Exception e) {

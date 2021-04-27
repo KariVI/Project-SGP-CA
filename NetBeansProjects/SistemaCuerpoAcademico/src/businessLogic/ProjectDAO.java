@@ -7,9 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import log.Log;
+import log.BusinessException;
 
 /**
  *
@@ -18,7 +17,7 @@ import log.Log;
 public class ProjectDAO implements IProjectDAO {
 
         @Override
-        public boolean save(Project project) {
+        public boolean save(Project project) throws BusinessException{
                 boolean saveSuccess = false;
                     try{
                         Connector connectorDataBase = new Connector();
@@ -37,16 +36,16 @@ public class ProjectDAO implements IProjectDAO {
                             connectorDataBase.disconnect();
                             saveSuccess = true;
                         }catch(SQLException sqlException) {
-                            throw new IllegalStateException("Parameter index ", sqlException);
+                            throw new BusinessException("Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
-                        Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+                        Log.logException(ex);
                     }
                     return saveSuccess;
         }
         
         @Override
-        public ArrayList<Project>  getProjects(){
+        public ArrayList<Project>  getProjects() throws BusinessException{
                      ArrayList<Project> projectList = new ArrayList<>();
                      try{
                         Connector connectorDataBase = new Connector();
@@ -72,16 +71,16 @@ public class ProjectDAO implements IProjectDAO {
                             connectorDataBase.disconnect();
                            
                         }catch(SQLException sqlException) {
-                            throw new IllegalStateException("Parameter index ", sqlException);
+                            throw new BusinessException("Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
-                        Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+                        Log.logException(ex);
                     }
                     return projectList;  
         }
         
         @Override
-        public int  searchId(Project project) {
+        public int  searchId(Project project) throws BusinessException {
                 int idProject = 0;
                 try{
                         Connector connectorDataBase = new Connector();
@@ -102,10 +101,10 @@ public class ProjectDAO implements IProjectDAO {
                             connectorDataBase.disconnect();
                            
                         }catch(SQLException sqlException) {
-                            throw new IllegalStateException("Parameter index ", sqlException);
+                            throw new BusinessException("Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
-                        Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+                        Log.logException(ex);
                     }
                     return idProject;
         }
@@ -120,7 +119,7 @@ public class ProjectDAO implements IProjectDAO {
         }
         
         @Override
-        public Project getProjectById(int idProject){
+        public Project getProjectById(int idProject) throws BusinessException{
                      Project project = null;
                      try{
                         Connector connectorDataBase = new Connector();
@@ -145,11 +144,36 @@ public class ProjectDAO implements IProjectDAO {
                             connectorDataBase.disconnect();
                            
                         }catch(SQLException sqlException) {
-                            throw new IllegalStateException("Parameter index ", sqlException);
+                            throw new BusinessException("Parameter index ", sqlException);
                         }
                     }catch(ClassNotFoundException ex) {
-                        Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+                        Log.logException(ex);
                     }
                     return project;  
         }
+        
+    @Override
+    public boolean update(Project newProject) throws BusinessException {
+        boolean updateSucess = false;
+        Connector connectorDataBase=new Connector();
+        try {
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("UPDATE Proyecto set titulo = ?, descripcion = ?, fechaInicio = ?, fechaFin = ? WHERE idProyecto = ? ");
+            preparedStatement.setString(1, newProject.getTitle());
+            preparedStatement.setString(2, newProject.getDescription());
+            preparedStatement.setString(3, newProject.getStartDate());
+            preparedStatement.setString(4, newProject.getFinishDate());
+            preparedStatement.setInt(5, newProject.getIdProject());
+                
+            preparedStatement.executeUpdate();
+            updateSucess=true;  
+            connectorDataBase.disconnect();
+        }catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        } catch (SQLException sqlException) {
+           throw new BusinessException("DataBase connection failed ", sqlException);
+        }
+        
+        return updateSucess;
+    }
 }

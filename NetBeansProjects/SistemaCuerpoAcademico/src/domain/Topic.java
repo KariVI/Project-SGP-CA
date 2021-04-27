@@ -9,33 +9,36 @@ package domain;
  *
  * @author Mariana
  */
-public class AgendaTopic {
+public class Topic {
     private String topicName;
     private String startTime;
     private String finishTime;
-    private int idAgendaTopic;
+    private int idTopic;
     private String ProfessionalLicense;
+    private int idMeeting;
 
-    public AgendaTopic(String topicName, String startTime, String finishTime, String ProfessionalLicense){
+    public Topic(String topicName, String startTime, String finishTime, String ProfessionalLicense, int idMeeting){
         this.topicName = topicName;
         this.startTime = startTime;
         this.finishTime = finishTime;
         this.ProfessionalLicense = ProfessionalLicense;
+        this.idMeeting = idMeeting;
     }
     
-    public AgendaTopic(int idAgendaTopic, String topicName, String startTime, String finishTime, String ProfessionalLicense){
-        this.idAgendaTopic = idAgendaTopic;
+    public Topic(int idTopic, String topicName, String startTime, String finishTime, String ProfessionalLicense, int idMeeting){
+        this.idTopic = idTopic;
         this.topicName = topicName;
         this.startTime = startTime;
         this.finishTime = finishTime;
+        this.idMeeting = idMeeting;
     }
     
-    public int getIdAgendaTopic(){
-        return idAgendaTopic;
+    public int getIdTopic(){
+        return idTopic;
     }
 
-    public void setIdAgendaTopic(int idAgendaTopic){
-        this.idAgendaTopic = idAgendaTopic;
+    public void setIdTopic(int idTopic){
+        this.idTopic = idTopic;
     }
 
     public String getTopicName(){
@@ -68,5 +71,13 @@ public class AgendaTopic {
 
     public void setProfessionalLicense(String ProfessionalLicense){
         this.ProfessionalLicense = ProfessionalLicense;
+    }
+    
+    public int getIdMeeting(){
+        return idMeeting;
+    }
+    
+    public void setIdMeeting(int idMeeting){
+        this.idMeeting = idMeeting;
     }
 }

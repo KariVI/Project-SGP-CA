@@ -9,18 +9,21 @@ public class Minute {
     private String state;
     private String due;
     private int idMinute;
+    private int idMeeting;
 
-    public Minute(int idMinute, String note, String state, String due ){
+    public Minute(int idMinute, String note, String state, String due, int idMeeting ){
         this.idMinute = idMinute;
         this.note = note;
         this.state = state;
         this.due = due;
+        this.idMeeting = idMeeting;
     }
     
-    public Minute(String note, String state, String due ){
+    public Minute(String note, String state, String due, int idMeeting ){
         this.note = note;
         this.state = state;
         this.due = due;
+        this.idMeeting = idMeeting;
     }
     
     public int getIdMinute(){
@@ -52,5 +55,13 @@ public class Minute {
     
     public void setDue(String due){
         this.due = due;
+    }
+    
+    public int getIdMeeting(){
+        return idMeeting;
+    }
+    
+    public void setIdMeeting(int idMeeting){
+        this.idMeeting = idMeeting;
     }
 }

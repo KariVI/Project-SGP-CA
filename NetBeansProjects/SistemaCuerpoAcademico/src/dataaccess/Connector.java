@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 public class Connector {
         private Connection connection;
+
         Properties properties = new Properties();
          FileInputStream fileInputStream;
         
@@ -31,14 +32,13 @@ public class Connector {
             userPassword = properties.getProperty("userPassword");
         }
 
-        public void connect() throws ClassNotFoundException{
-                connection = null;
-   
+        public void connect() throws ClassNotFoundException {
+
+                connection = null;  
                 inicializar();
-            
                 try{
                    
-                     Class.forName("com.mysql.cj.jdbc.Driver");
+                    Class.forName("com.mysql.cj.jdbc.Driver");
                     this.connection = DriverManager.getConnection(url, userName, userPassword);
 
                 } catch (SQLException sqlException ) {
@@ -51,17 +51,21 @@ public class Connector {
                 return connection;
         }
 
-        public void disconnect() throws SQLException {
+        public void disconnect() {
                 if(connection != null) {
+                    try {
                         if(!connection.isClosed()) {
                                 try{
                                   connection.close();
                                 }catch(SQLException sqlException) {
                                        Log.logException(sqlException);
-
+                                }
+                             connection.close(); 
                         }
+                    } catch (SQLException ex) {
+                        Log.logException(ex);
+                    }
 
                 }
         }
     }
-}

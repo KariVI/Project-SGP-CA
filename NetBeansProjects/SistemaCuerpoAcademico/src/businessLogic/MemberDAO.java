@@ -1,75 +1,83 @@
 package businessLogic;
 import domain.Member;
-import domain.GroupAcademic;
 import dataaccess.Connector;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import log.BusinessException;
+import log.Log;
 
 public class MemberDAO implements IMemberDAO{
 
     @Override
-    public void saveMember(Member member, GroupAcademic groupAcademic){
+    public boolean saveMember(Member member) throws BusinessException{
+        boolean saveSuccess = false;
         try {
             
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
-            String insertMember = "INSERT INTO Miembro(cedula, nombre, rol, gradoMaximo, correo, clave_CA) VALUES (?,?,?,?,?,?)";
+            String insertMember = "INSERT INTO Miembro(cedula, nombre, rol, grado, nombreGrado, universidad, anio, estado, clave) VALUES (?,?,?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement= connectionDataBase.prepareStatement(insertMember);
             preparedStatement.setString(1, member.getProfessionalLicense());
             preparedStatement.setString(2, member.getName());
             preparedStatement.setString(3, member.getRole());
-            preparedStatement.setString(6, groupAcademic.getKey());
+            preparedStatement.setString(4, member.getDegree());
+            preparedStatement.setString(5, member.getNameDegree());
+            preparedStatement.setString(6, member.getUniversityName());
+            preparedStatement.setInt(7, member.getDegreeYear());
+            preparedStatement.setString(8, "Activo");
+            preparedStatement.setString(9, member.getKeyGroupAcademic());
             preparedStatement.executeUpdate();
             connectorDataBase.disconnect();
             
+            saveSuccess = true;
+            
         } catch (SQLException sqlException){
-            throw new IllegalStateException("DataBase connection failed ", sqlException);
+            throw new BusinessException("DataBase connection failed ", sqlException);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MemberDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
+        
+        return saveSuccess;
     }
 
     @Override
-    public String searchProfessionalLicense(Member member) {
+    public String searchProfessionalLicense(String memberName) throws BusinessException{
         String professionalLicenseAuxiliar = "";
         
         try{
             Connector connectorDataBase=new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
             ResultSet resultSet;
-            String selectLicenseMember = "SELECT cedula from  Miembro where nombre=? and rol=? and gradoMaximo=? and correo=?";
+            String selectLicenseMember = "SELECT cedula from  Miembro where nombre=? ";
      
             PreparedStatement preparedStatement = connectionDataBase.prepareStatement(selectLicenseMember);
-            preparedStatement.setString(1, member.getName());          
-            preparedStatement.setString(2, member.getRole());
+            preparedStatement.setString(1, memberName);          
             
-            resultSet=preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
                 professionalLicenseAuxiliar = resultSet.getString("cedula");
             }
                 connectorDataBase.disconnect();
                 
         }catch(SQLException sqlException) {
-            throw new IllegalStateException("DataBase connection failed ", sqlException);
+            throw new BusinessException("DataBase connection failed ", sqlException);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MemberDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
+        
         return professionalLicenseAuxiliar;
     }
 
     @Override
-    public Member getMemberByLicense(String professionalLicenseMember) {
+    public Member getMemberByLicense(String professionalLicenseMember) throws BusinessException {
         Member memberAuxiliar = null;
         try{
             Connector connectorDataBase=new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
             ResultSet resultSet;
-            String selectLicenseMember = "SELECT * from Miembro where cedula=?";
+            String selectLicenseMember = "SELECT * from Miembro where cedula = ?";
      
             PreparedStatement preparedStatement = connectionDataBase.prepareStatement(selectLicenseMember);
             preparedStatement.setString(1, professionalLicenseMember);        
@@ -79,17 +87,21 @@ public class MemberDAO implements IMemberDAO{
                 String professionalLicense = resultSet.getString("cedula");
                 String name = resultSet.getString("nombre");
                 String role = resultSet.getString("rol");
-                String maxDegreeStudy = resultSet.getString("gradoMaximo");
-                String email =resultSet.getString("correo");
-               
-                //memberAuxiliar = new Member(professionalLicense, name, role, maxDegreeStudy, email);
+                String degree = resultSet.getString("grado");
+                String nameDegree = resultSet.getString("nombreGrado");
+                String nameUniversity = resultSet.getString("universidad");
+                int year = resultSet.getInt("anio");
+                String state = resultSet.getString("estado");
+                String key = resultSet.getString("clave");
+                
+                memberAuxiliar = new Member(professionalLicense, name, role, degree, nameDegree, nameUniversity, year,state,key);
             }
                 connectorDataBase.disconnect();
                 
         }catch(SQLException sqlException) {
-            throw new IllegalStateException("DataBase connection failed ", sqlException);
+            throw new BusinessException("DataBase connection failed ", sqlException);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MemberDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
         return memberAuxiliar;
     }
@@ -102,4 +114,33 @@ public class MemberDAO implements IMemberDAO{
        }
        return value;
     }
+    
+
+    public boolean update(Member newMember) throws BusinessException {
+        boolean updateSucess = false;
+        Connector connectorDataBase=new Connector();
+        try {
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("UPDATE Miembro set  nombre = ? , rol = ?, grado = ?, nombreGrado = ?, universidad = ? , anio = ?, estado = ?, clave = ? where cedula = ? ");
+            preparedStatement.setString(1, newMember.getName());
+            preparedStatement.setString(2, newMember.getRole());
+            preparedStatement.setString(3, newMember.getDegree());
+            preparedStatement.setString(4, newMember.getNameDegree());
+            preparedStatement.setString(5,newMember.getUniversityName());
+            preparedStatement.setInt(6, newMember.getDegreeYear());
+            preparedStatement.setString(7, newMember.getState());
+            preparedStatement.setString(8, newMember.getKeyGroupAcademic());
+            preparedStatement.setString(9, newMember.getProfessionalLicense());
+            
+            preparedStatement.executeUpdate();
+            updateSucess=true;  
+            connectorDataBase.disconnect();
+        }catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        } catch (SQLException sqlException) {
+           throw new BusinessException("DataBase connection failed ", sqlException);
+        }
+      
+        return updateSucess;
+    }    
 }

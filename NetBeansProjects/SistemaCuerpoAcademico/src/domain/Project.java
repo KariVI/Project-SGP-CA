@@ -67,7 +67,7 @@ public class Project {
     public void setFinishDate(String finishDate){
         this.finishDate = finishDate;
     }
-    
+
     @Override
     public boolean equals(Object object){
         boolean value = false;

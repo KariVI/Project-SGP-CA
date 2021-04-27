@@ -1,47 +1,64 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package businessLogic;
 
 import domain.Member;
-import domain.GroupAcademic;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+import static org.junit.Assert.*;
+import log.BusinessException;
 /**
  *
- * @author Laura Rodríguez
+ * @author Mariana
  */
 public class MemberDAOTest {
     
+   
     @Test
-    public void testSaveMember() {
+    public void testSaveMember() throws BusinessException {
+        System.out.println("saveMember");
+        Member member = new Member("4065161", "Maria de los Angeles Arenas Valdes","Colaborador","Maestria","Maestria en ciencias de la computacion","Fundacion Arturo Rosenbulth",1999,"1491");
+        MemberDAO memberDAO = new MemberDAO();
+        assertTrue(memberDAO.saveMember(member));
+    }
 
+ 
+    @Test
+    public void testSearchProfessionalLicense() throws BusinessException {
+      MemberDAO memberDAO= new MemberDAO();
+      String professionalLicenseExpected = "4065161";
+      String professionalLicense =  memberDAO.searchProfessionalLicense("Maria de los Angeles Arenas Valdes");
+      assertEquals (professionalLicense, professionalLicenseExpected);
     }
 
     @Test
-    public void testSearchProfessionalLicense() {
-        MemberDAO memberDAO= new MemberDAO();
-        Member memberAuxiliar;
-       // memberAuxiliar = new Member("12345678", "Karen Cortés Verdin", "Responsable", "Doctorado", "kcortes@uv.mx");
-        String licenseExpected;
-        licenseExpected = "12345678";
-        //String licenseMember = memberDAO.searchProfessionalLicense(memberAuxiliar);
-        //assertEquals("Primera prueba de la cedula del miembro", licenseExpected, licenseMember);
+    public void testGetMemberByLicense() throws BusinessException {
+        System.out.println("getMemberByLicense");
+        String professionalLicenseMember = "4065161";
+        MemberDAO memberDAO = new MemberDAO();
+        Member memberExpected = new Member("4065161", "Maria de los Angeles Arenas Valdes","Colaborador","Maestria","Maestria en ciencias de la computacion","Fundacion Arturo Rosenbulth",1999);
+        Member member = memberDAO.getMemberByLicense(professionalLicenseMember);
+        assertEquals(memberExpected, member);
     }
 
-    @Test
-    public void testGetMemberByLicense() {
-        MemberDAO memberDAO= new MemberDAO();
-        Member memberExpected;
-       // memberExpected = new Member("12345678", "Karen Cortés Verdin", "Responsable", "Doctorado", "kcortes@uv.mx");
-        Member memberResult = memberDAO.getMemberByLicense("12345678");
-        //assertTrue(memberExpected.equals(memberResult));
-    }
-/*
+
     @Test
     public void testFindMemberByLicense() {
-        MemberDAO memberDAO= new MemberDAO();
-        Member memberAuxiliar;
-        memberAuxiliar = new Member("12345678", "Karen Cortés Verdin", "Responsable", "Doctorado", "kcortes@uv.mx");
-        String licenseMember = memberDAO.searchProfessionalLicense(memberAuxiliar);
-        assertTrue(memberDAO.findMemberByLicense(licenseMember));
-    }*/
+        System.out.println("findMemberByLicense");
+        String professionalLicense = "4065161";
+        MemberDAO memberDAO = new MemberDAO();
+        boolean result = memberDAO.findMemberByLicense(professionalLicense);
+        assertTrue(result);
+    }
+    
+    @Test 
+    public void testUpdate() throws BusinessException {
+        System.out.println("update");
+        Member newMember = new Member("4065161", "Maria de los Angeles Arenas Valdes","Colaborador","Maestria","Maestria en ciencias de la computacion","Fundacion Arturo Rosenbulth",1999,"inactivo","1491");
+        MemberDAO memberDAO = new MemberDAO();
+        assertTrue(memberDAO.update(newMember));
+    }
+    
 }

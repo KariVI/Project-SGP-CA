@@ -13,6 +13,7 @@ import log.Log;
 
 public class GroupAcademicDAO implements IGroupAcademicDAO {
 
+    @Override
     public boolean save(GroupAcademic groupAcademic) throws BusinessException {
         boolean value=false;
             try {
@@ -41,7 +42,9 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
         return value;
     }
  
+@Override
     public GroupAcademic getGroupAcademicById(String key ) throws BusinessException{
+
         GroupAcademic groupAcademicAuxiliar = null;
         try{
             Connector connectorDataBase=new Connector();
