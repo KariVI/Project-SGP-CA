@@ -3,51 +3,57 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import log.BusinessException;
 import log.Log;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Connector {
         private Connection connection;
-        //Properties properties = new Properties();
-        //private String host = properties.getProperty("host");
-        private String host = "localhost";
-        private int port = 3306;
-        private String dataBaseName = "CuerpoAcademico";
-        private String url = "jdbc:mysql://" + host + ":" + String.valueOf(port) + "/" + dataBaseName;
-        private String userName = "integrante";
-        private String userPassword = "password";
+        Properties properties = new Properties();
+         FileInputStream fi;
+        
+        private String url;
+        private String userName;
+        private String userPassword;
 
-        public void connect() throws BusinessException, ClassNotFoundException {
+        public void inicializar() throws FileNotFoundException, IOException{
+            this.fi = new FileInputStream("./properties.properties");
+            properties.load(fi);
+            url = properties.getProperty("url");
+            userName = properties.getProperty("userName");
+            userPassword = properties.getProperty("userPassword");
+        }
+
+        public void connect() throws ClassNotFoundException, IOException{
                 connection = null;
+                inicializar();
                 try{
+                   
                      Class.forName("com.mysql.cj.jdbc.Driver");
                     this.connection = DriverManager.getConnection(url, userName, userPassword);
-                    
+
                 } catch (SQLException sqlException ) {
-                  
-                   throw new BusinessException("DataBase connection failed ", sqlException);
+                     Log.logException(sqlException);
                 } 
         } 
-         
-        public Connection getConnection() throws ClassNotFoundException, BusinessException {
+
+        public Connection getConnection() throws ClassNotFoundException, IOException{
                 connect();
                 return connection;
         }
 
-        public void disconnect() throws SQLException{
+        public void disconnect() throws SQLException {
                 if(connection != null) {
                         if(!connection.isClosed()) {
                                 try{
                                   connection.close();
                                 }catch(SQLException sqlException) {
-                                       
-                                        Log.logException(sqlException);
-                                }
+                                       Log.logException(sqlException);
 
                         }
 
                 }
         }
+    }
 }

@@ -5,7 +5,7 @@
     <classes>
       <class name="dataaccess.ConnectorTest">
         <methods>
-          <include name="testDataBaseConnection"/>
+          <include name="testConnect"/>
         </methods>
       </class> <!-- dataaccess.ConnectorTest -->
     </classes>
