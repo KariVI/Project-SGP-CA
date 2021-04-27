@@ -1,12 +1,15 @@
 
 package domain;
 
+import java.util.ArrayList;
+
 public class PreliminarProject {
-      private int key;
+    private int key;
     private String title;
     private String description;
     private String dateStart;
     private String dateEnd;
+    private ArrayList<Student> students;
 
     
     
@@ -57,5 +60,19 @@ public class PreliminarProject {
     public void setDateEnd(String dateEnd){ 
         this.dateEnd=dateEnd;
     }
-      
+    
+    public boolean equals(Object object){
+        boolean value=false;
+            if (object instanceof PreliminarProject) {
+            PreliminarProject preliminarProjectCompare = (PreliminarProject) object;
+            if( (this.key==preliminarProjectCompare.getKey() )
+               && ( this.title.equals(preliminarProjectCompare.getTitle())) 
+               && ( this.dateStart.equals(preliminarProjectCompare.getDateStart()) )  
+               && (this.dateEnd.equals(preliminarProjectCompare.getDateEnd()) )) {
+                value=true;
+            }
+
+        }  
+        return value;
+    }
 }

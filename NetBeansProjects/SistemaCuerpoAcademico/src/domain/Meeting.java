@@ -10,17 +10,14 @@ public class Meeting {
     private String date;
     private String hourStart;
     private String state;
-    ArrayList<Prerequisite> listPrerequisites;
-    public int indexListPrerequisites=0;
-    public Member assistant;
+    private ArrayList<Prerequisite> listPrerequisites;
+    public ArrayList<Member> assistants;
    
     
     public Meeting (String subject, String date, String hourStart){
       this.subject= subject;
       this.date= date;
       this.hourStart= hourStart;
-      listPrerequisites= new ArrayList<Prerequisite> ();
-      
     }
     public Meeting (int key, String subject, String date, String hourStart, String state){
       this.key=key;
@@ -31,6 +28,8 @@ public class Meeting {
       listPrerequisites= new ArrayList<Prerequisite> ();
       
     }
+
+    
      public int getKey(){
         return key;
     }
@@ -79,8 +78,25 @@ public class Meeting {
     }
     public void addPrerequiste(Prerequisite prerequisite){ 
         listPrerequisites.add(prerequisite);
-        
     }
+    
+    public Member getAssistant( String licenseProfessional){
+        Member assistant=null;
+        for (int i=0; i< assistants.size() ; i++  ){
+            Member auxiliar=assistants.get(i);
+            if (auxiliar.getProfessionalLicense().equals(licenseProfessional)){
+               assistant=auxiliar;
+            }
+        }
+        return assistant;
+    }
+    public ArrayList<Member> getAssistant(){
+        return assistants;
+    }
+    public void addAssistant(Member assistant){ 
+        assistants.add(assistant);
+    }
+
 
 
     public int hashCode() {

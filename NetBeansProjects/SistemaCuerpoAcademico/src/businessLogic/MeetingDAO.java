@@ -10,12 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import log.BusinessException;
+import log.Log;
 
 public class MeetingDAO implements IMeetingDAO{
 
-    public boolean save(Meeting meeting) {    
+    public boolean save(Meeting meeting) throws BusinessException  {    
         boolean saveSuccess=false;
             try {
                 Connector connectorDataBase=new Connector();
@@ -33,15 +33,15 @@ public class MeetingDAO implements IMeetingDAO{
                 saveSuccess=true;
                 connectorDataBase.disconnect();
             } catch (SQLException sqlException) {
-                throw new IllegalStateException("DataBase connection failed ", sqlException);
+                throw new BusinessException("DataBase connection failed ", sqlException);
             } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                Log.logException(ex);
+            }
         return saveSuccess;
         
     } 
 
-    public int searchId(Meeting meeting) {
+    public int searchId(Meeting meeting) throws BusinessException {
         Integer idAuxiliar=0;
         try{
             Connector connectorDataBase=new Connector();
@@ -60,9 +60,9 @@ public class MeetingDAO implements IMeetingDAO{
             }
                 connectorDataBase.disconnect();
         }catch(SQLException sqlException) {
-            throw new IllegalStateException("DataBase connection failed ", sqlException);
+            throw new BusinessException("DataBase connection failed ", sqlException);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
         return idAuxiliar;
     }
@@ -75,7 +75,7 @@ public class MeetingDAO implements IMeetingDAO{
        return value;
     }
 
-    public Meeting getMeetingById(int idMeeting) {
+    public Meeting getMeetingById(int idMeeting) throws BusinessException  {
         Meeting meetingAuxiliar = null;
         try{
             Connector connectorDataBase=new Connector();
@@ -98,50 +98,44 @@ public class MeetingDAO implements IMeetingDAO{
             }
                 connectorDataBase.disconnect();
         }catch(SQLException sqlException) {
-            throw new IllegalStateException("DataBase connection failed ", sqlException);
+            throw new BusinessException("DataBase connection failed ", sqlException);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
         return meetingAuxiliar;
         
     }
 
       public ArrayList<Meeting>  getMeetings(){
-                     ArrayList<Meeting> meetingList = new ArrayList<>();
-                     try{
-                        Connector connectorDataBase = new Connector();
-                        Connection connectionDataBase = connectorDataBase.getConnection();
-                        String queryMeeting="SELECT * FROM Reunion";
-                        try{
+        ArrayList<Meeting> meetingList = new ArrayList<>();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String queryMeeting="SELECT * FROM Reunion";
 
-                            PreparedStatement preparedStatement;
-                            preparedStatement = connectionDataBase.prepareStatement(queryMeeting);
-                            ResultSet resultSet;
-
-                            resultSet = preparedStatement.executeQuery();
-
-                            while(resultSet.next()){
-                                int keyMeeting=resultSet.getInt(1);
-                                String subject = resultSet.getString("asunto");
-                                String hourStart = resultSet.getString("hora");
-                                String date = resultSet.getString("fecha");
-                                String state= resultSet.getString("estado");
-                                Meeting meetingAuxiliar = new Meeting(keyMeeting,subject, hourStart, date, state);
-                                meetingList.add(meetingAuxiliar);
-                            }
-
-                            connectorDataBase.disconnect();
-
-                        }catch(SQLException sqlException) {
-                            throw new IllegalStateException("Parameter index ", sqlException);
-                        }
-                    }catch(ClassNotFoundException ex) {
-                        Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    return meetingList;
+               PreparedStatement preparedStatement;
+               preparedStatement = connectionDataBase.prepareStatement(queryMeeting);
+               ResultSet resultSet;
+               resultSet = preparedStatement.executeQuery();
+               while(resultSet.next()){
+                    int keyMeeting=resultSet.getInt(1);
+                    String subject = resultSet.getString("asunto");
+                    String hourStart = resultSet.getString("hora");
+                    String date = resultSet.getString("fecha");
+                    String state= resultSet.getString("estado");
+                    Meeting meetingAuxiliar = new Meeting(keyMeeting,subject, hourStart, date, state);
+                    meetingList.add(meetingAuxiliar);
+                }
+                connectorDataBase.disconnect();
+            }catch(SQLException sqlException) {
+                   throw new IllegalStateException("Parameter index ", sqlException);         
+            }catch(ClassNotFoundException ex) {
+                        Log.logException(ex);
+            }
+            return meetingList;
         }
 
-     public boolean addAssistant(int idMeeting, String enrollment, String role) {
+     public boolean addAssistant(int idMeeting, String enrollment, String role) throws BusinessException  {
          boolean addAssistantSuccess=false;
          try {
                 Connector connectorDataBase=new Connector();
@@ -158,16 +152,16 @@ public class MeetingDAO implements IMeetingDAO{
                 preparedStatement.executeUpdate();
                 connectorDataBase.disconnect();
             } catch (SQLException sqlException) {
-                throw new IllegalStateException("DataBase connection failed ", sqlException);
+                throw new BusinessException("DataBase connection failed ", sqlException);
             } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                Log.logException(ex);
+            }
         return addAssistantSuccess;
     }
    
      
      
-   public Member getAssistant(int idMeeting, String profesionalLicense){
+   public Member getAssistant(int idMeeting, String profesionalLicense)throws BusinessException  {
         Member assistant=null;
       try{
         Connector connectorDataBase = new Connector();
@@ -191,14 +185,62 @@ public class MeetingDAO implements IMeetingDAO{
             connectorDataBase.disconnect();
 
         }catch(SQLException sqlException) {
-            throw new IllegalStateException("Parameter index ", sqlException);
+           throw new BusinessException("DataBase connection failed ", sqlException);
         }
         }catch(ClassNotFoundException ex) {
-                        Logger.getLogger(MeetingDAO.class.getName()).log(Level.SEVERE, null, ex);
+           Log.logException(ex);
         }
         return assistant;
     }
-    
+
+    public boolean update(Meeting meeting) throws BusinessException{
+      boolean updateSuccess=false;
+            try {
+                Connector connectorDataBase=new Connector();
+                Connection connectionDataBase = connectorDataBase.getConnection();
+                String updateMeeting = "UPDATE Reunion set asunto=? ,hora=?, fecha=? where idReunion=?";
+            
+                PreparedStatement preparedStatement = connectionDataBase.prepareStatement(updateMeeting);
+                
+                preparedStatement.setString(1, meeting.getSubject());
+                preparedStatement.setString(2, meeting.getHourStart());
+                preparedStatement.setString(3, meeting.getDate());
+                preparedStatement.setInt(4, meeting.getKey());
+                
+                preparedStatement.executeUpdate();
+                updateSuccess=true;
+                connectorDataBase.disconnect();
+            } catch (SQLException sqlException) {
+                throw new BusinessException("DataBase connection failed ", sqlException);
+            } catch (ClassNotFoundException ex) {
+                Log.logException(ex);
+            }
+        return updateSuccess;  
+    }    
+
+    @Override
+    public boolean changeState(Meeting meeting) throws BusinessException {
+          boolean updateSuccess=false;
+            try {
+                Connector connectorDataBase=new Connector();
+                Connection connectionDataBase = connectorDataBase.getConnection();
+                String updateMeeting = "UPDATE Reunion set estado=?  where idReunion=?";
+            
+                PreparedStatement preparedStatement = connectionDataBase.prepareStatement(updateMeeting);
+                
+                preparedStatement.setString(1, meeting.getState());
+                preparedStatement.setInt(2, meeting.getKey());
+                
+                preparedStatement.executeUpdate();
+                updateSuccess=true;
+                connectorDataBase.disconnect();
+            } catch (SQLException sqlException) {
+                throw new BusinessException("DataBase connection failed ", sqlException);
+            } catch (ClassNotFoundException ex) {
+                Log.logException(ex);
+            }
+        return updateSuccess;    
+    }
 
 }
 

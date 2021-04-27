@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="1" total="1" passed="0">
+<testng-results skipped="0" failed="1" total="2" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="SistemaCuerpoAcademico" duration-ms="1556" started-at="2021-04-27T00:57:45Z" finished-at="2021-04-27T00:57:46Z">
+  <suite name="SistemaCuerpoAcademico" duration-ms="1870" started-at="2021-04-27T01:10:42Z" finished-at="2021-04-27T01:10:44Z">
     <groups>
     </groups>
-    <test name="dataaccess.ConnectorTest" duration-ms="1556" started-at="2021-04-27T00:57:45Z" finished-at="2021-04-27T00:57:46Z">
+    <test name="dataaccess.ConnectorTest" duration-ms="1870" started-at="2021-04-27T01:10:42Z" finished-at="2021-04-27T01:10:44Z">
       <class name="dataaccess.ConnectorTest">
-        <test-method status="FAIL" signature="testDataBaseConnection()[pri:0, instance:testDataBaseConnection(dataaccess.ConnectorTest)]" name="testDataBaseConnection" duration-ms="1254" started-at="2021-04-26T19:57:45Z" finished-at="2021-04-26T19:57:46Z">
-          <exception class="java.lang.IllegalStateException">
-            <message>
-              <![CDATA[DataBase connection failed ]]>
-            </message>
+        <test-method status="PASS" signature="testDisconnect()[pri:0, instance:testDisconnect(dataaccess.ConnectorTest)]" name="testDisconnect" duration-ms="13" started-at="2021-04-26T20:10:42Z" finished-at="2021-04-26T20:10:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDisconnect -->
+        <test-method status="FAIL" signature="testConnect()[pri:0, instance:testConnect(dataaccess.ConnectorTest)]" name="testConnect" duration-ms="1633" started-at="2021-04-26T20:10:42Z" finished-at="2021-04-26T20:10:44Z">
+          <exception class="java.lang.AssertionError">
             <full-stacktrace>
-              <![CDATA[java.lang.IllegalStateException: DataBase connection failed 
-	at dataaccess.Connector.connect(Connector.java:26)
-	at dataaccess.ConnectorTest.testDataBaseConnection(ConnectorTest.java:17)
+              <![CDATA[java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:86)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at org.junit.Assert.assertNotNull(Assert.java:712)
+	at org.junit.Assert.assertNotNull(Assert.java:722)
+	at dataaccess.ConnectorTest.testConnect(ConnectorTest.java:29)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -52,23 +56,12 @@
 	at org.testng.TestNG.run(TestNG.java:1057)
 	at org.testng.TestNG.privateMain(TestNG.java:1364)
 	at org.testng.TestNG.main(TestNG.java:1333)
-Caused by: java.sql.SQLException: Your password has expired. To log in you must change it using a client that supports expired passwords.
-	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129)
-	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
-	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:833)
-	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:453)
-	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:246)
-	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:198)
-	at java.sql.DriverManager.getConnection(DriverManager.java:664)
-	at java.sql.DriverManager.getConnection(DriverManager.java:247)
-	at dataaccess.Connector.connect(Connector.java:22)
-	... 37 more
 ]]>
             </full-stacktrace>
-          </exception> <!-- java.lang.IllegalStateException -->
+          </exception> <!-- java.lang.AssertionError -->
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testDataBaseConnection -->
+        </test-method> <!-- testConnect -->
       </class> <!-- dataaccess.ConnectorTest -->
     </test> <!-- dataaccess.ConnectorTest -->
   </suite> <!-- SistemaCuerpoAcademico -->

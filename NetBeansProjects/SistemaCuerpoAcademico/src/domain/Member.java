@@ -26,7 +26,7 @@ public class Member {
         this.degree = degree;
         this.universityName = universityName;
     }
-    
+
     public Member(String professionalLicense, String name) {
         this.professionalLicense = professionalLicense;
         this.name = name;
@@ -34,7 +34,6 @@ public class Member {
 
     }
     
-   
     public boolean equals(Object object){
         boolean value=false;
             if (object instanceof Member) {
@@ -48,10 +47,21 @@ public class Member {
                 value=true;
             }
         }  
-       
+
      }
       return value;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 71 * hash + Objects.hashCode(this.professionalLicense);
+        hash = 71 * hash + Objects.hashCode(this.name);
+        hash = 71 * hash + Objects.hashCode(this.role);
+        return hash;
+
+       
+     }
      
     public void setName(String name) {
         this.name = name;
@@ -81,13 +91,16 @@ public class Member {
     
     public void setNameDegree(String nameDegree){
         this.nameDegree = nameDegree;
+
     }
+
     
     public void setProfessionalLicense(String professionalLicense) {
         this.professionalLicense = professionalLicense;
     }
  
     
+
     public String getNameDegree(){
         return nameDegree;
     }
@@ -101,8 +114,11 @@ public class Member {
         return universityName;
     }
 
+
+
     public String getProfessionalLicense() {
         return professionalLicense;
     }
+
 
 }
