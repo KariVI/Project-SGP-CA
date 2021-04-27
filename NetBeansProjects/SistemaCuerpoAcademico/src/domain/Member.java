@@ -26,7 +26,7 @@ public class Member {
         this.degree = degree;
         this.universityName = universityName;
     }
-    
+
     public Member(String professionalLicense, String name) {
         this.professionalLicense = professionalLicense;
         this.name = name;
@@ -48,9 +48,23 @@ public class Member {
                 value=true;
             }
         }  
+
+     }
+      return value;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 71 * hash + Objects.hashCode(this.professionalLicense);
+        hash = 71 * hash + Objects.hashCode(this.name);
+        hash = 71 * hash + Objects.hashCode(this.role);
+        return hash;
+
        
      }
       return value;
+
     }
      
     public void setName(String name) {
@@ -81,6 +95,9 @@ public class Member {
     
     public void setNameDegree(String nameDegree){
         this.nameDegree = nameDegree;
+
+    }
+
     }
     
     public void setProfessionalLicense(String professionalLicense) {
@@ -88,6 +105,7 @@ public class Member {
     }
  
     
+
     public String getNameDegree(){
         return nameDegree;
     }
@@ -101,8 +119,10 @@ public class Member {
         return universityName;
     }
 
+
     private String getProfessionalLicense() {
         return professionalLicense;
     }
+
 
 }
