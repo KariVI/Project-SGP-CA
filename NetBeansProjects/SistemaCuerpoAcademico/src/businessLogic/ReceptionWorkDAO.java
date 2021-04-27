@@ -3,11 +3,14 @@ package businessLogic;
 
 import dataaccess.Connector;
 import domain.ReceptionWork;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import log.BusinessException;
 import log.Log;
 
@@ -38,7 +41,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
                 throw new BusinessException("DataBase connection failed ", sqlException);
             } catch (ClassNotFoundException ex) {
                Log.logException(ex);
-            }
+            } 
         return value;
     }
 
