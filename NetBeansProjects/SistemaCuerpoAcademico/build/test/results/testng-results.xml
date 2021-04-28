@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="1" total="2" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="SistemaCuerpoAcademico" duration-ms="2778" started-at="2021-04-28T02:53:40Z" finished-at="2021-04-28T02:53:43Z">
+  <suite name="SistemaCuerpoAcademico" duration-ms="1942" started-at="2021-04-28T03:09:54Z" finished-at="2021-04-28T03:09:56Z">
     <groups>
     </groups>
-    <test name="dataaccess.ConnectorTest" duration-ms="2778" started-at="2021-04-28T02:53:40Z" finished-at="2021-04-28T02:53:43Z">
+    <test name="dataaccess.ConnectorTest" duration-ms="1942" started-at="2021-04-28T03:09:54Z" finished-at="2021-04-28T03:09:56Z">
       <class name="dataaccess.ConnectorTest">
-        <test-method status="PASS" signature="testDisconnect()[pri:0, instance:testDisconnect(dataaccess.ConnectorTest)]" name="testDisconnect" duration-ms="20" started-at="2021-04-27T21:53:41Z" finished-at="2021-04-27T21:53:41Z">
+        <test-method status="PASS" signature="testDisconnect()[pri:0, instance:testDisconnect(dataaccess.ConnectorTest)]" name="testDisconnect" duration-ms="10" started-at="2021-04-27T22:09:54Z" finished-at="2021-04-27T22:09:54Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testDisconnect -->
-        <test-method status="FAIL" signature="testConnect()[pri:0, instance:testConnect(dataaccess.ConnectorTest)]" name="testConnect" duration-ms="2266" started-at="2021-04-27T21:53:41Z" finished-at="2021-04-27T21:53:43Z">
+        <test-method status="FAIL" signature="testConnect()[pri:0, instance:testConnect(dataaccess.ConnectorTest)]" name="testConnect" duration-ms="1645" started-at="2021-04-27T22:09:54Z" finished-at="2021-04-27T22:09:56Z">
           <exception class="java.lang.AssertionError">
             <full-stacktrace>
               <![CDATA[java.lang.AssertionError
