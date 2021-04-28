@@ -11,4 +11,8 @@ public interface IReceptionWorkDAO {
     public boolean update(int id, ReceptionWork receptionWork)  throws BusinessException;
     public ReceptionWork getReceptionWorkById(int id) throws BusinessException;
     public ArrayList<ReceptionWork> getReceptionWorks() throws BusinessException;
+    public boolean addColaborators(ReceptionWork receptionWork)throws BusinessException;
+    public boolean addStudents (ReceptionWork receptionWork) throws BusinessException;
+    public int getId(ReceptionWork receptionWork) throws BusinessException;
+
 }

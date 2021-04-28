@@ -96,7 +96,7 @@ public class PreliminarProject {
         return student;
     }
     
-    public ArrayList<Student> getStudent(){
+    public ArrayList<Student> getStudents(){
         return  students;
     }
     

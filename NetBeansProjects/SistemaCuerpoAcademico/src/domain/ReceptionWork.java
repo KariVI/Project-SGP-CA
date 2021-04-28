@@ -25,9 +25,10 @@ public class ReceptionWork {
         this.dateStart=dateStart;
         this.dateEnd=dateEnd;
         this.actualState=actualState;
+        students=new ArrayList<Student>();
+        members=new ArrayList<Member>();
          
     }
-    
     public int getKey(){
         return key;
     }
@@ -92,11 +93,11 @@ public class ReceptionWork {
         this.preliminarProject=preliminarProject;
     }
     
-     public ArrayList<Member> getMember(){
+     public ArrayList<Member> getMembers(){
         return  members;
     }
     
-    public void addAssistant(Member assistant){ 
+    public void addMember(Member assistant){ 
          members.add(assistant);
     }
     
@@ -111,7 +112,7 @@ public class ReceptionWork {
         return student;
     }
     
-    public ArrayList<Student> getStudent(){
+    public ArrayList<Student> getStudents(){
         return  students;
     }
     

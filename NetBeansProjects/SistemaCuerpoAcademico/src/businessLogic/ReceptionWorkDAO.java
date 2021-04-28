@@ -2,6 +2,7 @@
 package businessLogic;
 
 import dataaccess.Connector;
+import domain.Member;
 import domain.ReceptionWork;
 import java.io.IOException;
 import java.sql.Connection;
@@ -166,5 +167,60 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
             }
             return receptionWorkList;
     }
+    
+    public boolean addColaborators(ReceptionWork receptionWork) throws BusinessException {
+        boolean addColaboratorSuccess=false;
+        int idReceptionWork=receptionWork.getKey();
+        ArrayList<Member> colaborators= receptionWork.getMembers();
+         try {
+                Connector connectorDataBase=new Connector();
+                Connection connectionDataBase = connectorDataBase.getConnection();
+                String insertColaborators = "INSERT INTO Dirige(idTrabajoRecepcional,cedula,rol) VALUES (?,?,?)";
+                int i=0;
+                while(i< colaborators.size()){
+                    PreparedStatement preparedStatement = connectionDataBase.prepareStatement(insertColaborators);
+                    preparedStatement.setInt(1, idReceptionWork);
+                    preparedStatement.setString(2, colaborators.get(i).getProfessionalLicense());
+                    preparedStatement.setString(3, colaborators.get(i).getRole());
+                    preparedStatement.executeUpdate();
+                    addColaboratorSuccess=true; 
+                    i++;
+                } 
+               connectorDataBase.disconnect();
+            } catch (SQLException sqlException) {
+                throw new BusinessException("DataBase connection failed ", sqlException);
+            } catch (ClassNotFoundException ex) {
+                Log.logException(ex);
+            }
+        return addColaboratorSuccess;
+    }
+
+    public boolean addStudents(ReceptionWork receptionWork) throws BusinessException {
+        boolean addStudentsSuccess=false;
+        int idReceptionWork=receptionWork.getKey();
+        ArrayList<Student> students= receptionWork.getStudents();
+         try {
+                Connector connectorDataBase=new Connector();
+                Connection connectionDataBase = connectorDataBase.getConnection();
+                String insertColaborators = "INSERT INTO ParticipaTrabajoRecepcional(idTrabajoReceptional ,matricula) VALUES (?,?)";
+                int i=0;
+                while(i< students.size()){
+                    PreparedStatement preparedStatement = connectionDataBase.prepareStatement(insertColaborators);
+                    preparedStatement.setInt(1, idReceptionWork);
+                    preparedStatement.setString(2, students.get(i).getEnrollment());
+                    preparedStatement.executeUpdate();
+                    addStudentsSuccess=true; 
+                    i++;
+                } 
+               connectorDataBase.disconnect();
+            } catch (SQLException sqlException) {
+                throw new BusinessException("DataBase connection failed ", sqlException);
+            } catch (ClassNotFoundException ex) {
+                Log.logException(ex);
+            }
+        return addStudentsSuccess;
+    }
+
+
     
 }

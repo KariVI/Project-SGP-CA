@@ -4,6 +4,7 @@ package businessLogic;
 import dataaccess.Connector;
 import domain.Member;
 import domain.PreliminarProject;
+import domain.Student;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -181,6 +182,36 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
                 Log.logException(ex);
             }
         return addColaboratorSuccess;
+    }
+    
+    public boolean addStudents(PreliminarProject preliminarProject) throws BusinessException {
+        boolean addStudentsSuccess=false;
+        int idPreliminarProject=preliminarProject.getKey();
+        ArrayList<Student> students= preliminarProject.getStudents();
+         try {
+                Connector connectorDataBase=new Connector();
+                Connection connectionDataBase = connectorDataBase.getConnection();
+                String insertColaborators = "INSERT INTO Realiza(idAnteproyecto,matricula) VALUES (?,?)";
+                int i=0;
+                while(i< students.size()){
+                    PreparedStatement preparedStatement = connectionDataBase.prepareStatement(insertColaborators);
+                    preparedStatement.setInt(1, idPreliminarProject);
+                    preparedStatement.setString(2, students.get(i).getEnrollment());
+                    preparedStatement.executeUpdate();
+                    addStudentsSuccess=true; 
+                    i++;
+                } 
+               connectorDataBase.disconnect();
+            } catch (SQLException sqlException) {
+                throw new BusinessException("DataBase connection failed ", sqlException);
+            } catch (ClassNotFoundException ex) {
+                Log.logException(ex);
+            }
+        return addStudentsSuccess;
+    }
+
+    public ArrayList<Member> getColaborators(int idPreliminarProject) throws BusinessException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

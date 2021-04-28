@@ -1,6 +1,7 @@
 
 package businessLogic;
 
+import domain.Member;
 import domain.PreliminarProject;
 import java.util.ArrayList;
 import log.BusinessException;
@@ -12,4 +13,7 @@ public interface IPreliminarProjectDAO {
     public ArrayList<PreliminarProject> getPreliminarProjects() throws BusinessException;
     public PreliminarProject getById(int id) throws BusinessException ;
     public boolean addColaborators(PreliminarProject preliminarProject)throws BusinessException;
+    public boolean addStudents(PreliminarProject preliminarProject) throws BusinessException;
+    public ArrayList<Member> getColaborators(int idPreliminarProject) throws BusinessException;
 }
+
