@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [SistemaCuerpoAcademico]">
+  <test name="dataaccess.ConnectorTest(failed)" junit="true">
+    <classes>
+      <class name="dataaccess.ConnectorTest">
+        <methods>
+          <include name="testConnect"/>
+        </methods>
+      </class> <!-- dataaccess.ConnectorTest -->
+    </classes>
+  </test> <!-- dataaccess.ConnectorTest(failed) -->
+</suite> <!-- Failed suite [SistemaCuerpoAcademico] -->

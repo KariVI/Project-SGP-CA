@@ -52,6 +52,12 @@ public class Member {
         this.role="";
 
     }
+        public Member(String professionalLicense, String name, String role) {
+        this.professionalLicense = professionalLicense;
+        this.name = name;
+        this.role=role;
+
+    }
     
     public boolean equals(Object object){
         boolean value=false;
