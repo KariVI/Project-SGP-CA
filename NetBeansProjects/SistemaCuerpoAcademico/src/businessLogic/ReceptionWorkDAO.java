@@ -4,14 +4,12 @@ package businessLogic;
 import dataaccess.Connector;
 import domain.Member;
 import domain.ReceptionWork;
-import java.io.IOException;
+import domain.Student;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import log.BusinessException;
 import log.Log;
 
@@ -202,7 +200,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
          try {
                 Connector connectorDataBase=new Connector();
                 Connection connectionDataBase = connectorDataBase.getConnection();
-                String insertColaborators = "INSERT INTO ParticipaTrabajoRecepcional(idTrabajoReceptional ,matricula) VALUES (?,?)";
+                String insertColaborators = "INSERT INTO ParticipaTrabajoRecepcional(idTrabajoRecepcional,matricula) VALUES (?,?)";
                 int i=0;
                 while(i< students.size()){
                     PreparedStatement preparedStatement = connectionDataBase.prepareStatement(insertColaborators);

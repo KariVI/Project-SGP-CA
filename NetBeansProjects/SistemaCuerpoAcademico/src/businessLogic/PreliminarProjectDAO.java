@@ -211,7 +211,119 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
     }
 
     public ArrayList<Member> getColaborators(int idPreliminarProject) throws BusinessException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Member> colaborators= new ArrayList<Member> ();
+        MemberDAO memberDAO= new MemberDAO();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String query="SELECT cedula FROM Colabora where idAnteproyecto=?";
+
+               PreparedStatement preparedStatement = connectionDataBase.prepareStatement(query);
+               preparedStatement.setInt(1, idPreliminarProject);
+               ResultSet resultSet;
+               resultSet = preparedStatement.executeQuery();
+               while(resultSet.next()){
+                   int key= resultSet.getInt(1);
+                    String professionalLicense= resultSet.getString("cedula");
+                    Member member = memberDAO.getMemberByLicense(professionalLicense);
+                    colaborators.add(member);
+                    
+                }
+                connectorDataBase.disconnect();
+            }catch(SQLException sqlException) {
+                   throw new BusinessException("Database failed ", sqlException);         
+            }catch(ClassNotFoundException ex) {
+                        Log.logException(ex);
+            }
+
+        return colaborators;
+    }
+
+    @Override
+    public boolean deleteColaborators(PreliminarProject preliminarProject) throws BusinessException {
+        boolean deleteSucess=false;
+        int idPreliminarProject=preliminarProject.getKey();
+        ArrayList<Member> colaborators= preliminarProject.getMembers();
+        try{
+            Connector connectorDataBase=new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String delete = "delete from Colabora where cedula=? and idAnteproyecto=?";
+     
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement(delete);
+            int i=0;
+            while(i< colaborators.size()){
+               preparedStatement.setString(1, colaborators.get(i).getProfessionalLicense());
+               preparedStatement.setInt(2, idPreliminarProject);
+               preparedStatement.executeUpdate();
+               i++;
+            }
+            deleteSucess=true;
+            connectorDataBase.disconnect();         
+        }catch(SQLException sqlException) {
+            throw new BusinessException("DataBase connection failed ", sqlException);
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return deleteSucess;
+    }
+
+    @Override
+    public ArrayList<Student> getStudents(int idPreliminarProject) throws BusinessException {
+        ArrayList<Student> students= new ArrayList<Student> ();
+        StudentDAO studentDAO= new StudentDAO();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String query="SELECT matricula FROM Realiza where idAnteproyecto=?";
+
+               PreparedStatement preparedStatement = connectionDataBase.prepareStatement(query);
+               preparedStatement.setInt(1, idPreliminarProject);
+               ResultSet resultSet;
+               resultSet = preparedStatement.executeQuery();
+               while(resultSet.next()){
+                   int key= resultSet.getInt(1);
+                    String enrollment= resultSet.getString("matricula");
+                    Student student = studentDAO.getByEnrollment(enrollment);
+                    students.add(student);
+                    
+                }
+                connectorDataBase.disconnect();
+            }catch(SQLException sqlException) {
+                   throw new BusinessException("Database failed ", sqlException);         
+            }catch(ClassNotFoundException ex) {
+                        Log.logException(ex);
+            }
+
+        return students;
+    }
+
+    @Override
+    public boolean deleteStudents(PreliminarProject preliminarProject) throws BusinessException {
+        boolean deleteSucess=false;
+        int idPreliminarProject=preliminarProject.getKey();
+        ArrayList<Student> students= preliminarProject.getStudents();
+        try{
+            Connector connectorDataBase=new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String delete = "delete from Realiza where matricula=? and idAnteproyecto=?";
+     
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement(delete);
+            int i=0;
+            while(i< students.size()){
+               preparedStatement.setString(1, students.get(i).getEnrollment());
+               preparedStatement.setInt(2, idPreliminarProject);
+               preparedStatement.executeUpdate();
+               i++;
+            }
+            deleteSucess=true;
+            connectorDataBase.disconnect();         
+        }catch(SQLException sqlException) {
+            throw new BusinessException("DataBase connection failed ", sqlException);
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return deleteSucess;
+
     }
     
 }

@@ -15,5 +15,6 @@ public interface IPreliminarProjectDAO {
     public boolean addColaborators(PreliminarProject preliminarProject)throws BusinessException;
     public boolean addStudents(PreliminarProject preliminarProject) throws BusinessException;
     public ArrayList<Member> getColaborators(int idPreliminarProject) throws BusinessException;
+    public boolean deleteColaborators(PreliminarProject preliminarProject) throws BusinessException;
 }
 

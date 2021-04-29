@@ -1,8 +1,10 @@
 
 package businessLogic;
 
+import domain.Member;
 import domain.PreliminarProject;
 import domain.ReceptionWork;
+import domain.Student;
 import java.util.ArrayList;
 import log.BusinessException;
 import org.junit.Test;
@@ -94,5 +96,30 @@ public class ReceptionWorkDAOTest {
         assertNotEquals(id,result);
     
     }
+    
+    @Test
+    public void testAddColaborator()throws BusinessException{     
+        ReceptionWork receptionWork = new ReceptionWork ("Propuesta de Aplicación de Aprendizaje Máquina y Cómputo Evolutivo en la Clasificación de Requisitos de Calidad", "Tesis",
+        "Propuesta de uso de aprendizaje máquina en la clasificación de requisitos", "14/11/2019", "14/05/2021", "Concluido");
+        receptionWork.setKey(3);
+        Member member= new Member("8325134","Juan Carlos Perez Arriaga","Director");
+        receptionWork.addMember(member);  
+        ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO(); 
+        assertTrue(receptionWorkDAO.addColaborators(receptionWork));
+    }
+    
+    @Test
+    public void testAddStudents()throws BusinessException{   
+        ReceptionWork receptionWork = new ReceptionWork ("Propuesta de Aplicación de Aprendizaje Máquina y Cómputo Evolutivo en la Clasificación de Requisitos de Calidad", "Tesis",
+        "Propuesta de uso de aprendizaje máquina en la clasificación de requisitos", "14/11/2019", "14/05/2021", "Concluido");
+        receptionWork.setKey(3);
+        Student student = new Student("S19014013", "Mariana Yazmin Vargas Segura ");
+        receptionWork.addStudent(student);
+        ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO(); 
+        assertTrue(receptionWorkDAO .addStudents(receptionWork));
+    }
+    
+
+ 
     
 }

@@ -3,6 +3,7 @@ package businessLogic;
 
 import domain.Member;
 import domain.PreliminarProject;
+import domain.Student;
 import java.util.ArrayList;
 import log.BusinessException;
 import org.junit.Test;
@@ -97,5 +98,27 @@ public class PreliminarProjectDAOTest {
   
         PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
         assertTrue(preliminarProjectDAO.addColaborators(preliminarProject));
+    }
+    
+    @Test
+    public void testAddStudents()throws BusinessException{   
+        PreliminarProject preliminarProject = new PreliminarProject ("Revisión de la Literatura acerca de Varamiento de Mamíferos Marinos",
+        "Revisión de la Literatura acerca de Varamiento de Mamíferos Marinos",
+        "13/01/2021", "13/07/2021");
+        preliminarProject.setKey(6);
+        Student student = new Student("S19014013", "Mariana Yazmin Vargas Segura ");
+        preliminarProject.addStudent(student);
+        PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
+        assertTrue(preliminarProjectDAO.addStudents(preliminarProject));
+    }
+    
+    @Test 
+    public void testGetColaborators () throws BusinessException {
+         ArrayList<Member> colaborators;
+        PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
+        colaborators=preliminarProjectDAO.getColaborators(7);
+        String professionalLicenseExpected="8325134";
+        String professionalLicenseResult=colaborators.get(0).getProfessionalLicense();
+        assertEquals(professionalLicenseExpected, professionalLicenseResult);
     }
 }
