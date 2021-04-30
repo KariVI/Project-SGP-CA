@@ -219,6 +219,120 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
         return addStudentsSuccess;
     }
 
+    @Override
+    public ArrayList<Member> getColaborators(int idPreliminarProject) throws BusinessException {
+        ArrayList<Member> colaborators= new ArrayList<Member> ();
+        MemberDAO memberDAO= new MemberDAO();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String query = "SELECT cedula FROM Dirige where idTrabajoRecepcional=?";
 
+               PreparedStatement preparedStatement = connectionDataBase.prepareStatement(query);
+               preparedStatement.setInt(1, idPreliminarProject);
+               ResultSet resultSet;
+               resultSet = preparedStatement.executeQuery();
+               while(resultSet.next()){
+                    int key= resultSet.getInt(1);
+                    String professionalLicense= resultSet.getString("cedula");
+                    Member member = memberDAO.getMemberByLicense(professionalLicense);
+                    colaborators.add(member);
+                    
+                }
+                connectorDataBase.disconnect();
+            }catch(SQLException sqlException) {
+                   throw new BusinessException("Database failed ", sqlException);         
+            }catch(ClassNotFoundException ex) {
+                        Log.logException(ex);
+            }
+
+        return colaborators;
+    }
+    
+    @Override
+    public boolean deleteColaborators(ReceptionWork receptionWork) throws BusinessException {
+        boolean deleteSucess=false;
+        int idReceptionWork = receptionWork.getKey();
+        ArrayList<Member> colaborators= receptionWork.getMembers();
+        try{
+            Connector connectorDataBase=new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String delete = "delete from Dirige where cedula=? and idTrabajoRecepcional=?";
+     
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement(delete);
+            int i=0;
+            while(i< colaborators.size()){
+               preparedStatement.setString(1, colaborators.get(i).getProfessionalLicense());
+               preparedStatement.setInt(2, idReceptionWork);
+               preparedStatement.executeUpdate();
+               i++;
+            }
+            deleteSucess=true;
+            connectorDataBase.disconnect();         
+        }catch(SQLException sqlException) {
+            throw new BusinessException("DataBase connection failed ", sqlException);
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return deleteSucess;
+    }
+
+    @Override
+    public ArrayList<Student> getStudents(int idReceptionWork) throws BusinessException {
+        ArrayList<Student> students= new ArrayList<Student> ();
+        StudentDAO studentDAO= new StudentDAO();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String query="SELECT matricula FROM ParticipaTrabajoRecepcional where idTrabajoRecepcional=?";
+
+               PreparedStatement preparedStatement = connectionDataBase.prepareStatement(query);
+               preparedStatement.setInt(1, idReceptionWork);
+               ResultSet resultSet;
+               resultSet = preparedStatement.executeQuery();
+               while(resultSet.next()){
+                    String enrollment= resultSet.getString("matricula");
+                    Student student = studentDAO.getByEnrollment(enrollment);
+                    students.add(student);
+                    
+                }
+                connectorDataBase.disconnect();
+            }catch(SQLException sqlException) {
+                   throw new BusinessException("Database failed ", sqlException);         
+            }catch(ClassNotFoundException ex) {
+                        Log.logException(ex);
+            }
+
+        return students;
+    }
+
+    @Override
+    public boolean deleteStudents(ReceptionWork receptionWork) throws BusinessException {
+        boolean deleteSucess=false;
+        int idReceptionWork=receptionWork.getKey();
+        ArrayList<Student> students= receptionWork.getStudents();
+        try{
+            Connector connectorDataBase=new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String delete = "delete from ParticipaTrabajoRecepcional where matricula=? and idTrabajoRecepcional=?";
+     
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement(delete);
+            int i=0;
+            while(i< students.size()){
+               preparedStatement.setString(1, students.get(i).getEnrollment());
+               preparedStatement.setInt(2, idReceptionWork);
+               preparedStatement.executeUpdate();
+               i++;
+            }
+            deleteSucess=true;
+            connectorDataBase.disconnect();         
+        }catch(SQLException sqlException) {
+            throw new BusinessException("DataBase connection failed ", sqlException);
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return deleteSucess;
+
+    }
     
 }
