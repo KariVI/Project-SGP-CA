@@ -4,6 +4,7 @@ package businessLogic;
 import dataaccess.Connector;
 import domain.Meeting;
 import domain.Member;
+import domain.Student;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -135,64 +136,6 @@ public class MeetingDAO implements IMeetingDAO{
             return meetingList;
         }
 
-     public boolean addAssistant(int idMeeting, String enrollment, String role) throws BusinessException  {
-         boolean addAssistantSuccess=false;
-         try {
-                Connector connectorDataBase=new Connector();
-                Connection connectionDataBase = connectorDataBase.getConnection();
-                String insertMeeting = "INSERT INTO ParticipaReunion(idReunion,cedula, rol) VALUES (?,?,?)";
-            
-                PreparedStatement preparedStatement = connectionDataBase.prepareStatement(insertMeeting);
-                
-                preparedStatement.setInt(1, idMeeting);
-                preparedStatement.setString(2, enrollment);
-                preparedStatement.setString(3, role);
-                addAssistantSuccess=true;
-                
-                preparedStatement.executeUpdate();
-                connectorDataBase.disconnect();
-            } catch (SQLException sqlException) {
-                throw new BusinessException("DataBase connection failed ", sqlException);
-            } catch (ClassNotFoundException ex) {
-                Log.logException(ex);
-            }
-        return addAssistantSuccess;
-    }
-   
-     
-     
-   public Member getAssistant(int idMeeting, String profesionalLicense)throws BusinessException  {
-        Member assistant=null;
-      try{
-        Connector connectorDataBase = new Connector();
-        Connection connectionDataBase = connectorDataBase.getConnection();
-        String queryNameAssistant="SELECT Miembro.nombre, Miembro.cedula FROM ParticipaReunion, Miembro where ParticipaReunion.cedula=Miembro.cedula and idReunion=? and ParticipaReunion.cedula=?; ";
-        try{
-            PreparedStatement preparedStatement;
-            preparedStatement = connectionDataBase.prepareStatement(queryNameAssistant);
-            preparedStatement.setInt(1, idMeeting);
-            preparedStatement.setString(2, profesionalLicense);
-            ResultSet resultSet;
-
-            resultSet = preparedStatement.executeQuery();
-
-            if(resultSet.next()){
-                String name = resultSet.getString(1);
-                String professionalLicense=resultSet.getString(2);
-                assistant=new Member(professionalLicense, name);
-            }
-
-            connectorDataBase.disconnect();
-
-        }catch(SQLException sqlException) {
-           throw new BusinessException("DataBase connection failed ", sqlException);
-        }
-        }catch(ClassNotFoundException ex) {
-           Log.logException(ex);
-        }
-        return assistant;
-    }
-
     public boolean update(Meeting meeting) throws BusinessException{
       boolean updateSuccess=false;
             try {
@@ -240,6 +183,90 @@ public class MeetingDAO implements IMeetingDAO{
                 Log.logException(ex);
             }
         return updateSuccess;    
+    }
+    
+     public boolean addAssistants(Meeting meeting) throws BusinessException {
+        boolean addAssistantSuccess=false;
+        int idMeeting=meeting.getKey();
+        ArrayList<Member> assistants= meeting.getAssistants();
+         try {
+                Connector connectorDataBase=new Connector();
+                Connection connectionDataBase = connectorDataBase.getConnection();
+                String insertAssistant = "INSERT INTO ParticipaReunion(idReunion,cedula, rol) VALUES (?,?,?)";
+                int i=0;
+                while(i< assistants.size()){
+                    PreparedStatement preparedStatement = connectionDataBase.prepareStatement(insertAssistant);
+                    preparedStatement.setInt(1, idMeeting);
+                    preparedStatement.setString(2, assistants.get(i).getProfessionalLicense());
+                    preparedStatement.setString(3, assistants.get(i).getRole());
+                    preparedStatement.executeUpdate();
+                    i++;
+                } 
+                addAssistantSuccess=true; 
+               connectorDataBase.disconnect();
+            } catch (SQLException sqlException) {
+                throw new BusinessException("DataBase connection failed ", sqlException);
+            } catch (ClassNotFoundException ex) {
+                Log.logException(ex);
+            }
+        return addAssistantSuccess;
+    }
+
+    @Override
+    public boolean deleteAssistants(Meeting meeting) throws BusinessException {
+        boolean deleteSucess=false;
+        int idMeeting=meeting.getKey();
+        ArrayList<Member> assistants= meeting.getAssistants();
+        try{
+            Connector connectorDataBase=new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String delete = "delete from ParticipaReunion where cedula=? and idReunion=?";
+     
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement(delete);
+            int i=0;
+            while(i< assistants.size()){
+               preparedStatement.setString(1, assistants.get(i).getProfessionalLicense());
+               preparedStatement.setInt(2, idMeeting);
+               preparedStatement.executeUpdate();
+               i++;
+            }
+            deleteSucess=true;
+            connectorDataBase.disconnect();         
+        }catch(SQLException sqlException) {
+            throw new BusinessException("DataBase connection failed ", sqlException);
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return deleteSucess;
+    }
+
+    @Override
+    public ArrayList<Member> getAssistants(int idMeeting) throws BusinessException {
+         ArrayList<Member> assistants= new ArrayList<Member> ();
+        MemberDAO memberDAO= new MemberDAO();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String query="SELECT cedula FROM ParticipaReunion where idReunion=?";
+
+               PreparedStatement preparedStatement = connectionDataBase.prepareStatement(query);
+               preparedStatement.setInt(1, idMeeting);
+               ResultSet resultSet;
+               resultSet = preparedStatement.executeQuery();
+               while(resultSet.next()){
+                    String professionalLicense= resultSet.getString("cedula");
+                    Member member = memberDAO.getMemberByLicense(professionalLicense);
+                    assistants.add(member);
+                    
+                }
+                connectorDataBase.disconnect();
+            }catch(SQLException sqlException) {
+                   throw new BusinessException("Database failed ", sqlException);         
+            }catch(ClassNotFoundException ex) {
+                        Log.logException(ex);
+            }
+
+        return assistants;
     }
 
 }

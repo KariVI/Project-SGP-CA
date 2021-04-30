@@ -2,6 +2,7 @@
 package businessLogic;
 
 import dataaccess.Connector;
+import domain.LGAC;
 import domain.Member;
 import domain.PreliminarProject;
 import domain.Student;
@@ -223,7 +224,6 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
                ResultSet resultSet;
                resultSet = preparedStatement.executeQuery();
                while(resultSet.next()){
-                   int key= resultSet.getInt(1);
                     String professionalLicense= resultSet.getString("cedula");
                     Member member = memberDAO.getMemberByLicense(professionalLicense);
                     colaborators.add(member);
@@ -322,7 +322,85 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
             Log.logException(ex);
         }
         return deleteSucess;
-
     }
+    
+    public boolean addLGAC(PreliminarProject preliminarProject) throws BusinessException {
+        boolean addLGACSucces = false;
+        int idPreliminarProject = preliminarProject.getKey();
+        ArrayList<LGAC> lgacs =  preliminarProject.getLGACs();
+         try {
+                Connector connectorDataBase = new Connector();
+                Connection connectionDataBase = connectorDataBase.getConnection();
+                int i=0;
+                while(i< lgacs.size()){
+                    PreparedStatement preparedStatement = connectionDataBase.prepareStatement("INSERT INTO CultivaAnteproyecto(idAnteproyecto,nombreLGAC) VALUES (?,?)");
+                    preparedStatement.setInt(1, idPreliminarProject);
+                    preparedStatement.setString(2, lgacs.get(i).getName());
+                    preparedStatement.executeUpdate();
+                    i++;
+                } 
+                addLGACSucces = true; 
+               connectorDataBase.disconnect();
+            } catch (SQLException sqlException) {
+                throw new BusinessException("DataBase connection failed ", sqlException);
+            } catch (ClassNotFoundException ex) {
+                Log.logException(ex);
+            }
+        return addLGACSucces;
+    }
+    
+    public ArrayList<LGAC> getLGACs(PreliminarProject preliminarProject) throws BusinessException {
+        ArrayList<LGAC> lgacs = new ArrayList<LGAC>();
+        LGACDAO lgacDAO= new LGACDAO();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+               PreparedStatement preparedStatement = connectionDataBase.prepareStatement("SELECT nombreLGAC FROM CultivaAnteproyecto where idAnteproyecto = ?");
+               preparedStatement.setInt(1, preliminarProject.getKey());
+               ResultSet resultSet;
+               resultSet = preparedStatement.executeQuery();
+               while(resultSet.next()){
+                    String name = resultSet.getString("nombreLGAC");
+                    LGAC lgac = lgacDAO.getLgacByName(name);
+                    lgacs.add(lgac);
+                }
+                connectorDataBase.disconnect();
+            }catch(SQLException sqlException) {
+                   throw new BusinessException("Database failed ", sqlException);         
+            }catch(ClassNotFoundException ex) {
+                        Log.logException(ex);
+            }
+
+        return lgacs;
+    }
+
+    @Override
+    public boolean deleteLGACS(PreliminarProject preliminarProject) throws BusinessException {
+       boolean deleteSucess=false;
+        int idPreliminarProject=preliminarProject.getKey();
+        ArrayList<LGAC> lgacs= preliminarProject.getLGACs();
+        try{
+            Connector connectorDataBase=new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String delete = "delete from CultivaAnteproyecto idAnteproyecto=? where nombreLGAC=?";
+     
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement(delete);
+            int i=0;
+            while(i< lgacs.size()){
+               preparedStatement.setInt(1, idPreliminarProject);
+               preparedStatement.setString(2, lgacs.get(i).getName());
+               preparedStatement.executeUpdate();
+               i++;
+            }
+            deleteSucess=true;
+            connectorDataBase.disconnect();         
+        }catch(SQLException sqlException) {
+            throw new BusinessException("DataBase connection failed ", sqlException);
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return deleteSucess; 
+    }
+
     
 }

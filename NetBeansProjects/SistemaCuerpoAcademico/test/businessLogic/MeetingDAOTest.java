@@ -80,36 +80,7 @@ public class MeetingDAOTest {
         assertFalse(meetingExpected. equals(meetingResult ));
         
     }
-        
-    @Test    
-    public void testgetAssistant() throws BusinessException{ 
-      MeetingDAO meetingDAO= new MeetingDAO();
-      Member memberExpected= new Member("8325134","Juan Carlos Perez Arriaga");
-      Member memberResult= meetingDAO.getAssistant(1, "8325134");
-      
-      assertTrue(memberExpected.equals(memberResult));
-    }
-    
-    @Test
-    public void testgetAssistantFailed() throws BusinessException{ 
-      MeetingDAO meetingDAO= new MeetingDAO();
-      Member memberExpected= new Member("7938268","Maria Karen Cortes Verdin");
-      Member memberResult= meetingDAO.getAssistant(1,"7938268");
-      
-      assertFalse(memberExpected.equals(memberResult));
-    }
-        
-    @Test
-    public void testAddAssistant() throws BusinessException{
-        MeetingDAO meetingDAO= new MeetingDAO();
-        String enrollment= "7938268";
-        int idMeeting=1;
-        String role="Lider";
-        assertTrue(meetingDAO.addAssistant(idMeeting, enrollment, role));
-        
-    
-    }
-    
+   
     @Test
     public void testUpdate() throws BusinessException{  
         MeetingDAO meetingDAO= new MeetingDAO();
@@ -134,6 +105,34 @@ public class MeetingDAOTest {
         Meeting meeting= new Meeting(4,"Actualizar plan de trabajo de la LIS","13:00","11/05/2021", "Proxima");
         MeetingDAO meetingDAO= new MeetingDAO();
         assertTrue(meetingDAO.changeState(meeting));
+    }
+    
+    @Test
+    public void testAddAssistants() throws BusinessException{
+        MeetingDAO meetingDAO= new MeetingDAO();
+        Meeting meeting= new Meeting(1, "Revisión de avances en proyectos actuales" ,"04/05/2021","11:30", "Registrada");
+        Member assistant= new Member("7938268","Maria Karen Cortes Verdin","Lider");
+        meeting.addAssistant(assistant);
+        assertTrue(meetingDAO.addAssistants(meeting));
+    }
+    
+    @Test
+    public void testGetAssistants() throws BusinessException{   
+      MeetingDAO meetingDAO= new MeetingDAO();
+      Meeting meeting= new Meeting(1, "Revisión de avances en proyectos actuales" ,"04/05/2021","11:30", "Registrada");  
+      String professionalLicenseExpected= "8325134";
+      meeting.setAssistants(meetingDAO.getAssistants(1));
+      String professionalLicenseResult=meeting.getAssistants().get(0).getProfessionalLicense();
+      assertEquals(professionalLicenseExpected, professionalLicenseResult);
+    }
+    
+    @Test     
+    public void testDeleteAssistants() throws BusinessException{  
+        MeetingDAO meetingDAO= new MeetingDAO();
+        Meeting meeting= new Meeting(1, "Revisión de avances en proyectos actuales" ,"04/05/2021","11:30", "Registrada");
+        Member assistant= new Member("7938268","Maria Karen Cortes Verdin","Lider");
+        meeting.addAssistant(assistant);
+        assertTrue(meetingDAO.deleteAssistants(meeting));
     }
 }
 
