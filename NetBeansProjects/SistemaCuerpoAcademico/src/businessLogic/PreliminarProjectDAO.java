@@ -281,7 +281,6 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
                ResultSet resultSet;
                resultSet = preparedStatement.executeQuery();
                while(resultSet.next()){
-                   int key= resultSet.getInt(1);
                     String enrollment= resultSet.getString("matricula");
                     Student student = studentDAO.getByEnrollment(enrollment);
                     students.add(student);

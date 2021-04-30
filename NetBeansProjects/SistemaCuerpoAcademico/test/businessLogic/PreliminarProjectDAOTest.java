@@ -114,11 +114,42 @@ public class PreliminarProjectDAOTest {
     
     @Test 
     public void testGetColaborators () throws BusinessException {
-         ArrayList<Member> colaborators;
+        ArrayList<Member> colaborators;
         PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
         colaborators=preliminarProjectDAO.getColaborators(7);
         String professionalLicenseExpected="8325134";
         String professionalLicenseResult=colaborators.get(0).getProfessionalLicense();
         assertEquals(professionalLicenseExpected, professionalLicenseResult);
+    }
+    
+    @Test
+    public void testDeleteColaborators() throws BusinessException { 
+        PreliminarProject preliminarProject= new PreliminarProject("Evaluación del modelo de calidad de seguridad para arquitecturas de software", "Una arquitectura de software define no sólo la estructura o estructuras de un sistema de software, sino las características de calidad del propio sistema. Una característica o atributo de calidad altamente crítico en nuestros días es la seguridad. Esta característica, por supuesto que también es importante considerar en el desarrollo de la plataforma de comunicación y educación",
+        "13/11/2019","13/07/2020");
+        preliminarProject.setKey(7);
+        MemberDAO memberDAO =new MemberDAO();
+        preliminarProject.addMember(memberDAO.getMemberByLicense("8325134"));
+        PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
+        assertTrue(preliminarProjectDAO.deleteColaborators(preliminarProject));
+    }
+    
+    @Test 
+    public void testGetStudents () throws BusinessException{
+        String enrollmentExpected="S19014013";
+        PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
+        ArrayList<Student> students= preliminarProjectDAO.getStudents(7);
+        String enrollmentResult= students.get(0).getEnrollment();
+        assertEquals(enrollmentExpected,enrollmentResult);
+    }
+    
+    @Test 
+    public void testDeleteStudents () throws BusinessException{
+        PreliminarProject preliminarProject= new PreliminarProject("Evaluación del modelo de calidad de seguridad para arquitecturas de software", "Una arquitectura de software define no sólo la estructura o estructuras de un sistema de software, sino las características de calidad del propio sistema. Una característica o atributo de calidad altamente crítico en nuestros días es la seguridad. Esta característica, por supuesto que también es importante considerar en el desarrollo de la plataforma de comunicación y educación",
+        "13/11/2019","13/07/2020");
+        preliminarProject.setKey(7);
+        Student student= new Student("S19014013", "Mariana Yazmin Vargas Segura");
+        preliminarProject.addStudent(student);
+        PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
+        assertTrue(preliminarProjectDAO.deleteStudents(preliminarProject));
     }
 }

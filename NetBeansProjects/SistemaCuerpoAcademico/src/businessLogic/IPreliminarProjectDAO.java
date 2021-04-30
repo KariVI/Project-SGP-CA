@@ -3,6 +3,7 @@ package businessLogic;
 
 import domain.Member;
 import domain.PreliminarProject;
+import domain.Student;
 import java.util.ArrayList;
 import log.BusinessException;
 
@@ -16,5 +17,7 @@ public interface IPreliminarProjectDAO {
     public boolean addStudents(PreliminarProject preliminarProject) throws BusinessException;
     public ArrayList<Member> getColaborators(int idPreliminarProject) throws BusinessException;
     public boolean deleteColaborators(PreliminarProject preliminarProject) throws BusinessException;
+    public ArrayList<Student> getStudents(int idPreliminarProject) throws BusinessException;
+    public boolean deleteStudents(PreliminarProject preliminarProject) throws BusinessException;
 }
 
