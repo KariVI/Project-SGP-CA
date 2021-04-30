@@ -3,7 +3,7 @@ package businessLogic;
 
 import dataaccess.Connector;
 import domain.GroupAcademic;
-import domain.LGCA;
+import domain.LGAC;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -76,7 +76,7 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
     }  
 
     @Override
-    public boolean addLGAC(GroupAcademic groupAcademic,LGCA lgac) throws BusinessException {
+    public boolean addLGAC(GroupAcademic groupAcademic,LGAC lgac) throws BusinessException {
         boolean addSucess=false;
         Connector connectorDataBase=new Connector();
         try {

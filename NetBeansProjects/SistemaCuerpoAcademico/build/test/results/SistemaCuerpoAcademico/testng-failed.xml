@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Failed suite [SistemaCuerpoAcademico]">
-  <test name="dataaccess.ConnectorTest(failed)" junit="true">
+  <test name="businessLogic.ProjectDaoTest(failed)" junit="true">
     <classes>
-      <class name="dataaccess.ConnectorTest">
+      <class name="businessLogic.ProjectDaoTest">
         <methods>
-          <include name="testConnect"/>
+          <include name="testAddReceptionWork"/>
         </methods>
-      </class> <!-- dataaccess.ConnectorTest -->
+      </class> <!-- businessLogic.ProjectDaoTest -->
     </classes>
-  </test> <!-- dataaccess.ConnectorTest(failed) -->
+  </test> <!-- businessLogic.ProjectDaoTest(failed) -->
 </suite> <!-- Failed suite [SistemaCuerpoAcademico] -->
