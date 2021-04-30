@@ -8,7 +8,7 @@ import domain.Student;
 import java.util.ArrayList;
 import log.BusinessException;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.Assert.*;
 
 public class ReceptionWorkDAOTest {
     
@@ -119,7 +119,47 @@ public class ReceptionWorkDAOTest {
         assertTrue(receptionWorkDAO .addStudents(receptionWork));
     }
     
-
+    
+    @Test 
+    public void testGetColaborators () throws BusinessException {
+        ArrayList<Member> colaborators;
+        PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
+        colaborators=preliminarProjectDAO.getColaborators(7);
+        String professionalLicenseExpected="8325134";
+        String professionalLicenseResult=colaborators.get(0).getProfessionalLicense();
+        assertEquals(professionalLicenseExpected, professionalLicenseResult);
+    }
+    
+    @Test
+    public void testDeleteColaborators() throws BusinessException { 
+         ReceptionWork receptionWork = new ReceptionWork ("Propuesta de Aplicación de Aprendizaje Máquina y Cómputo Evolutivo en la Clasificación de Requisitos de Calidad", "Tesis",
+        "Propuesta de uso de aprendizaje máquina en la clasificación de requisitos", "14/11/2019", "14/05/2021", "Concluido");
+        receptionWork.setKey(3);
+        MemberDAO memberDAO =new MemberDAO();
+        receptionWork.addMember(memberDAO.getMemberByLicense("8325134"));
+        ReceptionWorkDAO receptionWorkDAO= new ReceptionWorkDAO();
+        assertTrue(receptionWorkDAO.deleteColaborators(receptionWork));
+    }
+    
+    @Test 
+    public void testGetStudents () throws BusinessException{
+        String enrollmentExpected="S19014013";
+        ReceptionWorkDAO receptionWorkDAO= new ReceptionWorkDAO();
+        ArrayList<Student> students= receptionWorkDAO.getStudents(3);
+        String enrollmentResult= students.get(0).getEnrollment();
+        assertEquals(enrollmentExpected,enrollmentResult);
+    }
+    
+    @Test 
+    public void testDeleteStudents () throws BusinessException{
+       ReceptionWork receptionWork = new ReceptionWork ("Propuesta de Aplicación de Aprendizaje Máquina y Cómputo Evolutivo en la Clasificación de Requisitos de Calidad", "Tesis",
+        "Propuesta de uso de aprendizaje máquina en la clasificación de requisitos", "14/11/2019", "14/05/2021", "Concluido");
+        receptionWork.setKey(3);
+        Student student= new Student("S19014013", "Mariana Yazmin Vargas Segura");
+        receptionWork.addStudent(student);
+        ReceptionWorkDAO receptionWorkDAO= new ReceptionWorkDAO();
+        assertTrue(receptionWorkDAO.deleteStudents(receptionWork));
+    }
  
     
 }
