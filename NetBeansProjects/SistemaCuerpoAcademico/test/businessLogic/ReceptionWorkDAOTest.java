@@ -5,6 +5,7 @@ import domain.Member;
 import domain.PreliminarProject;
 import domain.ReceptionWork;
 import domain.Student;
+import domain.LGAC;
 import java.util.ArrayList;
 import log.BusinessException;
 import org.junit.Test;
@@ -161,5 +162,27 @@ public class ReceptionWorkDAOTest {
         assertTrue(receptionWorkDAO.deleteStudents(receptionWork));
     }
  
+        @Test
+    public void testAddLGAC() throws BusinessException {
+        ReceptionWork receptionWork = new ReceptionWork("VaraAppX: Aplicación móvil para registro de datos detallados sobre varamientos de mamíferos marinos",
+        "Práctico técnico","Aplicación enfocada al registro de datos sobre varamientos mamiferos",
+        "20/12/2019","20/08/2020", "Concluido");
+        receptionWork.setKey(1);
+        LGAC lgac = new LGAC("Tecnologías de software", "Se orienta al estudio de diversas propiedades, enfoques, métodos de modelado y herramientas que conforman cada una de las diversas tecnologías aplicables al desarrollo del software con vistas a su adaptación, mejora y sustitución en el medio nacional");
+        receptionWork.addLGAC(lgac);
+        ReceptionWorkDAO receptionWorkDAO= new ReceptionWorkDAO();
+        assertTrue(receptionWorkDAO.addLGACs(receptionWork));
+    }
     
+    @Test
+    public void testGetLGAC() throws BusinessException {
+        ReceptionWork receptionWork = new ReceptionWork("VaraAppX: Aplicación móvil para registro de datos detallados sobre varamientos de mamíferos marinos",
+        "Práctico técnico","Aplicación enfocada al registro de datos sobre varamientos mamiferos",
+        "20/12/2019","20/08/2020", "Concluido");
+        int idReceptionWork = 1;
+        LGAC lgac = new LGAC("Tecnologías de software", "Se orienta al estudio de diversas propiedades, enfoques, métodos de modelado y herramientas que conforman cada una de las diversas tecnologías aplicables al desarrollo del software con vistas a su adaptación, mejora y sustitución en el medio nacional");
+        receptionWork.addLGAC(lgac);
+        ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO ();
+        assertEquals(receptionWorkDAO.getLGACs(idReceptionWork),receptionWork.getLGACs());
+    }
 }

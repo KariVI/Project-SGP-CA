@@ -2,6 +2,7 @@
 package businessLogic;
 
 import dataaccess.Connector;
+import domain.LGAC;
 import domain.Member;
 import domain.ReceptionWork;
 import domain.Student;
@@ -333,6 +334,59 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
         }
         return deleteSucess;
 
+    }
+
+    @Override
+    public boolean addLGACs(ReceptionWork receptionWork) throws BusinessException {
+        boolean addLGACSucces = false;
+        int idReceptionWork = receptionWork.getKey();
+        ArrayList<LGAC> lgacs = receptionWork.getLGACs();
+         try {
+                Connector connectorDataBase = new Connector();
+                Connection connectionDataBase = connectorDataBase.getConnection();
+                int i=0;
+                while(i< lgacs.size()){
+                    PreparedStatement preparedStatement = connectionDataBase.prepareStatement("INSERT INTO CultivaTrabajoRecepcional(idTrabajoRecepcional,nombreLGAC) VALUES (?,?)");
+                    preparedStatement.setInt(1, idReceptionWork);
+                    preparedStatement.setString(2, lgacs.get(i).getName());
+                    preparedStatement.executeUpdate();
+                    i++;
+                } 
+                addLGACSucces = true; 
+               connectorDataBase.disconnect();
+            } catch (SQLException sqlException) {
+                throw new BusinessException("DataBase connection failed ", sqlException);
+            } catch (ClassNotFoundException ex) {
+                Log.logException(ex);
+            }
+        return addLGACSucces;
+
+    }
+
+    @Override
+    public ArrayList<LGAC> getLGACs(int idReceptionWork) throws BusinessException {
+        ArrayList<LGAC> lgacs = new ArrayList<LGAC>();
+        LGACDAO lgacDAO= new LGACDAO();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+               PreparedStatement preparedStatement = connectionDataBase.prepareStatement("SELECT nombreLGAC FROM CultivaTrabajoRecepcional where idTrabajoRecepcional = ?");
+               preparedStatement.setInt(1, idReceptionWork);
+               ResultSet resultSet;
+               resultSet = preparedStatement.executeQuery();
+               while(resultSet.next()){
+                    String name = resultSet.getString("nombreLGAC");
+                    LGAC lgac = lgacDAO.getLgacByName(name);
+                    lgacs.add(lgac);
+                }
+                connectorDataBase.disconnect();
+            }catch(SQLException sqlException) {
+                   throw new BusinessException("Database failed ", sqlException);         
+            }catch(ClassNotFoundException ex) {
+                        Log.logException(ex);
+            }
+
+        return lgacs;
     }
     
 }

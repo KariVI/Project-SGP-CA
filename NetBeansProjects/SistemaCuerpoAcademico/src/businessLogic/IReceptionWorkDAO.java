@@ -1,6 +1,7 @@
 
 package businessLogic;
 
+import domain.LGAC;
 import domain.Member;
 import domain.ReceptionWork;
 import domain.Student;
@@ -14,9 +15,11 @@ public interface IReceptionWorkDAO {
     public ArrayList<ReceptionWork> getReceptionWorks() throws BusinessException;
     public boolean addColaborators(ReceptionWork receptionWork)throws BusinessException;
     public boolean addStudents (ReceptionWork receptionWork) throws BusinessException;
+    public boolean addLGACs (ReceptionWork receptionWork) throws BusinessException;
     public int getId(ReceptionWork receptionWork) throws BusinessException;
     public ArrayList<Member> getColaborators(int idReceptionWork) throws BusinessException;
     public boolean deleteColaborators(ReceptionWork receptionWork) throws BusinessException;
     public ArrayList<Student> getStudents(int idReceptionWork) throws BusinessException;
+     public ArrayList<LGAC> getLGACs(int idReceptionWork) throws BusinessException;
     public boolean deleteStudents(ReceptionWork receptionWork) throws BusinessException;
 }

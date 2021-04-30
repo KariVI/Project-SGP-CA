@@ -16,6 +16,7 @@ public class ReceptionWork {
     private PreliminarProject preliminarProject;
     private ArrayList<Student> students;
     private ArrayList<Member> members;
+    private ArrayList<LGAC> lgacs;
     
     
     public ReceptionWork(String title, String type, String description, String dateStart, String dateEnd, String actualState){
@@ -27,6 +28,7 @@ public class ReceptionWork {
         this.actualState=actualState;
         students=new ArrayList<Student>();
         members=new ArrayList<Member>();
+        lgacs=new ArrayList<LGAC>();
          
     }
     public int getKey(){
@@ -120,7 +122,15 @@ public class ReceptionWork {
          students.add(student);
     }
     
+    public ArrayList<LGAC> getLGACs(){
+        return lgacs;
+    }
     
+    public void addLGAC(LGAC lgac){ 
+         lgacs.add(lgac);
+    }
+    
+    @Override
     public boolean equals(Object object){
         boolean value=false;
             if (object instanceof ReceptionWork) {
