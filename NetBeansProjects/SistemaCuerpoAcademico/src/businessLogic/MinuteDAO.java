@@ -1,6 +1,7 @@
 package businessLogic;
 
 import dataaccess.Connector;
+import domain.Member;
 import domain.Minute;
 import domain.MinuteComment;
 import java.sql.Connection;
@@ -185,4 +186,37 @@ public class MinuteDAO implements IMinuteDAO {
       
         return updateSucess;
     } 
+
+    @Override
+    public ArrayList<Member> getMembersApprove(Minute minute) throws BusinessException {
+         ArrayList<Member> members = new ArrayList<Member>();
+        MemberDAO memberDAO= new MemberDAO();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+               PreparedStatement preparedStatement = connectionDataBase.prepareStatement("SELECT cedula FROM ValidarMinuta where idMinuta = ? and estado is NULL");
+               preparedStatement.setInt(1, minute.getIdMinute());
+               ResultSet resultSet;
+               resultSet = preparedStatement.executeQuery();
+       
+               while(resultSet.next()){
+                    String professionalLicense = resultSet.getString("cedula");
+                    
+                    Member member = memberDAO.getMemberByLicense(professionalLicense);
+                    members.add(member);
+                }
+                connectorDataBase.disconnect();
+            }catch(SQLException sqlException) {
+                   throw new BusinessException("Database failed ", sqlException);         
+            }catch(ClassNotFoundException ex) {
+                        Log.logException(ex);
+            }
+        
+        return members;
+    }
+
+    @Override
+    public ArrayList<Member> getMembersDisapprove(Minute minute) throws BusinessException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

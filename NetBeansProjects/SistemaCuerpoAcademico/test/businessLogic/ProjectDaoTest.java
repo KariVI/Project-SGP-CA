@@ -12,10 +12,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import log.BusinessException;
-/**
- *
- * @author Mariana
- */
+
 public class ProjectDaoTest {
    
   
