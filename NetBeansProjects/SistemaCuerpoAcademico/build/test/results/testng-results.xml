@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="SistemaCuerpoAcademico" duration-ms="1389" started-at="2021-04-30T15:52:31Z" finished-at="2021-04-30T15:52:33Z">
+  <suite name="SistemaCuerpoAcademico" duration-ms="1523" started-at="2021-04-30T17:20:46Z" finished-at="2021-04-30T17:20:47Z">
     <groups>
     </groups>
-    <test name="businessLogic.ProjectDaoTest" duration-ms="1389" started-at="2021-04-30T15:52:31Z" finished-at="2021-04-30T15:52:33Z">
-      <class name="businessLogic.ProjectDaoTest">
-        <test-method status="PASS" signature="testGetReceptionWork()[pri:0, instance:testGetReceptionWork(businessLogic.ProjectDaoTest)]" name="testGetReceptionWork" duration-ms="1180" started-at="2021-04-30T10:52:32Z" finished-at="2021-04-30T10:52:33Z">
+    <test name="businessLogic.MemberDAOTest" duration-ms="1523" started-at="2021-04-30T17:20:46Z" finished-at="2021-04-30T17:20:47Z">
+      <class name="businessLogic.MemberDAOTest">
+        <test-method status="PASS" signature="testActivateMember()[pri:0, instance:testActivateMember(businessLogic.MemberDAOTest)]" name="testActivateMember" duration-ms="1297" started-at="2021-04-30T12:20:46Z" finished-at="2021-04-30T12:20:47Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testGetReceptionWork -->
-      </class> <!-- businessLogic.ProjectDaoTest -->
-    </test> <!-- businessLogic.ProjectDaoTest -->
+        </test-method> <!-- testActivateMember -->
+      </class> <!-- businessLogic.MemberDAOTest -->
+    </test> <!-- businessLogic.MemberDAOTest -->
   </suite> <!-- SistemaCuerpoAcademico -->
 </testng-results>

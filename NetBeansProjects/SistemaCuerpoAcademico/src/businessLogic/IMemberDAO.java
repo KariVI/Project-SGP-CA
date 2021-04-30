@@ -8,4 +8,6 @@ public interface IMemberDAO {
     public Member getMemberByLicense(String license) throws BusinessException;
     public boolean findMemberByLicense(String license);  
     public boolean update( Member newMember) throws BusinessException;
+    public boolean desactivateMember( Member newMember) throws BusinessException;
+    public boolean activateMember( Member newMember) throws BusinessException;
 }

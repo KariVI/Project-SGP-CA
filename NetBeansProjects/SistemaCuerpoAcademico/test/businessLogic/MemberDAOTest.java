@@ -61,4 +61,19 @@ public class MemberDAOTest {
         assertTrue(memberDAO.update(newMember));
     }
     
+    @Test
+    public void testDesactivateMember() throws BusinessException {
+        System.out.println("DesactivateMember");
+        Member member = new Member("4065161", "Maria de los Angeles Arenas Valdes","Colaborador","Maestria","Maestria en ciencias de la computacion","Fundacion Arturo Rosenbulth",1999,"inactivo","1491");
+        MemberDAO memberDAO = new MemberDAO();
+        assertTrue(memberDAO.desactivateMember(member));
+    }
+    
+    @Test
+    public void testActivateMember() throws BusinessException {
+        System.out.println("ActivateMember");
+        Member member = new Member("4065161", "Maria de los Angeles Arenas Valdes","Colaborador","Maestria","Maestria en ciencias de la computacion","Fundacion Arturo Rosenbulth",1999,"inactivo","1491");
+        MemberDAO memberDAO = new MemberDAO();
+        assertTrue(memberDAO.activateMember(member));
+    }
 }

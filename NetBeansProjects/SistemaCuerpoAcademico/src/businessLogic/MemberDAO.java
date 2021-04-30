@@ -143,4 +143,46 @@ public class MemberDAO implements IMemberDAO{
       
         return updateSucess;
     }    
+
+    @Override
+    public boolean desactivateMember(Member newMember) throws BusinessException {
+        boolean updateSucess = false;
+        Connector connectorDataBase=new Connector();
+        try {
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("UPDATE Miembro set   estado = ? where cedula = ? ");
+            preparedStatement.setString(1, "inactivo");
+            preparedStatement.setString(2, newMember.getProfessionalLicense());
+            preparedStatement.executeUpdate();
+            updateSucess=true;  
+            connectorDataBase.disconnect();
+        }catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        } catch (SQLException sqlException) {
+           throw new BusinessException("DataBase connection failed ", sqlException);
+        }
+      
+        return updateSucess;
+    }
+
+    @Override
+    public boolean activateMember(Member newMember) throws BusinessException {
+        boolean updateSucess = false;
+        Connector connectorDataBase=new Connector();
+        try {
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("UPDATE Miembro set   estado = ? where cedula = ? ");
+            preparedStatement.setString(1, "activo");
+            preparedStatement.setString(2, newMember.getProfessionalLicense());
+            preparedStatement.executeUpdate();
+            updateSucess=true;  
+            connectorDataBase.disconnect();
+        }catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        } catch (SQLException sqlException) {
+           throw new BusinessException("DataBase connection failed ", sqlException);
+        }
+      
+        return updateSucess;
+    }
 }
