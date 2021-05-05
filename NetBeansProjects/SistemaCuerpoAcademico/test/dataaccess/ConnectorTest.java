@@ -18,7 +18,6 @@ public class ConnectorTest {
         System.out.println("connect");
         Connector instance;
         instance = new Connector();
-         instance.connect();
         assertNotNull(instance.getConnection());
     }
 

@@ -50,7 +50,7 @@ public class ProjectDAO implements IProjectDAO {
         
         @Override
         public ArrayList<Project>  getProjects() throws BusinessException{
-                     ArrayList<Project> projectList = new ArrayList<>();
+                     ArrayList<Project> projectList = new ArrayList<Project>();
                      try{
                         Connector connectorDataBase = new Connector();
                         Connection connectionDataBase = connectorDataBase.getConnection();
@@ -83,6 +83,8 @@ public class ProjectDAO implements IProjectDAO {
                     return projectList;  
         }
         
+      
+        
         @Override
         public int  searchId(Project project) throws BusinessException {
                 int idProject = 0;
@@ -100,6 +102,8 @@ public class ProjectDAO implements IProjectDAO {
                             
                             if(projectResultSet.next()){
                                 idProject = projectResultSet.getInt("idProyecto");
+                            }else{
+                                throw new BusinessException("Project not found");
                             }
                               
                             connectorDataBase.disconnect();
@@ -184,12 +188,12 @@ public class ProjectDAO implements IProjectDAO {
     @Override
     public boolean addStudents(Project project) throws BusinessException {
         boolean addStudentsSuccess = false;
-        int idProject = project.getIdProject();
-        ArrayList<Student> students = project.getStudents();
          try {
                 Connector connectorDataBase = new Connector();
                 Connection connectionDataBase = connectorDataBase.getConnection();
                 int i=0;
+                int idProject = project.getIdProject();
+                 ArrayList<Student> students = project.getStudents();
                 while(i< students.size()){
                     PreparedStatement preparedStatement = connectionDataBase.prepareStatement("INSERT INTO ParticipaProyecto(idProyecto,matricula) VALUES (?,?)");
                     preparedStatement.setInt(1, idProject);
@@ -210,12 +214,12 @@ public class ProjectDAO implements IProjectDAO {
     @Override
     public boolean addColaborators(Project project) throws BusinessException {
         boolean addColaboratorsSuccess = false;
-        int idProject = project.getIdProject();
-        ArrayList<Member> members = project.getMembers();
          try {
                 Connector connectorDataBase = new Connector();
                 Connection connectionDataBase = connectorDataBase.getConnection();
                 int i=0;
+                int idProject = project.getIdProject();
+                ArrayList<Member> members = project.getMembers();
                 while(i< members.size()){
                     PreparedStatement preparedStatement = connectionDataBase.prepareStatement("INSERT INTO DesarrollaProyecto(idProyecto,cedula) VALUES (?,?)");
                     preparedStatement.setInt(1, idProject);
@@ -236,11 +240,11 @@ public class ProjectDAO implements IProjectDAO {
     @Override
     public boolean addLGAC(Project project) throws BusinessException {
         boolean addLGACSucces = false;
-        int idProject = project.getIdProject();
-        ArrayList<LGAC> lgacs = project.getLGACs();
          try {
                 Connector connectorDataBase = new Connector();
                 Connection connectionDataBase = connectorDataBase.getConnection();
+                ArrayList<LGAC> lgacs = project.getLGACs();
+                int idProject = project.getIdProject();
                 int i=0;
                 while(i< lgacs.size()){
                     PreparedStatement preparedStatement = connectionDataBase.prepareStatement("INSERT INTO CultivaProyecto(idProyecto,nombreLGAC) VALUES (?,?)");
@@ -262,7 +266,6 @@ public class ProjectDAO implements IProjectDAO {
     @Override
     public ArrayList<Member> getColaborators(Project project) throws BusinessException {
         ArrayList<Member> members = new ArrayList<Member>();
-        MemberDAO memberDAO= new MemberDAO();
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
@@ -270,6 +273,7 @@ public class ProjectDAO implements IProjectDAO {
                preparedStatement.setInt(1, project.getIdProject());
                ResultSet resultSet;
                resultSet = preparedStatement.executeQuery();
+               MemberDAO memberDAO= new MemberDAO();
                while(resultSet.next()){
                     String professionalLicense = resultSet.getString("cedula");
                     Member member = memberDAO.getMemberByLicense(professionalLicense);
@@ -288,7 +292,6 @@ public class ProjectDAO implements IProjectDAO {
     @Override
     public ArrayList<Student> getStudents(Project project) throws BusinessException {
         ArrayList<Student> students= new ArrayList<Student>();
-        StudentDAO studentDAO= new StudentDAO();
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
@@ -296,11 +299,13 @@ public class ProjectDAO implements IProjectDAO {
                preparedStatement.setInt(1, project.getIdProject());
                ResultSet resultSet;
                resultSet = preparedStatement.executeQuery();
+               StudentDAO studentDAO= new StudentDAO();
                while(resultSet.next()){
                     String enrollment= resultSet.getString("matricula");
                     Student student = studentDAO.getByEnrollment(enrollment);
                     students.add(student);
                 }
+               
                 connectorDataBase.disconnect();
             }catch(SQLException sqlException) {
                    throw new BusinessException("Database failed ", sqlException);         
@@ -314,7 +319,7 @@ public class ProjectDAO implements IProjectDAO {
     @Override
     public ArrayList<LGAC> getLGACs(Project project) throws BusinessException {
         ArrayList<LGAC> lgacs = new ArrayList<LGAC>();
-        LGACDAO lgacDAO= new LGACDAO();
+        
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
@@ -322,6 +327,7 @@ public class ProjectDAO implements IProjectDAO {
                preparedStatement.setInt(1, project.getIdProject());
                ResultSet resultSet;
                resultSet = preparedStatement.executeQuery();
+               LGACDAO lgacDAO= new LGACDAO();
                while(resultSet.next()){
                     String name = resultSet.getString("nombreLGAC");
                     LGAC lgac = lgacDAO.getLgacByName(name);
@@ -341,10 +347,11 @@ public class ProjectDAO implements IProjectDAO {
     public boolean addReceptionWork(Project project) throws BusinessException {
         boolean addReceptionWorkSucces = false;
         int idProject = project.getIdProject();
-        ArrayList<ReceptionWork> receptionWorks = project.getReceptionWorks();
+       
          try {
                 Connector connectorDataBase = new Connector();
                 Connection connectionDataBase = connectorDataBase.getConnection();
+                ArrayList<ReceptionWork> receptionWorks = project.getReceptionWorks();
                 int i=0;
                 while(i< receptionWorks.size()){
                     PreparedStatement preparedStatement = connectionDataBase.prepareStatement("INSERT INTO ProyectoTrabajoRecepcional(idProyecto,idTrabajoRecepcional) VALUES (?,?)");
@@ -366,7 +373,6 @@ public class ProjectDAO implements IProjectDAO {
     @Override
     public ArrayList<ReceptionWork> getReceptionWorks(Project project) throws BusinessException {
         ArrayList<ReceptionWork> receptionWorks = new ArrayList<ReceptionWork>();
-        ReceptionWorkDAO receptionWorkDAO= new ReceptionWorkDAO();
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
@@ -374,6 +380,7 @@ public class ProjectDAO implements IProjectDAO {
                preparedStatement.setInt(1, project.getIdProject());
                ResultSet resultSet;
                resultSet = preparedStatement.executeQuery();
+               ReceptionWorkDAO receptionWorkDAO= new ReceptionWorkDAO();
                while(resultSet.next()){
                     int idReceptionWork = resultSet.getInt("idTrabajoRecepcional");
                     ReceptionWork receptionWork = receptionWorkDAO.getReceptionWorkById(idReceptionWork);

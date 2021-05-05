@@ -107,7 +107,7 @@ public class MemberDAO implements IMemberDAO{
     }
     
     @Override
-    public boolean findMemberByLicense(String professionalLicense) {
+    public boolean memberExists(String professionalLicense) {
         boolean value=true;
        if (professionalLicense == null){
            value=false;

@@ -7,4 +7,7 @@ public class BusinessException extends Exception {
         super(message);
         Log.logException(ex);
     }
+    public BusinessException(String message){
+        super(message);
+    }
 }

@@ -21,9 +21,8 @@ public class ProjectDaoTest {
       ProjectDAO projectDAO= new ProjectDAO();
       Project projectAuxiliar;
       projectAuxiliar = new Project("Inteligencia artificial" ,"Descripcion","04/05/2021","05/11/2021");
-      int idExpected = 1;
       int idProject = projectDAO.searchId(projectAuxiliar);
-      assertEquals("Test id Project", idExpected, idProject);
+      assertEquals("Test id Project", 1, idProject);
     }
     
     @Test

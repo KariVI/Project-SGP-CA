@@ -215,8 +215,4 @@ public class MinuteDAO implements IMinuteDAO {
         return members;
     }
 
-    @Override
-    public ArrayList<Member> getMembersDisapprove(Minute minute) throws BusinessException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

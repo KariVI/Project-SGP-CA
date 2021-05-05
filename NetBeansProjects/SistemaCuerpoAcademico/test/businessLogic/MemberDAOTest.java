@@ -49,7 +49,7 @@ public class MemberDAOTest {
         System.out.println("findMemberByLicense");
         String professionalLicense = "4065161";
         MemberDAO memberDAO = new MemberDAO();
-        boolean result = memberDAO.findMemberByLicense(professionalLicense);
+        boolean result = memberDAO.memberExists(professionalLicense);
         assertTrue(result);
     }
     
