@@ -126,6 +126,8 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
            
             if(resultSet.next()){
                 id=Integer.parseInt(resultSet.getString("idTrabajoRecepcional"));
+            }else{
+                throw new BusinessException("ReceptionWork not found");
             }
             connectorDataBase.disconnect();
         }catch(SQLException sqlException) {
@@ -336,7 +338,6 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
 
     }
 
-    @Override
     public boolean addLGACs(ReceptionWork receptionWork) throws BusinessException {
         boolean addLGACSucces = false;
         int idReceptionWork = receptionWork.getKey();
@@ -363,7 +364,6 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
 
     }
 
-    @Override
     public ArrayList<LGAC> getLGACs(int idReceptionWork) throws BusinessException {
         ArrayList<LGAC> lgacs = new ArrayList<LGAC>();
         LGACDAO lgacDAO= new LGACDAO();

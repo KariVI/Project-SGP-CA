@@ -30,6 +30,8 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
             resultSet=preparedStatement.executeQuery();
             if(resultSet.next()){
                 idAuxiliar=Integer.parseInt(resultSet.getString("idPrerequisito"));
+            }else{
+                throw new BusinessException("Prerequisite not found");
             }
                 connectorDataBase.disconnect();
         }catch(SQLException sqlException) {

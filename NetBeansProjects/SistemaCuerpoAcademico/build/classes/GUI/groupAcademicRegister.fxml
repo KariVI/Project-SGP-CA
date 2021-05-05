@@ -27,7 +27,7 @@
       <TextArea id="tAMision" fx:id="tAMision" layoutX="173.0" layoutY="227.0" prefHeight="59.0" prefWidth="149.0" />
       <TextArea id="tAVision" fx:id="tAVision" layoutX="173.0" layoutY="295.0" prefHeight="59.0" prefWidth="149.0" />
       <Button id="btSave" fx:id="btSave" layoutX="410.0" layoutY="361.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar " />
-      <Button id="btCancel" fx:id="btCancel" layoutX="501.0" layoutY="361.0" mnemonicParsing="false" text="Cancelar" />
+      <Button id="btCancel" fx:id="btCancel" layoutX="501.0" layoutY="361.0" mnemonicParsing="false" onAction="#actionCancel" text="Cancelar" />
       <Label layoutX="345.0" layoutY="73.0" text="Número de LGCA:" />
       <TextField fx:id="tfLgcasNumber" layoutX="462.0" layoutY="61.0" prefHeight="25.0" prefWidth="55.0" />
       <Button fx:id="btOk" layoutX="516.0" layoutY="61.0" mnemonicParsing="false" text="Ok" />

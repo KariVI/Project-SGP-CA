@@ -60,7 +60,10 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
            
             if(resultSet.next()){
                 id=Integer.parseInt(resultSet.getString("idAnteproyecto"));
+            }else{
+                throw new BusinessException("PreliminarProject not found");
             }
+            
             connectorDataBase.disconnect();
         }catch(SQLException sqlException) {
             throw new BusinessException("DataBase connection failed ", sqlException);

@@ -58,6 +58,8 @@ public class MeetingDAO implements IMeetingDAO{
             resultSet=preparedStatement.executeQuery();
             if(resultSet.next()){
                 idAuxiliar=Integer.parseInt(resultSet.getString("idReunion"));
+            }else{
+                throw new BusinessException("Meeting not found");
             }
                 connectorDataBase.disconnect();
         }catch(SQLException sqlException) {

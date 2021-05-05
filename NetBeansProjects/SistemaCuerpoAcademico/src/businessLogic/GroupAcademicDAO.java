@@ -64,6 +64,8 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
                 String vision=resultSet.getString("vision");
                 String consolidationGrade=resultSet.getString("gradoConsolidacion");
                 groupAcademicAuxiliar= new GroupAcademic(keyGroup, name, objetive, consolidationGrade, mission,vision);
+            }else{  
+                throw new BusinessException("GroupAcademic not found");
             }
                 connectorDataBase.disconnect();
         }catch(SQLException sqlException) {
