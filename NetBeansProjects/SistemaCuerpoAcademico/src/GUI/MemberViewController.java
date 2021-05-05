@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
  *
  * @author Mariana
  */
-public class FXMLController implements Initializable {
+public class MemberViewController implements Initializable {
 
     /**
      * Initializes the controller class.
