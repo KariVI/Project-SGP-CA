@@ -134,14 +134,7 @@ public class ReceptionWork {
     public void addStudent(Student student){ 
          students.add(student);
     }
-    
-    public ArrayList<LGAC> getLGACs(){
-        return lgacs;
-    }
-    
-    public void addLGAC(LGAC lgac){ 
-         lgacs.add(lgac);
-    }
+
     
     @Override
     public boolean equals(Object object){
