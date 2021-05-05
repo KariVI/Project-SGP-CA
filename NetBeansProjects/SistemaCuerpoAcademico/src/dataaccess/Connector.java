@@ -5,10 +5,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 import log.Log;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Connector {
         private Connection connection;
@@ -20,7 +17,7 @@ public class Connector {
         private String userName;
         private String userPassword;
 
-        public void inicializar(){ 
+        private void inicializar(){ 
             try {
                 this.fileInputStream = new FileInputStream("./properties.properties");
                 properties.load(fileInputStream);

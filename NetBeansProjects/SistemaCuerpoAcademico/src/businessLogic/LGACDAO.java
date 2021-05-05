@@ -14,7 +14,7 @@ import log.Log;
 
 public class LGACDAO implements ILGACDAO {
     
-    public boolean save(LGAC lgac) throws BusinessException{
+    public boolean savedSucessful(LGAC lgac) throws BusinessException{
         boolean value=false;
         Connector connectorDataBase=new Connector();
         try {
@@ -64,7 +64,7 @@ public class LGACDAO implements ILGACDAO {
     }
 
    
-    public boolean update(String beforeName, LGAC lgac) throws BusinessException {
+    public boolean updatedSucessful(String beforeName, LGAC lgac) throws BusinessException {
         boolean updateSucess=false;
         Connector connectorDataBase=new Connector();
         try {
@@ -89,7 +89,7 @@ public class LGACDAO implements ILGACDAO {
     }
     
     public ArrayList<LGAC>  getLGACs(){
-        ArrayList<LGAC> lgacList = new ArrayList<>();
+        ArrayList<LGAC> lgacList = new ArrayList<LGAC>();
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();

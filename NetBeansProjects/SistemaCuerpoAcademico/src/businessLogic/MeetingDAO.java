@@ -16,7 +16,7 @@ import log.Log;
 
 public class MeetingDAO implements IMeetingDAO{
 
-    public boolean save(Meeting meeting) throws BusinessException  {    
+    public boolean savedSucessful(Meeting meeting) throws BusinessException  {    
         boolean saveSuccess=false;
             try {
                 Connector connectorDataBase=new Connector();
@@ -108,7 +108,7 @@ public class MeetingDAO implements IMeetingDAO{
     }
 
     public ArrayList<Meeting>  getMeetings(){
-        ArrayList<Meeting> meetingList = new ArrayList<>();
+        ArrayList<Meeting> meetingList = new ArrayList<Meeting>();
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
@@ -136,7 +136,7 @@ public class MeetingDAO implements IMeetingDAO{
             return meetingList;
         }
 
-    public boolean update(Meeting meeting) throws BusinessException{
+    public boolean updatedSucessful(Meeting meeting) throws BusinessException{
       boolean updateSuccess=false;
             try {
                 Connector connectorDataBase=new Connector();
@@ -162,7 +162,7 @@ public class MeetingDAO implements IMeetingDAO{
     }    
 
     @Override
-    public boolean changeState(Meeting meeting) throws BusinessException {
+    public boolean changedStateSucessful(Meeting meeting) throws BusinessException {
           boolean updateSuccess=false;
             try {
                 Connector connectorDataBase=new Connector();
@@ -185,7 +185,7 @@ public class MeetingDAO implements IMeetingDAO{
         return updateSuccess;    
     }
     
-     public boolean addAssistants(Meeting meeting) throws BusinessException {
+     public boolean addedSucessfulAssistants(Meeting meeting) throws BusinessException {
         boolean addAssistantSuccess=false;
         int idMeeting=meeting.getKey();
         ArrayList<Member> assistants= meeting.getAssistants();
@@ -213,7 +213,7 @@ public class MeetingDAO implements IMeetingDAO{
     }
 
     @Override
-    public boolean deleteAssistants(Meeting meeting) throws BusinessException {
+    public boolean deletedSucessfulAssistants(Meeting meeting) throws BusinessException {
         boolean deleteSucess=false;
         int idMeeting=meeting.getKey();
         ArrayList<Member> assistants= meeting.getAssistants();

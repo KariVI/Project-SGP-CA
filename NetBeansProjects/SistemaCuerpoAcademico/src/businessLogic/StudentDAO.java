@@ -11,7 +11,7 @@ import log.BusinessException;
 import log.Log;
 
 public class StudentDAO implements IStudentDAO{
-    public boolean save(Student student) throws BusinessException{
+    public boolean savedSucessful(Student student) throws BusinessException{
          boolean saveSuccess=false;
             try {
                 Connector connectorDataBase=new Connector();

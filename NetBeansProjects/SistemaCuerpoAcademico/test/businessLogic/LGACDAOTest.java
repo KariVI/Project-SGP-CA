@@ -14,11 +14,11 @@ public class LGACDAOTest {
 
     @Test
     public void testSave() throws BusinessException {
-        System.out.println("save");
+        System.out.println("savedSucessful");
         LGAC lgac;
         lgac = new LGAC("Tecnologías de software", "Se orienta al estudio de diversas propiedades, enfoques, métodos de modelado y herramientas que conforman cada una de las diversas tecnologías aplicables al desarrollo del software con vistas a su adaptación, mejora y sustitución en el medio nacional");
         LGACDAO lgacDAO = new LGACDAO();
-        boolean result = lgacDAO.save(lgac);
+        boolean result = lgacDAO.savedSucessful(lgac);
         assertTrue(result);
        
     }
@@ -46,11 +46,11 @@ public class LGACDAOTest {
     }
     @Test
     public void testUpdate() throws BusinessException {
-      System.out.println("update");
+      System.out.println("updatedSucessful");
       LGAC lgac;
       lgac = new LGAC("Aplicaciones de las técnicas estadísticas",  "Se orienta al estudio de los diversos métodos para el muestreo");
       LGACDAO lgacDAO = new LGACDAO(); 
-      assertTrue(lgacDAO.update("Aplicaciones de las técnicas estadísticas", lgac));
+      assertTrue(lgacDAO.updatedSucessful("Aplicaciones de las técnicas estadísticas", lgac));
     }
     
     @Test

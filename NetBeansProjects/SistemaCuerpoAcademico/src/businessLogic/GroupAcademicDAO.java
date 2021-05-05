@@ -14,7 +14,7 @@ import log.Log;
 public class GroupAcademicDAO implements IGroupAcademicDAO {
 
     @Override
-    public boolean save(GroupAcademic groupAcademic) throws BusinessException {
+    public boolean savedSucessful(GroupAcademic groupAcademic) throws BusinessException {
         boolean value=false;
             try {
                 Connector connectorDataBase=new Connector();
@@ -76,7 +76,7 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
     }  
 
     @Override
-    public boolean addLGAC(GroupAcademic groupAcademic,LGAC lgac) throws BusinessException {
+    public boolean addedLGACSucessful(GroupAcademic groupAcademic, LGAC lgac) throws BusinessException {
         boolean addSucess=false;
         Connector connectorDataBase=new Connector();
         try {
@@ -97,7 +97,7 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
     }
 
  
-    public boolean update(String lastKey, GroupAcademic groupAcademic) throws BusinessException {
+    public boolean updatedSucessful(String lastKey,GroupAcademic groupAcademic) throws BusinessException {
         boolean updateSucess=false;
         Connector connectorDataBase=new Connector();
         try {

@@ -41,7 +41,7 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
     }
     
 
-    public boolean savePrerequisites(Prerequisite prerequisite, int idMeeting) throws BusinessException {
+    public boolean savedSucessfulPrerequisites(Prerequisite prerequisite, int idMeeting) throws BusinessException {
         String professionalLicense= prerequisite.getMandated().getProfessionalLicense();
         boolean saveSuccess=false;
         try {
@@ -93,7 +93,7 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
     }
 
  
-     public boolean updatePrerequisite(int id, Prerequisite prerequisite) throws BusinessException{
+     public boolean updatedSucessfulPrerequisite(int id, Prerequisite prerequisite) throws BusinessException{
          boolean updateSuccess=false;
          String professionalLicense= prerequisite.getMandated().getProfessionalLicense();
        
@@ -146,7 +146,7 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
    
     }
 
-    public boolean delete(int idPrerequisite) throws BusinessException{
+    public boolean deletedSucessful(int idPrerequisite) throws BusinessException{
         boolean deleteSucess=false;
         try{
             Connector connectorDataBase=new Connector();
@@ -167,7 +167,7 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
     }
     
      public ArrayList<Prerequisite> getPrerequisites(int idMeeting) throws BusinessException{
-        ArrayList<Prerequisite> prerequisiteList = new ArrayList<>();
+        ArrayList<Prerequisite> prerequisiteList = new ArrayList<Prerequisite>();
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();

@@ -9,7 +9,9 @@ import domain.LGAC;
 import java.util.ArrayList;
 import log.BusinessException;
 import org.junit.Test;
-import org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ReceptionWorkDAOTest {
     
@@ -18,7 +20,7 @@ public class ReceptionWorkDAOTest {
 
     @Test
     public void testSave() throws BusinessException {
-        System.out.println("save");
+        System.out.println("savedSucessful");
         ReceptionWork receptionWork = new ReceptionWork("VaraAppX: Aplicación móvil para registro de datos detallados sobre varamientos de mamíferos marinos",
         "Práctico técnico","Aplicación enfocada al registro de datos sobre varamientos mamiferos",
         "20/12/2019","20/08/2020", "Concluido");
@@ -28,7 +30,7 @@ public class ReceptionWorkDAOTest {
         preliminarProject.setKey(6);
         receptionWork.setPreliminarProject(preliminarProject);
         ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
-        boolean result = receptionWorkDAO .save(receptionWork);
+        boolean result = receptionWorkDAO .savedSucessful(receptionWork);
         assertTrue(result);
         
         
@@ -36,7 +38,7 @@ public class ReceptionWorkDAOTest {
 
     @Test
     public void testUpdate() throws BusinessException {
-        System.out.println("update");
+        System.out.println("updatedSucessful");
         int id = 2;
         ReceptionWork receptionWork = new ReceptionWork("Análisis comparativo de métodos de evaluación de arquitecturas de software guiado por ESSENCE 1.2",
         "Práctico técnico","Resultados de la investigación y aplicación de ESSENCE 1.2 en distintas arquitecturas de software enfocadas a proyectos guiados",
@@ -47,7 +49,7 @@ public class ReceptionWorkDAOTest {
         preliminarProject.setKey(7);
         receptionWork.setPreliminarProject(preliminarProject);
         ReceptionWorkDAO instance = new ReceptionWorkDAO();
-        boolean result = instance.update(id, receptionWork);
+        boolean result = instance.updatedSucessful(id, receptionWork);
         assertTrue( result);
     }
     
@@ -106,7 +108,7 @@ public class ReceptionWorkDAOTest {
         Member member= new Member("8325134","Juan Carlos Perez Arriaga","Director");
         receptionWork.addMember(member);  
         ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO(); 
-        assertTrue(receptionWorkDAO.addColaborators(receptionWork));
+        assertTrue(receptionWorkDAO.addedSucessfulColaborators(receptionWork));
     }
     
     @Test
@@ -117,7 +119,7 @@ public class ReceptionWorkDAOTest {
         Student student = new Student("S19014013", "Mariana Yazmin Vargas Segura ");
         receptionWork.addStudent(student);
         ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO(); 
-        assertTrue(receptionWorkDAO .addStudents(receptionWork));
+        assertTrue(receptionWorkDAO .addedSucessfulStudents(receptionWork));
     }
     
     
@@ -139,7 +141,7 @@ public class ReceptionWorkDAOTest {
         MemberDAO memberDAO =new MemberDAO();
         receptionWork.addMember(memberDAO.getMemberByLicense("8325134"));
         ReceptionWorkDAO receptionWorkDAO= new ReceptionWorkDAO();
-        assertTrue(receptionWorkDAO.deleteColaborators(receptionWork));
+        assertTrue(receptionWorkDAO.deletedSucessfulColaborators(receptionWork));
     }
     
     @Test 
@@ -159,7 +161,7 @@ public class ReceptionWorkDAOTest {
         Student student= new Student("S19014013", "Mariana Yazmin Vargas Segura");
         receptionWork.addStudent(student);
         ReceptionWorkDAO receptionWorkDAO= new ReceptionWorkDAO();
-        assertTrue(receptionWorkDAO.deleteStudents(receptionWork));
+        assertTrue(receptionWorkDAO.deletedSucessfulStudents(receptionWork));
     }
  
         @Test

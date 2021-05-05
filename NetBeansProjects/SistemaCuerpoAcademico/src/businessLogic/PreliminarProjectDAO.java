@@ -17,7 +17,7 @@ import log.Log;
 public class PreliminarProjectDAO implements IPreliminarProjectDAO {
 
     @Override
-    public boolean save(PreliminarProject preliminarProject) throws BusinessException {
+    public boolean savedSucessful(PreliminarProject preliminarProject) throws BusinessException {
          boolean value=false;
             try {
                 Connector connectorDataBase=new Connector();
@@ -71,7 +71,7 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
     }
 
     @Override
-    public boolean update(int id,PreliminarProject preliminarProject) throws BusinessException {
+    public boolean updatedSucessful(int id,PreliminarProject preliminarProject) throws BusinessException {
         boolean updateSucess=false;
         try{
             Connector connectorDataBase=new Connector();
@@ -98,7 +98,7 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
 
     @Override
     public ArrayList<PreliminarProject> getPreliminarProjects() throws BusinessException {
-       ArrayList<PreliminarProject> preliminarProjectList = new ArrayList<>();
+       ArrayList<PreliminarProject> preliminarProjectList = new ArrayList<PreliminarProject>();
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
@@ -158,7 +158,7 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
     }
 
   
-    public boolean addColaborators(PreliminarProject preliminarProject) throws BusinessException {
+    public boolean addedSucessfulColaborators(PreliminarProject preliminarProject) throws BusinessException {
         boolean addColaboratorSuccess=false;
         int idPreliminarProject=preliminarProject.getKey();
         ArrayList<Member> colaborators= preliminarProject.getMembers();
@@ -185,7 +185,7 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
         return addColaboratorSuccess;
     }
     
-    public boolean addStudents(PreliminarProject preliminarProject) throws BusinessException {
+    public boolean addedSucessfulStudents(PreliminarProject preliminarProject) throws BusinessException {
         boolean addStudentsSuccess=false;
         int idPreliminarProject=preliminarProject.getKey();
         ArrayList<Student> students= preliminarProject.getStudents();
@@ -240,7 +240,7 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
     }
 
     @Override
-    public boolean deleteColaborators(PreliminarProject preliminarProject) throws BusinessException {
+    public boolean deletedSucessfulColaborators(PreliminarProject preliminarProject) throws BusinessException {
         boolean deleteSucess=false;
         int idPreliminarProject=preliminarProject.getKey();
         ArrayList<Member> colaborators= preliminarProject.getMembers();
@@ -297,7 +297,7 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
     }
 
     @Override
-    public boolean deleteStudents(PreliminarProject preliminarProject) throws BusinessException {
+    public boolean deletedSucessfulStudents(PreliminarProject preliminarProject) throws BusinessException {
         boolean deleteSucess=false;
         int idPreliminarProject=preliminarProject.getKey();
         ArrayList<Student> students= preliminarProject.getStudents();
@@ -324,7 +324,7 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
         return deleteSucess;
     }
     
-    public boolean addLGAC(PreliminarProject preliminarProject) throws BusinessException {
+    public boolean addedSucessfulLGAC(PreliminarProject preliminarProject) throws BusinessException {
         boolean addLGACSucces = false;
         int idPreliminarProject = preliminarProject.getKey();
         ArrayList<LGAC> lgacs =  preliminarProject.getLGACs();
@@ -349,14 +349,14 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
         return addLGACSucces;
     }
     
-    public ArrayList<LGAC> getLGACs(PreliminarProject preliminarProject) throws BusinessException {
+    public ArrayList<LGAC> getLGACs(int idPreliminarProject) throws BusinessException {
         ArrayList<LGAC> lgacs = new ArrayList<LGAC>();
         LGACDAO lgacDAO= new LGACDAO();
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
                PreparedStatement preparedStatement = connectionDataBase.prepareStatement("SELECT nombreLGAC FROM CultivaAnteproyecto where idAnteproyecto = ?");
-               preparedStatement.setInt(1, preliminarProject.getKey());
+               preparedStatement.setInt(1, idPreliminarProject);
                ResultSet resultSet;
                resultSet = preparedStatement.executeQuery();
                while(resultSet.next()){
@@ -375,14 +375,14 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
     }
 
     @Override
-    public boolean deleteLGACS(PreliminarProject preliminarProject) throws BusinessException {
+    public boolean deletedSucessfulLGACS(PreliminarProject preliminarProject) throws BusinessException {
        boolean deleteSucess=false;
         int idPreliminarProject=preliminarProject.getKey();
         ArrayList<LGAC> lgacs= preliminarProject.getLGACs();
         try{
             Connector connectorDataBase=new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
-            String delete = "delete from CultivaAnteproyecto idAnteproyecto=? where nombreLGAC=?";
+            String delete = "delete from CultivaAnteproyecto where idAnteproyecto=? and nombreLGAC=?";
      
             PreparedStatement preparedStatement = connectionDataBase.prepareStatement(delete);
             int i=0;

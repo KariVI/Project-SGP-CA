@@ -17,7 +17,7 @@ import log.Log;
 
 public class ReceptionWorkDAO implements IReceptionWorkDAO {
 
-    public boolean save(ReceptionWork receptionWork) throws BusinessException {
+    public boolean savedSucessful(ReceptionWork receptionWork) throws BusinessException {
         boolean value=false;
         int idPreliminarProject= receptionWork.getPreliminarProject().getKey();
             try {
@@ -45,7 +45,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
         return value;
     }
 
-    public boolean update(int id, ReceptionWork receptionWork) throws BusinessException {
+    public boolean updatedSucessful(int id, ReceptionWork receptionWork) throws BusinessException {
         boolean updateSuccess=false;
         int idPreliminarProject= receptionWork.getPreliminarProject().getKey();
        
@@ -136,7 +136,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
         return id;
     }
     public ArrayList<ReceptionWork> getReceptionWorks() throws BusinessException {
-        ArrayList<ReceptionWork> receptionWorkList = new ArrayList<>();
+        ArrayList<ReceptionWork> receptionWorkList = new ArrayList<ReceptionWork>();
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
@@ -167,7 +167,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
             return receptionWorkList;
     }
     
-    public boolean addColaborators(ReceptionWork receptionWork) throws BusinessException {
+    public boolean addedSucessfulColaborators(ReceptionWork receptionWork) throws BusinessException {
         boolean addColaboratorSuccess=false;
         int idReceptionWork=receptionWork.getKey();
         ArrayList<Member> colaborators= receptionWork.getMembers();
@@ -194,7 +194,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
         return addColaboratorSuccess;
     }
 
-    public boolean addStudents(ReceptionWork receptionWork) throws BusinessException {
+    public boolean addedSucessfulStudents(ReceptionWork receptionWork) throws BusinessException {
         boolean addStudentsSuccess=false;
         int idReceptionWork=receptionWork.getKey();
         ArrayList<Student> students= receptionWork.getStudents();
@@ -251,7 +251,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
     }
     
     @Override
-    public boolean deleteColaborators(ReceptionWork receptionWork) throws BusinessException {
+    public boolean deletedSucessfulColaborators(ReceptionWork receptionWork) throws BusinessException {
         boolean deleteSucess=false;
         int idReceptionWork = receptionWork.getKey();
         ArrayList<Member> colaborators= receptionWork.getMembers();
@@ -308,7 +308,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
     }
 
     @Override
-    public boolean deleteStudents(ReceptionWork receptionWork) throws BusinessException {
+    public boolean deletedSucessfulStudents(ReceptionWork receptionWork) throws BusinessException {
         boolean deleteSucess=false;
         int idReceptionWork=receptionWork.getKey();
         ArrayList<Student> students= receptionWork.getStudents();
@@ -388,5 +388,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
 
         return lgacs;
     }
+    
+
     
 }
