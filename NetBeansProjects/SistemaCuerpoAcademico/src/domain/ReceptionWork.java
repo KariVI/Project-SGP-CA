@@ -16,6 +16,7 @@ public class ReceptionWork {
     private PreliminarProject preliminarProject;
     private ArrayList<Student> students;
     private ArrayList<Member> members;
+    private ArrayList<LGAC> lgacs;
     
     
     public ReceptionWork(String title, String type, String description, String dateStart, String dateEnd, String actualState){
@@ -27,8 +28,10 @@ public class ReceptionWork {
         this.actualState=actualState;
         students=new ArrayList<Student>();
         members=new ArrayList<Member>();
+        lgacs=new ArrayList<LGAC>();
          
     }
+    
     public int getKey(){
         return key;
     }
@@ -101,7 +104,19 @@ public class ReceptionWork {
          members.add(assistant);
     }
     
-        public Student getStudent( String enrollment){
+     public void setLGAC(LGAC lgac){
+        lgacs.add(lgac);
+    }
+    
+    public ArrayList<LGAC> getLGACs(){
+        return lgacs;
+    }
+    
+    public void addLGAC(LGAC lgac){ 
+         lgacs.add(lgac);
+    }
+    
+    public Student getStudent( String enrollment){
         Student student=null;
         for (int i=0; i<  students.size() ; i++  ){
             Student auxiliar= students.get(i);

@@ -56,7 +56,7 @@ public class MeetingDAOTest {
         MeetingDAO meetingDAO= new MeetingDAO();
         Meeting meetingAuxiliar;
         meetingAuxiliar = new Meeting("Planeación del próximo seminario" ,"05/06/2021","14:30");   
-        assertTrue( meetingDAO.save(meetingAuxiliar));
+        assertTrue( meetingDAO.savedSucessful(meetingAuxiliar));
     }
    
     @Test
@@ -87,7 +87,7 @@ public class MeetingDAOTest {
         Meeting meeting;
         meeting= new Meeting( "Organizar agenda de actividades del seminario" ,"15 /05/2021","15:30"); 
         meeting.setKey(3);
-        assertTrue(meetingDAO.update(meeting));
+        assertTrue(meetingDAO.updatedSucessful(meeting));
     }
     
     @Test
@@ -104,7 +104,7 @@ public class MeetingDAOTest {
     public void testChangeState() throws BusinessException{
         Meeting meeting= new Meeting(4,"Actualizar plan de trabajo de la LIS","13:00","11/05/2021", "Proxima");
         MeetingDAO meetingDAO= new MeetingDAO();
-        assertTrue(meetingDAO.changeState(meeting));
+        assertTrue(meetingDAO.changedStateSucessful(meeting));
     }
     
     @Test
@@ -113,7 +113,7 @@ public class MeetingDAOTest {
         Meeting meeting= new Meeting(1, "Revisión de avances en proyectos actuales" ,"04/05/2021","11:30", "Registrada");
         Member assistant= new Member("7938268","Maria Karen Cortes Verdin","Lider");
         meeting.addAssistant(assistant);
-        assertTrue(meetingDAO.addAssistants(meeting));
+        assertTrue(meetingDAO.addedSucessfulAssistants(meeting));
     }
     
     @Test
@@ -132,7 +132,7 @@ public class MeetingDAOTest {
         Meeting meeting= new Meeting(1, "Revisión de avances en proyectos actuales" ,"04/05/2021","11:30", "Registrada");
         Member assistant= new Member("7938268","Maria Karen Cortes Verdin","Lider");
         meeting.addAssistant(assistant);
-        assertTrue(meetingDAO.deleteAssistants(meeting));
+        assertTrue(meetingDAO.deletedSucessfulAssistants(meeting));
     }
 }
 

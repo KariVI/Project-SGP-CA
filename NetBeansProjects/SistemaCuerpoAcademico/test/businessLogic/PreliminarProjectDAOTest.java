@@ -1,6 +1,7 @@
 
 package businessLogic;
 
+import domain.LGAC;
 import domain.Member;
 import domain.PreliminarProject;
 import domain.Student;
@@ -16,12 +17,12 @@ public class PreliminarProjectDAOTest {
 
     @Test
     public void testSave() throws BusinessException {
-        System.out.println("save");
+        System.out.println("savedSucessful");
         PreliminarProject preliminarProject = new PreliminarProject("Accesibilidad en el ciclo de vida de desarrollo de software", 
         "El trabajo consiste en realizar una revisión sistemática de la literatura que permita identificar las prácticas y/o actividades en las distintas etapas del ciclo de vida de desarrollo de software orientadas a favorecer el desarrollo de software accesible", 
         "21/01/2021", "21/07/2021 ");
         PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
-        boolean result = preliminarProjectDAO .save(preliminarProject);
+        boolean result = preliminarProjectDAO .savedSucessful(preliminarProject);
         assertTrue(result);
     }
 
@@ -56,12 +57,12 @@ public class PreliminarProjectDAOTest {
       
     @Test
     public void testUpdate() throws BusinessException{
-        System.out.println("update");
+        System.out.println("updatedSucessful");
         PreliminarProjectDAO preliminarProjectDAO=new PreliminarProjectDAO();
         PreliminarProject preliminarProject= new PreliminarProject("Métricas de Cohesión y Acoplamiento", "La facilidad de evolución permite al software adaptarse a distintas necesidades conforme pasa el tiempo y suceden cambios tanto en el mercado como en la organización",
         "13/09/2020" , "17/05/2021");
         int id=8;
-        assertTrue(preliminarProjectDAO.update(id, preliminarProject));
+        assertTrue(preliminarProjectDAO.updatedSucessful(id, preliminarProject));
     }
     
     @Test
@@ -97,7 +98,7 @@ public class PreliminarProjectDAOTest {
         preliminarProject.addMember(memberAdd);
   
         PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
-        assertTrue(preliminarProjectDAO.addColaborators(preliminarProject));
+        assertTrue(preliminarProjectDAO.addedSucessfulColaborators(preliminarProject));
     }
     
     @Test
@@ -109,7 +110,7 @@ public class PreliminarProjectDAOTest {
         Student student = new Student("S19014013", "Mariana Yazmin Vargas Segura ");
         preliminarProject.addStudent(student);
         PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
-        assertTrue(preliminarProjectDAO.addStudents(preliminarProject));
+        assertTrue(preliminarProjectDAO.addedSucessfulStudents(preliminarProject));
     }
     
     @Test 
@@ -130,7 +131,7 @@ public class PreliminarProjectDAOTest {
         MemberDAO memberDAO =new MemberDAO();
         preliminarProject.addMember(memberDAO.getMemberByLicense("8325134"));
         PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
-        assertTrue(preliminarProjectDAO.deleteColaborators(preliminarProject));
+        assertTrue(preliminarProjectDAO.deletedSucessfulColaborators(preliminarProject));
     }
     
     @Test 
@@ -150,6 +151,42 @@ public class PreliminarProjectDAOTest {
         Student student= new Student("S19014013", "Mariana Yazmin Vargas Segura");
         preliminarProject.addStudent(student);
         PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
-        assertTrue(preliminarProjectDAO.deleteStudents(preliminarProject));
+        assertTrue(preliminarProjectDAO.deletedSucessfulStudents(preliminarProject));
     }
+    
+    @Test
+    public void testAddLGACs() throws BusinessException{   
+      LGAC lgac=new LGAC("Gestión, modelado y desarrollo de software",  "Se orienta al estudio de los diversos métodos y enfoques para la gestión, modelado y desarrollo de software, de manera que se obtenga software de calidad. Gestión de las diversas etapas del proceso de desarrollo, incluyendo hasta la medición del proceso y artefactos. Modelado de los diversos artefactos en las distintas etapas del proceso de desarrollo.");
+      PreliminarProject preliminarProject = new PreliminarProject ("Revisión de la Literatura acerca de Varamiento de Mamíferos Marinos",
+        "Revisión de la Literatura acerca de Varamiento de Mamíferos Marinos",
+        "13/01/2021", "13/07/2021");
+     preliminarProject.setKey(6);
+     preliminarProject.addLGAC(lgac);
+     PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
+     assertTrue(preliminarProjectDAO.addedSucessfulLGAC(preliminarProject));
+    }
+    
+    @Test
+    public void testGetLGACs() throws BusinessException{    
+        String nameLGACExpected= "Gestión, modelado y desarrollo de software";
+        PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
+        ArrayList<LGAC> lgacs= preliminarProjectDAO.getLGACs(7);
+        String nameLGACResult= lgacs.get(0).getName();
+        assertEquals(nameLGACExpected, nameLGACResult);
+    }
+    
+    @Test 
+    public void testDeleteLGACs() throws BusinessException {  
+       LGAC lgac=new LGAC("Gestión, modelado y desarrollo de software",  "Se orienta al estudio de los diversos métodos y enfoques para la gestión, modelado y desarrollo de software, de manera que se obtenga software de calidad. Gestión de las diversas etapas del proceso de desarrollo, incluyendo hasta la medición del proceso y artefactos. Modelado de los diversos artefactos en las distintas etapas del proceso de desarrollo.");
+       PreliminarProject preliminarProject= new PreliminarProject("Evaluación del modelo de calidad de seguridad para arquitecturas de software", "Una arquitectura de software define no sólo la estructura o estructuras de un sistema de software, sino las características de calidad del propio sistema. Una característica o atributo de calidad altamente crítico en nuestros días es la seguridad. Esta característica, por supuesto que también es importante considerar en el desarrollo de la plataforma de comunicación y educación",
+       "13/11/2019","13/07/2020");
+       preliminarProject.setKey(7); 
+       preliminarProject.addLGAC(lgac);
+       PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
+
+       assertTrue(preliminarProjectDAO.deletedSucessfulLGACS(preliminarProject));
+          
+    }
+    
+    
 }

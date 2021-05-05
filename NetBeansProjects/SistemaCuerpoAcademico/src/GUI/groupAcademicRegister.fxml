@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GroupAcademicRegisterController">
+    <stylesheets>
+        <URL value="@groupacademicregister.css" />
+    </stylesheets>
+   <children>
+      <Label layoutX="259.0" layoutY="25.0" text="Cuerpo Académico" />
+      <Label id="lbName" layoutX="24.0" layoutY="73.0" text="Nombre:" />
+      <Hyperlink id="lbKey" layoutX="24.0" layoutY="101.0" text="Clave:" />
+      <Label id="lbConsolidationGrade" layoutX="26.0" layoutY="142.0" text="Grado de consolidación:" />
+      <Label id="lbObjetive" layoutX="24.0" layoutY="174.0" text="Objetivo:" />
+      <Label id="lbMision" layoutX="25.0" layoutY="227.0" text="Misión:" />
+      <Label id="lbVision" layoutX="27.0" layoutY="307.0" text="Visión:" />
+      <TextField id="tfName" fx:id="tfName" layoutX="173.0" layoutY="69.0" />
+      <TextField id="tfKey" fx:id="tfKey" layoutX="173.0" layoutY="100.0" />
+      <TextField id="tfConsolidationGrade" fx:id="tfConsolidationGrade" layoutX="173.0" layoutY="138.0" />
+      <TextArea id="tAObjetive" fx:id="tAObjetive" layoutX="173.0" layoutY="168.0" prefHeight="47.0" prefWidth="149.0" />
+      <TextArea id="tAMision" fx:id="tAMision" layoutX="173.0" layoutY="227.0" prefHeight="59.0" prefWidth="149.0" />
+      <TextArea id="tAVision" fx:id="tAVision" layoutX="173.0" layoutY="295.0" prefHeight="59.0" prefWidth="149.0" />
+      <Button id="btSave" fx:id="btSave" layoutX="410.0" layoutY="361.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar " />
+      <Button id="btCancel" fx:id="btCancel" layoutX="501.0" layoutY="361.0" mnemonicParsing="false" text="Cancelar" />
+      <Label layoutX="345.0" layoutY="73.0" text="Número de LGCA:" />
+      <TextField fx:id="tfLgcasNumber" layoutX="462.0" layoutY="61.0" prefHeight="25.0" prefWidth="55.0" />
+      <Button fx:id="btOk" layoutX="516.0" layoutY="61.0" mnemonicParsing="false" text="Ok" />
+   </children>
+</AnchorPane>
