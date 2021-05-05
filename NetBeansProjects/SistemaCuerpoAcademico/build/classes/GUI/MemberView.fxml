@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MemberViewController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MemberViewController">
     <stylesheets>
         <URL value="@memberview.css" />
     </stylesheets>
@@ -57,6 +57,6 @@
          </font>
       </Label>
       <Button layoutX="382.0" layoutY="346.0" mnemonicParsing="false" onAction="#save" prefHeight="26.0" prefWidth="92.0" text="Guardar" />
-      <Button layoutX="493.0" layoutY="346.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="85.0" text="Salir" />
+      <Button layoutX="493.0" layoutY="346.0" mnemonicParsing="false" onAction="#close" prefHeight="26.0" prefWidth="85.0" text="Salir" />
    </children>
 </AnchorPane>
