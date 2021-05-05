@@ -3,6 +3,7 @@ package GUI;
 
 import businessLogic.MemberDAO;
 import domain.Member;
+import java.awt.event.ActionEvent;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import java.net.URL;
@@ -13,8 +14,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import log.BusinessException;
 
 
@@ -64,9 +68,24 @@ public class MemberViewController implements Initializable {
        MemberDAO memberDAO = new MemberDAO();
         try { 
             memberDAO.saveMember(newMember);
+            mostrarAlertInfo();
         } catch (BusinessException ex) {
             ex.printStackTrace();
         }
+    }
+    
+    @FXML
+    public void close(ActionEvent event) {
+           ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+    }
+    
+    @FXML
+    private void mostrarAlertInfo() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("Info");
+        alert.setContentText("Miembro guardado con exito");
+        alert.showAndWait();
     }
     
     public int getActualYear(){
@@ -83,4 +102,5 @@ public class MemberViewController implements Initializable {
         }
         return emptyFields;
     }
+    
 }
