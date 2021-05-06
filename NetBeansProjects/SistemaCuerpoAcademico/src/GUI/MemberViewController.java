@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import log.BusinessException;
 
 
@@ -33,6 +34,7 @@ public class MemberViewController implements Initializable {
     @FXML private TextField tfProfessionalLicense;
     @FXML private TextField tfNameDegree;
     @FXML private TextField tfUniversity;
+   @FXML  private Button btClose;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -66,25 +68,40 @@ public class MemberViewController implements Initializable {
        universityName = tfUniversity.getText();
        Member newMember = new Member(professionalLicense, name, role, degree,nameDegree,universityName, degreeYear,"1491");
        MemberDAO memberDAO = new MemberDAO();
-        try { 
+       if(!isEmptyFields(newMember)){
+         try { 
             memberDAO.saveMember(newMember);
-            mostrarAlertInfo();
-        } catch (BusinessException ex) {
+            showAlertSucesfulSave();
+         } catch (BusinessException ex) {
             ex.printStackTrace();
-        }
+            }
+       }else{
+           showAlertTroubleSave("Campos vacios");
+       }
     }
     
     @FXML
-    public void close(ActionEvent event) {
-           ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+    public void close() {
+        Stage stage = (Stage)btClose.getScene().getWindow();
+        stage.close();
     }
     
+    
     @FXML
-    private void mostrarAlertInfo() {
+    private void showAlertSucesfulSave() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
-        alert.setTitle("Info");
+        alert.setTitle("Información guardada");
         alert.setContentText("Miembro guardado con exito");
+        alert.showAndWait();
+    }
+    
+    @FXML
+    private void showAlertTroubleSave(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setTitle("");
+        alert.setContentText(message);
         alert.showAndWait();
     }
     
@@ -96,11 +113,10 @@ public class MemberViewController implements Initializable {
     }
     
     public boolean isEmptyFields(Member member){
-        boolean emptyFields = FALSE;
+        boolean emptyFields = false;
         if((member.getProfessionalLicense().isEmpty())||(member.getName().isEmpty())||(member.getRole().isEmpty())||(member.getDegree().isEmpty())|| (member.getNameDegree().isEmpty())||(member.getUniversityName().isEmpty())|| member.getDegreeYear() == 0){
-            emptyFields = TRUE;
+            emptyFields = true;
         }
         return emptyFields;
     }
-    
 }

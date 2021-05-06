@@ -44,7 +44,7 @@ public class MinuteDAO implements IMinuteDAO {
                     }
                     return saveSuccess;
     }
-
+    
     @Override
     public void approveMinute(int idMinute, String professionalLicense)throws BusinessException{
                     try{

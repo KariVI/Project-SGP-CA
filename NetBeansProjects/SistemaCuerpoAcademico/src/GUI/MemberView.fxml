@@ -57,6 +57,6 @@
          </font>
       </Label>
       <Button layoutX="382.0" layoutY="346.0" mnemonicParsing="false" onAction="#save" prefHeight="26.0" prefWidth="92.0" text="Guardar" />
-      <Button layoutX="493.0" layoutY="346.0" mnemonicParsing="false" onAction="#close" prefHeight="26.0" prefWidth="85.0" text="Salir" />
+      <Button fx:id="btClose" layoutX="493.0" layoutY="346.0" mnemonicParsing="false" onAction="#close" prefHeight="26.0" prefWidth="85.0" text="Salir" />
    </children>
 </AnchorPane>

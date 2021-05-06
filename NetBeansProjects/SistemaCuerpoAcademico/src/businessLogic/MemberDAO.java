@@ -41,7 +41,7 @@ public class MemberDAO implements IMemberDAO{
         
         return saveSuccess;
     }
-
+ 
     @Override
     public String searchProfessionalLicense(String memberName) throws BusinessException{
         String professionalLicenseAuxiliar = "";
@@ -58,6 +58,8 @@ public class MemberDAO implements IMemberDAO{
             resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
                 professionalLicenseAuxiliar = resultSet.getString("cedula");
+            }else{
+                 throw new BusinessException("member not found");
             }
                 connectorDataBase.disconnect();
                 
