@@ -10,6 +10,8 @@ import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,6 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import log.BusinessException;
+import log.Log;
 
 
 public class MemberViewController implements Initializable {
@@ -69,12 +72,16 @@ public class MemberViewController implements Initializable {
        Member newMember = new Member(professionalLicense, name, role, degree,nameDegree,universityName, degreeYear,"1491");
        MemberDAO memberDAO = new MemberDAO();
        if(!isEmptyFields(newMember)){
-         try { 
-            memberDAO.saveMember(newMember);
-            showAlertSucesfulSave();
-         } catch (BusinessException ex) {
-            ex.printStackTrace();
+           if(!isAlreadyRegisterd(newMember)){
+             try { 
+             memberDAO.saveMember(newMember);
+              showAlertSucesfulSave();
+             } catch (BusinessException ex) {
+                Log.logException(ex);
             }
+          } else{
+            showAlertTroubleSave("El miembro ya se encuentra registrado");   
+           }
        }else{
            showAlertTroubleSave("Campos vacios");
        }
@@ -118,5 +125,16 @@ public class MemberViewController implements Initializable {
             emptyFields = true;
         }
         return emptyFields;
+    }
+    public boolean isAlreadyRegisterd(Member member){
+        boolean value = false;
+        try {
+            MemberDAO memberDAO = new MemberDAO();
+            memberDAO.getMemberByLicense(member.getProfessionalLicense());
+            value = true;
+        } catch (BusinessException ex) {
+            Log.logException(ex);
+        }
+        return value;
     }
 }
