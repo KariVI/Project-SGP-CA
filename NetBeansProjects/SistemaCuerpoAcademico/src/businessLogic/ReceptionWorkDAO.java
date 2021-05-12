@@ -2,7 +2,7 @@
 package businessLogic;
 
 import dataaccess.Connector;
-import domain.LGAC;
+import domain.LGCA;
 import domain.Member;
 import domain.ReceptionWork;
 import domain.Student;
@@ -341,7 +341,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
     public boolean addLGACs(ReceptionWork receptionWork) throws BusinessException {
         boolean addLGACSucces = false;
         int idReceptionWork = receptionWork.getKey();
-        ArrayList<LGAC> lgacs = receptionWork.getLGACs();
+        ArrayList<LGCA> lgacs = receptionWork.getLGACs();
          try {
                 Connector connectorDataBase = new Connector();
                 Connection connectionDataBase = connectorDataBase.getConnection();
@@ -364,9 +364,9 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
 
     }
 
-    public ArrayList<LGAC> getLGACs(int idReceptionWork) throws BusinessException {
-        ArrayList<LGAC> lgacs = new ArrayList<LGAC>();
-        LGACDAO lgacDAO= new LGACDAO();
+    public ArrayList<LGCA> getLGACs(int idReceptionWork) throws BusinessException {
+        ArrayList<LGCA> lgacs = new ArrayList<LGCA>();
+        LGCADAO lgacDAO= new LGCADAO();
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
@@ -376,7 +376,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
                resultSet = preparedStatement.executeQuery();
                while(resultSet.next()){
                     String name = resultSet.getString("nombreLGAC");
-                    LGAC lgac = lgacDAO.getLgacByName(name);
+                    LGCA lgac = lgacDAO.getLgacByName(name);
                     lgacs.add(lgac);
                 }
                 connectorDataBase.disconnect();

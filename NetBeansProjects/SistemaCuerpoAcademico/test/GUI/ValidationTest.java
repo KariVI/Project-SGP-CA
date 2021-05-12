@@ -48,4 +48,21 @@ public class ValidationTest {
 
     }
     
+    @Test 
+    public void testValidateKeyAlphanumeric(){  
+        String key="JDOEIJ80/&%4";
+        Validation validation= new Validation();
+        boolean result= validation.findInvalidKeyAlphanumeric(key);
+        assertTrue(result);
+        
+    }
+    
+    @Test
+       public void testValidateKeyAlphanumericFailed(){  
+        String key="JDOEIJ804";
+        Validation validation= new Validation();
+        boolean result= validation.findInvalidKeyAlphanumeric(key);
+        assertFalse(result);
+    }
+    
 }

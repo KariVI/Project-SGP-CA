@@ -31,10 +31,9 @@ public class Validation {
         return value;  
     }
     
-    public boolean validateKeysAlphanumeric(String key){    
-        
+    public boolean findInvalidKeyAlphanumeric(String key){    
         boolean value=false;
-        Pattern pattern = Pattern.compile("\"\\\\d{8}[A-Z]\"");
+        Pattern pattern = Pattern.compile("[.!#$%&'*+/=?^_`{|}~-]");
         Matcher mather = pattern.matcher(key);
         if(mather.find()){  
             value=true;

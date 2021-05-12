@@ -20,15 +20,15 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="21.0" layoutY="75.0" text="Nombre:">
+      <Label fx:id="lbName" layoutX="21.0" layoutY="75.0" text="Nombre:">
          <font>
             <Font size="10.0" />
          </font></Label>
-      <Label layoutX="21.0" layoutY="90.0" text="Clave:">
+      <Label fx:id="lbKey" layoutX="21.0" layoutY="90.0" text="Clave:">
          <font>
             <Font size="10.0" />
          </font></Label>
-      <Label layoutX="21.0" layoutY="111.0" text="Grado de consolidación:">
+      <Label fx:id="lbConsolidateGrade" layoutX="21.0" layoutY="111.0" text="Grado de consolidación:">
          <font>
             <Font size="10.0" />
          </font></Label>
@@ -48,20 +48,5 @@
             <Font size="10.0" />
          </font></TextArea>
       <Pane fx:id="lgcasPane" layoutX="19.0" layoutY="284.0" prefHeight="169.0" prefWidth="667.0" />
-      <Label fx:id="lbName" layoutX="152.0" layoutY="75.0" text="Label">
-         <font>
-            <Font size="10.0" />
-         </font>
-      </Label>
-      <Label fx:id="lbKey" layoutX="152.0" layoutY="90.0" text="Label">
-         <font>
-            <Font size="10.0" />
-         </font>
-      </Label>
-      <Label fx:id="lbConsolidateGrade" layoutX="150.0" layoutY="110.0" text="Label">
-         <font>
-            <Font size="10.0" />
-         </font>
-      </Label>
    </children>
 </AnchorPane>

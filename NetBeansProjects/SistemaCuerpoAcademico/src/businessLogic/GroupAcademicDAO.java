@@ -3,11 +3,12 @@ package businessLogic;
 
 import dataaccess.Connector;
 import domain.GroupAcademic;
-import domain.LGAC;
+import domain.LGCA;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import log.BusinessException;
 import log.Log;
 
@@ -78,7 +79,7 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
     }  
 
     @Override
-    public boolean addedLGACSucessful(GroupAcademic groupAcademic, LGAC lgac) throws BusinessException {
+    public boolean addedLGACSucessful(GroupAcademic groupAcademic, LGCA lgac) throws BusinessException {
         boolean addSucess=false;
         Connector connectorDataBase=new Connector();
         try {
@@ -123,6 +124,33 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
            throw new BusinessException("DataBase connection failed ", sqlException);
         }
         return updateSucess;
+    }
+    
+    public ArrayList<LGCA> getLGACs(String keyGroupAcademic) throws BusinessException{  
+        ArrayList<LGCA> lgcaList = new ArrayList<LGCA>();
+        Connector connectorDataBase=new Connector();
+        try {
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String query="Select nombreLGAC CuerpoLGAC where claveCuerpoAcademico= ?";
+            PreparedStatement preparedStatement= connectionDataBase.prepareStatement(query);
+            preparedStatement.setString(1, keyGroupAcademic);
+            ResultSet resultSet ;
+            resultSet=preparedStatement.executeQuery();
+            
+            while(resultSet.next()){    
+                String lgcaName= resultSet.getString(1);              
+                LGCADAO lgcaDAO = new LGCADAO();               
+                LGCA lgca = lgcaDAO.getLgacByName(lgcaName);
+                lgcaList.add(lgca);
+            }
+            
+            connectorDataBase.disconnect();
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        } catch (SQLException sqlException) {
+             throw new BusinessException("DataBase connection failed ", sqlException);
+        }
+      return lgcaList;
     }
     
 }

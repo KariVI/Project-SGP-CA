@@ -12,7 +12,7 @@ public class PreliminarProject {
     private String dateEnd;
     private ArrayList<Student> students;
     private ArrayList<Member> members;
-    private ArrayList<LGAC> lgacs;
+    private ArrayList<LGCA> lgacs;
 
     
     public PreliminarProject(String title, String description, String dateStart, String dateEnd){
@@ -22,7 +22,7 @@ public class PreliminarProject {
         this.dateEnd=dateEnd;
         students=new ArrayList<Student>();
         members=new ArrayList<Member>();
-        lgacs=new ArrayList<LGAC>();
+        lgacs=new ArrayList<LGCA>();
          
     }
     
@@ -106,15 +106,15 @@ public class PreliminarProject {
          students.add(student);
     }
          
-    public void setLGAC(LGAC lgac){
+    public void setLGAC(LGCA lgac){
         lgacs.add(lgac);
     }
     
-    public ArrayList<LGAC> getLGACs(){
+    public ArrayList<LGCA> getLGACs(){
         return lgacs;
     }
     
-    public void addLGAC(LGAC lgac){ 
+    public void addLGAC(LGCA lgac){ 
          lgacs.add(lgac);
     }
 

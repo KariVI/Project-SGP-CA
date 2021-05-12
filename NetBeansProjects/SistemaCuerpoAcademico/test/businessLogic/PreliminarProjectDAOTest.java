@@ -1,7 +1,7 @@
 
 package businessLogic;
 
-import domain.LGAC;
+import domain.LGCA;
 import domain.Member;
 import domain.PreliminarProject;
 import domain.Student;
@@ -156,7 +156,7 @@ public class PreliminarProjectDAOTest {
     
     @Test
     public void testAddLGACs() throws BusinessException{   
-      LGAC lgac=new LGAC("Gestión, modelado y desarrollo de software",  "Se orienta al estudio de los diversos métodos y enfoques para la gestión, modelado y desarrollo de software, de manera que se obtenga software de calidad. Gestión de las diversas etapas del proceso de desarrollo, incluyendo hasta la medición del proceso y artefactos. Modelado de los diversos artefactos en las distintas etapas del proceso de desarrollo.");
+      LGCA lgac=new LGCA("Gestión, modelado y desarrollo de software",  "Se orienta al estudio de los diversos métodos y enfoques para la gestión, modelado y desarrollo de software, de manera que se obtenga software de calidad. Gestión de las diversas etapas del proceso de desarrollo, incluyendo hasta la medición del proceso y artefactos. Modelado de los diversos artefactos en las distintas etapas del proceso de desarrollo.");
       PreliminarProject preliminarProject = new PreliminarProject ("Revisión de la Literatura acerca de Varamiento de Mamíferos Marinos",
         "Revisión de la Literatura acerca de Varamiento de Mamíferos Marinos",
         "13/01/2021", "13/07/2021");
@@ -170,14 +170,14 @@ public class PreliminarProjectDAOTest {
     public void testGetLGACs() throws BusinessException{    
         String nameLGACExpected= "Gestión, modelado y desarrollo de software";
         PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
-        ArrayList<LGAC> lgacs= preliminarProjectDAO.getLGACs(7);
+        ArrayList<LGCA> lgacs= preliminarProjectDAO.getLGACs(7);
         String nameLGACResult= lgacs.get(0).getName();
         assertEquals(nameLGACExpected, nameLGACResult);
     }
     
     @Test 
     public void testDeleteLGACs() throws BusinessException {  
-       LGAC lgac=new LGAC("Gestión, modelado y desarrollo de software",  "Se orienta al estudio de los diversos métodos y enfoques para la gestión, modelado y desarrollo de software, de manera que se obtenga software de calidad. Gestión de las diversas etapas del proceso de desarrollo, incluyendo hasta la medición del proceso y artefactos. Modelado de los diversos artefactos en las distintas etapas del proceso de desarrollo.");
+       LGCA lgac=new LGCA("Gestión, modelado y desarrollo de software",  "Se orienta al estudio de los diversos métodos y enfoques para la gestión, modelado y desarrollo de software, de manera que se obtenga software de calidad. Gestión de las diversas etapas del proceso de desarrollo, incluyendo hasta la medición del proceso y artefactos. Modelado de los diversos artefactos en las distintas etapas del proceso de desarrollo.");
        PreliminarProject preliminarProject= new PreliminarProject("Evaluación del modelo de calidad de seguridad para arquitecturas de software", "Una arquitectura de software define no sólo la estructura o estructuras de un sistema de software, sino las características de calidad del propio sistema. Una característica o atributo de calidad altamente crítico en nuestros días es la seguridad. Esta característica, por supuesto que también es importante considerar en el desarrollo de la plataforma de comunicación y educación",
        "13/11/2019","13/07/2020");
        preliminarProject.setKey(7); 

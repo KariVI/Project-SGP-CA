@@ -6,10 +6,9 @@ public class AlertMessage {
     
     public void showMessageSave(String message){    
     
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
-        alert.setTitle("Info");
-        alert.setContentText(message + "ha sido guardado con exito");
+        alert.setContentText(message + " ha sido guardado con exito");
         alert.showAndWait();
     }
     
