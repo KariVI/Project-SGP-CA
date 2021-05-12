@@ -44,26 +44,26 @@ public class MemberListController implements  Initializable {
     @FXML private Button btClose;
     @FXML private ListView<Member> lvMembers = new ListView<Member>();
     private ObservableList <Member> members ;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
       members = FXCollections.observableArrayList();
       initializeMembers();
       lvMembers.setItems(members);
-
-     lvMembers.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Member>() {
+      lvMembers.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Member>() {
           @Override
           public void changed(ObservableValue<? extends Member> observaleValue, Member oldValue, Member newValue) {
               Member selectedMember = lvMembers.getSelectionModel().getSelectedItem();
             try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("MemberView.fxml"));
             Parent root = loader.load();
-            MemberViewController controladorForm = loader.getController();
-            controladorForm.initializeMember(selectedMember);
-            Scene escenaFormulario = new Scene(root);
-            Stage escenario = new Stage();
-            escenario.setScene(escenaFormulario);
-            escenario.initModality(Modality.APPLICATION_MODAL);
-            escenario.showAndWait();
+            MemberViewController memberViewController = loader.getController();
+            memberViewController.initializeMember(selectedMember);
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
         } catch (IOException ex) {
             Logger.getLogger(Launcher.class.getName()).log(Level.SEVERE, null, ex);
         }

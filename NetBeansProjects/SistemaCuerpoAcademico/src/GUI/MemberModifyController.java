@@ -32,6 +32,7 @@ public class MemberModifyController implements Initializable {
     @FXML private TextField tfNameDegree;
     @FXML private TextField tfUniversity;
     @FXML private Button btClose;
+    private Member member;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -82,7 +83,8 @@ public class MemberModifyController implements Initializable {
     }
     
     public void initializeMember(Member member){
-        
+        this.member = member;
+        tfName.setText(member.getName());
     }
     
     @FXML

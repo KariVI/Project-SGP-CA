@@ -51,6 +51,6 @@
          </children>
       </GridPane>
       <Button fx:id="btClose" layoutX="484.0" layoutY="346.0" mnemonicParsing="false" onAction="#close" prefHeight="26.0" prefWidth="66.0" text="Salir" />
-      <Button layoutX="390.0" layoutY="346.0" mnemonicParsing="false" text="Modificar" />
+      <Button fx:id="btUpdate" layoutX="390.0" layoutY="346.0" mnemonicParsing="false" onAction="#goUpdate" text="Modificar" />
    </children>
 </AnchorPane>
