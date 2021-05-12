@@ -26,7 +26,7 @@ import javafx.stage.Stage;
  *
  * @author Mariana
  */
-public class MemberViewController implements Initializable,LoadData {
+public class MemberViewController implements Initializable {
     @FXML Button btClose = new Button();
     @FXML Button btUpdate = new Button();
     @FXML Label lName = new Label();
@@ -44,7 +44,7 @@ public class MemberViewController implements Initializable,LoadData {
         
     }
 
-    @Override
+    
     public void initializeMember(Member member) {
          this.member = member;
          lName.setText(member.getName());
