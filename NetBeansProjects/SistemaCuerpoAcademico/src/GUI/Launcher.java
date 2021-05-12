@@ -1,5 +1,6 @@
 
 package GUI;
+import businessLogic.MemberDAO;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -10,12 +11,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import log.BusinessException;
 public class Launcher extends Application {
     @Override
     public void start(Stage primaryStage) {
   
         try {
-            URL url = new File("src/GUI/MemberView.fxml").toURI().toURL();
+            URL url = new File("src/GUI/MemberList.fxml").toURI().toURL();
             AnchorPane root = (AnchorPane)FXMLLoader.load(url);
             Scene scene = new Scene(root,600,400);
             primaryStage.setScene(scene);
@@ -26,7 +28,7 @@ public class Launcher extends Application {
             
        
     }
-    public static void main(String[] args){
+    public static void main(String[] args) throws BusinessException{
         launch(args);
     }
 

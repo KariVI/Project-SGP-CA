@@ -35,7 +35,9 @@ public class Member {
         this.degreeYear = degreeYear;
         this.keyGroupAcademic = keyGroupAcademic;
     }
-    
+    public Member() {
+
+    }
     public Member(String professionalLicense, String name, String role, String degree, String nameDegree, String universityName, int degreeYear) {
         this.professionalLicense = professionalLicense;
         this.name = name;
@@ -174,4 +176,10 @@ public class Member {
     public int getDegreeYear(){
         return degreeYear;
     }
+    
+    @Override
+    public String toString(){
+        return professionalLicense+"\t"+name;
+    }
+   
 }

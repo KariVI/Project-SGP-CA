@@ -11,8 +11,8 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MemberViewController">
+<?import GUI.TextFieldLimited?>
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MemberRegisterController">
     <stylesheets>
         <URL value="@memberview.css" />
     </stylesheets>
@@ -41,10 +41,10 @@
             <Label text="Especialzación:" GridPane.rowIndex="5" />
             <Label text="Año:" GridPane.rowIndex="6" />
             <Label text="Universidad:" GridPane.rowIndex="7" />
-            <TextField fx:id="tfName" GridPane.columnIndex="1" />
-            <TextField fx:id="tfProfessionalLicense" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="tfNameDegree" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="tfUniversity" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextFieldLimited fx:id="tfName" GridPane.columnIndex="1" />
+            <TextFieldLimited fx:id="tfProfessionalLicense" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextFieldLimited fx:id="tfNameDegree" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextFieldLimited fx:id="tfUniversity" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <ComboBox fx:id="cbRoles" prefHeight="26.0" prefWidth="224.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <ComboBox fx:id="cbDegrees" prefHeight="26.0" prefWidth="223.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <ComboBox fx:id="cbYears" prefHeight="26.0" prefWidth="220.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />

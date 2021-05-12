@@ -6,6 +6,7 @@
 package businessLogic;
 
 import domain.Member;
+import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import log.BusinessException;
@@ -75,5 +76,14 @@ public class MemberDAOTest {
         Member member = new Member("4065161", "Maria de los Angeles Arenas Valdes","Colaborador","Maestria","Maestria en ciencias de la computacion","Fundacion Arturo Rosenbulth",1999,"inactivo","1491");
         MemberDAO memberDAO = new MemberDAO();
         assertTrue(memberDAO.activateMember(member));
+    }
+     @Test
+    public void testGetMembers() throws BusinessException {
+        System.out.println("GetMembers");
+        ArrayList<Member> memberList = new ArrayList<Member>();
+        Member member = new Member("4065161", "Maria de los Angeles Arenas Valdes","Colaborador","Maestria","Maestria en ciencias de la computacion","Fundacion Arturo Rosenbulth",1999,"Activo","1491");
+        memberList.add(member);
+        MemberDAO memberDAO = new MemberDAO();
+        assertEquals(memberDAO.getMembers(),memberList);
     }
 }

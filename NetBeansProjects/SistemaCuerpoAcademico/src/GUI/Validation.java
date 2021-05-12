@@ -1,9 +1,6 @@
 
 package GUI;
 
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
-
 
 public class Validation {
     public boolean validateStringSize(String TextField, int size){

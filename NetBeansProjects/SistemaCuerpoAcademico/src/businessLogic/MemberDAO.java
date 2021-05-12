@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import log.BusinessException;
 import log.Log;
 
@@ -186,5 +187,43 @@ public class MemberDAO implements IMemberDAO{
         }
       
         return updateSucess;
+    }
+
+    @Override
+    public ArrayList<Member> getMembers() throws BusinessException {
+        ArrayList<Member> memberList = new ArrayList<Member>();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            try{
+                            
+                PreparedStatement getMemberStatment;
+                getMemberStatment = connectionDataBase.prepareStatement("SELECT * FROM Miembro");
+                ResultSet memberResultSet;                    
+                memberResultSet = getMemberStatment.executeQuery();
+                            
+                while(memberResultSet.next()){
+                    String name = memberResultSet.getString("nombre");
+                    String role = memberResultSet.getString("rol");
+                    String nameDegree = memberResultSet.getString("nombreGrado");
+                    String degree = memberResultSet.getString("grado");
+                    String universityName = memberResultSet.getString("universidad");
+                    int degreeYear = memberResultSet.getInt("anio");
+                    String state = memberResultSet.getString("estado");
+                    String KeyGroupAcademic = memberResultSet.getString("clave");
+                    String professionalLicense = memberResultSet.getString("cedula");    
+                    Member memberData = new Member(professionalLicense, name, role, degree, nameDegree, universityName, degreeYear,state,KeyGroupAcademic);
+                    memberList.add(memberData);
+                }
+                             
+                connectorDataBase.disconnect();                         
+            }catch(SQLException sqlException) {
+                throw new BusinessException("Parameter index ", sqlException);
+            }
+        }catch(ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+                   
+        return memberList; 
     }
 }

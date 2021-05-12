@@ -1,5 +1,6 @@
 package businessLogic;
 import domain.Member;
+import java.util.ArrayList;
 import log.BusinessException;
 
 public interface IMemberDAO {
@@ -10,4 +11,5 @@ public interface IMemberDAO {
     public boolean update( Member newMember) throws BusinessException;
     public boolean desactivateMember( Member newMember) throws BusinessException;
     public boolean activateMember( Member newMember) throws BusinessException;
+    public ArrayList<Member> getMembers() throws BusinessException;
 }
