@@ -5,7 +5,7 @@ import domain.Member;
 import domain.PreliminarProject;
 import domain.ReceptionWork;
 import domain.Student;
-import domain.LGCA;
+import domain.LGAC;
 import java.util.ArrayList;
 import log.BusinessException;
 import org.junit.Test;
@@ -170,7 +170,7 @@ public class ReceptionWorkDAOTest {
         "Práctico técnico","Aplicación enfocada al registro de datos sobre varamientos mamiferos",
         "20/12/2019","20/08/2020", "Concluido");
         receptionWork.setKey(1);
-        LGCA lgac = new LGCA("Tecnologías de software", "Se orienta al estudio de diversas propiedades, enfoques, métodos de modelado y herramientas que conforman cada una de las diversas tecnologías aplicables al desarrollo del software con vistas a su adaptación, mejora y sustitución en el medio nacional");
+        LGAC lgac = new LGAC("Tecnologías de software", "Se orienta al estudio de diversas propiedades, enfoques, métodos de modelado y herramientas que conforman cada una de las diversas tecnologías aplicables al desarrollo del software con vistas a su adaptación, mejora y sustitución en el medio nacional");
         receptionWork.addLGAC(lgac);
         ReceptionWorkDAO receptionWorkDAO= new ReceptionWorkDAO();
         assertTrue(receptionWorkDAO.addLGACs(receptionWork));
@@ -182,7 +182,7 @@ public class ReceptionWorkDAOTest {
         "Práctico técnico","Aplicación enfocada al registro de datos sobre varamientos mamiferos",
         "20/12/2019","20/08/2020", "Concluido");
         int idReceptionWork = 1;
-        LGCA lgac = new LGCA("Tecnologías de software", "Se orienta al estudio de diversas propiedades, enfoques, métodos de modelado y herramientas que conforman cada una de las diversas tecnologías aplicables al desarrollo del software con vistas a su adaptación, mejora y sustitución en el medio nacional");
+        LGAC lgac = new LGAC("Tecnologías de software", "Se orienta al estudio de diversas propiedades, enfoques, métodos de modelado y herramientas que conforman cada una de las diversas tecnologías aplicables al desarrollo del software con vistas a su adaptación, mejora y sustitución en el medio nacional");
         receptionWork.addLGAC(lgac);
         ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO ();
         assertEquals(receptionWorkDAO.getLGACs(idReceptionWork),receptionWork.getLGACs());

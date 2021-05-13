@@ -1,12 +1,12 @@
 
 package domain;
 
-public class LGCA {
+public class LGAC {
    private String name;
    private String description;
   
    
-    public LGCA(String name, String description){  
+    public LGAC(String name, String description){  
         this.name=name;
         this.description=description;
     }
@@ -29,8 +29,8 @@ public class LGCA {
     
     public boolean equals(Object object){
         boolean value=false;
-            if (object instanceof LGCA) {
-            LGCA lgacCompare = (LGCA) object;
+            if (object instanceof LGAC) {
+            LGAC lgacCompare = (LGAC) object;
             if( (this.name.equals(lgacCompare.getName()) ) && (this.description.equals(lgacCompare.getDescription())) ) {
                 value=true;
             }

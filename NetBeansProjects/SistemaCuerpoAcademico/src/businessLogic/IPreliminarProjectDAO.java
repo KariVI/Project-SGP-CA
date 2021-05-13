@@ -1,7 +1,7 @@
 
 package businessLogic;
 
-import domain.LGCA;
+import domain.LGAC;
 import domain.Member;
 import domain.PreliminarProject;
 import domain.Student;
@@ -21,7 +21,7 @@ public interface IPreliminarProjectDAO {
     public ArrayList<Student> getStudents(int idPreliminarProject) throws BusinessException;
     public boolean deletedSucessfulStudents(PreliminarProject preliminarProject) throws BusinessException;
     public boolean addedSucessfulLGAC(PreliminarProject preliminarProject) throws BusinessException;
-     public ArrayList<LGCA> getLGACs(int idPreliminarProject) throws BusinessException;
+     public ArrayList<LGAC> getLGACs(int idPreliminarProject) throws BusinessException;
      public boolean deletedSucessfulLGACS(PreliminarProject preliminarProject) throws BusinessException;
 }
 

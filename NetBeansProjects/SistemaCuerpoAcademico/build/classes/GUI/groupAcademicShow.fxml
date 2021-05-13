@@ -15,20 +15,15 @@
     </stylesheets>
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2b2b2c" height="34.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" width="703.0" />
-      <Label layoutX="25.0" layoutY="45.0" text="Cuerpo académico">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
-      <Label fx:id="lbName" layoutX="21.0" layoutY="75.0" text="Nombre:">
+      <Label layoutX="21.0" layoutY="75.0" text="Nombre:">
          <font>
             <Font size="10.0" />
          </font></Label>
-      <Label fx:id="lbKey" layoutX="21.0" layoutY="90.0" text="Clave:">
+      <Label layoutX="21.0" layoutY="90.0" text="Clave:">
          <font>
             <Font size="10.0" />
          </font></Label>
-      <Label fx:id="lbConsolidateGrade" layoutX="21.0" layoutY="111.0" text="Grado de consolidación:">
+      <Label layoutX="21.0" layoutY="111.0" text="Grado de consolidación:">
          <font>
             <Font size="10.0" />
          </font></Label>
@@ -47,6 +42,21 @@
          <font>
             <Font size="10.0" />
          </font></TextArea>
-      <Pane fx:id="lgcasPane" layoutX="19.0" layoutY="284.0" prefHeight="169.0" prefWidth="667.0" />
+      <Pane fx:id="lgacsPane" layoutX="19.0" layoutY="284.0" prefHeight="169.0" prefWidth="667.0" />
+      <Label fx:id="lbName" layoutX="152.0" layoutY="75.0" text="Label">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbKey" layoutX="152.0" layoutY="90.0" text="Label">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbConsolidateGrade" layoutX="150.0" layoutY="110.0" text="Label">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

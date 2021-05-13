@@ -9,17 +9,15 @@ import java.io.IOException;
 
 public class Connector {
         private Connection connection;
-
-        Properties properties = new Properties();
-         FileInputStream fileInputStream;
-        
         private String url;
         private String userName;
         private String userPassword;
 
         private void inicializar(){ 
+            Properties properties = new Properties();
+            FileInputStream fileInputStream;
             try {
-                this.fileInputStream = new FileInputStream("./properties.properties");
+                fileInputStream = new FileInputStream("./properties.properties");
                 properties.load(fileInputStream);
             } catch (IOException ex) {
                 Log.logException(ex);

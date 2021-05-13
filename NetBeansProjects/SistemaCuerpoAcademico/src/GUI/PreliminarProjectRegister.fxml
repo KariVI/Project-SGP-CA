@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="663.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="GUI.PreliminarProjectRegisterController">
+    <stylesheets>
+        <URL value="@preliminarprojectregister.css" />
+    </stylesheets>
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#242525" height="31.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="663.0" />
+      <Label layoutX="19.0" layoutY="101.0" text="Título " />
+      <Label layoutX="11.0" layoutY="135.0" text="Fecha de inicio:" />
+      <Label layoutX="16.0" layoutY="165.0" text="Fecha de fin: " />
+      <Label layoutX="19.0" layoutY="203.0" text="Descripción:" />
+      <TextField layoutX="106.0" layoutY="97.0" prefHeight="25.0" prefWidth="252.0" />
+      <TextField layoutX="106.0" layoutY="131.0" />
+      <TextField layoutX="106.0" layoutY="165.0" />
+      <TextArea layoutX="106.0" layoutY="203.0" prefHeight="82.0" prefWidth="260.0" />
+      <Button layoutX="491.0" layoutY="461.0" mnemonicParsing="false" text="Guardar" />
+      <Button layoutX="563.0" layoutY="461.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Salir" />
+      <Label layoutX="19.0" layoutY="306.0" text="Director:" />
+      <TextField layoutX="106.0" layoutY="302.0" prefHeight="25.0" prefWidth="260.0" />
+      <Label layoutX="16.0" layoutY="339.0" text="Codirectores:" />
+      <TextArea layoutX="106.0" layoutY="339.0" prefHeight="82.0" prefWidth="260.0" />
+      <TextField layoutX="540.0" layoutY="89.0" prefHeight="25.0" prefWidth="46.0" />
+      <Button layoutX="583.0" layoutY="89.0" mnemonicParsing="false" text="Ok" />
+      <Label layoutX="386.0" layoutY="93.0" text="Número de estudiantes:" />
+      <Label layoutX="25.0" layoutY="41.0" text="Registro de Anteproyecto ">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

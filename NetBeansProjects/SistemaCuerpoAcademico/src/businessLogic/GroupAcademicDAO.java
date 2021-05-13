@@ -3,7 +3,7 @@ package businessLogic;
 
 import dataaccess.Connector;
 import domain.GroupAcademic;
-import domain.LGCA;
+import domain.LGAC;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -79,7 +79,7 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
     }  
 
     @Override
-    public boolean addedLGACSucessful(GroupAcademic groupAcademic, LGCA lgac) throws BusinessException {
+    public boolean addedLGACSucessful(GroupAcademic groupAcademic, LGAC lgac) throws BusinessException {
         boolean addSucess=false;
         Connector connectorDataBase=new Connector();
         try {
@@ -126,22 +126,22 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
         return updateSucess;
     }
     
-    public ArrayList<LGCA> getLGACs(String keyGroupAcademic) throws BusinessException{  
-        ArrayList<LGCA> lgcaList = new ArrayList<LGCA>();
+    public ArrayList<LGAC> getLGACs(String keyGroupAcademic) throws BusinessException{  
+        ArrayList<LGAC> lgacList = new ArrayList<LGAC>();
         Connector connectorDataBase=new Connector();
         try {
             Connection connectionDataBase = connectorDataBase.getConnection();
-            String query="Select nombreLGAC CuerpoLGAC where claveCuerpoAcademico= ?";
+            String query="Select nombreLGAC from CuerpoLGAC where claveCuerpoAcademico= ?";
             PreparedStatement preparedStatement= connectionDataBase.prepareStatement(query);
             preparedStatement.setString(1, keyGroupAcademic);
             ResultSet resultSet ;
             resultSet=preparedStatement.executeQuery();
             
             while(resultSet.next()){    
-                String lgcaName= resultSet.getString(1);              
-                LGCADAO lgcaDAO = new LGCADAO();               
-                LGCA lgca = lgcaDAO.getLgacByName(lgcaName);
-                lgcaList.add(lgca);
+                String lgacName= resultSet.getString(1);              
+                LGACDAO lgacDAO = new LGACDAO();               
+                LGAC lgac = lgacDAO.getLgacByName(lgacName);
+                lgacList.add(lgac);
             }
             
             connectorDataBase.disconnect();
@@ -150,7 +150,28 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
         } catch (SQLException sqlException) {
              throw new BusinessException("DataBase connection failed ", sqlException);
         }
-      return lgcaList;
+      return lgacList;
     }
+
+   public boolean deletedLGACSuccesful(String keyGroupAcademic, LGAC lgac) throws BusinessException {
+       boolean value=false;
+       Connector connectorDataBase=new Connector();
+        try {
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String query="DELETE FROM CuerpoLGAC where claveCuerpoAcademico= ? and nombreLGAC=?";
+            PreparedStatement preparedStatement= connectionDataBase.prepareStatement(query);
+            preparedStatement.setString(1, keyGroupAcademic);
+            preparedStatement.setString(2,lgac.getName());
+            preparedStatement.executeUpdate();            
+            connectorDataBase.disconnect();
+            value=true;
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        } catch (SQLException sqlException) {
+             throw new BusinessException("DataBase connection failed ", sqlException);
+        }
+       return value;
+   }
+   
     
 }

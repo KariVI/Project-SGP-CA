@@ -16,7 +16,7 @@ public class ReceptionWork {
     private PreliminarProject preliminarProject;
     private ArrayList<Student> students;
     private ArrayList<Member> members;
-    private ArrayList<LGCA> lgacs;
+    private ArrayList<LGAC> lgacs;
     
     
     public ReceptionWork(String title, String type, String description, String dateStart, String dateEnd, String actualState){
@@ -28,7 +28,7 @@ public class ReceptionWork {
         this.actualState=actualState;
         students=new ArrayList<Student>();
         members=new ArrayList<Member>();
-        lgacs=new ArrayList<LGCA>();
+        lgacs=new ArrayList<LGAC>();
          
     }
     
@@ -104,15 +104,15 @@ public class ReceptionWork {
          members.add(assistant);
     }
     
-     public void setLGAC(LGCA lgac){
+     public void setLGAC(LGAC lgac){
         lgacs.add(lgac);
     }
     
-    public ArrayList<LGCA> getLGACs(){
+    public ArrayList<LGAC> getLGACs(){
         return lgacs;
     }
     
-    public void addLGAC(LGCA lgac){ 
+    public void addLGAC(LGAC lgac){ 
          lgacs.add(lgac);
     }
     

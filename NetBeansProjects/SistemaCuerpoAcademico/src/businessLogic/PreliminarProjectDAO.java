@@ -2,7 +2,7 @@
 package businessLogic;
 
 import dataaccess.Connector;
-import domain.LGCA;
+import domain.LGAC;
 import domain.Member;
 import domain.PreliminarProject;
 import domain.Student;
@@ -330,7 +330,7 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
     public boolean addedSucessfulLGAC(PreliminarProject preliminarProject) throws BusinessException {
         boolean addLGACSucces = false;
         int idPreliminarProject = preliminarProject.getKey();
-        ArrayList<LGCA> lgacs =  preliminarProject.getLGACs();
+        ArrayList<LGAC> lgacs =  preliminarProject.getLGACs();
          try {
                 Connector connectorDataBase = new Connector();
                 Connection connectionDataBase = connectorDataBase.getConnection();
@@ -352,9 +352,9 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
         return addLGACSucces;
     }
     
-    public ArrayList<LGCA> getLGACs(int idPreliminarProject) throws BusinessException {
-        ArrayList<LGCA> lgacs = new ArrayList<LGCA>();
-        LGCADAO lgacDAO= new LGCADAO();
+    public ArrayList<LGAC> getLGACs(int idPreliminarProject) throws BusinessException {
+        ArrayList<LGAC> lgacs = new ArrayList<LGAC>();
+        LGACDAO lgacDAO= new LGACDAO();
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
@@ -364,7 +364,7 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
                resultSet = preparedStatement.executeQuery();
                while(resultSet.next()){
                     String name = resultSet.getString("nombreLGAC");
-                    LGCA lgac = lgacDAO.getLgacByName(name);
+                    LGAC lgac = lgacDAO.getLgacByName(name);
                     lgacs.add(lgac);
                 }
                 connectorDataBase.disconnect();
@@ -381,7 +381,7 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
     public boolean deletedSucessfulLGACS(PreliminarProject preliminarProject) throws BusinessException {
        boolean deleteSucess=false;
         int idPreliminarProject=preliminarProject.getKey();
-        ArrayList<LGCA> lgacs= preliminarProject.getLGACs();
+        ArrayList<LGAC> lgacs= preliminarProject.getLGACs();
         try{
             Connector connectorDataBase=new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
