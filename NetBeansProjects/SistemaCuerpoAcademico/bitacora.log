@@ -3730,3 +3730,53 @@ GRAVE: java.sql.SQLException: No value specified for parameter 2
 	at org.testng.TestNG.privateMain(TestNG.java:1364)
 	at org.testng.TestNG.main(TestNG.java:1333)
 
+may 13, 2021 2:49:38 PM log.Log logException
+INFORMACIÓN: Bitacora inicializada
+may 13, 2021 2:49:38 PM log.Log logException
+GRAVE: javafx.fxml.LoadException: 
+/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/PreliminarProjectList.fxml
+
+	at javafx.fxml.FXMLLoader.constructLoadException(FXMLLoader.java:2601)
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2579)
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2441)
+	at javafx.fxml.FXMLLoader.load(FXMLLoader.java:2409)
+	at sistemacuerpoacademico.PrincipalMenu.start(PrincipalMenu.java:36)
+	at com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$8(LauncherImpl.java:863)
+	at com.sun.javafx.application.PlatformImpl.lambda$runAndWait$7(PlatformImpl.java:326)
+	at com.sun.javafx.application.PlatformImpl.lambda$null$5(PlatformImpl.java:295)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$6(PlatformImpl.java:294)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$null$4(WinApplication.java:186)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.NullPointerException
+	at GUI.PreliminarProjectListController.initialize(PreliminarProjectListController.java:44)
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2548)
+	... 12 more
+
+may 13, 2021 3:48:48 PM log.Log logException
+INFORMACIÓN: Bitacora inicializada
+may 13, 2021 3:48:48 PM log.Log logException
+GRAVE: javafx.fxml.LoadException: 
+/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/PreliminarProjectList.fxml
+
+	at javafx.fxml.FXMLLoader.constructLoadException(FXMLLoader.java:2601)
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2579)
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2441)
+	at javafx.fxml.FXMLLoader.load(FXMLLoader.java:2409)
+	at sistemacuerpoacademico.PrincipalMenu.start(PrincipalMenu.java:36)
+	at com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$8(LauncherImpl.java:863)
+	at com.sun.javafx.application.PlatformImpl.lambda$runAndWait$7(PlatformImpl.java:326)
+	at com.sun.javafx.application.PlatformImpl.lambda$null$5(PlatformImpl.java:295)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$6(PlatformImpl.java:294)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$null$4(WinApplication.java:186)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.NullPointerException
+	at GUI.PreliminarProjectListController.initialize(PreliminarProjectListController.java:42)
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2548)
+	... 12 more
+

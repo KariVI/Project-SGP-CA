@@ -142,4 +142,8 @@ public class PreliminarProject {
         }  
         return value;
     }
+     
+    public String toString(){
+        return title;
+    }
 }

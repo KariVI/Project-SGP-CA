@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import log.Log;
 
@@ -23,7 +25,12 @@ import log.Log;
 public class MenuController implements Initializable {
 
     @FXML Button btRegister;
+    @FXML Button btConsult;
+    @FXML ListView lvOptions;
     GroupAcademic groupAcademic;
+    private ObservableList<String> options ;
+
+    
     
     
     @FXML
@@ -74,8 +81,11 @@ public class MenuController implements Initializable {
        } catch (MalformedURLException ex) {
                 Logger.getLogger(GroupAcademicShowController.class.getName()).log(Level.SEVERE, null,ex);
         }
-    
     }
+         
+        private void fillOptions() {   
+            options.add("Anteproyectos");
+        }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
