@@ -58,11 +58,11 @@ public class TopicDAO implements ITopic {
                             
                 while(agendaResultSet.next()){
                     int idTopic = agendaResultSet.getInt("idTema");
-                    String ProfessionalLicense = agendaResultSet.getString("cedula");
+                    String professionalLicense = agendaResultSet.getString("cedula");
                     String topicName = agendaResultSet.getString("tema");
                     String startTime = agendaResultSet.getString("horaInicio");
                     String finishTime = agendaResultSet.getString("horaFin");
-                    Topic agendaData = new Topic(idTopic, topicName, startTime, finishTime,ProfessionalLicense, idMeeting);
+                    Topic agendaData = new Topic(idTopic, topicName, startTime, finishTime,professionalLicense, idMeeting);
                     agendaList.add(agendaData);
                 }
                              

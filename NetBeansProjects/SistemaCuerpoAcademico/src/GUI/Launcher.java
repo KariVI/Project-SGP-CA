@@ -17,7 +17,7 @@ public class Launcher extends Application {
     public void start(Stage primaryStage) {
   
         try {
-            URL url = new File("src/GUI/MemberList.fxml").toURI().toURL();
+            URL url = new File("src/GUI/TopicShow.fxml").toURI().toURL();
             AnchorPane root = (AnchorPane)FXMLLoader.load(url);
             Scene scene = new Scene(root,600,400);
             primaryStage.setScene(scene);
@@ -25,9 +25,9 @@ public class Launcher extends Application {
         } catch (IOException ex) {
             Logger.getLogger(Launcher.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
-       
+                  
     }
+    
     public static void main(String[] args) throws BusinessException{
         launch(args);
     }

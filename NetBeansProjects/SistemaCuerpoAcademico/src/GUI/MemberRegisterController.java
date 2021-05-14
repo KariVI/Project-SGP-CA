@@ -1,17 +1,20 @@
 package GUI;
 
 
+import businessLogic.GroupAcademicDAO;
 import businessLogic.MemberDAO;
+import domain.GroupAcademic;
 import domain.Member;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -24,18 +27,19 @@ public class MemberRegisterController implements Initializable {
     private ObservableList<String> roles;
     private ObservableList<String> degrees;
     private ObservableList<Integer> years;
+    private ObservableList<GroupAcademic> academicGroups;
+    @FXML private ComboBox<GroupAcademic> cbAcademicGroups;
     @FXML private ComboBox<Integer> cbYears;
     @FXML private ComboBox<String> cbRoles;
     @FXML private ComboBox<String> cbDegrees;
-    @FXML private TextFieldLimited tfName;
-    @FXML private TextFieldLimited tfProfessionalLicense;
-    @FXML private TextFieldLimited tfNameDegree;
-    @FXML private TextFieldLimited tfUniversity;
+    @FXML private TextField tfName;
+    @FXML private TextField tfProfessionalLicense;
+    @FXML private TextField tfNameDegree;
+    @FXML private TextField tfUniversity;
     @FXML private Button btClose;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-     tfName.setMaxlength(1);
      roles = FXCollections.observableArrayList();
      roles.add("Integrante");
      roles.add("Colaborador");
@@ -46,17 +50,22 @@ public class MemberRegisterController implements Initializable {
      degrees.add("Doctorado");
      cbDegrees.setItems(degrees);
      years = FXCollections.observableArrayList();
+     academicGroups = FXCollections.observableArrayList();
+     initializeAcademicGroups();
+     cbAcademicGroups.setItems(academicGroups);
      for(int i = getActualYear(); i>1899; i--){
             years.add(i);
      }
      cbYears.setItems(years);
      cbYears.getSelectionModel().selectFirst();
+     cbAcademicGroups.getSelectionModel().selectFirst();
     }    
 
     @FXML 
     public void save(){
        String name = "", role = "", degree = "", professionalLicense = "", nameDegree = "", universityName = "";
        int degreeYear = 0;
+       GroupAcademic groupAcademic;
        name = tfName.getText();
        role = cbRoles.getSelectionModel().getSelectedItem();
        degree = cbDegrees.getValue();
@@ -64,21 +73,16 @@ public class MemberRegisterController implements Initializable {
        nameDegree = tfNameDegree.getText();
        degreeYear = cbYears.getSelectionModel().getSelectedItem();
        universityName = tfUniversity.getText();
-       Member newMember = new Member(professionalLicense, name, role, degree,nameDegree,universityName, degreeYear,"1491");
+       groupAcademic = cbAcademicGroups.getSelectionModel().getSelectedItem();
+       Member newMember = new Member(professionalLicense, name, role, degree,nameDegree,universityName, degreeYear,groupAcademic.getKey());
        MemberDAO memberDAO = new MemberDAO();
-       if(!isEmptyFields(newMember)){
-           if(!isAlreadyRegisterd(newMember)){
+       if(validateMember(newMember)){
              try { 
              memberDAO.saveMember(newMember);
-              showAlertSucesfulSave();
+              AlertMessage.showAlertSuccesfulSave("El miembro fue registrado con éxito");
              } catch (BusinessException ex) {
                 Log.logException(ex);
-            }
-          } else{
-            showAlertTroubleSave("El miembro ya se encuentra registrado");   
-           }
-       }else{
-           showAlertTroubleSave("Campos vacios");
+             }
        }
     }
     
@@ -88,30 +92,41 @@ public class MemberRegisterController implements Initializable {
         stage.close();
     }
     
-    
-    @FXML
-    private void showAlertSucesfulSave() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(null);
-        alert.setTitle("Información guardada");
-        alert.setContentText("Miembro guardado con exito");
-        alert.showAndWait();
+    public void initializeAcademicGroups(){
+        try {
+            GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO();
+            GroupAcademic academicGroup = groupAcademicDAO.getGroupAcademicById("1491");
+            academicGroups.add(academicGroup);
+        } catch (BusinessException ex) {
+            Logger.getLogger(MemberRegisterController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
-    @FXML
-    private void showAlertTroubleSave(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(null);
-        alert.setTitle("");
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
     
     public int getActualYear(){
         Date date = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar.get(Calendar.YEAR);
+    }
+    
+    public boolean validateMember(Member member){
+        boolean value = true;
+        if(isEmptyFields(member)){
+            value = false;
+            AlertMessage.showAlertValidateFailed("Campos vacios");
+        }
+        if(!isAlreadyRegisterd(member)){
+            value = false;
+            AlertMessage.showAlertValidateFailed("El miembro ya se encuentra registrado");
+        }
+        
+        if(!invalidFields(member)){
+            value = false;
+            AlertMessage.showAlertValidateFailed("Campos inválidos");
+        }
+        
+        return value;
     }
     
     public boolean isEmptyFields(Member member){
@@ -129,6 +144,15 @@ public class MemberRegisterController implements Initializable {
             value = true;
         } catch (BusinessException ex) {
             Log.logException(ex);
+        }
+        return value;
+    }
+    
+    public boolean invalidFields(Member member){
+        boolean value = true;
+        if(Validation.findInvalidField(member.getName())||Validation.findInvalidField(member.getNameDegree())||
+           Validation.findInvalidField(member.getUniversityName())){
+            value = false;
         }
         return value;
     }

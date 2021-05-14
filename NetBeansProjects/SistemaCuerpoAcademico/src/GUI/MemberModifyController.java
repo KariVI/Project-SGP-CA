@@ -73,15 +73,13 @@ public class MemberModifyController implements Initializable {
        state = ((RadioButton) tgState.getSelectedToggle()).getText();
        Member newMember = new Member(professionalLicense, name, role, degree,nameDegree,universityName, degreeYear,state,"1491");
        MemberDAO memberDAO = new MemberDAO();
-       if(!isEmptyFields(newMember)){
+        if(validateMember(newMember)){
              try { 
              memberDAO.update(newMember);
-              showAlertSucesfulSave();
+              AlertMessage.showAlertSuccesfulSave("Los cambios fueron guardados con éxito");
              } catch (BusinessException ex) {
                 Log.logException(ex);
-            }
-       }else{
-           showAlertTroubleSave("Campos vacios");
+             }
        }
     }
     
@@ -109,29 +107,30 @@ public class MemberModifyController implements Initializable {
     }
     
     
-    @FXML
-    private void showAlertSucesfulSave() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(null);
-        alert.setTitle("Información guardada");
-        alert.setContentText("Miembro guardado con exito");
-        alert.showAndWait();
-    }
-    
-    @FXML
-    private void showAlertTroubleSave(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(null);
-        alert.setTitle("");
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-    
     public int getActualYear(){
         Date date = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar.get(Calendar.YEAR);
+    }
+    
+    public boolean validateMember(Member member){
+        boolean value = true;
+        if(isEmptyFields(member)){
+            value = false;
+            AlertMessage.showAlertValidateFailed("Campos vacios");
+        }
+        if(!isAlreadyRegisterd(member)){
+            value = false;
+            AlertMessage.showAlertValidateFailed("El miembro ya se encuentra registrado");
+        }
+        
+        if(!invalidFields(member)){
+            value = false;
+            AlertMessage.showAlertValidateFailed("Campos inválidos");
+        }
+        
+        return value;
     }
     
     public boolean isEmptyFields(Member member){
@@ -141,7 +140,6 @@ public class MemberModifyController implements Initializable {
         }
         return emptyFields;
     }
-    
     public boolean isAlreadyRegisterd(Member member){
         boolean value = false;
         try {
@@ -150,6 +148,15 @@ public class MemberModifyController implements Initializable {
             value = true;
         } catch (BusinessException ex) {
             Log.logException(ex);
+        }
+        return value;
+    }
+    
+    public boolean invalidFields(Member member){
+        boolean value = true;
+        if(Validation.findInvalidField(member.getName())||Validation.findInvalidField(member.getNameDegree())||
+           Validation.findInvalidField(member.getUniversityName())){
+            value = false;
         }
         return value;
     }

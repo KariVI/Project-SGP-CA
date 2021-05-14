@@ -85,4 +85,9 @@ public class GroupAcademic {
         }  
         return value;
     }
+    
+    @Override
+    public String toString(){
+        return name;
+    }
 }
