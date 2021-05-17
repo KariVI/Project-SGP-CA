@@ -5,14 +5,23 @@ import businessLogic.GroupAcademicDAO;
 import businessLogic.LGACDAO;
 import domain.GroupAcademic;
 import domain.LGAC;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -27,7 +36,6 @@ public class GroupAcademicModifyController implements Initializable {
 
      @FXML private TextField tfName;
     @FXML private TextField tfKey;
-    @FXML private TextField tfConsolidationGrade;
     @FXML private TextArea taObjetive;
     @FXML private TextArea taVision;
     @FXML private TextArea taMision; 
@@ -37,26 +45,28 @@ public class GroupAcademicModifyController implements Initializable {
     @FXML private Button btReturn;
     @FXML private Node groupAcademicPanel;
     @FXML private Pane lgacPane;
-    private GroupAcademic groupAcademic;
+    @FXML private ComboBox<String> cbConsolidateGrade;
+     private ObservableList<String> consolidateGrades;
+    private GroupAcademic groupAcademic= new GroupAcademic();
     private GroupAcademic groupAcademicNew=new GroupAcademic();
   
    
    public void setGroupAcademic(GroupAcademic groupAcademic){
-        
-        this.groupAcademic= groupAcademic;
+              this.groupAcademic.setKey(groupAcademic.getKey());
+              this.groupAcademic.setConsolidationGrade(groupAcademic.getConsolidationGrade());
+              this.groupAcademic.setName(groupAcademic.getName());
+             this.groupAcademic.setObjetive(groupAcademic.getObjetive());
+              this.groupAcademic.setMission(groupAcademic.getMission());
+             this.groupAcademic.setVision(groupAcademic.getVision());
     }
    
     public void initializeGroupAcademic(){
-        String objetive= "Objetivo: "+groupAcademic.getObjetive();
-        String vision="Visión: "+groupAcademic.getVision();
-        String mision= "Misión "+ groupAcademic.getMission();
-
         tfName.setText(groupAcademic.getName());
         tfKey.setText(groupAcademic.getKey());
-        tfConsolidationGrade.setText(groupAcademic.getConsolidationGrade());
-        taObjetive.setText(objetive);
-        taVision.setText(vision);
-        taMision.setText(mision);
+        taObjetive.setText(groupAcademic.getObjetive());
+        cbConsolidateGrade.setValue (groupAcademic.getConsolidationGrade());
+        taVision.setText(groupAcademic.getVision());
+        taMision.setText(groupAcademic.getMission());
     
         try {
            getlgacs();
@@ -78,7 +88,7 @@ public class GroupAcademicModifyController implements Initializable {
         while (i < ( lgacs.size() * numberRows)){  
                 TextField tfNamelgac = new TextField(lgacs.get(numberlgacs).getName());
                 TextArea taDescriptionlgac = new TextArea(lgacs.get(numberlgacs).getDescription());
-                String lgacName= "lgac "+ (numberlgacs + 1);
+                String lgacName= "LGAC "+ (numberlgacs + 1);
                 Label label = new Label(lgacName);
                 taDescriptionlgac.setPrefHeight(80); 
                 taDescriptionlgac.setPrefWidth(170);
@@ -94,15 +104,13 @@ public class GroupAcademicModifyController implements Initializable {
     @FXML
     private void actionSave (ActionEvent actionEvent){    
         String name = tfName.getText();
-        String consolidationGrade= tfConsolidationGrade.getText();
+        String consolidationGrade= cbConsolidateGrade.getSelectionModel().getSelectedItem();;
         String objetive= taObjetive.getText();
         String vision= taVision.getText();
         String mision= taMision.getText();
         String key= tfKey.getText();
         
         if(!validateFieldEmpty() && validateFields()){  
-          if(!searchRepeateGroupAcademic()){ 
-              //groupAcademicNew =new GroupAcademic(key,name,objetive,consolidationGrade,mision,vision);
               groupAcademicNew.setKey(key);
               groupAcademicNew.setConsolidationGrade(consolidationGrade);
               groupAcademicNew.setName(name);
@@ -110,13 +118,43 @@ public class GroupAcademicModifyController implements Initializable {
               groupAcademicNew.setMission(mision);
               groupAcademicNew.setVision(vision);
               updateGroupAcademic();
-          }else{  
-            sendAlert();
-          }
+
         }else{  
             sendAlert();
         }
-        
+    }
+    
+    @FXML 
+    private void actionReturn(ActionEvent actionEvent) throws BusinessException{  
+        Stage stage = (Stage) btReturn.getScene().getWindow();
+        stage.close();
+        try{ 
+            Stage primaryStage= new Stage();
+            URL url = new File("src/GUI/groupAcademicShow.fxml").toURI().toURL();
+           try{
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+                GroupAcademicShowController groupAcademicShowController =loader.getController();
+                GroupAcademicDAO groupAcademicDAO= new GroupAcademicDAO();
+                if(groupAcademicNew.getKey() != ""){
+                     GroupAcademic groupAcademic= groupAcademicDAO.getGroupAcademicById(groupAcademicNew.getKey());
+                }else{  
+                     GroupAcademic groupAcademic= groupAcademicDAO.getGroupAcademicById(this.groupAcademic.getKey());
+
+                }
+                groupAcademicShowController.setGroupAcademic(groupAcademic);
+                groupAcademicShowController.initializeGroupAcademic();
+                Parent root = loader.getRoot();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+           }catch (IOException ex) {
+                    Log.logException(ex);
+            }
+            primaryStage.show();
+       } catch (MalformedURLException ex) {
+                Log.logException(ex);
+        }
     }
     
     public void updateGroupAcademic (){    
@@ -125,11 +163,11 @@ public class GroupAcademicModifyController implements Initializable {
         try {
             if(groupAcademicDAO.updatedSucessful(groupAcademic.getKey(),groupAcademicNew)){
                 recoverlgacs();
-                alertMessage.showMessageSave("Cuerpo Academico");
+                alertMessage.showUpdateMessage();
             }
         } catch (BusinessException ex) {
             
-            alertMessage.showAlert("Error en la conexion con la base de datos");
+            alertMessage.showAlert("Error en la conexión con la base de datos");
         }                
     }
     
@@ -137,17 +175,17 @@ public class GroupAcademicModifyController implements Initializable {
         GridPane gridPane= (GridPane) lgacPane.getChildren().get(0);
             int i=1;
             int indexLGAC=0;
-            Integer lgacs=Integer.parseInt(tflgacsNumber.getText());  
-            ArrayList<LGAC> lgcas = groupAcademic.getLGACs();
+            ArrayList<LGAC> lgacs = groupAcademic.getLGACs();
+            
             int sizeRows=3;
-           while (i < (sizeRows * lgacs)){
+           while (i < (sizeRows * lgacs.size())){
                TextField namelgac = (TextField) getNodeFromGridPane( gridPane, 1, i);
                TextArea descriptionlgac = (TextArea) getNodeFromGridPane( gridPane, 1, (i + 1));
                if(validateFieldslgacs(namelgac,descriptionlgac)){         
                  String name= namelgac.getText();
                  String description= descriptionlgac.getText(); 
                  LGAC lgac = new LGAC(name, description);
-                 String nameLast = lgcas.get(indexLGAC).getName();
+                 String nameLast = lgacs.get(indexLGAC).getName();
                  updatelgacs(nameLast,  lgac);
                }
                i=i+3;
@@ -167,24 +205,23 @@ public class GroupAcademicModifyController implements Initializable {
     private void updatelgacs(String nameLGACLast ,LGAC lgac){   
         GroupAcademicDAO groupAcademicDAO= new GroupAcademicDAO();
         LGACDAO lgacDAO =new LGACDAO();
-        AlertMessage alertMessage =new AlertMessage();
         
         try {
-            if(!searchRepeatedLGAC(lgac.getName())){
+                LGAC lgacLast = lgacDAO.getLgacByName(nameLGACLast);
                 lgacDAO.updatedSucessful(nameLGACLast, lgac);
+                groupAcademicDAO.deletedLGACSuccesful(groupAcademic.getKey(),lgacLast);
                 groupAcademicDAO.addedLGACSucessful(groupAcademicNew, lgac);
-            }else { 
-                alertMessage.showAlert("La LGCA ya se encuentra registrada");
-            }
+
         } catch (BusinessException ex) {
-            alertMessage.showAlert("Error en la conexion con la base de datos");
+                AlertMessage alertMessage =new AlertMessage();
+                alertMessage.showAlert("Error en la conexion con la base de datos");
         }
     }
     
        
     private boolean validateFieldEmpty(){ 
           boolean value=false;
-          if(tfName.getText().isEmpty() || tfConsolidationGrade.getText().isEmpty() || taObjetive.getText().isEmpty() 
+          if(tfName.getText().isEmpty() || taObjetive.getText().isEmpty() 
            || taVision.getText().isEmpty()  || taMision.getText().isEmpty() || tfKey.getText().isEmpty()  
            ){
               value=true;
@@ -199,42 +236,13 @@ public class GroupAcademicModifyController implements Initializable {
           }
           if(!validateFields()){
              alertMessage.showAlert("Existen campos con caracteres invalidos");
-          }
-          
-          if(searchRepeateGroupAcademic()){
-              alertMessage.showAlert("El cuerpo académico ya se encuentra registrado");
-          }                   
+          }                  
     }
-      
-    public boolean searchRepeateGroupAcademic(){ 
-       boolean value=false; 
-       String key=tfKey.getText();
-        try {   
-            GroupAcademicDAO groupAcademicDAO= new GroupAcademicDAO();
-            groupAcademicDAO.getGroupAcademicById(key);
-            value=true;
-        }catch (BusinessException ex){ 
-            Log.logException(ex);
-        }
-        return value;
-    }
-           
-    public boolean searchRepeatedLGAC(String name)   { 
-       boolean value=false; 
-        try {   
-            LGACDAO lgacDAO = new LGACDAO();
-            lgacDAO.getLgacByName(name);
-            value=true;
-        }catch (BusinessException ex){ 
-            Log.logException(ex);
-        }
-        return value;
-    }
-     
+
     private boolean validateFields(){    
         boolean value=true;
         Validation validation=new Validation();
-        if(validation.findInvalidKeyAlphanumeric(tfKey.getText()) || validation.findInvalidField(tfConsolidationGrade.getText())
+        if(validation.findInvalidKeyAlphanumeric(tfKey.getText())
         || validation.findInvalidField(taObjetive.getText()) || validation.findInvalidField(taVision.getText()) 
         || validation.findInvalidField(taMision.getText()) || validation.findInvalidField(tfName.getText())){   
             value=false;
@@ -259,7 +267,12 @@ public class GroupAcademicModifyController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+      consolidateGrades= FXCollections.observableArrayList();
+      consolidateGrades.add("En formación");
+      consolidateGrades.add("En consolidación");
+      consolidateGrades.add("Consolidado");
+      cbConsolidateGrade.setItems(consolidateGrades);
+      
     }
     
 }

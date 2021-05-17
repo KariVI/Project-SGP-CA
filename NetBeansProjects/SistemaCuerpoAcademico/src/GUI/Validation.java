@@ -12,7 +12,7 @@ public class Validation {
     
     public boolean findInvalidField(String field){ 
         boolean value=false;
-        Pattern pattern = Pattern.compile("[0-9!#$%&'*+/=?^_`{|}~-]");
+        Pattern pattern = Pattern.compile("[0-9!#$%&'*+/=?^_{|}~-]");
         Matcher mather = pattern.matcher(field);
         if(mather.find()){  
             value=true;
@@ -39,6 +39,20 @@ public class Validation {
             value=true;
         }   
         return value;  
+    }
+    
+    public boolean validateNumberField(String field){
+       boolean value=false;
+              try {
+                    Integer.parseInt(field);
+                    value=true;
+               } catch (NumberFormatException exception) {
+                   AlertMessage alertMessage=new AlertMessage();
+                   alertMessage.showAlert("Inserte un formato de número correcto en número de lgac");
+               }
+
+              return value;
+
     }
     
     

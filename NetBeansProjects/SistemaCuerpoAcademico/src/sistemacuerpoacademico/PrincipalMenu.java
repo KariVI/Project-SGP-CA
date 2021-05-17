@@ -29,12 +29,12 @@ public class PrincipalMenu extends Application {
         
         try{
             
-            URL url = new File("src/GUI/PreliminarProjectList.fxml").toURI().toURL();
+            URL url = new File("src/GUI/Menu.fxml").toURI().toURL();
             try{
                 FXMLLoader loader = new FXMLLoader(url);
                 loader.setLocation(url);
                 loader.load();
-               // MenuController menuController =loader.getController();
+                MenuController menuController =loader.getController();
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);

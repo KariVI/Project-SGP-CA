@@ -35,6 +35,8 @@ public class GroupAcademicShowController implements Initializable {
     @FXML private TextArea taMision;
     @FXML private Pane lgacsPane;
     @FXML private Button btUpdate;
+    @FXML private Button btReturn;
+
     GroupAcademic groupAcademic;
     
     public void setGroupAcademic(GroupAcademic groupAcademic){   
@@ -42,16 +44,12 @@ public class GroupAcademicShowController implements Initializable {
     }
     
     public void initializeGroupAcademic(){
-        String objetive= "Objetivo: "+groupAcademic.getObjetive();
-        String vision="Visión: "+groupAcademic.getVision();
-        String mision= "Misión "+ groupAcademic.getMission();
-
-        lbName.setText(groupAcademic.getName());
+        lbName.setText( groupAcademic.getName());
         lbKey.setText(groupAcademic.getKey());
         lbConsolidateGrade.setText(groupAcademic.getConsolidationGrade());
-        taObjetive.setText(objetive);
-        taVision.setText(vision);
-        taMision.setText(mision);
+        taObjetive.setText("Objetivo: "+groupAcademic.getObjetive() );
+        taVision.setText("Visión: "+groupAcademic.getVision());
+        taMision.setText("Misión: "+groupAcademic.getMission());
         try {
             getlgacs();
         } catch (BusinessException ex) {
@@ -73,7 +71,9 @@ public class GroupAcademicShowController implements Initializable {
               groupAcademicModifyController.initializeGroupAcademic();
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
-              primaryStage.setScene(scene);       
+              primaryStage.setScene(scene);
+              Stage stage = (Stage) btUpdate.getScene().getWindow();
+              stage.close();
             } catch (IOException ex) {
                     Log.logException(ex);
             }
@@ -81,7 +81,14 @@ public class GroupAcademicShowController implements Initializable {
        } catch (MalformedURLException ex) {
             Log.logException(ex);
        }
-    }      
+    }   
+    
+    @FXML 
+    private void actionReturn(ActionEvent actionEvent){   
+        Stage stage = (Stage) btReturn.getScene().getWindow();
+        stage.close();
+    }
+ 
    
     private void getlgacs() throws BusinessException{
         GridPane gridPane= new GridPane();

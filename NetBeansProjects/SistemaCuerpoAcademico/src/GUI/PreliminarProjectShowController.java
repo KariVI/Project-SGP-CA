@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import domain.PreliminarProject;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -16,9 +17,26 @@ import javafx.fxml.Initializable;
  */
 public class PreliminarProjectShowController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+    PreliminarProject preliminarProject;
+    
+     public void setGroupAcademic(PreliminarProject preliminarProject){   
+        this.preliminarProject= preliminarProject;
+    }
+    
+    public void initializeGroupAcademic(){
+        /*lbName.setText( groupAcademic.getName());
+        lbKey.setText(groupAcademic.getKey());
+        lbConsolidateGrade.setText(groupAcademic.getConsolidationGrade());
+        taObjetive.setText("Objetivo: "+groupAcademic.getObjetive());
+        taVision.setText("Visión: "+groupAcademic.getVision());
+        taMision.setText("Misión "+groupAcademic.getMission());
+        try {
+            getlgacs();
+        } catch (BusinessException ex) {
+            Log.logException(ex);
+        }*/
+    }
+  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

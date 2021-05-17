@@ -1,6 +1,7 @@
 
 package GUI;
 
+import businessLogic.GroupAcademicDAO;
 import domain.GroupAcademic;
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +10,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,7 +22,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import log.BusinessException;
 import log.Log;
 
 
@@ -51,13 +57,13 @@ public class MenuController implements Initializable {
             }
             primaryStage.show();
        } catch (MalformedURLException ex) {
-                Logger.getLogger(GroupAcademicShowController.class.getName()).log(Level.SEVERE, null,ex);
-        }
+           Log.logException(ex);
+       }
     
     }
     
     @FXML 
-    private void actionQuery(ActionEvent actionEvent){  
+    private void actionQuery(ActionEvent actionEvent) throws BusinessException{  
          try{ 
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/groupAcademicShow.fxml").toURI().toURL();
@@ -66,9 +72,8 @@ public class MenuController implements Initializable {
               loader.setLocation(url);
               loader.load();
                 GroupAcademicShowController groupAcademicShowController =loader.getController();
-                GroupAcademic groupAcademic= new GroupAcademic("JDOEIJ804", "Ingenieria y Tecnologias de Software", "Desarrollar métodos, técnicas y herramientas para el desarrollo de software con un enfoque sistemático, disciplinado y cuantificable y apegado a estándares de calidad"
-                        , "En consolidacion", " Generar conocimiento y formar recursos humanos en Ingeniería de Software que contribuyan al desarrollo de software de calidad; a través de proyectos de investigación cuyos resultados se trasladen a  la docencia y la sociedad; y se difundan en foros especializados y de divulgación, fortaleciendo la vinculación academia-industria",
-                        "El Cuerpo Académico se encuentra consolidado y es líder en Ingeniería de Software y áreas relacionadas; todos los miembros trabajan colaborativamente en actividades de docencia, vinculación, generación y aplicación del conocimiento en las que participan activamente estudiantes de licenciatura y posgrado");
+                GroupAcademicDAO groupAcademicDAO= new GroupAcademicDAO();
+                 GroupAcademic groupAcademic= groupAcademicDAO.getGroupAcademicById("JDOEIJ804");
                 groupAcademicShowController.setGroupAcademic(groupAcademic);
                 groupAcademicShowController.initializeGroupAcademic();
                 Parent root = loader.getRoot();
@@ -79,16 +84,38 @@ public class MenuController implements Initializable {
             }
             primaryStage.show();
        } catch (MalformedURLException ex) {
-                Logger.getLogger(GroupAcademicShowController.class.getName()).log(Level.SEVERE, null,ex);
-        }
+           Log.logException(ex);
+       }
     }
          
-        private void fillOptions() {   
-            options.add("Anteproyectos");
-        }
+    private void fillOptions() {   
+        options.add("Anteproyectos");
+    }
+        
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        options = FXCollections.observableArrayList();
+       fillOptions();      
+      lvOptions.setItems(options);
+      lvOptions.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+          public void changed(ObservableValue<? extends String> observaleValue, String oldValue, String newValue) {
+             String selectedOptions = (String) lvOptions.getSelectionModel().getSelectedItem();
+            try {
+           FXMLLoader loader = new FXMLLoader(getClass().getResource("PreliminarProjectList.fxml"));
+            Parent root = loader.load();
+            PreliminarProjectListController PreliminarProjectListController = loader.getController();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(Launcher.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          }
+      });
+    
     }    
     
 }

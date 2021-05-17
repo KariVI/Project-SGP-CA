@@ -7,6 +7,7 @@ import domain.PreliminarProject;
 import domain.Student;
 import java.util.ArrayList;
 import log.BusinessException;
+import log.Log;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -115,12 +116,18 @@ public class PreliminarProjectDAOTest {
     
     @Test 
     public void testGetColaborators () throws BusinessException {
-        ArrayList<Member> colaborators;
+        ArrayList<Member> colaboratorsExpected=new ArrayList<Member>();
+        MemberDAO memberDAO = new MemberDAO();
+         Member member = memberDAO.getMemberByLicense("8325134");
+         member.setRole("Codirector");
+        colaboratorsExpected.add(member);
         PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
-        colaborators=preliminarProjectDAO.getColaborators(7);
-        String professionalLicenseExpected="8325134";
-        String professionalLicenseResult=colaborators.get(0).getProfessionalLicense();
-        assertEquals(professionalLicenseExpected, professionalLicenseResult);
+        ArrayList<Member> colaboratorsResult=preliminarProjectDAO.getColaborators(7);
+        try{
+            assertEquals(colaboratorsExpected, colaboratorsResult);
+        }catch(NullPointerException ex){    
+            Log.logException(ex);
+        }
     }
     
     @Test
@@ -136,11 +143,13 @@ public class PreliminarProjectDAOTest {
     
     @Test 
     public void testGetStudents () throws BusinessException{
-        String enrollmentExpected="S19014013";
+        Student student= new Student("S19014013", "Mariana Yazmin Vargas Segura" );
+         ArrayList<Student> studentsExpected= new ArrayList <Student>();
+         studentsExpected.add(student);
         PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
-        ArrayList<Student> students= preliminarProjectDAO.getStudents(7);
-        String enrollmentResult= students.get(0).getEnrollment();
-        assertEquals(enrollmentExpected,enrollmentResult);
+        ArrayList<Student> studentsResult= preliminarProjectDAO.getStudents(7);
+
+        assertEquals(studentsExpected,studentsResult);
     }
     
     @Test 
@@ -168,11 +177,12 @@ public class PreliminarProjectDAOTest {
     
     @Test
     public void testGetLGACs() throws BusinessException{    
-        String nameLGACExpected= "Gestión, modelado y desarrollo de software";
+        LGAC lgac=new LGAC("Gestión, modelado y desarrollo de software",  "Se orienta al estudio de los diversos métodos y enfoques para la gestión, modelado y desarrollo de software, de manera que se obtenga software de calidad. Gestión de las diversas etapas del proceso de desarrollo, incluyendo hasta la medición del proceso y artefactos. Modelado de los diversos artefactos en las distintas etapas del proceso de desarrollo.");
+        ArrayList<LGAC> lgacsExpected= new ArrayList<LGAC>();
+        lgacsExpected.add(lgac);
         PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
-        ArrayList<LGAC> lgacs= preliminarProjectDAO.getLGACs(7);
-        String nameLGACResult= lgacs.get(0).getName();
-        assertEquals(nameLGACExpected, nameLGACResult);
+        ArrayList<LGAC> lgacsResult= preliminarProjectDAO.getLGACs(7);
+        assertEquals(lgacsExpected, lgacsResult);
     }
     
     @Test 

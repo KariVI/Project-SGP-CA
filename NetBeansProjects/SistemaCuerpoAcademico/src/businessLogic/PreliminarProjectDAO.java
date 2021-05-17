@@ -220,7 +220,7 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
-            String query="SELECT cedula FROM Colabora where idAnteproyecto=?";
+            String query="SELECT cedula,rol FROM Colabora where idAnteproyecto=?";
 
                PreparedStatement preparedStatement = connectionDataBase.prepareStatement(query);
                preparedStatement.setInt(1, idPreliminarProject);
@@ -228,7 +228,9 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
                resultSet = preparedStatement.executeQuery();
                while(resultSet.next()){
                     String professionalLicense= resultSet.getString("cedula");
+                    String role = resultSet.getString("rol");
                     Member member = memberDAO.getMemberByLicense(professionalLicense);
+                    member.setRole(role);
                     colaborators.add(member);
                     
                 }

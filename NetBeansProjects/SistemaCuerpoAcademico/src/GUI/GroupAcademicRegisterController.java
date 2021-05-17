@@ -10,11 +10,14 @@ import log.Log;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -28,7 +31,6 @@ import javafx.stage.Stage;
 public class GroupAcademicRegisterController implements Initializable  {
     @FXML private TextField tfName;
     @FXML private TextField tfKey;
-    @FXML private TextField tfConsolidationGrade;
     @FXML private TextArea tAObjetive;
     @FXML private TextArea tAVision;
     @FXML private TextArea tAMision; 
@@ -39,6 +41,8 @@ public class GroupAcademicRegisterController implements Initializable  {
     @FXML private Node groupAcademicPanel;
     @FXML private AnchorPane anchorPaneGroupRegister;
     @FXML private Pane anchorPanelgac;
+    @FXML private ComboBox<String> cbConsolidateGrade;
+     private ObservableList<String> consolidateGrades;
 
      
   
@@ -46,12 +50,11 @@ public class GroupAcademicRegisterController implements Initializable  {
     @FXML
     private void actionSave (ActionEvent actionEvent) throws BusinessException{    
         String name = tfName.getText();
-        String consolidationGrade= tfConsolidationGrade.getText();
+        String consolidationGrade= cbConsolidateGrade.getSelectionModel().getSelectedItem();
         String objetive= tAObjetive.getText();
         String vision= tAVision.getText();
         String mision= tAMision.getText();
         String key= tfKey.getText();
-        
         if(!validateFieldEmpty() && validateFields()){  
           if(!searchRepeateGroupAcademic()){ 
               GroupAcademic groupAcademicAuxiliar =new GroupAcademic(key,name,objetive,consolidationGrade,mision,vision);
@@ -61,9 +64,15 @@ public class GroupAcademicRegisterController implements Initializable  {
           }
         }else{  
             sendAlert();
-        }
-        
+        }       
     }
+    
+    @FXML 
+    private void actionCancel(ActionEvent actionEvent){   
+        Stage stage = (Stage) btCancel.getScene().getWindow();
+        stage.close();
+    }
+ 
     
     public void saveGroupAcademic (GroupAcademic groupAcademic){    
         GroupAcademicDAO groupAcademicDAO =new GroupAcademicDAO();
@@ -83,17 +92,18 @@ public class GroupAcademicRegisterController implements Initializable  {
    @FXML 
     private void addlgacs(ActionEvent actionEvent){  
         GridPane gridPane= new GridPane();
-        if(!tflgacsNumber.getText().isEmpty() && (validateNumberlgac(tflgacsNumber.getText()))){
+        Validation validation =new Validation();
+        if(!tflgacsNumber.getText().isEmpty() && (validation.validateNumberField(tflgacsNumber.getText()))){
             Integer lgacs=Integer.parseInt(tflgacsNumber.getText());  
             gridPane.setHgap (5);
             gridPane.setVgap (5);
-            System.out.println(lgacs);
             int i=0;
             int numberlgacs=1;
             int sizeRows=3;
            while (i < ( lgacs * sizeRows)){  
                 TextField tfNamelgac = new TextField();
                 tfNamelgac .setPromptText("Nombre: ");   
+                tfNamelgac.setPrefWidth(200);
                 TextArea taDescriptionlgac = new TextArea();
                 taDescriptionlgac.setPrefHeight(80); 
                 taDescriptionlgac.setPrefWidth(170);
@@ -111,19 +121,6 @@ public class GroupAcademicRegisterController implements Initializable  {
         anchorPanelgac.getChildren().add(gridPane);
     }
     
-    private boolean validateNumberlgac(String numberlgac){
-       boolean value=false;
-              try {
-                    Integer.parseInt(numberlgac);
-                    value=true;
-               } catch (NumberFormatException exception) {
-                   AlertMessage alertMessage=new AlertMessage();
-                   alertMessage.showAlert("Inserte un formato de número correcto en número de lgac");
-               }
-
-              return value;
-
-    }
     
     private boolean validateFieldslgacs(TextField name, TextField description){
         boolean value=true;
@@ -185,17 +182,12 @@ public class GroupAcademicRegisterController implements Initializable  {
      return null;
    }
   
-    @FXML 
-    private void actionCancel(ActionEvent actionEvent){   
-        Stage stage = (Stage) btCancel.getScene().getWindow();
-        stage.close();
-    }
- 
+   
     
     
     private boolean validateFieldEmpty(){ 
           boolean value=false;
-          if(tfName.getText().isEmpty() || tfConsolidationGrade.getText().isEmpty() || tAObjetive.getText().isEmpty() 
+          if(tfName.getText().isEmpty() || tAObjetive.getText().isEmpty() 
            || tAVision.getText().isEmpty()  || tAMision.getText().isEmpty() || tfKey.getText().isEmpty()  
            ){
               value=true;
@@ -222,7 +214,7 @@ public class GroupAcademicRegisterController implements Initializable  {
     private boolean validateFields(){    
         boolean value=true;
         Validation validation=new Validation();
-        if(validation.findInvalidKeyAlphanumeric(tfKey.getText()) || validation.findInvalidField(tfConsolidationGrade.getText())
+        if(validation.findInvalidKeyAlphanumeric(tfKey.getText())
         || validation.findInvalidField(tAObjetive.getText()) || validation.findInvalidField(tAVision.getText()) 
         || validation.findInvalidField(tAMision.getText()) || validation.findInvalidField(tfName.getText())){   
             value=false;
@@ -255,13 +247,19 @@ public class GroupAcademicRegisterController implements Initializable  {
         }
         return value;
     }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+     consolidateGrades= FXCollections.observableArrayList();
+     consolidateGrades.add("En formación");
+     consolidateGrades.add("En consolidación");
+     consolidateGrades.add("Consolidado");
+     cbConsolidateGrade.setItems(consolidateGrades);
+     cbConsolidateGrade.setValue ("En formación");
+    }
     
    
     
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        
-    }
 
     
 }
