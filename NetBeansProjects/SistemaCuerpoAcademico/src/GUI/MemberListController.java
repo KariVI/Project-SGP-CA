@@ -17,12 +17,10 @@ import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import log.BusinessException;
@@ -30,9 +28,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
-import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -55,15 +51,19 @@ public class MemberListController implements  Initializable {
           public void changed(ObservableValue<? extends Member> observaleValue, Member oldValue, Member newValue) {
               Member selectedMember = lvMembers.getSelectionModel().getSelectedItem();
             try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("MemberView.fxml"));
-            Parent root = loader.load();
-            MemberViewController memberViewController = loader.getController();
-            memberViewController.initializeMember(selectedMember);
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
+            Stage primaryStage= new Stage();
+            URL url = new File("src/GUI/memberView.fxml").toURI().toURL();
+            FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              MemberViewController memberViewController =loader.getController();      
+              memberViewController.initializeMember(selectedMember);
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);
+              Stage stage = (Stage) lvMembers.getScene().getWindow();
+              stage.close();
+              primaryStage.show();
         } catch (IOException ex) {
             Logger.getLogger(Launcher.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -90,12 +90,6 @@ public class MemberListController implements  Initializable {
         Stage stage = (Stage)btClose.getScene().getWindow();
         stage.close();
     }
-    
-EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() { 
-   @Override 
-   public void handle(MouseEvent e) { 
-      System.out.println("Hello World"); 
-   } 
-}; 
+
 
 }

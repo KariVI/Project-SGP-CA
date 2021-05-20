@@ -37,5 +37,14 @@ public class Validation {
         return value;  
     }
     
+    public static boolean validateHour(String hour){    
+        boolean value=false;
+        Pattern pattern = Pattern.compile("([0-1][0-9]|2[0-3])(:)([0-5][0-9])");
+        Matcher mather = pattern.matcher(hour);
+        if(mather.find()){  
+            value = true;
+        }   
+        return value;  
+    }
     
 }

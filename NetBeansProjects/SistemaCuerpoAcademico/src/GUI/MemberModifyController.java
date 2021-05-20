@@ -3,14 +3,21 @@ package GUI;
 
 import businessLogic.MemberDAO;
 import domain.Member;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -34,7 +41,8 @@ public class MemberModifyController implements Initializable {
     @FXML private Label lProfessionalLicense;
     @FXML private TextField tfNameDegree;
     @FXML private TextField tfUniversity;
-    @FXML private Button btClose;
+    @FXML private Button btReturn;
+     @FXML private Button btSave;
     @FXML private ToggleGroup tgState;
     @FXML private RadioButton rbActive;
     @FXML private RadioButton rbInactive;
@@ -81,6 +89,8 @@ public class MemberModifyController implements Initializable {
                 Log.logException(ex);
              }
        }
+       Stage stage = (Stage) btSave.getScene().getWindow();
+       stage.close();
     }
     
     public void initializeMember(Member member){
@@ -101,9 +111,23 @@ public class MemberModifyController implements Initializable {
     }
     
     @FXML
-    public void close() {
-        Stage stage = (Stage)btClose.getScene().getWindow();
-        stage.close();
+    public void actionReturn() {
+        try {
+            Stage primaryStage= new Stage();
+            URL url = new File("src/GUI/memberList.fxml").toURI().toURL();
+            FXMLLoader loader = new FXMLLoader(url);
+            loader.setLocation(url);
+            loader.load();
+            MemberListController memberListController = loader.getController();
+            Parent root = loader.getRoot();
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            Stage stage = (Stage) btReturn.getScene().getWindow();
+            stage.close();
+            primaryStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(MemberViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     
@@ -140,6 +164,7 @@ public class MemberModifyController implements Initializable {
         }
         return emptyFields;
     }
+    
     public boolean isAlreadyRegisterd(Member member){
         boolean value = false;
         try {

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-
+<?import GUI.TextFieldLimited?>
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MemberRegisterController">
     <stylesheets>
         <URL value="@memberview.css" />
@@ -42,7 +42,7 @@
             <Label text="Especialzación:" GridPane.rowIndex="6" />
             <Label text="Año:" GridPane.rowIndex="7" />
             <Label text="Universidad:" GridPane.rowIndex="8" />
-            <TextField fx:id="tfName" GridPane.columnIndex="1" />
+            <TextFieldLimited fx:id="tfName" GridPane.columnIndex="1" />
             <TextField fx:id="tfProfessionalLicense" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="tfNameDegree" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <TextField fx:id="tfUniversity" GridPane.columnIndex="1" GridPane.rowIndex="8" />

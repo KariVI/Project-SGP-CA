@@ -81,4 +81,17 @@ public class Topic {
     public void setIdMeeting(int idMeeting){
         this.idMeeting = idMeeting;
     }
+    
+    public boolean equals(Object object){
+        boolean value = false;
+            if (object instanceof Topic) {
+            Topic topicCompare = (Topic) object;
+
+            if (this.getStartTime().equals(topicCompare.getStartTime()) && this.getFinishTime().equals(topicCompare.getFinishTime()) &&
+                    this.getTopicName().equals(topicCompare.getTopicName())){
+                value = true;
+            }
+        }
+      return value;
+    }    
 }

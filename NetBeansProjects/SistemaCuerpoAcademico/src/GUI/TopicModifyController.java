@@ -26,9 +26,10 @@ import javafx.stage.Stage;
 import log.BusinessException;
 
 
-public class TopicRegisterController implements Initializable {
+public class TopicModifyController implements Initializable {
     private ObservableList<Member> members;
     private ObservableList<Topic> topics;
+    private ObservableList<Topic> oldTopics;
     @FXML ComboBox<Member> cbMember;
     @FXML TextField tfTopic;
     @FXML TextField tfStartTime;
@@ -42,6 +43,7 @@ public class TopicRegisterController implements Initializable {
     @FXML Button btAdd;
     @FXML Button btSave;
     @FXML Button btCancel;
+    @FXML Button btUpdate;
     private int idMeeting = 1;
     private int indexTopic;
     private ListChangeListener<Topic> tableTopicListener;
@@ -53,12 +55,14 @@ public class TopicRegisterController implements Initializable {
         tcFinishTime.setCellValueFactory(new PropertyValueFactory<Topic,String>("finishTime"));
         tcMember.setCellValueFactory(new PropertyValueFactory<Topic,String>("professionalLicense"));
         topics = FXCollections.observableArrayList();
+        oldTopics = FXCollections.observableArrayList();
+        initializeTopics();
         tvTopic.setItems(topics);
+       
         members = FXCollections.observableArrayList();
         initializeMembers();
         cbMember.setItems(members);
         cbMember.getSelectionModel().selectFirst();
-
         tvTopic.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                  setSelectedTopic();
@@ -72,6 +76,21 @@ public class TopicRegisterController implements Initializable {
                 setSelectedTopic();
             }
         };
+    }
+    
+    public void initializeTopics(){
+        TopicDAO topicDAO = new TopicDAO();
+        try {
+            ArrayList<Topic> topicList = new ArrayList<Topic>();
+            topicList = topicDAO.getAgendaTopics(idMeeting);
+            for(int i = 0; i < topicList.size(); i++){
+                topics.add(topicList.get(i));
+                oldTopics.add(topicList.get(i));
+            }
+        } catch (BusinessException ex) {
+            Logger.getLogger(TopicShowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     
     @FXML
@@ -93,7 +112,7 @@ public class TopicRegisterController implements Initializable {
         topics.remove(indexTopic);
         cleanFields();
     }
-    
+
     @FXML
     private void cleanFields(){
         tfTopic.setText("");
@@ -147,9 +166,12 @@ public class TopicRegisterController implements Initializable {
    public void actionSave(){
        TopicDAO topicDAO = new TopicDAO();
         try {
-          for(int i = 0; i < topics.size(); i++){
-             topicDAO.save(topics.get(i));
-           }    
+          for(int i = 0; i < oldTopics.size(); i++){
+               topicDAO.delete(oldTopics.get(i));
+           }  
+           for(int i = 0; i < topics.size(); i++){
+               topicDAO.save(topics.get(i));
+           }
            AlertMessage.showAlertSuccesfulSave("Los temas fueron registrados con éxito");
          } catch (BusinessException ex) {
                Logger.getLogger(TopicRegisterController.class.getName()).log(Level.SEVERE, null, ex);
@@ -162,6 +184,19 @@ public class TopicRegisterController implements Initializable {
    public void actionCancel(){
       Stage stage = (Stage)btCancel.getScene().getWindow();
       stage.close(); 
+   }
+   
+   public void actionUpdate(){
+        String finishTime = "", startTime = "", topicName = "";
+        Member member = cbMember.getSelectionModel().getSelectedItem();
+        finishTime = tfFinishTime.getText();
+        startTime = tfFinishTime.getText();
+        topicName = tfTopic.getText();
+        Topic topic = new Topic(topics.get(indexTopic).getIdTopic(),topicName,startTime,finishTime,member.getProfessionalLicense(),idMeeting);
+        if(validateTopic(topic)){    
+            topics.set(indexTopic,topic);
+        }
+        cleanFields();
    }
     
     public boolean validateTopic(Topic topic){

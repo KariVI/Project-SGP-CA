@@ -32,7 +32,7 @@ public class MemberRegisterController implements Initializable {
     @FXML private ComboBox<Integer> cbYears;
     @FXML private ComboBox<String> cbRoles;
     @FXML private ComboBox<String> cbDegrees;
-    @FXML private TextField tfName;
+    @FXML private TextFieldLimited tfName;
     @FXML private TextField tfProfessionalLicense;
     @FXML private TextField tfNameDegree;
     @FXML private TextField tfUniversity;
@@ -40,6 +40,7 @@ public class MemberRegisterController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+      tfName.setMaxlength(10);
      roles = FXCollections.observableArrayList();
      roles.add("Integrante");
      roles.add("Colaborador");
@@ -136,6 +137,7 @@ public class MemberRegisterController implements Initializable {
         }
         return emptyFields;
     }
+    
     public boolean isAlreadyRegisterd(Member member){
         boolean value = false;
         try {

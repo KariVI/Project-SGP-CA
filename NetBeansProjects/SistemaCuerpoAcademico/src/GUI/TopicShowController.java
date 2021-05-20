@@ -34,16 +34,16 @@ import log.BusinessException;
  */
 public class TopicShowController implements Initializable {
     private ObservableList<Topic> topics;
-    @FXML TextField tfTopic;
-    @FXML TextField tfStartTime;
-    @FXML TextField tfFinishTime;
+    TextField tfTopic;
+    TextField tfStartTime;
+    TextField tfFinishTime;
     @FXML TableColumn<Topic,String>  tcFinishTime;
     @FXML TableColumn<Topic,String>  tcStartTime;
     @FXML TableColumn<Topic,String> tcMember;
     @FXML TableColumn<Topic,String> tcTopic;
     @FXML TableView<Topic> tvTopic;
-    @FXML Button btDelete;
-    @FXML Button btAdd;
+    Button btDelete;
+    Button btAdd;
     private int idMeeting = 1;
 
     

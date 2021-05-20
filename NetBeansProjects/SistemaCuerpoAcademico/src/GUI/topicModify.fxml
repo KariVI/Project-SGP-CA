@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.TopicRegisterController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.TopicModifyController">
    <children>
       <TableView fx:id="tvTopic" layoutX="24.0" layoutY="103.0" prefHeight="166.0" prefWidth="448.0">
         <columns>
@@ -39,5 +39,6 @@
       <Button fx:id="btDelete" layoutX="482.0" layoutY="274.0" mnemonicParsing="false" onAction="#delete" text="X" />
       <Button fx:id="btSave" layoutX="441.0" layoutY="358.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar" />
       <Button fx:id="btCancel" layoutX="510.0" layoutY="358.0" mnemonicParsing="false" onAction="#actionCancel" text="Cancelar" />
+      <Button fx:id="btUpdate" layoutX="514.0" layoutY="274.0" mnemonicParsing="false" onAction="#actionUpdate" text="Actualizar" />
    </children>
 </AnchorPane>

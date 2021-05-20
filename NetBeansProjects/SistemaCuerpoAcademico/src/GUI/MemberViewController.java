@@ -6,6 +6,7 @@
 package GUI;
 
 import domain.Member;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,7 +28,7 @@ import javafx.stage.Stage;
  * @author Mariana
  */
 public class MemberViewController implements Initializable {
-    @FXML Button btClose = new Button();
+    @FXML Button btReturn = new Button();
     @FXML Button btUpdate = new Button();
     @FXML Label lName = new Label();
     @FXML Label lRole = new Label();
@@ -58,23 +59,40 @@ public class MemberViewController implements Initializable {
 
     
     @FXML
-    public void close() {
-        Stage stage = (Stage)btClose.getScene().getWindow();
-        stage.close();
-    }
-    
- 
-    public void goUpdate(){
+    public void actionReturn(){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("MemberModify.fxml"));
-            Parent root = loader.load();
-            MemberModifyController controller = loader.getController();
-            controller.initializeMember(member);
+            Stage primaryStage= new Stage();
+            URL url = new File("src/GUI/memberList.fxml").toURI().toURL();
+            FXMLLoader loader = new FXMLLoader(url);
+            loader.setLocation(url);
+            loader.load();
+            MemberListController memberListController =loader.getController();
+            Parent root = loader.getRoot();
             Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
+            primaryStage.setScene(scene);
+            Stage stage = (Stage) btReturn.getScene().getWindow();
+            stage.close();
+            primaryStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(MemberViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+ 
+    public void actionUpdate(){
+        try {
+            Stage primaryStage= new Stage();
+            URL url = new File("src/GUI/memberModify.fxml").toURI().toURL();
+            FXMLLoader loader = new FXMLLoader(url);
+            loader.setLocation(url);
+            loader.load();
+            MemberModifyController memberModifyController = loader.getController();
+            memberModifyController.initializeMember(member);
+            Parent root = loader.getRoot();
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            Stage stage = (Stage) btReturn.getScene().getWindow();
+            stage.close();
+            primaryStage.show();
         } catch (IOException ex) {
             Logger.getLogger(MemberViewController.class.getName()).log(Level.SEVERE, null, ex);
         }

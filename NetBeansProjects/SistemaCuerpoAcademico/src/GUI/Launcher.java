@@ -17,7 +17,7 @@ public class Launcher extends Application {
     public void start(Stage primaryStage) {
   
         try {
-            URL url = new File("src/GUI/TopicShow.fxml").toURI().toURL();
+            URL url = new File("src/GUI/TopicModify.fxml").toURI().toURL();
             AnchorPane root = (AnchorPane)FXMLLoader.load(url);
             Scene scene = new Scene(root,600,400);
             primaryStage.setScene(scene);

@@ -73,7 +73,7 @@
             <Font name="System Bold" size="26.0" />
          </font>
       </Label>
-      <Button layoutX="382.0" layoutY="346.0" mnemonicParsing="false" onAction="#save" prefHeight="26.0" prefWidth="92.0" text="Guardar" />
-      <Button fx:id="btClose" layoutX="493.0" layoutY="346.0" mnemonicParsing="false" onAction="#close" prefHeight="26.0" prefWidth="85.0" text="Salir" />
+      <Button fx:id="btSave" layoutX="382.0" layoutY="346.0" mnemonicParsing="false" onAction="#save" prefHeight="26.0" prefWidth="92.0" text="Guardar" />
+      <Button fx:id="btReturn" layoutX="493.0" layoutY="346.0" mnemonicParsing="false" onAction="#actionReturn" prefHeight="26.0" prefWidth="85.0" text="Regresar" />
    </children>
 </AnchorPane>
