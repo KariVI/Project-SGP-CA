@@ -49,8 +49,9 @@ public class StudentDAO implements IStudentDAO{
             if(resultSet.next()){
                 String enrollmentResult= resultSet.getString("matricula");
                 String name= resultSet.getString("nombre");
-               
                 studentAuxiliar=new Student(enrollmentResult, name);
+            }else{  
+                throw new BusinessException("Not found student ");
             }
                 connectorDataBase.disconnect();
         }catch(SQLException sqlException) {

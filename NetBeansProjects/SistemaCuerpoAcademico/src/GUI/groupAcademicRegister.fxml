@@ -11,6 +11,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import GUI.TextFieldLimited?>
+
 
 <AnchorPane id="AnchorPane" fx:id="anchorPaneGroupRegister" prefHeight="500.0" prefWidth="662.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GroupAcademicRegisterController">
     <stylesheets>
@@ -27,7 +29,7 @@
       <Label id="lbObjetive" layoutX="24.0" layoutY="174.0" text="Objetivo:" />
       <Label id="lbMision" layoutX="33.0" layoutY="296.0" text="Misión:" />
       <Label id="lbVision" layoutX="27.0" layoutY="390.0" text="Visión:" />
-      <TextField id="tfName" fx:id="tfName" layoutX="173.0" layoutY="69.0" prefHeight="25.0" prefWidth="185.0" />
+      <TextFieldLimited id="tfName" fx:id="tfName" layoutX="173.0" layoutY="69.0" prefHeight="25.0" prefWidth="185.0" />
       <TextField id="tfKey" fx:id="tfKey" layoutX="173.0" layoutY="100.0" prefHeight="25.0" prefWidth="185.0" />
       <TextArea id="tAObjetive" fx:id="tAObjetive" layoutX="173.0" layoutY="168.0" prefHeight="82.0" prefWidth="185.0" />
       <TextArea id="tAMision" fx:id="tAMision" layoutX="173.0" layoutY="268.0" prefHeight="90.0" prefWidth="185.0" />

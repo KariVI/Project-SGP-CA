@@ -25,6 +25,16 @@ public class PreliminarProject {
         lgacs=new ArrayList<LGAC>();
          
     }
+
+    public PreliminarProject() {
+        this.title="";
+        this.description="";
+        this.dateStart="";
+        this.dateEnd="";
+        students=new ArrayList<Student>();
+        members=new ArrayList<Member>();
+        lgacs=new ArrayList<LGAC>();
+    }
     
     public int getKey(){
         return key;
@@ -83,6 +93,13 @@ public class PreliminarProject {
         return  members;
     }
     
+    public void setMembers(ArrayList<Member> members){  
+        this.members=members;
+    }
+    
+     public void setStudents(ArrayList<Student> students){  
+        this.students=students;
+    }
     public void addMember(Member member){ 
          members.add(member);
     }

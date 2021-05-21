@@ -94,7 +94,7 @@ public class PreliminarProjectDAOTest {
         "13/01/2021", "13/07/2021");
         preliminarProject.setKey(6);
          Member member= new Member("8325134","Juan Carlos Perez Arriaga","Director");
-        Member memberAdd= new Member("7938268","Maria Karen Cortes Verdin", "Colaborador");
+        Member memberAdd= new Member("7938268","Maria Karen Cortes Verdin", "Codirector");
         preliminarProject.addMember(member);
         preliminarProject.addMember(memberAdd);
   

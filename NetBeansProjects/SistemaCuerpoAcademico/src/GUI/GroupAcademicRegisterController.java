@@ -29,7 +29,7 @@ import javafx.stage.Stage;
 
 
 public class GroupAcademicRegisterController implements Initializable  {
-    @FXML private TextField tfName;
+    @FXML private TextFieldLimited tfName;
     @FXML private TextField tfKey;
     @FXML private TextArea tAObjetive;
     @FXML private TextArea tAVision;
@@ -78,14 +78,16 @@ public class GroupAcademicRegisterController implements Initializable  {
         GroupAcademicDAO groupAcademicDAO =new GroupAcademicDAO();
         AlertMessage alertMessage =new AlertMessage();
         try {
-            groupAcademicDAO.savedSucessful(groupAcademic);
             if(groupAcademicDAO.savedSucessful(groupAcademic)){
                 recoverlgacs(groupAcademic);
                 alertMessage.showMessageSave("Cuerpo Academico");
             }
         } catch (BusinessException ex) {
-            
-            alertMessage.showAlert("Error en la conexion con la base de datos");
+            if(ex.getMessage().equals("DataBase connection failed ")){
+                alertMessage.showAlert("Error en la conexion con la base de datos");
+            }else{  
+                Log.logException(ex);
+            }
         }                
     }
     
@@ -122,7 +124,7 @@ public class GroupAcademicRegisterController implements Initializable  {
     }
     
     
-    private boolean validateFieldslgacs(TextField name, TextField description){
+    private boolean validateFieldslgacs(TextField name, TextArea description){
         boolean value=true;
         AlertMessage alertMessage =new AlertMessage();
         Validation validation=new Validation();
@@ -145,7 +147,7 @@ public class GroupAcademicRegisterController implements Initializable  {
             int sizeRows=3;
            while (i < (sizeRows * lgacs)){
                TextField namelgac = (TextField) getNodeFromGridPane( gridPane, 1, i);
-               TextField descriptionlgac = (TextField) getNodeFromGridPane( gridPane, 1, (i + 1));
+               TextArea descriptionlgac = (TextArea) getNodeFromGridPane( gridPane, 1, (i + 1));
                if(validateFieldslgacs(namelgac,descriptionlgac)){         
                  String name= namelgac.getText();
                  String description= descriptionlgac.getText(); 
@@ -169,7 +171,11 @@ public class GroupAcademicRegisterController implements Initializable  {
                 alertMessage.showAlert("La LGCA ya se encuentra registrada");
             }
         } catch (BusinessException ex) {
-            alertMessage.showAlert("Error en la conexion con la base de datos");
+            if(ex.getMessage().equals("DataBase connection failed ")){
+                alertMessage.showAlert("Error en la conexion con la base de datos");
+            }else{  
+                Log.logException(ex);
+            }
         }
     }
     
@@ -182,9 +188,6 @@ public class GroupAcademicRegisterController implements Initializable  {
      return null;
    }
   
-   
-    
-    
     private boolean validateFieldEmpty(){ 
           boolean value=false;
           if(tfName.getText().isEmpty() || tAObjetive.getText().isEmpty() 
@@ -207,8 +210,6 @@ public class GroupAcademicRegisterController implements Initializable  {
           if(searchRepeateGroupAcademic()){
               alertMessage.showAlert("El cuerpo académico ya se encuentra registrado");
           }
-          
-          
       }
       
     private boolean validateFields(){    
@@ -226,12 +227,17 @@ public class GroupAcademicRegisterController implements Initializable  {
     public boolean searchRepeateGroupAcademic()   { 
        boolean value=false; 
        String key=tfKey.getText();
+       AlertMessage alertMessage = new AlertMessage();
         try {   
             GroupAcademicDAO groupAcademicDAO= new GroupAcademicDAO();
             groupAcademicDAO.getGroupAcademicById(key);
             value=true;
         }catch (BusinessException ex){ 
-            Log.logException(ex);
+            if(ex.getMessage().equals("DataBase connection failed ")){
+                alertMessage.showAlert("Error en la conexion con la base de datos");
+            }else{  
+                Log.logException(ex);
+            }
         }
         return value;
     }
@@ -250,6 +256,7 @@ public class GroupAcademicRegisterController implements Initializable  {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+     tfName.setMaxlength(200);
      consolidateGrades= FXCollections.observableArrayList();
      consolidateGrades.add("En formación");
      consolidateGrades.add("En consolidación");

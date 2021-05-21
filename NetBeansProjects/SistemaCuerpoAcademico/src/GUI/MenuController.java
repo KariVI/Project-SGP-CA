@@ -90,6 +90,8 @@ public class MenuController implements Initializable {
          
     private void fillOptions() {   
         options.add("Anteproyectos");
+        options.add("Proyectos");
+        options.add("Reuniones");
     }
         
     

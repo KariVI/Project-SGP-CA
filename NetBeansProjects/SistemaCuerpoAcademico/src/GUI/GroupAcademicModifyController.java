@@ -52,12 +52,12 @@ public class GroupAcademicModifyController implements Initializable {
   
    
    public void setGroupAcademic(GroupAcademic groupAcademic){
-              this.groupAcademic.setKey(groupAcademic.getKey());
-              this.groupAcademic.setConsolidationGrade(groupAcademic.getConsolidationGrade());
-              this.groupAcademic.setName(groupAcademic.getName());
-             this.groupAcademic.setObjetive(groupAcademic.getObjetive());
-              this.groupAcademic.setMission(groupAcademic.getMission());
-             this.groupAcademic.setVision(groupAcademic.getVision());
+     this.groupAcademic.setKey(groupAcademic.getKey());
+      this.groupAcademic.setConsolidationGrade(groupAcademic.getConsolidationGrade());
+      this.groupAcademic.setName(groupAcademic.getName());
+      this.groupAcademic.setObjetive(groupAcademic.getObjetive());
+      this.groupAcademic.setMission(groupAcademic.getMission());
+       this.groupAcademic.setVision(groupAcademic.getVision());
     }
    
     public void initializeGroupAcademic(){
@@ -137,11 +137,13 @@ public class GroupAcademicModifyController implements Initializable {
               loader.load();
                 GroupAcademicShowController groupAcademicShowController =loader.getController();
                 GroupAcademicDAO groupAcademicDAO= new GroupAcademicDAO();
-                if(groupAcademicNew.getKey() != ""){
-                     GroupAcademic groupAcademic= groupAcademicDAO.getGroupAcademicById(groupAcademicNew.getKey());
-                }else{  
-                     GroupAcademic groupAcademic= groupAcademicDAO.getGroupAcademicById(this.groupAcademic.getKey());
+                GroupAcademic groupAcademic;
+                if(!tfKey.getText().isEmpty()){
+                    groupAcademic= groupAcademicDAO.getGroupAcademicById(groupAcademicNew.getKey());
+                    System.out.println(groupAcademicNew.getConsolidationGrade());
 
+                }else{  
+                    groupAcademic= groupAcademicDAO.getGroupAcademicById(this.groupAcademic.getKey());
                 }
                 groupAcademicShowController.setGroupAcademic(groupAcademic);
                 groupAcademicShowController.initializeGroupAcademic();
@@ -166,8 +168,11 @@ public class GroupAcademicModifyController implements Initializable {
                 alertMessage.showUpdateMessage();
             }
         } catch (BusinessException ex) {
-            
-            alertMessage.showAlert("Error en la conexión con la base de datos");
+           if(ex.getMessage().equals("DataBase connection failed ")){
+                alertMessage.showAlert("Error en la conexion con la base de datos");
+            }else{  
+                Log.logException(ex);
+            }
         }                
     }
     
@@ -213,8 +218,12 @@ public class GroupAcademicModifyController implements Initializable {
                 groupAcademicDAO.addedLGACSucessful(groupAcademicNew, lgac);
 
         } catch (BusinessException ex) {
-                AlertMessage alertMessage =new AlertMessage();
+            if(ex.getMessage().equals("DataBase connection failed ")){
+                AlertMessage alertMessage = new AlertMessage();
                 alertMessage.showAlert("Error en la conexion con la base de datos");
+            }else{  
+                Log.logException(ex);
+            }
         }
     }
     

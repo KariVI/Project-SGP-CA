@@ -59,10 +59,15 @@ public class GroupAcademicShowController implements Initializable {
   
     @FXML
     private void actionUpdate(ActionEvent actionEvent){  
-         try{ 
-            Stage primaryStage= new Stage();
-            URL url = new File("src/GUI/groupAcademicModify.fxml").toURI().toURL();
-           try{
+        Stage primaryStage= new Stage();
+        URL url=null;
+        try{ 
+             url = new File("src/GUI/groupAcademicModify.fxml").toURI().toURL();
+        } catch (MalformedURLException ex) {
+            Log.logException(ex);
+        }
+        
+        try{
               FXMLLoader loader = new FXMLLoader(url);
               loader.setLocation(url);
               loader.load();
@@ -78,9 +83,7 @@ public class GroupAcademicShowController implements Initializable {
                     Log.logException(ex);
             }
             primaryStage.show();
-       } catch (MalformedURLException ex) {
-            Log.logException(ex);
-       }
+       
     }   
     
     @FXML 

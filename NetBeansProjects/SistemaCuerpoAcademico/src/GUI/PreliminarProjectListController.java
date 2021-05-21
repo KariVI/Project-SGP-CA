@@ -36,6 +36,7 @@ import log.Log;
 public class PreliminarProjectListController implements Initializable {
     @FXML private ListView lvPreliminarProjects;
     @FXML private Button btAddPreliminarProject;
+    @FXML private Button btReturn;
     private ObservableList<PreliminarProject> preliminarProjects ;
     
     @Override
@@ -50,7 +51,9 @@ public class PreliminarProjectListController implements Initializable {
             try {
            FXMLLoader loader = new FXMLLoader(getClass().getResource("PreliminarProjectShow.fxml"));
             Parent root = loader.load();
-            PreliminarProjectShowController PreliminarProjectShowController = loader.getController();
+            PreliminarProjectShowController preliminarProjectShowController = loader.getController();
+            preliminarProjectShowController.setPreliminarProject(selectedPreliminarProject);
+            preliminarProjectShowController.initializePreliminarProject();
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
@@ -98,7 +101,12 @@ public class PreliminarProjectListController implements Initializable {
        } catch (MalformedURLException ex) {
            Log.logException(ex);
        }
+    }
     
+    @FXML 
+    private void actionReturn(ActionEvent actionEvent){   
+        Stage stage = (Stage) btReturn.getScene().getWindow();
+        stage.close();
     }
     
 }

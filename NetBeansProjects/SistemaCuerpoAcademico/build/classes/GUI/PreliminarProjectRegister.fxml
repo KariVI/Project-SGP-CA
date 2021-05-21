@@ -26,9 +26,9 @@
       <Button fx:id="btSave" layoutX="491.0" layoutY="461.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar" />
       <Button fx:id="btExit" layoutX="563.0" layoutY="461.0" mnemonicParsing="false" onAction="#actionExit" prefHeight="25.0" prefWidth="59.0" text="Salir" />
       <Label layoutX="19.0" layoutY="306.0" text="Director:" />
-      <TextField fx:id="tfDirector" layoutX="106.0" layoutY="302.0" prefHeight="25.0" prefWidth="260.0" />
+      <TextField fx:id="tfDirector" layoutX="106.0" layoutY="302.0" prefHeight="25.0" prefWidth="260.0" promptText="Escribe la cedula del director " />
       <Label layoutX="16.0" layoutY="339.0" text="Codirectores:" />
-      <TextArea fx:id="taCodirectors" layoutX="106.0" layoutY="339.0" prefHeight="82.0" prefWidth="260.0" promptText="Separa los nombres de los participantes con una coma" wrapText="true" />
+      <TextArea fx:id="taCodirectors" layoutX="105.0" layoutY="340.0" prefHeight="82.0" prefWidth="260.0" promptText="Separa las cedulas de los participantes con una coma" wrapText="true" />
       <TextField fx:id="tfNumberStudents" layoutX="540.0" layoutY="89.0" prefHeight="25.0" prefWidth="46.0" />
       <Button fx:id="btOk" layoutX="583.0" layoutY="89.0" mnemonicParsing="false" onAction="#addStudents" text="Ok" />
       <Label layoutX="386.0" layoutY="93.0" text="Número de estudiantes:" />
