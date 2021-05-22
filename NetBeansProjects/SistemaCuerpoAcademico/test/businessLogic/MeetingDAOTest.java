@@ -37,7 +37,7 @@ public class MeetingDAOTest {
         MeetingDAO meetingDAO= new MeetingDAO();
         Meeting meetingAuxiliar;
         meetingAuxiliar = new Meeting("Revisión de avances en proyectos actuales" ,"04/05/2021","11:30");
-        int idMeeting= meetingDAO.searchId(meetingAuxiliar);
+        int idMeeting= meetingDAO.getId(meetingAuxiliar);
         assertTrue(meetingDAO.findMeetingById(idMeeting));
     }
     
@@ -46,7 +46,7 @@ public class MeetingDAOTest {
         MeetingDAO meetingDAO= new MeetingDAO();
         Meeting meetingAuxiliar;
         meetingAuxiliar = new Meeting("Lanzamiento FEIBook" ,"11/11/2020","12:30");
-        int idMeeting= meetingDAO.searchId(meetingAuxiliar);
+        int idMeeting= meetingDAO.getId(meetingAuxiliar);
         assertFalse(meetingDAO.findMeetingById(idMeeting));
     }
     
