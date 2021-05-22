@@ -7,13 +7,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import log.BusinessException;
 import log.Log;
 
 public class StudentDAO implements IStudentDAO{
-    public boolean save(Student student) throws BusinessException{
+    public boolean savedSucessful(Student student) throws BusinessException{
          boolean saveSuccess=false;
             try {
                 Connector connectorDataBase=new Connector();
@@ -51,8 +49,9 @@ public class StudentDAO implements IStudentDAO{
             if(resultSet.next()){
                 String enrollmentResult= resultSet.getString("matricula");
                 String name= resultSet.getString("nombre");
-               
                 studentAuxiliar=new Student(enrollmentResult, name);
+            }else{  
+                throw new BusinessException("Not found student ");
             }
                 connectorDataBase.disconnect();
         }catch(SQLException sqlException) {

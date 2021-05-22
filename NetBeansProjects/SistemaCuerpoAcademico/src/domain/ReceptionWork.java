@@ -16,6 +16,7 @@ public class ReceptionWork {
     private PreliminarProject preliminarProject;
     private ArrayList<Student> students;
     private ArrayList<Member> members;
+    private ArrayList<LGAC> lgacs;
     
     
     public ReceptionWork(String title, String type, String description, String dateStart, String dateEnd, String actualState){
@@ -25,6 +26,9 @@ public class ReceptionWork {
         this.dateStart=dateStart;
         this.dateEnd=dateEnd;
         this.actualState=actualState;
+        students=new ArrayList<Student>();
+        members=new ArrayList<Member>();
+        lgacs=new ArrayList<LGAC>();
          
     }
     
@@ -92,15 +96,27 @@ public class ReceptionWork {
         this.preliminarProject=preliminarProject;
     }
     
-     public ArrayList<Member> getMember(){
+     public ArrayList<Member> getMembers(){
         return  members;
     }
     
-    public void addAssistant(Member assistant){ 
+    public void addMember(Member assistant){ 
          members.add(assistant);
     }
     
-        public Student getStudent( String enrollment){
+     public void setLGAC(LGAC lgac){
+        lgacs.add(lgac);
+    }
+    
+    public ArrayList<LGAC> getLGACs(){
+        return lgacs;
+    }
+    
+    public void addLGAC(LGAC lgac){ 
+         lgacs.add(lgac);
+    }
+    
+    public Student getStudent( String enrollment){
         Student student=null;
         for (int i=0; i<  students.size() ; i++  ){
             Student auxiliar= students.get(i);
@@ -111,15 +127,16 @@ public class ReceptionWork {
         return student;
     }
     
-    public ArrayList<Student> getStudent(){
+    public ArrayList<Student> getStudents(){
         return  students;
     }
     
     public void addStudent(Student student){ 
          students.add(student);
     }
+
     
-    
+    @Override
     public boolean equals(Object object){
         boolean value=false;
             if (object instanceof ReceptionWork) {

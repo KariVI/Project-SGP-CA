@@ -12,16 +12,28 @@ public class PreliminarProject {
     private String dateEnd;
     private ArrayList<Student> students;
     private ArrayList<Member> members;
-    
+    private ArrayList<LGAC> lgacs;
+
     
     public PreliminarProject(String title, String description, String dateStart, String dateEnd){
         this.title=title;
         this.description=description;
         this.dateStart=dateStart;
         this.dateEnd=dateEnd;
-        students=new ArrayList();
-        members=new ArrayList();
+        students=new ArrayList<Student>();
+        members=new ArrayList<Member>();
+        lgacs=new ArrayList<LGAC>();
          
+    }
+
+    public PreliminarProject() {
+        this.title="";
+        this.description="";
+        this.dateStart="";
+        this.dateEnd="";
+        students=new ArrayList<Student>();
+        members=new ArrayList<Member>();
+        lgacs=new ArrayList<LGAC>();
     }
     
     public int getKey(){
@@ -81,6 +93,13 @@ public class PreliminarProject {
         return  members;
     }
     
+    public void setMembers(ArrayList<Member> members){  
+        this.members=members;
+    }
+    
+     public void setStudents(ArrayList<Student> students){  
+        this.students=students;
+    }
     public void addMember(Member member){ 
          members.add(member);
     }
@@ -96,12 +115,24 @@ public class PreliminarProject {
         return student;
     }
     
-    public ArrayList<Student> getStudent(){
+    public ArrayList<Student> getStudents(){
         return  students;
     }
     
     public void addStudent(Student student){ 
          students.add(student);
+    }
+         
+    public void setLGAC(LGAC lgac){
+        lgacs.add(lgac);
+    }
+    
+    public ArrayList<LGAC> getLGACs(){
+        return lgacs;
+    }
+    
+    public void addLGAC(LGAC lgac){ 
+         lgacs.add(lgac);
     }
 
     @Override
@@ -127,5 +158,9 @@ public class PreliminarProject {
 
         }  
         return value;
+    }
+     
+    public String toString(){
+        return title;
     }
 }

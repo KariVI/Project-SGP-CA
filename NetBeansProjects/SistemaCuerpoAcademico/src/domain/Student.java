@@ -1,6 +1,8 @@
 
 package domain;
 
+import java.util.Objects;
+
 public class Student {
     private String enrollment;
     private String name;
@@ -26,13 +28,21 @@ public class Student {
     public void setName(String name){ 
         this.name=name;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.enrollment);
+        hash = 67 * hash + Objects.hashCode(this.name);
+        return hash;
+    }
     
      public boolean equals(Object object){
         boolean value=false;
             if (object instanceof Student) {
             Student studentCompare = (Student) object;
             if( (this.enrollment.equals(studentCompare.getEnrollment()) )
-               && ( this.name.equals(studentCompare.getName()) ) ) {
+                ) {
                 value=true;
             }
 
