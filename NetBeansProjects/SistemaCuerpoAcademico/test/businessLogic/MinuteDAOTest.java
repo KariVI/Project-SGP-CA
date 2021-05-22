@@ -5,6 +5,7 @@
  */
 package businessLogic;
 
+import domain.Member;
 import domain.Minute;
 import domain.MinuteComment;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class MinuteDAOTest {
     public void testApproveMinute() throws BusinessException {
         System.out.println("approveMinute");
         int idMinute = 1;
-        String professionalLicense = "1234";
+        String professionalLicense = "4065161";
         MinuteDAO minuteDAO = new MinuteDAO();
         try{
             minuteDAO.approveMinute(idMinute, professionalLicense);
@@ -46,7 +47,7 @@ public class MinuteDAOTest {
     public void testDisapproveMinute() throws BusinessException{
         System.out.println("disapproveMinute");
         int minute = 1;
-        String professionalLicense = "1234";
+        String professionalLicense = "4065161";
         String comments = "No se encuentran algunos acuerdos;";
         MinuteDAO minuteDAO = new MinuteDAO();
         try{
@@ -80,5 +81,16 @@ public class MinuteDAOTest {
         Minute newMinute = new Minute(1,"Los acuerdos registrados son pendiente","Completado","Falta gastrocafe",1);
         MinuteDAO minuteDAO = new MinuteDAO();
         assertTrue(minuteDAO.update(newMinute));
+    }
+    
+    @Test
+    public void testGetMembersApprove() throws BusinessException {
+        System.out.println("approveMinute");
+         Minute minute = new Minute(1,"Los acuerdos registrados son pendiente","Estado","Falta gastrocafe",1);
+         ArrayList<Member> memberList = new ArrayList<Member>();
+         Member member = new Member("4065161", "Maria de los Angeles Arenas Valdes","Colaborador","Maestria","Maestria en ciencias de la computacion","Fundacion Arturo Rosenbulth",1999,"1491");
+         memberList.add(member);
+        MinuteDAO minuteDAO = new MinuteDAO();
+        assertEquals(minuteDAO.getMembersApprove(minute),memberList);
     }
 }

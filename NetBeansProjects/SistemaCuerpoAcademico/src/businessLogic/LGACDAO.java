@@ -12,9 +12,15 @@ import log.BusinessException;
 import log.Log;
 
 
+<<<<<<< HEAD:NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/LGACDAO.java
 public class LGACDAO implements ILGACDAO {
     
     public boolean savedSucessful(LGAC lgac) throws BusinessException{
+=======
+public class LGACDAO implements ILGCADAO {
+    
+    public boolean save(LGAC lgac) throws BusinessException{
+>>>>>>> MarianaChangesGUI:NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/LGCADAO.java
         boolean value=false;
         Connector connectorDataBase=new Connector();
         try {
@@ -64,7 +70,11 @@ public class LGACDAO implements ILGACDAO {
     }
 
    
+<<<<<<< HEAD:NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/LGACDAO.java
     public boolean updatedSucessful(String beforeName, LGAC lgac) throws BusinessException {
+=======
+    public boolean update(String beforeName, LGAC lgac) throws BusinessException {
+>>>>>>> MarianaChangesGUI:NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/LGCADAO.java
         boolean updateSucess=false;
         Connector connectorDataBase=new Connector();
         try {
@@ -89,7 +99,11 @@ public class LGACDAO implements ILGACDAO {
     }
     
     public ArrayList<LGAC>  getLGACs(){
+<<<<<<< HEAD:NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/LGACDAO.java
         ArrayList<LGAC> lgacList = new ArrayList<LGAC>();
+=======
+        ArrayList<LGAC> lgacList = new ArrayList<>();
+>>>>>>> MarianaChangesGUI:NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/LGCADAO.java
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();

@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -12,12 +13,20 @@ public class Project {
     private String startDate;
     private String finishDate;
     private int idProject;
+    private ArrayList<Student> students;
+    private ArrayList<Member> members;
+    private ArrayList<LGAC> lgacs;
+    private ArrayList<ReceptionWork> receptionWorks;
     
     public Project(String title, String description, String startDate, String finishDate){
         this.title = title;
         this.description = description;
         this.startDate = startDate;
         this.finishDate = finishDate;
+        students = new ArrayList();
+        members = new ArrayList();
+        lgacs = new ArrayList();
+        receptionWorks = new ArrayList();
     }
     
     public Project(int idProject, String title, String description, String startDate, String finishDate){
@@ -26,6 +35,10 @@ public class Project {
         this.description = description;
         this.startDate = startDate;
         this.finishDate = finishDate;
+        students = new ArrayList();
+        members = new ArrayList();
+        lgacs = new ArrayList();
+        receptionWorks = new ArrayList();
     }    
     
     public int getIdProject(){
@@ -67,7 +80,39 @@ public class Project {
     public void setFinishDate(String finishDate){
         this.finishDate = finishDate;
     }
-
+    
+    public void setStudent(Student student){
+        students.add(student);
+    }
+    
+    public ArrayList<Student> getStudents(){
+        return students;
+    }
+    
+    public void setMember(Member member){
+        members.add(member);
+    }
+    
+    public ArrayList<Member> getMembers(){
+        return members;
+    }
+    
+    public void setLGAC(LGAC lgac){
+        lgacs.add(lgac);
+    }
+    
+    public ArrayList<LGAC> getLGACs(){
+        return lgacs;
+    }
+    
+    public void setReceptionWork(ReceptionWork receptionWork){
+        receptionWorks.add(receptionWork);
+    }
+    
+    public ArrayList<ReceptionWork> getReceptionWorks(){
+        return receptionWorks;
+    }
+    
     @Override
     public boolean equals(Object object){
         boolean value = false;

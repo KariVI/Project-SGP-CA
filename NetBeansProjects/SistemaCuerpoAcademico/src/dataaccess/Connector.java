@@ -27,7 +27,7 @@ public class Connector {
             userPassword = properties.getProperty("userPassword");
         }
 
-        public void connect() throws ClassNotFoundException {
+        private void connect() throws ClassNotFoundException {
 
                 connection = null;  
                 inicializar();
@@ -50,16 +50,12 @@ public class Connector {
                 if(connection != null) {
                     try {
                         if(!connection.isClosed()) {
-                                try{
-                                  connection.close();
-                                }catch(SQLException sqlException) {
-                                       Log.logException(sqlException);
-                                }
-                             connection.close(); 
+                            connection.close();   
                         }
-                    } catch (SQLException ex) {
-                        Log.logException(ex);
+                    } catch (SQLException sqlException) {
+                          Log.logException(sqlException);
                     }
+
 
                 }
         }

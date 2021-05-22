@@ -58,11 +58,11 @@ public class TopicDAO implements ITopic {
                             
                 while(agendaResultSet.next()){
                     int idTopic = agendaResultSet.getInt("idTema");
-                    String ProfessionalLicense = agendaResultSet.getString("cedula");
+                    String professionalLicense = agendaResultSet.getString("cedula");
                     String topicName = agendaResultSet.getString("tema");
                     String startTime = agendaResultSet.getString("horaInicio");
                     String finishTime = agendaResultSet.getString("horaFin");
-                    Topic agendaData = new Topic(idTopic, topicName, startTime, finishTime,ProfessionalLicense, idMeeting);
+                    Topic agendaData = new Topic(idTopic, topicName, startTime, finishTime,professionalLicense, idMeeting);
                     agendaList.add(agendaData);
                 }
                              
@@ -78,7 +78,7 @@ public class TopicDAO implements ITopic {
     }
        
     @Override
-    public boolean update(int idTopic, Topic newTopic) throws BusinessException {
+    public boolean update( Topic newTopic) throws BusinessException {
         boolean updateSucess = false;
         Connector connectorDataBase=new Connector();
         try {
@@ -89,7 +89,7 @@ public class TopicDAO implements ITopic {
             preparedStatement.setString(3, newTopic.getStartTime());
             preparedStatement.setString(4, newTopic.getFinishTime());
             preparedStatement.setString(5, newTopic.getProfessionalLicense());
-            preparedStatement.setInt(6, idTopic);
+            preparedStatement.setInt(6, newTopic.getIdTopic());
                 
             preparedStatement.executeUpdate();
             updateSucess=true;  

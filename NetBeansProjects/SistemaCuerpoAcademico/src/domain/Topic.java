@@ -14,23 +14,24 @@ public class Topic {
     private String startTime;
     private String finishTime;
     private int idTopic;
-    private String ProfessionalLicense;
+    private String professionalLicense;
     private int idMeeting;
 
     public Topic(String topicName, String startTime, String finishTime, String ProfessionalLicense, int idMeeting){
         this.topicName = topicName;
         this.startTime = startTime;
         this.finishTime = finishTime;
-        this.ProfessionalLicense = ProfessionalLicense;
+        this.professionalLicense = ProfessionalLicense;
         this.idMeeting = idMeeting;
     }
     
-    public Topic(int idTopic, String topicName, String startTime, String finishTime, String ProfessionalLicense, int idMeeting){
+    public Topic(int idTopic, String topicName, String startTime, String finishTime, String professionalLicense, int idMeeting){
         this.idTopic = idTopic;
         this.topicName = topicName;
         this.startTime = startTime;
         this.finishTime = finishTime;
         this.idMeeting = idMeeting;
+        this.professionalLicense = professionalLicense;
     }
     
     public int getIdTopic(){
@@ -66,11 +67,11 @@ public class Topic {
     }
     
     public String getProfessionalLicense(){
-        return ProfessionalLicense;
+        return professionalLicense;
     }
 
     public void setProfessionalLicense(String ProfessionalLicense){
-        this.ProfessionalLicense = ProfessionalLicense;
+        this.professionalLicense = ProfessionalLicense;
     }
     
     public int getIdMeeting(){
@@ -80,4 +81,17 @@ public class Topic {
     public void setIdMeeting(int idMeeting){
         this.idMeeting = idMeeting;
     }
+    
+    public boolean equals(Object object){
+        boolean value = false;
+            if (object instanceof Topic) {
+            Topic topicCompare = (Topic) object;
+
+            if (this.getStartTime().equals(topicCompare.getStartTime()) && this.getFinishTime().equals(topicCompare.getFinishTime()) &&
+                    this.getTopicName().equals(topicCompare.getTopicName())){
+                value = true;
+            }
+        }
+      return value;
+    }    
 }

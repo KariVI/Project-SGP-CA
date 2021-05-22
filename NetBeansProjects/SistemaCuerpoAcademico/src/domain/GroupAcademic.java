@@ -10,9 +10,15 @@ public class GroupAcademic {
     private String objetive;
     private String mission;
     private String vision;
+<<<<<<< HEAD
     private ArrayList<LGAC> lgacs;
     
     
+=======
+    private LGAC lgacs[];
+    public static int indexLgacs=0;
+
+>>>>>>> MarianaChangesGUI
     public GroupAcademic(String key, String name, String objetive, String consolidationGrade, String mission, String vision) {
       this.key= key;
       this.name= name;
@@ -79,7 +85,11 @@ public class GroupAcademic {
         this.vision=vision;
     }
     
+<<<<<<< HEAD
     public ArrayList<LGAC> getLGACs(){
+=======
+    public LGAC[] getLGAC(){
+>>>>>>> MarianaChangesGUI
      return lgacs;
     }
     
@@ -103,5 +113,10 @@ public class GroupAcademic {
 
         }  
         return value;
+    }
+    
+    @Override
+    public String toString(){
+        return name;
     }
 }

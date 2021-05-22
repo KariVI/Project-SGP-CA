@@ -14,11 +14,19 @@ public class LGACDAOTest {
 
     @Test
     public void testSave() throws BusinessException {
+<<<<<<< HEAD
         System.out.println("savedSucessful");
         LGAC lgac;
         lgac = new LGAC("Tecnologías de software", "Se orienta al estudio de diversas propiedades, enfoques, métodos de modelado y herramientas que conforman cada una de las diversas tecnologías aplicables al desarrollo del software con vistas a su adaptación, mejora y sustitución en el medio nacional");
         LGACDAO lgacDAO = new LGACDAO();
         boolean result = lgacDAO.savedSucessful(lgac);
+=======
+        System.out.println("save");
+        LGAC lgac;
+        lgac = new LGAC("Tecnologías de software", "Se orienta al estudio de diversas propiedades, enfoques, métodos de modelado y herramientas que conforman cada una de las diversas tecnologías aplicables al desarrollo del software con vistas a su adaptación, mejora y sustitución en el medio nacional");
+        LGACDAO lgacDAO = new LGACDAO();
+        boolean result = lgacDAO.save(lgac);
+>>>>>>> MarianaChangesGUI
         assertTrue(result);
        
     }
@@ -46,11 +54,19 @@ public class LGACDAOTest {
     }
     @Test
     public void testUpdate() throws BusinessException {
+<<<<<<< HEAD
       System.out.println("updatedSucessful");
       LGAC lgac;
       lgac = new LGAC("Aplicaciones de las técnicas estadísticas",  "Se orienta al estudio de los diversos métodos para el muestreo");
       LGACDAO lgacDAO = new LGACDAO(); 
       assertTrue(lgacDAO.updatedSucessful("Aplicaciones de las técnicas estadísticas", lgac));
+=======
+      System.out.println("update");
+      LGAC lgac;
+      lgac = new LGAC("Aplicaciones de las técnicas estadísticas",  "Se orienta al estudio de los diversos métodos para el muestreo");
+      LGACDAO lgacDAO = new LGACDAO(); 
+      assertTrue(lgacDAO.update("Aplicaciones de las técnicas estadísticas", lgac));
+>>>>>>> MarianaChangesGUI
     }
     
     @Test

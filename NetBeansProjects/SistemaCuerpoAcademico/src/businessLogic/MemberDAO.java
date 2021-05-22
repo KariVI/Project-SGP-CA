@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import log.BusinessException;
 import log.Log;
 
@@ -41,7 +42,7 @@ public class MemberDAO implements IMemberDAO{
         
         return saveSuccess;
     }
-
+ 
     @Override
     public String searchProfessionalLicense(String memberName) throws BusinessException{
         String professionalLicenseAuxiliar = "";
@@ -58,6 +59,8 @@ public class MemberDAO implements IMemberDAO{
             resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
                 professionalLicenseAuxiliar = resultSet.getString("cedula");
+            }else{
+                 throw new BusinessException("member not found");
             }
                 connectorDataBase.disconnect();
                 
@@ -107,7 +110,7 @@ public class MemberDAO implements IMemberDAO{
     }
     
     @Override
-    public boolean findMemberByLicense(String professionalLicense) {
+    public boolean memberExists(String professionalLicense) {
         boolean value=true;
        if (professionalLicense == null){
            value=false;
@@ -143,4 +146,84 @@ public class MemberDAO implements IMemberDAO{
       
         return updateSucess;
     }    
+
+    @Override
+    public boolean desactivateMember(Member newMember) throws BusinessException {
+        boolean updateSucess = false;
+        Connector connectorDataBase=new Connector();
+        try {
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("UPDATE Miembro set   estado = ? where cedula = ? ");
+            preparedStatement.setString(1, "inactivo");
+            preparedStatement.setString(2, newMember.getProfessionalLicense());
+            preparedStatement.executeUpdate();
+            updateSucess=true;  
+            connectorDataBase.disconnect();
+        }catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        } catch (SQLException sqlException) {
+           throw new BusinessException("DataBase connection failed ", sqlException);
+        }
+      
+        return updateSucess;
+    }
+
+    @Override
+    public boolean activateMember(Member newMember) throws BusinessException {
+        boolean updateSucess = false;
+        Connector connectorDataBase=new Connector();
+        try {
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("UPDATE Miembro set   estado = ? where cedula = ? ");
+            preparedStatement.setString(1, "activo");
+            preparedStatement.setString(2, newMember.getProfessionalLicense());
+            preparedStatement.executeUpdate();
+            updateSucess=true;  
+            connectorDataBase.disconnect();
+        }catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        } catch (SQLException sqlException) {
+           throw new BusinessException("DataBase connection failed ", sqlException);
+        }
+      
+        return updateSucess;
+    }
+
+    @Override
+    public ArrayList<Member> getMembers() throws BusinessException {
+        ArrayList<Member> memberList = new ArrayList<Member>();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            try{
+                            
+                PreparedStatement getMemberStatment;
+                getMemberStatment = connectionDataBase.prepareStatement("SELECT * FROM Miembro");
+                ResultSet memberResultSet;                    
+                memberResultSet = getMemberStatment.executeQuery();
+                            
+                while(memberResultSet.next()){
+                    String name = memberResultSet.getString("nombre");
+                    String role = memberResultSet.getString("rol");
+                    String nameDegree = memberResultSet.getString("nombreGrado");
+                    String degree = memberResultSet.getString("grado");
+                    String universityName = memberResultSet.getString("universidad");
+                    int degreeYear = memberResultSet.getInt("anio");
+                    String state = memberResultSet.getString("estado");
+                    String KeyGroupAcademic = memberResultSet.getString("clave");
+                    String professionalLicense = memberResultSet.getString("cedula");    
+                    Member memberData = new Member(professionalLicense, name, role, degree, nameDegree, universityName, degreeYear,state,KeyGroupAcademic);
+                    memberList.add(memberData);
+                }
+                             
+                connectorDataBase.disconnect();                         
+            }catch(SQLException sqlException) {
+                throw new BusinessException("Parameter index ", sqlException);
+            }
+        }catch(ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+                   
+        return memberList; 
+    }
 }
