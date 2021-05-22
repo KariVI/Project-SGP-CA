@@ -18,6 +18,7 @@ public class Meeting {
       this.subject= subject;
       this.date= date;
       this.hourStart= hourStart;
+      assistants=new ArrayList<Member>();
     }
     public Meeting (int key, String subject, String date, String hourStart, String state){
       this.key=key;
@@ -26,6 +27,7 @@ public class Meeting {
       this.hourStart= hourStart;
       this.state=state;
       listPrerequisites= new ArrayList<Prerequisite> ();
+      assistants=new ArrayList<Member>();
       
     }
 
@@ -80,6 +82,10 @@ public class Meeting {
         listPrerequisites.add(prerequisite);
     }
     
+    public void setAssistants(ArrayList<Member> assistants){    
+        this.assistants=assistants;
+    }
+    
     public Member getAssistant( String licenseProfessional){
         Member assistant=null;
         for (int i=0; i< assistants.size() ; i++  ){
@@ -90,7 +96,7 @@ public class Meeting {
         }
         return assistant;
     }
-    public ArrayList<Member> getAssistant(){
+    public ArrayList<Member> getAssistants(){
         return assistants;
     }
     public void addAssistant(Member assistant){ 

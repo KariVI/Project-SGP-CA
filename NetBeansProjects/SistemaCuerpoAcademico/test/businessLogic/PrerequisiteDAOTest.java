@@ -60,25 +60,25 @@ public class PrerequisiteDAOTest {
     
     @Test
     public void testSavePrerequisites() throws BusinessException {
-        System.out.println("savePrerequisites");
+        System.out.println("savedSucessfulPrerequisites");
         Prerequisite prerequisite = new Prerequisite ("Presentacion de anteproyectos");
         Member assistant= new Member("7938268", "Maria Karen Cortes Verdin", "Responsable");
         prerequisite.setMandated(assistant);
         int idReunion = 1;
         PrerequisiteDAO prerequisiteDAO = new PrerequisiteDAO();
-        assertTrue(prerequisiteDAO.savePrerequisites(prerequisite,idReunion) );
+        assertTrue(prerequisiteDAO.savedSucessfulPrerequisites(prerequisite,idReunion) );
         
         
     }
 
     @Test
        public void testUpdatePrerequisites() throws BusinessException {
-        System.out.println("updatePrerequisites");
+        System.out.println("updatedSucessfulPrerequisites");
         Prerequisite prerequisite = new Prerequisite ("Aprobar GastroCafe");
         Member assistant= new Member("7938268", "Maria Karen Cortes Verdin", "Responsable");
         prerequisite.setMandated(assistant);
         PrerequisiteDAO prerequisiteDAO = new PrerequisiteDAO();
-        assertTrue(prerequisiteDAO.updatePrerequisite(3,prerequisite) );
+        assertTrue(prerequisiteDAO.updatedSucessfulPrerequisite(3,prerequisite) );
         
     }
        
@@ -87,7 +87,7 @@ public class PrerequisiteDAOTest {
         System.out.println("delete");
         int idPrerequisite=4;
         PrerequisiteDAO prerequisiteDAO = new PrerequisiteDAO();
-        assertTrue(prerequisiteDAO.delete(idPrerequisite));
+        assertTrue(prerequisiteDAO.deletedSucessful(idPrerequisite));
     }
     
     @Test 

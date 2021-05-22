@@ -11,10 +11,10 @@ public class StudentDAOTest {
 
     @Test
     public void testSave() throws BusinessException {
-        System.out.println("save");
+        System.out.println("savedSucessful");
         Student student = new Student("S19014013", "Mariana Yazmin Vargas Segura ");
         StudentDAO instance = new StudentDAO();
-        assertTrue(instance.save(student));
+        assertTrue(instance.savedSucessful(student));
     }
 
     @Test

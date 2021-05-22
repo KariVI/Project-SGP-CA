@@ -1,6 +1,8 @@
 
 package domain;
 
+import java.util.ArrayList;
+
 public class GroupAcademic {
     private String key;
     private String name;
@@ -8,9 +10,9 @@ public class GroupAcademic {
     private String objetive;
     private String mission;
     private String vision;
-    private LGCA lgacs[];
-    public static int indexLgacs=0;
-
+    private ArrayList<LGAC> lgacs;
+    
+    
     public GroupAcademic(String key, String name, String objetive, String consolidationGrade, String mission, String vision) {
       this.key= key;
       this.name= name;
@@ -18,6 +20,15 @@ public class GroupAcademic {
       this.consolidationGrade= consolidationGrade;
       this.mission= mission;
       this.vision= vision;
+    }
+
+    public GroupAcademic() {
+        this.key= "";
+      this.name= "";
+      this.objetive="";
+      this.consolidationGrade= "";
+      this.mission= "";
+      this.vision= "";
     }
     
     public String getKey(){
@@ -68,8 +79,16 @@ public class GroupAcademic {
         this.vision=vision;
     }
     
-    public LGCA[] getLGAC(){
+    public ArrayList<LGAC> getLGACs(){
      return lgacs;
+    }
+    
+    public void setLGACs(ArrayList<LGAC> lgacs){ 
+        this.lgacs=lgacs;
+    }
+    
+    public void addLGAC(LGAC lgac){ 
+        lgacs.add(lgac);
     }
     
     public boolean equals(Object object){
