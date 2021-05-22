@@ -79,11 +79,7 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
     }  
 
     @Override
-<<<<<<< HEAD
     public boolean addedLGACSucessful(GroupAcademic groupAcademic, LGAC lgac) throws BusinessException {
-=======
-    public boolean addLGAC(GroupAcademic groupAcademic,LGAC lgac) throws BusinessException {
->>>>>>> MarianaChangesGUI
         boolean addSucess=false;
         Connector connectorDataBase=new Connector();
         try {

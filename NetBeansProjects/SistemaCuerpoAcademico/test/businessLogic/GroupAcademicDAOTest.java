@@ -3,10 +3,8 @@ package businessLogic;
 
 import domain.GroupAcademic;
 import domain.LGAC;
-<<<<<<< HEAD
 import java.util.ArrayList;
-=======
->>>>>>> MarianaChangesGUI
+
 import log.BusinessException;
 import org.junit.Test;
 import static org.junit.Assert.*;

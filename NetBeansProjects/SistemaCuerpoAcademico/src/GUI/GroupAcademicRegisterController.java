@@ -80,11 +80,11 @@ public class GroupAcademicRegisterController implements Initializable  {
         try {
             if(groupAcademicDAO.savedSucessful(groupAcademic)){
                 recoverlgacs(groupAcademic);
-                alertMessage.showMessageSave("Cuerpo Academico");
+                alertMessage.showAlertSuccesfulSave("Cuerpo Academico");
             }
         } catch (BusinessException ex) {
             if(ex.getMessage().equals("DataBase connection failed ")){
-                alertMessage.showAlert("Error en la conexion con la base de datos");
+                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
             }else{  
                 Log.logException(ex);
             }
@@ -130,9 +130,9 @@ public class GroupAcademicRegisterController implements Initializable  {
         Validation validation=new Validation();
         if( validation.findInvalidField(name.getText()) || validation.findInvalidField(description.getText())){    
             value=false;
-            alertMessage.showAlert("Existen campos con caracteres invalidos");
+            alertMessage.showAlertValidateFailed("Existen campos con caracteres invalidos");
         }else if( name.getText().isEmpty()|| description.getText().isEmpty()  ){ 
-            alertMessage.showAlert("Existen campos vacios");
+            alertMessage.showAlertValidateFailed("Existen campos vacios");
             value=false;
         }
      return value;
@@ -168,11 +168,11 @@ public class GroupAcademicRegisterController implements Initializable  {
                 lgacDAO.savedSucessful(lgac);
                 groupAcademicDAO.addedLGACSucessful(groupAcademic, lgac);
             }else { 
-                alertMessage.showAlert("La LGCA ya se encuentra registrada");
+                alertMessage.showAlertValidateFailed("La LGCA ya se encuentra registrada");
             }
         } catch (BusinessException ex) {
             if(ex.getMessage().equals("DataBase connection failed ")){
-                alertMessage.showAlert("Error en la conexion con la base de datos");
+                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
             }else{  
                 Log.logException(ex);
             }
@@ -201,14 +201,14 @@ public class GroupAcademicRegisterController implements Initializable  {
       private void sendAlert(){ 
           AlertMessage alertMessage= new AlertMessage();
           if(validateFieldEmpty() ){  
-              alertMessage.showAlert("No se han llenado todos los campos");
+              alertMessage.showAlertValidateFailed("No se han llenado todos los campos");
           }
           if(!validateFields()){
-             alertMessage.showAlert("Existen campos con caracteres invalidos");
+             alertMessage.showAlertValidateFailed("Existen campos con caracteres invalidos");
           }
           
           if(searchRepeateGroupAcademic()){
-              alertMessage.showAlert("El cuerpo académico ya se encuentra registrado");
+              alertMessage.showAlertValidateFailed("El cuerpo académico ya se encuentra registrado");
           }
       }
       
@@ -234,7 +234,7 @@ public class GroupAcademicRegisterController implements Initializable  {
             value=true;
         }catch (BusinessException ex){ 
             if(ex.getMessage().equals("DataBase connection failed ")){
-                alertMessage.showAlert("Error en la conexion con la base de datos");
+                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
             }else{  
                 Log.logException(ex);
             }

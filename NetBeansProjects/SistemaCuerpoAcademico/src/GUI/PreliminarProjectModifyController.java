@@ -110,7 +110,7 @@ public class PreliminarProjectModifyController implements Initializable {
        } catch (BusinessException ex) {
           if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage = new AlertMessage();
-                alertMessage.showAlert("Error en la conexion con la base de datos");
+                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
             }else{  
                 Log.logException(ex);
             }

@@ -118,13 +118,13 @@ public class PreliminarProjectRegisterController implements Initializable {
                saveColaborators();
                recoverStudents();
                AlertMessage alertMessage = new AlertMessage();
-               alertMessage.showMessageSave("Anteproyecto");
+               alertMessage.showAlertSuccesfulSave("Anteproyecto");
            }
         } catch (BusinessException ex){ 
             System.out.println("a");
             if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage = new AlertMessage();
-                alertMessage.showAlert("Error en la conexion con la base de datos");
+                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
             }else{  
                 Log.logException(ex);
             }
@@ -158,7 +158,7 @@ public class PreliminarProjectRegisterController implements Initializable {
         } catch (BusinessException ex) {
             if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage = new AlertMessage();
-                alertMessage.showAlert("Error en la conexion con la base de datos");
+                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
             }else{  
                 Log.logException(ex);
             }
@@ -193,9 +193,9 @@ public class PreliminarProjectRegisterController implements Initializable {
         Validation validation=new Validation();
         if( validation.findInvalidField(name.getText()) || validation.findInvalidKeyAlphanumeric(enrollment.getText())){    
             value=false;
-            alertMessage.showAlert("Existen campos con caracteres invalidos");
+            alertMessage.showAlertValidateFailed("Existen campos con caracteres invalidos");
         }else if( name.getText().isEmpty()|| enrollment.getText().isEmpty()  ){ 
-            alertMessage.showAlert("Existen campos vacios");
+            alertMessage.showAlertValidateFailed("Existen campos vacios");
             value=false;
         }
      return value;
@@ -216,7 +216,7 @@ public class PreliminarProjectRegisterController implements Initializable {
         } catch (BusinessException ex) {
             if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage= new AlertMessage();
-                alertMessage.showAlert("Error en la conexion con la base de datos");
+                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
             }else{  
                 Log.logException(ex);
             }
@@ -262,14 +262,14 @@ public class PreliminarProjectRegisterController implements Initializable {
      private void sendAlert(){ 
           AlertMessage alertMessage= new AlertMessage();
           if(validateFieldEmpty() ){  
-              alertMessage.showAlert("No se han llenado todos los campos");
+              alertMessage.showAlertValidateFailed("No se han llenado todos los campos");
           }
           if(!validateInformationField()){
-             alertMessage.showAlert("Existen campos con caracteres invalidos");
+             alertMessage.showAlertValidateFailed("Existen campos con caracteres invalidos");
           }
 
           if(searchRepeatePreliminarProject()){
-              alertMessage.showAlert("El cuerpo académico ya se encuentra registrado");
+              alertMessage.showAlertValidateFailed("El cuerpo académico ya se encuentra registrado");
           }
       }
      
@@ -282,7 +282,7 @@ public class PreliminarProjectRegisterController implements Initializable {
         }catch (BusinessException ex){ 
             if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage = new AlertMessage();
-                alertMessage.showAlert("Error en la conexion con la base de datos");
+                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
             }else{  
                 Log.logException(ex);
             }
@@ -314,7 +314,7 @@ public class PreliminarProjectRegisterController implements Initializable {
                  value=true;
             } else {
                 AlertMessage alertMessage = new AlertMessage ();
-                alertMessage.showAlert("Por favor escribe las cedulas separadas por comas");    
+                alertMessage.showAlertValidateFailed("Por favor escribe las cedulas separadas por comas");    
             }
         }
         return value;
