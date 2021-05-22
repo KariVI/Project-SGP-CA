@@ -30,7 +30,7 @@ public class TopicDAOTest {
         System.out.println("update");
         Topic newTopic = new Topic("Tema gastrocafe","12:00","13:00","4065161",1);
         TopicDAO topicDAO = new TopicDAO();
-        assertTrue(topicDAO.update(1, newTopic));
+        assertTrue(topicDAO.update( newTopic));
     }
 
     @Test 

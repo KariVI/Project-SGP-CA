@@ -92,6 +92,7 @@ public class MenuController implements Initializable {
         options.add("Anteproyectos");
         options.add("Proyectos");
         options.add("Reuniones");
+        options.add("Miembro");
     }
         
     

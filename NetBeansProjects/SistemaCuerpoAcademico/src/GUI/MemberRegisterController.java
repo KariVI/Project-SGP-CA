@@ -80,7 +80,8 @@ public class MemberRegisterController implements Initializable {
        if(validateMember(newMember)){
              try { 
              memberDAO.saveMember(newMember);
-              AlertMessage.showAlertSuccesfulSave("El miembro fue registrado con éxito");
+             AlertMessage alertMessage = new AlertMessage();
+              alertMessage.showAlertSuccesfulSave("El miembro fue registrado con éxito");
              } catch (BusinessException ex) {
                 Log.logException(ex);
              }
@@ -113,18 +114,19 @@ public class MemberRegisterController implements Initializable {
     
     public boolean validateMember(Member member){
         boolean value = true;
+        AlertMessage alertMessage = new AlertMessage();
         if(isEmptyFields(member)){
             value = false;
-            AlertMessage.showAlertValidateFailed("Campos vacios");
+            alertMessage.showAlertValidateFailed("Campos vacios");
         }
         if(!isAlreadyRegisterd(member)){
             value = false;
-            AlertMessage.showAlertValidateFailed("El miembro ya se encuentra registrado");
+            alertMessage.showAlertValidateFailed("El miembro ya se encuentra registrado");
         }
         
         if(!invalidFields(member)){
             value = false;
-            AlertMessage.showAlertValidateFailed("Campos inválidos");
+            alertMessage.showAlertValidateFailed("Campos inválidos");
         }
         
         return value;
@@ -152,8 +154,9 @@ public class MemberRegisterController implements Initializable {
     
     public boolean invalidFields(Member member){
         boolean value = true;
-        if(Validation.findInvalidField(member.getName())||Validation.findInvalidField(member.getNameDegree())||
-           Validation.findInvalidField(member.getUniversityName())){
+        Validation validation = new Validation();
+        if(validation.findInvalidField(member.getName())||validation.findInvalidField(member.getNameDegree())||
+           validation.findInvalidField(member.getUniversityName())){
             value = false;
         }
         return value;

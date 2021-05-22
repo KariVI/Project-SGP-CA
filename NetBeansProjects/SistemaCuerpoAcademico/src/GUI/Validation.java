@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 
 public class Validation {
-    public static boolean findInvalidField(String field){ 
+    public boolean findInvalidField(String field){ 
         boolean value=false;
         Pattern pattern = Pattern.compile("[0-9!#$%&'*+/=?^_`{|}~-]");
         Matcher mather = pattern.matcher(field);
@@ -54,7 +54,7 @@ public class Validation {
     
     
 
-    public static boolean validateHour(String hour){    
+    public  boolean validateHour(String hour){    
         boolean value=false;
         Pattern pattern = Pattern.compile("([0-1][0-9]|2[0-3])(:)([0-5][0-9])");
         Matcher mather = pattern.matcher(hour);

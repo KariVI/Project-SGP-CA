@@ -7,12 +7,8 @@ public class BusinessException extends Exception {
         super(message);
         Log.logException(ex);
     }
-<<<<<<< HEAD
     
      public BusinessException(String message){
-=======
-    public BusinessException(String message){
->>>>>>> MarianaChangesGUI
         super(message);
     }
 }

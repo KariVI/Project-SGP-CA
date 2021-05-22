@@ -172,7 +172,8 @@ public class TopicModifyController implements Initializable {
            for(int i = 0; i < topics.size(); i++){
                topicDAO.save(topics.get(i));
            }
-           AlertMessage.showAlertSuccesfulSave("Los temas fueron registrados con éxito");
+           AlertMessage alertMessage = new AlertMessage();
+           alertMessage.showAlertSuccesfulSave("Los temas fueron registrados con éxito");
          } catch (BusinessException ex) {
                Logger.getLogger(TopicRegisterController.class.getName()).log(Level.SEVERE, null, ex);
          }
@@ -201,24 +202,25 @@ public class TopicModifyController implements Initializable {
     
     public boolean validateTopic(Topic topic){
         boolean value = true;
+        AlertMessage alertMessage = new AlertMessage();
         if(isEmptyFields(topic)){
             value = false;
-            AlertMessage.showAlertValidateFailed("Campos vacios");
+            alertMessage.showAlertValidateFailed("Campos vacios");
         }
         
         if(invalidFields(topic)){
             value = false;
-            AlertMessage.showAlertValidateFailed("Campos inválidos");
+            alertMessage.showAlertValidateFailed("Campos inválidos");
         }
         
         if(!validateHours(topic)){
             value = false;
-            AlertMessage.showAlertValidateFailed("Ingresa la hora en formato HH:MM ");
+            alertMessage.showAlertValidateFailed("Ingresa la hora en formato HH:MM ");
         }
         
         if(repeatedTopic(topic)){
             value = false;
-            AlertMessage.showAlertValidateFailed("Tema repetido");
+            alertMessage.showAlertValidateFailed("Tema repetido");
         }
         return value;
     }
@@ -233,7 +235,8 @@ public class TopicModifyController implements Initializable {
     
     public boolean invalidFields(Topic topic){
         boolean value = false;
-        if(Validation.findInvalidField(topic.getTopicName())){
+        Validation validation = new Validation();
+        if(validation.findInvalidField(topic.getTopicName())){
            value = true;
         }
         return value;
@@ -241,7 +244,8 @@ public class TopicModifyController implements Initializable {
     
     public boolean validateHours(Topic topic){
         boolean value = false;
-        if(Validation.validateHour(topic.getFinishTime())){
+        Validation validation = new Validation();
+        if(validation.validateHour(topic.getFinishTime())){
             value = true;
         }
         return value;

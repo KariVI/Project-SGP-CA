@@ -8,7 +8,7 @@ import javafx.scene.control.Alert;
 public class AlertMessage {
     @FXML
     public  void showAlertValidateFailed(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
         alert.setTitle("Información invalida");
         alert.setContentText(message);
