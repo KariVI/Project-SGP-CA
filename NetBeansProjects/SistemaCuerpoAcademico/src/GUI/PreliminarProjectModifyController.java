@@ -6,6 +6,7 @@
 package GUI;
 
 import businessLogic.PreliminarProjectDAO;
+import domain.Member;
 import domain.PreliminarProject;
 import domain.Student;
 import java.net.URL;
@@ -30,11 +31,6 @@ import javafx.util.converter.LocalDateStringConverter;
 import log.BusinessException;
 import log.Log;
 
-/**
- * FXML Controller class
- *
- * @author kari
- */
 public class PreliminarProjectModifyController implements Initializable {
 
    @FXML private TextField tfTitle;
@@ -50,9 +46,7 @@ public class PreliminarProjectModifyController implements Initializable {
     private PreliminarProject preliminarProjectRecover = new PreliminarProject();
     private PreliminarProject preliminarProjectNew = new PreliminarProject();
     
-    
-    
-    
+
     @FXML
     private void actionSave(ActionEvent actionEvent){   
         String title =tfTitle.getText();
@@ -94,8 +88,7 @@ public class PreliminarProjectModifyController implements Initializable {
         Stage stage = (Stage) btExit.getScene().getWindow();
         stage.close();
     }
-    
-    
+        
     public void setPreliminarProject(PreliminarProject preliminarProject){   
         preliminarProjectRecover.setKey(preliminarProject.getKey());
         preliminarProjectRecover.setTitle(preliminarProject.getTitle());
@@ -124,7 +117,6 @@ public class PreliminarProjectModifyController implements Initializable {
        }
     }
     
-    
     private void getStudents() throws BusinessException{
         PreliminarProjectDAO preliminarProjectDAO =new PreliminarProjectDAO();
          preliminarProjectRecover.setStudents(preliminarProjectDAO.getStudents(preliminarProjectRecover.getKey()));
@@ -148,6 +140,16 @@ public class PreliminarProjectModifyController implements Initializable {
            }
             paneStudent.getChildren().add(gridPane);
     }
+    
+    private void getColaborators() throws BusinessException {    
+        PreliminarProjectDAO preliminarProjectDAO =new PreliminarProjectDAO();
+        preliminarProjectRecover.setMembers(preliminarProjectDAO.getColaborators(preliminarProjectRecover.getKey()));
+         ArrayList<Member> colaborators= preliminarProjectRecover.getMembers();
+         
+
+    
+    }
+
     
     public void initialize(URL url, ResourceBundle rb) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

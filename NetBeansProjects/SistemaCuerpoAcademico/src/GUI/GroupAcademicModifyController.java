@@ -77,7 +77,7 @@ public class GroupAcademicModifyController implements Initializable {
 
      private void getlgacs() throws BusinessException{
         GroupAcademicDAO groupAcademicDAO =new GroupAcademicDAO();
-         groupAcademic.setLGACs(groupAcademicDAO.getLGACs(groupAcademic.getKey()));
+        groupAcademic.setLGACs(groupAcademicDAO.getLGACs(groupAcademic.getKey()));
          ArrayList<LGAC> lgacs= groupAcademic.getLGACs();
          int i=0;
         int numberlgacs=0;

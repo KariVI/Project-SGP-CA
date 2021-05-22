@@ -12,23 +12,23 @@ public class MeetingDAOTest {
 
     @Test
     
-    public void testSearchId() throws BusinessException{ 
+    public void testGetId() throws BusinessException{ 
         MeetingDAO meetingDAO= new MeetingDAO();
         Meeting meetingAuxiliar;
         meetingAuxiliar = new Meeting("Revisión de avances en proyectos actuales" ,"04/05/2021","11:30");
         int idExpected=1;
-        int idMeeting= meetingDAO.searchId(meetingAuxiliar);
+        int idMeeting= meetingDAO.getId(meetingAuxiliar);
         assertEquals("Prueda de id Meeting", idExpected, idMeeting);
     
     }
     
     @Test
-    public void testSearchIdNotFound() throws BusinessException{ 
+    public void testGetIdNotFound() throws BusinessException{ 
         MeetingDAO meetingDAO= new MeetingDAO();
         Meeting meetingAuxiliar;
         meetingAuxiliar = new Meeting("Lanzamiento FEIBook" ,"11/11/2020","12:30");
         int idExpected=0;
-        int idMeeting= meetingDAO.searchId(meetingAuxiliar);
+        int idMeeting= meetingDAO.getId(meetingAuxiliar);
         assertEquals("Prueda de id Meeting", idExpected, idMeeting);
     }
     

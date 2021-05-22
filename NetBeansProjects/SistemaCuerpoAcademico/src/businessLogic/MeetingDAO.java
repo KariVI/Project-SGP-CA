@@ -42,7 +42,7 @@ public class MeetingDAO implements IMeetingDAO{
         
     } 
 
-    public int searchId(Meeting meeting) throws BusinessException {
+    public int getId(Meeting meeting) throws BusinessException {
         Integer idAuxiliar=0;
         try{
             Connector connectorDataBase=new Connector();
