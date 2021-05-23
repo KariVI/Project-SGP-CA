@@ -92,7 +92,7 @@ public class MenuController implements Initializable {
         options.add("Anteproyectos");
         options.add("Proyectos");
         options.add("Reuniones");
-        options.add("Miembro");
+        options.add("Miembros");
     }
         
     
@@ -103,22 +103,63 @@ public class MenuController implements Initializable {
       lvOptions.setItems(options);
       lvOptions.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
           public void changed(ObservableValue<? extends String> observaleValue, String oldValue, String newValue) {
-             String selectedOptions = (String) lvOptions.getSelectionModel().getSelectedItem();
-            try {
-           FXMLLoader loader = new FXMLLoader(getClass().getResource("PreliminarProjectList.fxml"));
-            Parent root = loader.load();
-            PreliminarProjectListController PreliminarProjectListController = loader.getController();
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-        } catch (IOException ex) {
-            Logger.getLogger(Launcher.class.getName()).log(Level.SEVERE, null, ex);
-        }
+             String selectedOption = (String) lvOptions.getSelectionModel().getSelectedItem();
+             showViewOption(selectedOption);
           }
       });
     
-    }    
+    }  
+    
+    private void showViewOption(String option){  
+        FXMLLoader loader;
+        switch(option){ 
+            case "Anteproyectos": ;
+                try {
+               loader = new FXMLLoader(getClass().getResource("PreliminarProjectList.fxml"));
+               Parent root = loader.load();
+               PreliminarProjectListController PreliminarProjectListController = loader.getController();
+               Scene scene = new Scene(root);
+               Stage stage = new Stage();
+               stage.setScene(scene);
+               stage.initModality(Modality.APPLICATION_MODAL);
+               stage.showAndWait();
+               } catch (IOException ex) {
+                   Log.logException(ex);
+               }
+            break;
+            
+            case "Miembros":;
+                   try {
+               loader = new FXMLLoader(getClass().getResource("MembertList.fxml"));
+               Parent root = loader.load();
+               MemberListController MemberListController = loader.getController();
+               Scene scene = new Scene(root);
+               Stage stage = new Stage();
+               stage.setScene(scene);
+               stage.initModality(Modality.APPLICATION_MODAL);
+               stage.showAndWait();
+               } catch (IOException ex) {
+                   Log.logException(ex);
+               }
+            break;
+            
+            case "Reuniones":;
+                   try {
+               loader = new FXMLLoader(getClass().getResource("MeetingList.fxml"));
+               Parent root = loader.load();
+               MeetingListController MeetingListController = loader.getController();
+               Scene scene = new Scene(root);
+               Stage stage = new Stage();
+               stage.setScene(scene);
+               stage.initModality(Modality.APPLICATION_MODAL);
+               stage.showAndWait();
+               } catch (IOException ex) {
+                   Log.logException(ex);
+               }
+            break;
+        
+        }
+    
+    }
     
 }
