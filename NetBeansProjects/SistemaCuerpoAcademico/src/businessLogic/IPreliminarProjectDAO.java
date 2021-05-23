@@ -20,8 +20,6 @@ public interface IPreliminarProjectDAO {
     public boolean deletedSucessfulColaborators(PreliminarProject preliminarProject) throws BusinessException;
     public ArrayList<Student> getStudents(int idPreliminarProject) throws BusinessException;
     public boolean deletedSucessfulStudents(PreliminarProject preliminarProject) throws BusinessException;
-    public boolean addedSucessfulLGAC(PreliminarProject preliminarProject) throws BusinessException;
-     public ArrayList<LGAC> getLGACs(int idPreliminarProject) throws BusinessException;
-     public boolean deletedSucessfulLGACS(PreliminarProject preliminarProject) throws BusinessException;
+    
 }
 

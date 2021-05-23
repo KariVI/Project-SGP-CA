@@ -5,6 +5,7 @@ import domain.Meeting;
 import domain.Member;
 import java.util.ArrayList;
 import log.BusinessException;
+import log.Log;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -23,33 +24,22 @@ public class MeetingDAOTest {
     }
     
     @Test
-    public void testGetIdNotFound() throws BusinessException{ 
+    public void testGetIdNotFound(){ 
         MeetingDAO meetingDAO= new MeetingDAO();
         Meeting meetingAuxiliar;
+        boolean value=true;
         meetingAuxiliar = new Meeting("Lanzamiento FEIBook" ,"11/11/2020","12:30");
-        int idExpected=0;
-        int idMeeting= meetingDAO.getId(meetingAuxiliar);
-        assertEquals("Prueda de id Meeting", idExpected, idMeeting);
+        int idExpected=8;
+        try{
+            int idMeeting= meetingDAO.getId(meetingAuxiliar);
+        }catch(BusinessException ex){
+            value=false;
+        }
+      assertFalse(value);
+
     }
     
-    @Test
-    public void testFindMeetingById() throws BusinessException{  
-        MeetingDAO meetingDAO= new MeetingDAO();
-        Meeting meetingAuxiliar;
-        meetingAuxiliar = new Meeting("Revisión de avances en proyectos actuales" ,"04/05/2021","11:30");
-        int idMeeting= meetingDAO.getId(meetingAuxiliar);
-        assertTrue(meetingDAO.findMeetingById(idMeeting));
-    }
-    
-    @Test
-    public void testFindMeetingByIdNotFound() throws BusinessException{  
-        MeetingDAO meetingDAO= new MeetingDAO();
-        Meeting meetingAuxiliar;
-        meetingAuxiliar = new Meeting("Lanzamiento FEIBook" ,"11/11/2020","12:30");
-        int idMeeting= meetingDAO.getId(meetingAuxiliar);
-        assertFalse(meetingDAO.findMeetingById(idMeeting));
-    }
-    
+ 
     
     @Test
     public void testSave() throws BusinessException{
@@ -74,10 +64,15 @@ public class MeetingDAOTest {
         public void testGetMeetingByIdNotFound() throws BusinessException{
         MeetingDAO meetingDAO= new MeetingDAO();
         Meeting meetingExpected;
+        boolean value=true;
         meetingExpected = new Meeting(1, "Revisión de avances en proyectos actuales" ,"04/05/2021","11:30", "Registrada");
-        Meeting meetingResult=meetingDAO.getMeetingById(2);
-        
-        assertFalse(meetingExpected. equals(meetingResult ));
+        Meeting meetingResult=null;
+        try{
+            meetingResult=meetingDAO.getMeetingById(12);
+        } catch(BusinessException ex){
+            Log.logException(ex);
+        }
+      assertFalse(meetingExpected.equals(meetingResult));
         
     }
    

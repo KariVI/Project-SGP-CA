@@ -31,7 +31,7 @@ public class LGAC {
         boolean value=false;
             if (object instanceof LGAC) {
             LGAC lgacCompare = (LGAC) object;
-            if( (this.name.equals(lgacCompare.getName()) ) && (this.description.equals(lgacCompare.getDescription())) ) {
+            if( (this.name.equals(lgacCompare.getName()) )  ) {
                 value=true;
             }
         }  

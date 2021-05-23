@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="14" passed="14">
+  <reporter-output>
+  </reporter-output>
+  <suite name="SistemaCuerpoAcademico" duration-ms="2488" started-at="2021-05-23T16:18:23Z" finished-at="2021-05-23T16:18:25Z">
+    <groups>
+    </groups>
+    <test name="businessLogic.ReceptionWorkDAOTest" duration-ms="2488" started-at="2021-05-23T16:18:23Z" finished-at="2021-05-23T16:18:25Z">
+      <class name="businessLogic.ReceptionWorkDAOTest">
+        <test-method status="PASS" signature="testDeleteColaborators()[pri:0, instance:testDeleteColaborators(businessLogic.ReceptionWorkDAOTest)]" name="testDeleteColaborators" duration-ms="1180" started-at="2021-05-23T11:18:23Z" finished-at="2021-05-23T11:18:24Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDeleteColaborators -->
+        <test-method status="PASS" signature="testGetColaborators()[pri:0, instance:testGetColaborators(businessLogic.ReceptionWorkDAOTest)]" name="testGetColaborators" duration-ms="105" started-at="2021-05-23T11:18:24Z" finished-at="2021-05-23T11:18:24Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetColaborators -->
+        <test-method status="PASS" signature="testAddLGAC()[pri:0, instance:testAddLGAC(businessLogic.ReceptionWorkDAOTest)]" name="testAddLGAC" duration-ms="220" started-at="2021-05-23T11:18:24Z" finished-at="2021-05-23T11:18:24Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAddLGAC -->
+        <test-method status="PASS" signature="testDeleteStudents()[pri:0, instance:testDeleteStudents(businessLogic.ReceptionWorkDAOTest)]" name="testDeleteStudents" duration-ms="195" started-at="2021-05-23T11:18:24Z" finished-at="2021-05-23T11:18:24Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDeleteStudents -->
+        <test-method status="PASS" signature="testGetId()[pri:0, instance:testGetId(businessLogic.ReceptionWorkDAOTest)]" name="testGetId" duration-ms="67" started-at="2021-05-23T11:18:24Z" finished-at="2021-05-23T11:18:24Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetId -->
+        <test-method status="PASS" signature="testSave()[pri:0, instance:testSave(businessLogic.ReceptionWorkDAOTest)]" name="testSave" duration-ms="113" started-at="2021-05-23T11:18:24Z" finished-at="2021-05-23T11:18:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSave -->
+        <test-method status="PASS" signature="testGetStudents()[pri:0, instance:testGetStudents(businessLogic.ReceptionWorkDAOTest)]" name="testGetStudents" duration-ms="50" started-at="2021-05-23T11:18:25Z" finished-at="2021-05-23T11:18:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetStudents -->
+        <test-method status="PASS" signature="testGetLGAC()[pri:0, instance:testGetLGAC(businessLogic.ReceptionWorkDAOTest)]" name="testGetLGAC" duration-ms="50" started-at="2021-05-23T11:18:25Z" finished-at="2021-05-23T11:18:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetLGAC -->
+        <test-method status="PASS" signature="testAddStudents()[pri:0, instance:testAddStudents(businessLogic.ReceptionWorkDAOTest)]" name="testAddStudents" duration-ms="95" started-at="2021-05-23T11:18:25Z" finished-at="2021-05-23T11:18:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAddStudents -->
+        <test-method status="PASS" signature="testGetIdFailed()[pri:0, instance:testGetIdFailed(businessLogic.ReceptionWorkDAOTest)]" name="testGetIdFailed" duration-ms="55" started-at="2021-05-23T11:18:25Z" finished-at="2021-05-23T11:18:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetIdFailed -->
+        <test-method status="PASS" signature="testGetReceptionWorks()[pri:0, instance:testGetReceptionWorks(businessLogic.ReceptionWorkDAOTest)]" name="testGetReceptionWorks" duration-ms="40" started-at="2021-05-23T11:18:25Z" finished-at="2021-05-23T11:18:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetReceptionWorks -->
+        <test-method status="PASS" signature="testAddColaborator()[pri:0, instance:testAddColaborator(businessLogic.ReceptionWorkDAOTest)]" name="testAddColaborator" duration-ms="100" started-at="2021-05-23T11:18:25Z" finished-at="2021-05-23T11:18:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAddColaborator -->
+        <test-method status="PASS" signature="testGetReceptionWorkById()[pri:0, instance:testGetReceptionWorkById(businessLogic.ReceptionWorkDAOTest)]" name="testGetReceptionWorkById" duration-ms="55" started-at="2021-05-23T11:18:25Z" finished-at="2021-05-23T11:18:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetReceptionWorkById -->
+        <test-method status="PASS" signature="testUpdate()[pri:0, instance:testUpdate(businessLogic.ReceptionWorkDAOTest)]" name="testUpdate" duration-ms="38" started-at="2021-05-23T11:18:25Z" finished-at="2021-05-23T11:18:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testUpdate -->
+      </class> <!-- businessLogic.ReceptionWorkDAOTest -->
+    </test> <!-- businessLogic.ReceptionWorkDAOTest -->
+  </suite> <!-- SistemaCuerpoAcademico -->
+</testng-results>

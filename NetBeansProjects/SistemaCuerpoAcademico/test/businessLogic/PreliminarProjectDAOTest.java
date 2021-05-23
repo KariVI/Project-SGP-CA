@@ -43,6 +43,7 @@ public class PreliminarProjectDAOTest {
     @Test
       public void testGetIdFailed() throws BusinessException {
         System.out.println("getId");
+        boolean value=true;
         PreliminarProject preliminarProject = new PreliminarProject ("Revisión Sistemática de la Literatura de Software para la Gestión automatizada de Restaurantes",
         "La vigilancia tecnológica es importante en el desarrollo de un producto tecnológico ya que\n" +
         "permite identificar amenazas y oportunidades en el desarrollo de una nueva solución. La\n" +
@@ -51,9 +52,12 @@ public class PreliminarProjectDAOTest {
         "13/01/2021", "13/07/2021");
         PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
         int expectedResult = 8;
-        int result = preliminarProjectDAO.getId(preliminarProject);
-        System.out.println(result);
-        assertNotEquals(expectedResult, result);
+        try{    
+            int result = preliminarProjectDAO.getId(preliminarProject);
+        }catch(BusinessException ex){   
+            value=false;
+        }
+        assertFalse(value);
     }
       
     @Test
@@ -72,7 +76,7 @@ public class PreliminarProjectDAOTest {
         PreliminarProjectDAO preliminarProjectDAO=new PreliminarProjectDAO();
         ArrayList<PreliminarProject> preliminarProjects;
         preliminarProjects=preliminarProjectDAO.getPreliminarProjects();
-        int idExpected=1;
+        int idExpected=6;
         int result= preliminarProjects.get(0).getKey();
        assertEquals(idExpected, result);
     }
@@ -87,12 +91,28 @@ public class PreliminarProjectDAOTest {
         assertTrue(preliminarProject.equals(preliminarProjectDAO.getById(6)));
     }
     
+    @Test 
+    public void testGetColaborators () throws BusinessException {
+        ArrayList<Member> colaboratorsExpected=new ArrayList<Member>();
+        MemberDAO memberDAO = new MemberDAO();
+         Member member = memberDAO.getMemberByLicense("8325134");
+         member.setRole("Codirector");
+        colaboratorsExpected.add(member);
+        PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
+        ArrayList<Member> colaboratorsResult=preliminarProjectDAO.getColaborators(20);
+        try{
+            assertEquals(colaboratorsExpected, colaboratorsResult);
+        }catch(NullPointerException ex){    
+            Log.logException(ex);
+        }
+    }
+    
     @Test
     public void testAddColaborator()throws BusinessException{   
-        PreliminarProject preliminarProject = new PreliminarProject ("Revisión de la Literatura acerca de Varamiento de Mamíferos Marinos",
-        "Revisión de la Literatura acerca de Varamiento de Mamíferos Marinos",
+        PreliminarProject preliminarProject = new PreliminarProject ("Revisión de articulos sobre microservicios ",
+        "Revisión de articulos relacionados al apartado de microservicios",
         "13/01/2021", "13/07/2021");
-        preliminarProject.setKey(6);
+        preliminarProject.setKey(26);
          Member member= new Member("8325134","Juan Carlos Perez Arriaga","Director");
         Member memberAdd= new Member("7938268","Maria Karen Cortes Verdin", "Codirector");
         preliminarProject.addMember(member);
@@ -104,31 +124,17 @@ public class PreliminarProjectDAOTest {
     
     @Test
     public void testAddStudents()throws BusinessException{   
-        PreliminarProject preliminarProject = new PreliminarProject ("Revisión de la Literatura acerca de Varamiento de Mamíferos Marinos",
-        "Revisión de la Literatura acerca de Varamiento de Mamíferos Marinos",
+        PreliminarProject preliminarProject = new PreliminarProject ("Revisión de articulos sobre microservicios ",
+        "Revisión de articulos relacionados al apartado de microservicios",
         "13/01/2021", "13/07/2021");
-        preliminarProject.setKey(6);
+        preliminarProject.setKey(26);
         Student student = new Student("S19014013", "Mariana Yazmin Vargas Segura ");
         preliminarProject.addStudent(student);
         PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
         assertTrue(preliminarProjectDAO.addedSucessfulStudents(preliminarProject));
     }
     
-    @Test 
-    public void testGetColaborators () throws BusinessException {
-        ArrayList<Member> colaboratorsExpected=new ArrayList<Member>();
-        MemberDAO memberDAO = new MemberDAO();
-         Member member = memberDAO.getMemberByLicense("8325134");
-         member.setRole("Codirector");
-        colaboratorsExpected.add(member);
-        PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
-        ArrayList<Member> colaboratorsResult=preliminarProjectDAO.getColaborators(7);
-        try{
-            assertEquals(colaboratorsExpected, colaboratorsResult);
-        }catch(NullPointerException ex){    
-            Log.logException(ex);
-        }
-    }
+    
     
     @Test
     public void testDeleteColaborators() throws BusinessException { 
@@ -143,9 +149,10 @@ public class PreliminarProjectDAOTest {
     
     @Test 
     public void testGetStudents () throws BusinessException{
-        Student student= new Student("S19014013", "Mariana Yazmin Vargas Segura" );
+ 
+
          ArrayList<Student> studentsExpected= new ArrayList <Student>();
-         studentsExpected.add(student);
+         studentsExpected.add(new Student("S19014023", "Karina Valdes Iglesias" ));
         PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
         ArrayList<Student> studentsResult= preliminarProjectDAO.getStudents(7);
 
@@ -162,41 +169,7 @@ public class PreliminarProjectDAOTest {
         PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
         assertTrue(preliminarProjectDAO.deletedSucessfulStudents(preliminarProject));
     }
-    
-    @Test
-    public void testAddLGACs() throws BusinessException{   
-      LGAC lgac=new LGAC("Gestión, modelado y desarrollo de software",  "Se orienta al estudio de los diversos métodos y enfoques para la gestión, modelado y desarrollo de software, de manera que se obtenga software de calidad. Gestión de las diversas etapas del proceso de desarrollo, incluyendo hasta la medición del proceso y artefactos. Modelado de los diversos artefactos en las distintas etapas del proceso de desarrollo.");
-      PreliminarProject preliminarProject = new PreliminarProject ("Revisión de la Literatura acerca de Varamiento de Mamíferos Marinos",
-        "Revisión de la Literatura acerca de Varamiento de Mamíferos Marinos",
-        "13/01/2021", "13/07/2021");
-     preliminarProject.setKey(6);
-     preliminarProject.addLGAC(lgac);
-     PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
-     assertTrue(preliminarProjectDAO.addedSucessfulLGAC(preliminarProject));
-    }
-    
-    @Test
-    public void testGetLGACs() throws BusinessException{    
-        LGAC lgac=new LGAC("Gestión, modelado y desarrollo de software",  "Se orienta al estudio de los diversos métodos y enfoques para la gestión, modelado y desarrollo de software, de manera que se obtenga software de calidad. Gestión de las diversas etapas del proceso de desarrollo, incluyendo hasta la medición del proceso y artefactos. Modelado de los diversos artefactos en las distintas etapas del proceso de desarrollo.");
-        ArrayList<LGAC> lgacsExpected= new ArrayList<LGAC>();
-        lgacsExpected.add(lgac);
-        PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
-        ArrayList<LGAC> lgacsResult= preliminarProjectDAO.getLGACs(7);
-        assertEquals(lgacsExpected, lgacsResult);
-    }
-    
-    @Test 
-    public void testDeleteLGACs() throws BusinessException {  
-       LGAC lgac=new LGAC("Gestión, modelado y desarrollo de software",  "Se orienta al estudio de los diversos métodos y enfoques para la gestión, modelado y desarrollo de software, de manera que se obtenga software de calidad. Gestión de las diversas etapas del proceso de desarrollo, incluyendo hasta la medición del proceso y artefactos. Modelado de los diversos artefactos en las distintas etapas del proceso de desarrollo.");
-       PreliminarProject preliminarProject= new PreliminarProject("Evaluación del modelo de calidad de seguridad para arquitecturas de software", "Una arquitectura de software define no sólo la estructura o estructuras de un sistema de software, sino las características de calidad del propio sistema. Una característica o atributo de calidad altamente crítico en nuestros días es la seguridad. Esta característica, por supuesto que también es importante considerar en el desarrollo de la plataforma de comunicación y educación",
-       "13/11/2019","13/07/2020");
-       preliminarProject.setKey(7); 
-       preliminarProject.addLGAC(lgac);
-       PreliminarProjectDAO preliminarProjectDAO= new PreliminarProjectDAO();
 
-       assertTrue(preliminarProjectDAO.deletedSucessfulLGACS(preliminarProject));
-          
-    }
     
     
 }

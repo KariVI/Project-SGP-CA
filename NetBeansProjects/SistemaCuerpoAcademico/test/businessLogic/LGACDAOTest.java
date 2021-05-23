@@ -53,13 +53,5 @@ public class LGACDAOTest {
       System.out.println("update");
     }
     
-    @Test
-    public void testGetLGACs()throws BusinessException{
-        ArrayList<LGAC> arrayLgac;
-        LGACDAO lgacDAO=new LGACDAO();
-        arrayLgac=lgacDAO.getLGACs();
-        String nameExpected="Evaluación del modelo de calidad de seguridad para arquitecturas de software ";
-        String result=arrayLgac.get(0).getName();
-        assertEquals(nameExpected, result);
-    }
+  
 }
