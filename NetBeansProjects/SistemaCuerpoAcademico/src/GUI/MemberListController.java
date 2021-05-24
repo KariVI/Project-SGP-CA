@@ -29,6 +29,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
+import log.Log;
 
 /**
  * FXML Controller class
@@ -65,7 +66,7 @@ public class MemberListController implements  Initializable {
               stage.close();
               primaryStage.show();
         } catch (IOException ex) {
-            Logger.getLogger(Launcher.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
           }
       });

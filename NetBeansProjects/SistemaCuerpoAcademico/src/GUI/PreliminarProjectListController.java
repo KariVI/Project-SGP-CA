@@ -60,7 +60,7 @@ public class PreliminarProjectListController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
         } catch (IOException ex) {
-            Logger.getLogger(Launcher.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
           }
       });

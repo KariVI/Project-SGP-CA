@@ -1,12 +1,19 @@
 
 package GUI;
 
+import businessLogic.MeetingDAO;
+import businessLogic.PreliminarProjectDAO;
 import domain.Meeting;
+import domain.PreliminarProject;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +23,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import log.BusinessException;
 import log.Log;
 
 public class MeetingListController implements Initializable {
@@ -27,14 +36,14 @@ public class MeetingListController implements Initializable {
        
      @FXML 
     public void actionAddMeeting(ActionEvent actionEvent){    
-        /* try{ 
+         try{ 
             Stage primaryStage= new Stage();
-            URL url = new File("src/GUI/PreliminarProjectRegister.fxml").toURI().toURL();
+            URL url = new File("src/GUI/MeetingRegister.fxml").toURI().toURL();
            try{
               FXMLLoader loader = new FXMLLoader(url);
               loader.setLocation(url);
               loader.load();
-              PreliminarProjectRegisterController preliminarProjectRegisterController =loader.getController();      
+              MeetingRegisterController meetingRegisterController =loader.getController();      
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);       
@@ -44,7 +53,7 @@ public class MeetingListController implements Initializable {
             primaryStage.show();
        } catch (MalformedURLException ex) {
            Log.logException(ex);
-       }*/
+       }
     }
     
     @FXML 
@@ -54,7 +63,39 @@ public class MeetingListController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        meetings = FXCollections.observableArrayList();
+       getMeetings();      
+      lvMeetings.setItems(meetings);
+      lvMeetings.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Meeting>() {
+          @Override
+          public void changed(ObservableValue<? extends Meeting> observaleValue, Meeting oldValue, Meeting newValue) {
+             Meeting selectedMeeting = (Meeting) lvMeetings.getSelectionModel().getSelectedItem();
+            try {
+           FXMLLoader loader = new FXMLLoader(getClass().getResource("MeetingShow.fxml"));
+            Parent root = loader.load();
+            MeetingShowController meetingShowController = loader.getController();
+            /*meetingShowController.setMeeting(selectedMeeting);
+            meetingShowController.initializeMeeting();*/
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Log.logException(ex);
+        }
+          }
+      }); 
     }    
     
+    
+    private void getMeetings() {   
+        MeetingDAO meetingDAO = new MeetingDAO();
+        ArrayList<Meeting> meetingList;  
+        meetingList = meetingDAO.getMeetings();
+        for(int i=0; i< meetingList.size(); i++){
+            meetings.add(meetingList.get(i));
+        }
+        
+    }
 }
