@@ -97,9 +97,8 @@ public class GroupAcademic {
         boolean value=false;
             if (object instanceof GroupAcademic) {
             GroupAcademic groupCompare = (GroupAcademic) object;
-            if( (this.name.equals(groupCompare.getName()) ) && (this.key.equals(groupCompare.getKey()) )&& ( this.objetive.equals(groupCompare.getObjetive())) &&
-                    ( this.consolidationGrade.equals(groupCompare.getConsolidationGrade()) )  && (this.mission.equals(groupCompare.getMission()) )&&
-                    (this.vision.equals(groupCompare.getVision()) ) ) {
+            if( (this.name.equals(groupCompare.getName()) ) && (this.key.equals(groupCompare.getKey()) )&&
+                    ( this.consolidationGrade.equals(groupCompare.getConsolidationGrade()) ) ) {
                 value=true;
             }
 

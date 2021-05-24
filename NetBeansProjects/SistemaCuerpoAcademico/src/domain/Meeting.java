@@ -129,4 +129,8 @@ public class Meeting {
         return value;
     }
     
+     public String toString(){
+        return subject;
+    }
+    
 }

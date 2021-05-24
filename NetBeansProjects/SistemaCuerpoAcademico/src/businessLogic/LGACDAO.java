@@ -87,32 +87,9 @@ public class LGACDAO implements ILGACDAO {
         }
         return updateSucess;
     }
-    
-    public ArrayList<LGAC>  getLGACs(){
-        ArrayList<LGAC> lgacList = new ArrayList<LGAC>();
-        try{
-            Connector connectorDataBase = new Connector();
-            Connection connectionDataBase = connectorDataBase.getConnection();
-            String queryLgac="SELECT * FROM LGAC";
 
-               PreparedStatement preparedStatement;
-               preparedStatement = connectionDataBase.prepareStatement(queryLgac);
-               ResultSet resultSet;
-               resultSet = preparedStatement.executeQuery();
-               while(resultSet.next()){
-                    String name = resultSet.getString("nombre");
-                    String description = resultSet.getString("descripcion");
-                    LGAC lgacAuxiliar = new LGAC(name,description);
-                    lgacList.add(lgacAuxiliar);
-                }
-                connectorDataBase.disconnect();
-            }catch(SQLException sqlException) {
-                   throw new IllegalStateException("Parameter index ", sqlException);         
-            }catch(ClassNotFoundException ex) {
-                        Log.logException(ex);
-            }
-            return lgacList;
-        }
+   
+ 
     
         
 }

@@ -85,7 +85,7 @@ public class PrerequisiteDAOTest {
     @Test
     public void testDelete() throws BusinessException{
         System.out.println("delete");
-        int idPrerequisite=4;
+        int idPrerequisite=13;
         PrerequisiteDAO prerequisiteDAO = new PrerequisiteDAO();
         assertTrue(prerequisiteDAO.deletedSucessful(idPrerequisite));
     }
@@ -93,12 +93,11 @@ public class PrerequisiteDAOTest {
     @Test 
     public void testGetPrerequisites() throws BusinessException{
       System.out.println("getPrerequisites");
-      int idExpected=1;
       PrerequisiteDAO prerequisiteDAO = new PrerequisiteDAO();
       ArrayList<Prerequisite> prerequisites;
-      prerequisites=prerequisiteDAO.getPrerequisites(1);
-      int result=prerequisites.get(0).getKey();
-      assertEquals(idExpected, result);
+      prerequisites= prerequisiteDAO.getPrerequisites(1);
+      int sizeExpected=4;
+      assertEquals(prerequisites.size(), sizeExpected);
       
     }
 }
