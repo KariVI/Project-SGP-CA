@@ -45,14 +45,15 @@ public class PreliminarProjectModifyController implements Initializable {
     @FXML private Pane paneStudent;
     @FXML DatePicker dpStartDate;
     @FXML DatePicker dpEndDate;
-    private String[] codirectorsParts;
+    private String[] colaboratorsPartsRecover;
+    private String[] codirectorsPartsNew;
     private PreliminarProject preliminarProjectRecover = new PreliminarProject();
     private PreliminarProject preliminarProjectNew = new PreliminarProject();
     
 
     @FXML
     private void actionSave(ActionEvent actionEvent){   
-String title =tfTitle.getText();
+        String title =tfTitle.getText();
         String description= taDescription.getText();
         String codirectors = taCodirectors.getText();
         String director= tfDirector.getText();
@@ -62,19 +63,19 @@ String title =tfTitle.getText();
         System.out.println("a");
 
         if(divisionCodirectorsSucessful(codirectors)){  
-            System.out.println("uy se pudo");
         }else{  
-           System.out.println("uy no se pudo");
 
         }
         if(!validateFieldEmpty() && validateInformationField() ){
             startDate = dpStartDate.getValue().format(formatter);
             endDate = dpEndDate.getValue().format(formatter);
+            int key = preliminarProjectRecover.getKey();
+            preliminarProjectNew.setKey(key);
             preliminarProjectNew.setTitle(title);
             preliminarProjectNew.setDescription(description);
             preliminarProjectNew.setDateStart(startDate);
             preliminarProjectNew.setDateEnd(endDate);
-                savePreliminarProject ();
+            updatePreliminarProject ();
             
         
             
@@ -83,10 +84,10 @@ String title =tfTitle.getText();
         }
     }
     
-  private void savePreliminarProject (){   
+  private void updatePreliminarProject (){   
         PreliminarProjectDAO preliminarProjectDAO =  new PreliminarProjectDAO();
         try{  
-           if(preliminarProjectDAO.savedSucessful(preliminarProjectNew)){  
+           if(preliminarProjectDAO.updatedSucessful(preliminarProjectRecover.getKey(), preliminarProjectNew)){  
                preliminarProjectNew.setKey(preliminarProjectDAO.getId(preliminarProjectNew));
                saveColaborators();
                recoverStudents();
@@ -110,6 +111,22 @@ String title =tfTitle.getText();
         stage.close();
     }
     
+    private boolean deleteColaborators() throws BusinessException{  
+        PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
+        ArrayList<Member> colaborators = preliminarProjectDAO.getColaborators(preliminarProjectRecover.getKey());
+        preliminarProjectRecover.setMembers(colaborators);
+    
+       return  preliminarProjectDAO.deletedSucessfulColaborators(preliminarProjectRecover);
+    }
+    
+    private boolean deleteStudents() throws BusinessException{  
+        PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
+        ArrayList<Student> students = preliminarProjectDAO.getStudents(preliminarProjectRecover.getKey());
+        preliminarProjectRecover.setStudents(students);
+    
+        return preliminarProjectDAO.deletedSucessfulColaborators(preliminarProjectRecover);
+    }
+    
     private void saveColaborators(){    
        String directorProfessionalLicense= tfDirector.getText();
        PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
@@ -121,8 +138,8 @@ String title =tfTitle.getText();
             if(director!=null){
                 preliminarProjectNew.addMember(director);
             }
-            for(int i=0; i< codirectorsParts.length; i++ ){  
-                Member codirector= memberDAO.getMemberByLicense(codirectorsParts[i]);
+            for(int i=0; i< codirectorsPartsNew.length; i++ ){  
+                Member codirector= memberDAO.getMemberByLicense(codirectorsPartsNew[i]);
                 codirector.setRole("Codirector");
                  preliminarProjectNew.addMember(codirector);
 
@@ -157,6 +174,8 @@ String title =tfTitle.getText();
        try {
            getColaborators ();
            getStudents();
+           deleteColaborators();
+           deleteStudents();
        } catch (BusinessException ex) {
           if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage = new AlertMessage();
@@ -244,7 +263,7 @@ String title =tfTitle.getText();
                  saveStudent(student);
                }
            }
-           preliminarProjectRecover.setStudents(students);
+           preliminarProjectNew.setStudents(students);
            addStudentsInPreliminarProject();
     }
     
@@ -273,7 +292,7 @@ String title =tfTitle.getText();
     private void addStudentsInPreliminarProject(){ 
         PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
         try {
-            preliminarProjectDAO.addedSucessfulStudents(preliminarProjectRecover);
+            preliminarProjectDAO.addedSucessfulStudents(preliminarProjectNew);
         } catch (BusinessException ex) {
             if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage= new AlertMessage();
@@ -349,12 +368,12 @@ String title =tfTitle.getText();
         boolean value=false;
         int sizeProfessionalLicense=7;
         if(codirectors.length() == sizeProfessionalLicense ){   
-            codirectorsParts= new String[1];
-            codirectorsParts[0]= codirectors;
+            codirectorsPartsNew= new String[1];
+            codirectorsPartsNew[0]= codirectors;
             value=true;
         }else{
             if (codirectors.contains(",")){
-                 codirectorsParts = codirectors.split(",");
+                 codirectorsPartsNew = codirectors.split(",");
                  value=true;
             } else {
                 AlertMessage alertMessage = new AlertMessage ();
