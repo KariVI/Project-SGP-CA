@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="507.0" prefWidth="733.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="GUI.MeetingRegisterController">
+<AnchorPane id="AnchorPane" prefHeight="507.0" prefWidth="733.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MeetingRegisterController">
     <stylesheets>
         <URL value="@meetingregister.css" />
     </stylesheets>
@@ -40,7 +40,7 @@
           <TableColumn prefWidth="260.0" text="Encargado" />
         </columns>
       </TableView>
-      <Button layoutX="544.0" layoutY="367.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="59.0" text="Añadir" />
+      <Button layoutX="479.0" layoutY="388.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="59.0" text="Añadir" />
       <Button fx:id="addTopic" layoutX="479.0" layoutY="474.0" mnemonicParsing="false" onAction="#actionAddTopics" text="Añadir agenda" />
       <Button layoutX="590.0" layoutY="474.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Guardar" />
       <Button layoutX="664.0" layoutY="474.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Salir" />
