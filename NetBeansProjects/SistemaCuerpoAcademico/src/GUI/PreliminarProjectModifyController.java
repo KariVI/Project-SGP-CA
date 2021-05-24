@@ -11,6 +11,9 @@ import businessLogic.StudentDAO;
 import domain.Member;
 import domain.PreliminarProject;
 import domain.Student;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -20,8 +23,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -60,27 +66,24 @@ public class PreliminarProjectModifyController implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String startDate;
         String endDate;
-        System.out.println("a");
 
-        if(divisionCodirectorsSucessful(codirectors)){  
-        }else{  
+        if(divisionCodirectorsSucessful(codirectors)){ 
+            if(!validateFieldEmpty() && validateInformationField() ){
+                startDate = dpStartDate.getValue().format(formatter);
+                endDate = dpEndDate.getValue().format(formatter);
+                int key = preliminarProjectRecover.getKey();
+                preliminarProjectNew.setKey(key);
+                preliminarProjectNew.setTitle(title);
+                preliminarProjectNew.setDescription(description);
+                preliminarProjectNew.setDateStart(startDate);
+                preliminarProjectNew.setDateEnd(endDate);
+                updatePreliminarProject ();
 
-        }
-        if(!validateFieldEmpty() && validateInformationField() ){
-            startDate = dpStartDate.getValue().format(formatter);
-            endDate = dpEndDate.getValue().format(formatter);
-            int key = preliminarProjectRecover.getKey();
-            preliminarProjectNew.setKey(key);
-            preliminarProjectNew.setTitle(title);
-            preliminarProjectNew.setDescription(description);
-            preliminarProjectNew.setDateStart(startDate);
-            preliminarProjectNew.setDateEnd(endDate);
-            updatePreliminarProject ();
-            
-        
-            
-        }else{  
-            sendAlert();
+
+
+            }else{  
+                sendAlert();
+            }
         }
     }
     
@@ -107,8 +110,44 @@ public class PreliminarProjectModifyController implements Initializable {
     
     @FXML 
     private void actionExit(ActionEvent actionEvent){   
-        Stage stage = (Stage) btExit.getScene().getWindow();
-        stage.close();
+       try {
+           Stage stage = (Stage) btExit.getScene().getWindow();
+           stage.close();
+           openShowView();
+       } catch (BusinessException ex) {
+           if(ex.getMessage().equals("DataBase connection failed ")){
+                AlertMessage alertMessage = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
+            }else{  
+                Log.logException(ex);
+            }
+       }
+    }
+    
+    private void openShowView() throws BusinessException{
+        try{ 
+            Stage primaryStage= new Stage();
+            URL url = new File("src/GUI/PreliminarProjectShow.fxml").toURI().toURL();
+        try{
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+                PreliminarProjectShowController preliminarProjectShowController =loader.getController();
+                PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
+                PreliminarProject preliminarProjectAuxiliar = preliminarProjectDAO.getById(preliminarProjectRecover.getKey());
+                preliminarProjectShowController.setPreliminarProject(preliminarProjectAuxiliar);
+                preliminarProjectShowController.initializePreliminarProject();
+                Parent root = loader.getRoot();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+           }catch (IOException ex) {
+                    Log.logException(ex);
+            }
+            primaryStage.show();
+       } catch (MalformedURLException ex) {
+                Log.logException(ex);
+        }
+    
     }
     
     private boolean deleteColaborators() throws BusinessException{  
