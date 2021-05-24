@@ -46,12 +46,13 @@ public class MinuteDAOTest {
     @Test
     public void testDisapproveMinute() throws BusinessException{
         System.out.println("disapproveMinute");
-        int minute = 1;
-        String professionalLicense = "4065161";
+        int idMinute = 1;
+        String professionalLicense = "8325134";
         String comments = "No se encuentran algunos acuerdos;";
+        MinuteComment minuteComment = new MinuteComment("No se encuentran algunos acuerdos;",professionalLicense,idMinute);
         MinuteDAO minuteDAO = new MinuteDAO();
         try{
-            minuteDAO.disapproveMinute(minute, professionalLicense, comments);
+            minuteDAO.disapproveMinute(minuteComment);
         }
         catch (IllegalStateException ex) {
             Logger.getLogger(ProjectDaoTest.class.getName()).log(Level.SEVERE, null, ex);
@@ -63,16 +64,24 @@ public class MinuteDAOTest {
         System.out.println("getMinutes");
         MinuteDAO instanceMinute = new MinuteDAO();
         ArrayList<Minute> result = instanceMinute.getMinutes();
-        assertNotNull(result);
+        ArrayList<Minute> resultExpected = new ArrayList<Minute>();
+        int idMinute = 1;
+        int idMeeting = 1;
+        Minute minute = new Minute(idMinute,"Los acuerdos registrados son pendiente","Completado","Falta gastrocafe",idMeeting);
+        resultExpected.add(minute);
+        assertEquals(result,resultExpected);
     }  
     
     @Test
     public void testGetMinutesComments() throws BusinessException {
         System.out.println("getMinutesComments");
-        int idMinute = 1;
         MinuteDAO instance = new MinuteDAO();
+        int idMinute = 1;
         ArrayList<MinuteComment> result = instance.getMinutesComments(idMinute);
-        assertNotNull(result);
+        ArrayList<MinuteComment> resultExpected = new ArrayList<MinuteComment>();
+        MinuteComment minuteComment = new MinuteComment("No se encuentran algunos acuerdos;","Pendiente","8325134",idMinute);
+        resultExpected.add(minuteComment);
+        assertEquals(result,resultExpected);
     }
 
     @Test 

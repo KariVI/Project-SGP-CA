@@ -82,6 +82,7 @@ public class Topic {
         this.idMeeting = idMeeting;
     }
     
+    @Override
     public boolean equals(Object object){
         boolean value = false;
             if (object instanceof Topic) {

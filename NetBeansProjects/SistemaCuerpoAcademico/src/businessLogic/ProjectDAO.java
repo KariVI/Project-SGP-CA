@@ -117,14 +117,7 @@ public class ProjectDAO implements IProjectDAO {
                     return idProject;
         }
         
-        @Override
-        public boolean findProjectById(int idProject){
-           boolean isRegistered = false;
-           if(idProject != 0 ){
-                isRegistered = true;
-           }
-           return isRegistered;
-        }
+
         
         @Override
         public Project getProjectById(int idProject) throws BusinessException{

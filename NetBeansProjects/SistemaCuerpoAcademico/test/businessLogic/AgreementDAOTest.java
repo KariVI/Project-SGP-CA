@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package businessLogic;
 
 import domain.Agreement;
 import java.util.ArrayList;
 import log.BusinessException;
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  *
@@ -20,17 +15,21 @@ public class AgreementDAOTest {
 
     @Test
     public void testSaveAgreement() throws BusinessException{
-        AgreementDAO agreementDAO= new AgreementDAO();
-        Agreement agreementAuxiliar;
+        AgreementDAO agreementDAO= new AgreementDAO();     
         int idMinute = 1;
         String professionalLicense = "4065161";
-        agreementAuxiliar = new Agreement("Septiembre 2020","Realizar reunión para evaliación", idMinute,professionalLicense);
+        Agreement agreementAuxiliar = new Agreement("Septiembre 2020","Realizar reunión para evaliación", idMinute,professionalLicense);
         assertTrue(agreementDAO.saveAgreement(agreementAuxiliar));
     }
     
     @Test
     public void testGetAgreements() throws BusinessException {
         AgreementDAO agreementDAO = new AgreementDAO();
+        ArrayList<Agreement> resultExpected = new ArrayList<Agreement>();
+        int idMinute = 1;
+        String professionalLicense = "4065161";
+        Agreement agreementAuxiliar = new Agreement("Septiembre 2020","Realizar reunión para evaliación", idMinute,professionalLicense);
+        resultExpected.add(agreementAuxiliar);
         ArrayList<Agreement> result = agreementDAO.getAgreements();
         assertNotNull(result);
     }
@@ -40,8 +39,7 @@ public class AgreementDAOTest {
         System.out.println("update");
         int idMinute = 1;
         String professionalLicense = "4065161";
-        Agreement newAgreement;
-        newAgreement = new Agreement("Septiembre 2021","Realizar reunión para evaliación",1,idMinute,professionalLicense);
+        Agreement newAgreement = new Agreement("Septiembre 2021","Realizar reunión para evaliación",1,idMinute,professionalLicense);
         AgreementDAO agreementDAO = new AgreementDAO();
         assertTrue(agreementDAO.update(newAgreement));
     }

@@ -69,7 +69,7 @@ public class MinuteDAO implements IMinuteDAO {
     }
 
     @Override
-    public void disapproveMinute(int idMinute, String professionalLicense, String comments)throws BusinessException {
+    public void disapproveMinute(MinuteComment minuteComment)throws BusinessException {
                     try{
                         Connector connectorDataBase = new Connector();
                         Connection connectionDataBase = connectorDataBase.getConnection();
@@ -77,9 +77,9 @@ public class MinuteDAO implements IMinuteDAO {
                             
                             PreparedStatement insertMinuteStatment;
                             insertMinuteStatment = connectionDataBase.prepareStatement("INSERT INTO ValidarMinuta(idMinuta, cedula,comentario,estado) VALUES(?,?,?,?) ");
-                            insertMinuteStatment.setInt(1, idMinute);
-                            insertMinuteStatment.setString(2, professionalLicense);
-                            insertMinuteStatment.setString(3, comments);
+                            insertMinuteStatment.setInt(1,  minuteComment.getIdMinute());
+                            insertMinuteStatment.setString(2,  minuteComment.getProfessionalLicense());
+                            insertMinuteStatment.setString(3,  minuteComment.getComment());
                             insertMinuteStatment.setString(4, "Pendiente");
                   
                             insertMinuteStatment.executeUpdate();
