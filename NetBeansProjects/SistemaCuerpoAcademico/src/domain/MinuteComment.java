@@ -22,6 +22,24 @@ public class MinuteComment {
         this.idMinute = idMinute;
     }
     
+    public MinuteComment(String comment, String professionalLicense, int idMinute){
+        this.comment = comment;
+        this.professionalLicense = professionalLicense;
+        this.idMinute = idMinute;
+    }
+    
+    public boolean equals(Object object){
+        boolean value = false;
+            if (object instanceof MinuteComment) {
+             MinuteComment minuteComment = (MinuteComment) object;
+
+            if (this.idMinute == minuteComment.getIdMinute() && this.professionalLicense.equals(minuteComment.getProfessionalLicense())){
+                value = true;
+            }
+
+        }
+      return value;
+    }
     public void setComment(String comment){
         this.comment = comment;
     }

@@ -176,9 +176,8 @@ public class Member {
         return degreeYear;
     }
     
-    @Override
-    public String toString(){
-        return professionalLicense+"\t"+name;
-    }
-   
+   @Override
+   public String toString(){
+      return professionalLicense+"\t"+name;
+    }  
 }

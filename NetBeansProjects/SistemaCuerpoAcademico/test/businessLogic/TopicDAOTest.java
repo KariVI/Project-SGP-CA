@@ -20,9 +20,12 @@ public class TopicDAOTest {
     public void testGetAgendaTopics()throws BusinessException {
         System.out.println("getAgendaTopics");
         int idMeeting = 1;
+        Topic topic = new Topic("Tema gastrocafe","11:00","12:00","4065161",1);
+        ArrayList<Topic> resultExpected = new ArrayList<Topic>();
+        resultExpected.add(topic);
         TopicDAO agendaTopicDAO = new TopicDAO();
-        ArrayList<Topic > result = agendaTopicDAO.getAgendaTopics(idMeeting);
-        assertNotNull(result);
+        ArrayList<Topic > result = agendaTopicDAO.getAgendaTopics(idMeeting);   
+        assertTrue(result.get(0).equals(topic));
     }
     
     @Test 

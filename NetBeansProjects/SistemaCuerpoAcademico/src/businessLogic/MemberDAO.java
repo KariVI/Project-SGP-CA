@@ -44,7 +44,7 @@ public class MemberDAO implements IMemberDAO{
     }
  
     @Override
-    public String searchProfessionalLicense(String memberName) throws BusinessException{
+    public String searchProfessionalLicenseByName(String memberName) throws BusinessException{
         String professionalLicenseAuxiliar = "";
         
         try{
@@ -98,7 +98,9 @@ public class MemberDAO implements IMemberDAO{
                 String key = resultSet.getString("clave");
                 
                 memberAuxiliar = new Member(professionalLicense, name, role, degree, nameDegree, nameUniversity, year,state,key);
-            }
+            }else{
+               throw new BusinessException("Project not found");
+             }
                 connectorDataBase.disconnect();
                 
         }catch(SQLException sqlException) {
@@ -109,15 +111,7 @@ public class MemberDAO implements IMemberDAO{
         return memberAuxiliar;
     }
     
-    @Override
-    public boolean memberExists(String professionalLicense) {
-        boolean value=true;
-       if (professionalLicense == null){
-           value=false;
-       }
-       return value;
-    }
-    
+
 
     public boolean update(Member newMember) throws BusinessException {
         boolean updateSucess = false;

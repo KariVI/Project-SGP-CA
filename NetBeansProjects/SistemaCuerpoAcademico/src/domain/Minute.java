@@ -26,6 +26,27 @@ public class Minute {
         this.idMeeting = idMeeting;
     }
     
+    public boolean equals(Object object){
+        boolean value = false;
+            if (object instanceof Minute) {
+             Minute minuteCompare = (Minute) object;
+
+            if (this.idMinute == minuteCompare.getIdMinute() && this.idMeeting == minuteCompare.getIdMeeting()){
+                value = true;
+            }
+
+        }
+      return value;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.idMinute;
+        hash = 97 * hash + this.idMeeting;
+        return hash;
+    }
+    
     public int getIdMinute(){
         return idMinute;
     }
