@@ -79,9 +79,10 @@ public class MemberRegisterController implements Initializable {
        MemberDAO memberDAO = new MemberDAO();
        if(validateMember(newMember)){
              try { 
-             memberDAO.saveMember(newMember);
-             AlertMessage alertMessage = new AlertMessage();
+              memberDAO.saveMember(newMember);
+              AlertMessage alertMessage = new AlertMessage();
               alertMessage.showAlertSuccesfulSave("El miembro fue registrado con éxito");
+              close();
              } catch (BusinessException ex) {
                 Log.logException(ex);
              }
@@ -119,7 +120,7 @@ public class MemberRegisterController implements Initializable {
             value = false;
             alertMessage.showAlertValidateFailed("Campos vacios");
         }
-        if(!isAlreadyRegisterd(member)){
+        if(isAlreadyRegisterd(member)){
             value = false;
             alertMessage.showAlertValidateFailed("El miembro ya se encuentra registrado");
         }
@@ -142,12 +143,17 @@ public class MemberRegisterController implements Initializable {
     
     public boolean isAlreadyRegisterd(Member member){
         boolean value = false;
+        AlertMessage alertMessage = new AlertMessage();
         try {
             MemberDAO memberDAO = new MemberDAO();
             memberDAO.getMemberByLicense(member.getProfessionalLicense());
             value = true;
         } catch (BusinessException ex) {
-            Log.logException(ex);
+            if(ex.getMessage().equals("DataBase connection failed ")){
+                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
+            }else{  
+                Log.logException(ex);
+            }
         }
         return value;
     }

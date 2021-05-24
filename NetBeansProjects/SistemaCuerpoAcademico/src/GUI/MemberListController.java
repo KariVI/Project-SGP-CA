@@ -29,6 +29,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
+import log.Log;
 
 /**
  * FXML Controller class
@@ -36,8 +37,9 @@ import javafx.stage.Modality;
  * @author Mariana
  */
 public class MemberListController implements  Initializable {
-    @FXML private GridPane gpMembers = new GridPane();
+   
     @FXML private Button btClose;
+    @FXML private Button btRegisterMember;
     @FXML private ListView<Member> lvMembers = new ListView<Member>();
     private ObservableList <Member> members ;
     
@@ -74,9 +76,9 @@ public class MemberListController implements  Initializable {
     @FXML
     void initializeMembers() {
         try {
-            MemberDAO md = new MemberDAO();
+            MemberDAO memberDAO = new MemberDAO();
             ArrayList <Member> memberList = new ArrayList<Member>();
-            memberList = md.getMembers();
+            memberList = memberDAO.getMembers();
             for( int i = 0; i<memberList.size(); i++) {
                 members.add(memberList.get(i));
             }
@@ -86,10 +88,28 @@ public class MemberListController implements  Initializable {
     }
     
     @FXML
-    public void close() {
+    public void actionClose() {
         Stage stage = (Stage)btClose.getScene().getWindow();
         stage.close();
     }
-
-
+    
+    @FXML 
+    public void actionRegister(){
+        try {
+            Stage primaryStage= new Stage();
+            URL url = new File("src/GUI/memberRegister.fxml").toURI().toURL();
+            FXMLLoader loader = new FXMLLoader(url);
+            loader.setLocation(url);
+            loader.load();
+            MemberRegisterController memberRegisterController = loader.getController();
+            Parent root = loader.getRoot();
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            Stage stage = (Stage) btRegisterMember.getScene().getWindow();
+            stage.close();
+            primaryStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(MemberViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

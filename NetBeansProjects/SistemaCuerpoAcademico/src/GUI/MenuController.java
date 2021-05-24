@@ -130,7 +130,7 @@ public class MenuController implements Initializable {
             
             case "Miembros":;
                    try {
-               loader = new FXMLLoader(getClass().getResource("MembertList.fxml"));
+               loader = new FXMLLoader(getClass().getResource("MemberList.fxml"));
                Parent root = loader.load();
                MemberListController MemberListController = loader.getController();
                Scene scene = new Scene(root);

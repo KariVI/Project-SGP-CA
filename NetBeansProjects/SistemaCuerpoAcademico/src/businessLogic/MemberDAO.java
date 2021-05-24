@@ -98,9 +98,9 @@ public class MemberDAO implements IMemberDAO{
                 String key = resultSet.getString("clave");
                 
                 memberAuxiliar = new Member(professionalLicense, name, role, degree, nameDegree, nameUniversity, year,state,key);
-            }else{
-               throw new BusinessException("Project not found");
-             }
+                 }else{
+                    throw new BusinessException("Member not found");
+                 }  
                 connectorDataBase.disconnect();
                 
         }catch(SQLException sqlException) {
