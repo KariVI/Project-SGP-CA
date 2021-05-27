@@ -8814,3 +8814,24 @@ GRAVE: log.BusinessException: Member not found
 	at com.sun.glass.ui.View.handleMouseEvent(View.java:555)
 	at com.sun.glass.ui.View.notifyMouse(View.java:937)
 
+may 26, 2021 11:21:52 PM log.Log logException
+INFORMACIÓN: Bitacora inicializada
+may 26, 2021 11:21:52 PM log.Log logException
+GRAVE: java.io.FileNotFoundException: /Users/Mariana/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/MinutaRegister.fxml (No such file or directory)
+	at java.io.FileInputStream.open0(Native Method)
+	at java.io.FileInputStream.open(FileInputStream.java:195)
+	at java.io.FileInputStream.<init>(FileInputStream.java:138)
+	at java.io.FileInputStream.<init>(FileInputStream.java:93)
+	at sun.net.www.protocol.file.FileURLConnection.connect(FileURLConnection.java:90)
+	at sun.net.www.protocol.file.FileURLConnection.getInputStream(FileURLConnection.java:188)
+	at java.net.URL.openStream(URL.java:1045)
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2440)
+	at javafx.fxml.FXMLLoader.load(FXMLLoader.java:2409)
+	at sistemacuerpoacademico.PrincipalMenu.start(PrincipalMenu.java:36)
+	at com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$162(LauncherImpl.java:863)
+	at com.sun.javafx.application.PlatformImpl.lambda$runAndWait$175(PlatformImpl.java:326)
+	at com.sun.javafx.application.PlatformImpl.lambda$null$173(PlatformImpl.java:295)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$174(PlatformImpl.java:294)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+

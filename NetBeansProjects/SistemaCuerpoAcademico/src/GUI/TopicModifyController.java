@@ -169,9 +169,11 @@ public class TopicModifyController implements Initializable {
           for(int i = 0; i < oldTopics.size(); i++){
                topicDAO.delete(oldTopics.get(i));
            }  
+          
            for(int i = 0; i < topics.size(); i++){
                topicDAO.save(topics.get(i));
            }
+           
            AlertMessage alertMessage = new AlertMessage();
            alertMessage.showAlertSuccesfulSave("Los temas fueron registrados con éxito");
          } catch (BusinessException ex) {

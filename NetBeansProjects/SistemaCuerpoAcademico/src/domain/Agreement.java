@@ -22,6 +22,12 @@ public class Agreement {
         this.professionalLicense = professionalLicense;
     }
     
+    public Agreement(String period, String description, String professionalLicense ){
+        this.period = period;
+        this.description = description;
+        this.professionalLicense = professionalLicense;
+    }
+    
     public int getIdAgreement(){
         return idAgreement;
     }
