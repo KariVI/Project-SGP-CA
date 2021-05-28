@@ -102,4 +102,25 @@ public class MinuteDAOTest {
         MinuteDAO minuteDAO = new MinuteDAO();
         assertEquals(minuteDAO.getMembersApprove(minute),memberList);
     }
+    
+    @Test
+    public void getIdMinute() throws BusinessException {
+        System.out.println("get id minute");
+        Minute minute = new Minute("Los acuerdos registrados son pendiente","Completado","Falta gastrocafe",1);
+        int idMinuteExpected = 1;
+        MinuteDAO minuteDAO = new MinuteDAO();
+        int idMinuteResut = minuteDAO.getIdMinute(minute);
+        assertEquals(idMinuteResut,idMinuteExpected);   
+    }
+    
+    
+    @Test (expected = BusinessException.class)
+    public void getIdMinuteNotFound() throws BusinessException {
+        System.out.println("get id minute");
+        Minute minute = new Minute("Los acuerdos registrados son pendiente","Estado","Falta gastrocafe",1);
+        int idMinuteExpected = 1;
+        MinuteDAO minuteDAO = new MinuteDAO();
+        int idMinuteResut = minuteDAO.getIdMinute(minute);
+        assertEquals(idMinuteResut,idMinuteExpected);
+    }
 }

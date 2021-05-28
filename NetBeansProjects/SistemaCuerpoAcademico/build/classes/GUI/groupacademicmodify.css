@@ -1,0 +1,11 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+    .text-area {    
+    -fx-wrap-text: true;
+  
+  }
+}

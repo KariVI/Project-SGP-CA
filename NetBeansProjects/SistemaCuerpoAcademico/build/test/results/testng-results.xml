@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="SistemaCuerpoAcademico" duration-ms="5050" started-at="2021-05-28T08:08:30Z" finished-at="2021-05-28T08:08:35Z">
+    <groups>
+    </groups>
+    <test name="businessLogic.MinuteDAOTest" duration-ms="5050" started-at="2021-05-28T08:08:30Z" finished-at="2021-05-28T08:08:35Z">
+      <class name="businessLogic.MinuteDAOTest">
+        <test-method status="PASS" signature="getIdMinuteNotFound()[pri:0, instance:getIdMinuteNotFound(businessLogic.MinuteDAOTest)]" name="getIdMinuteNotFound" duration-ms="4077" started-at="2021-05-28T03:08:31Z" finished-at="2021-05-28T03:08:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getIdMinuteNotFound -->
+      </class> <!-- businessLogic.MinuteDAOTest -->
+    </test> <!-- businessLogic.MinuteDAOTest -->
+  </suite> <!-- SistemaCuerpoAcademico -->
+</testng-results>

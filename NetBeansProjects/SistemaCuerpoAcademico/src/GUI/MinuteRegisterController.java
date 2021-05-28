@@ -2,8 +2,10 @@ package GUI;
 
 import businessLogic.MemberDAO;
 import businessLogic.MinuteDAO;
+import businessLogic.AgreementDAO;
 import domain.Agreement;
 import domain.Member;
+import domain.Minute;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import log.BusinessException;
+import log.Log;
 
 
 public class MinuteRegisterController implements Initializable {
@@ -38,18 +42,19 @@ public class MinuteRegisterController implements Initializable {
     @FXML TableColumn <Agreement,String>tcPeriod;
     @FXML TableColumn tcNumber;
     @FXML TextArea taDue;
-    @FXML TextArea taNotes;
+    @FXML TextArea taNote;
     @FXML TableView<Agreement> tvAgreement;
     @FXML Button btDelete;
     @FXML Button btAdd;
     @FXML Button btFinish;
     private int idMinute = 1;
+    private int idMeeting = 1;
     private int indexAgreement;
     private ListChangeListener<Agreement> tableAgreementListener;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tcAgreement.setCellValueFactory(new PropertyValueFactory("agreementName"));
+        tcAgreement.setCellValueFactory(new PropertyValueFactory("description"));
         tcPeriod.setCellValueFactory(new PropertyValueFactory("period"));
         tcNumber.setCellValueFactory(new PropertyValueFactory("finishTime"));
         tcMember.setCellValueFactory(new PropertyValueFactory("professionalLicense"));
@@ -124,10 +129,9 @@ public class MinuteRegisterController implements Initializable {
         period = tfPeriod.getText();
         agreementDescription = tfAgreement.getText();
         Agreement agreement = new Agreement(period,agreementDescription,member.getProfessionalLicense());
-       // if(validateTopic(topic)){
-       //     topics.add(topic);
-       //}
-       
+        if(validateAgreement(agreement)){
+          agreements.add(agreement);
+        }      
         cleanFields();
     }
     
@@ -143,84 +147,93 @@ public class MinuteRegisterController implements Initializable {
         tfPeriod.setText("");
     }
     
-    public void actionSave(){
-       MinuteDAO minuteDAO = new MinuteDAO();
-       
-       // try {
-        //  for(int i = 0; i < minutes.size(); i++){
-        //     topicDAO.save(topics.get(i));
-         //  }   
-        //   AlertMessage alertMessage = new AlertMessage();
-       //    alertMessage.showAlertSuccesfulSave("Los temas fueron registrados con éxito");
-       //  } catch (BusinessException ex) {
-        //       Logger.getLogger(TopicRegisterController.class.getName()).log(Level.SEVERE, null, ex);
-       //  }
-       
-       // Stage stage = (Stage)btSave.getScene().getWindow();
-        //stage.close();
+    public void actionFinish(){
+       String note = "";
+       String due = "";
+       String initialState = "pendiente";
+       note = taNote.getText();
+       due = taDue.getText();
+       Minute minute = new Minute(note,initialState,due,idMeeting);
+       if(validateMinute(minute)){
+           int idMinute = 0;
+           try {
+               MinuteDAO minuteDAO = new MinuteDAO();
+               minuteDAO.saveMinute(minute);
+               idMinute = minuteDAO.getIdMinute(minute);
+               AgreementDAO agreementDAO = new AgreementDAO();
+               for(int i = 0; i < agreements.size(); i++){
+                   agreements.get(i).setIdMinute(idMinute);
+                   agreementDAO.saveAgreement(agreements.get(i));
+               }
+               AlertMessage alertMessage = new AlertMessage();
+               alertMessage.showAlertSuccesfulSave("La minuta");
+           } catch (BusinessException ex) {
+                Log.logException(ex);
+           }          
+       }
+        Stage stage = (Stage)btFinish.getScene().getWindow();
+        stage.close();
     }
    
-   public void actionCancel(){
-      //Stage stage = (Stage)btCancel.getScene().getWindow();
-     // stage.close(); 
-   }
     
-    public boolean validateTopic(Topic topic){
+    public boolean validateAgreement(Agreement agreement){
         boolean value = true;
         AlertMessage alertMessage = new AlertMessage();
-        if(isEmptyFields(topic)){
+        if(isEmptyFields(agreement)){
             value = false;
             alertMessage.showAlertValidateFailed("Campos vacios");
         }
         
-        if(invalidFields(topic)){
+        if(invalidFields(agreement)){
             value = false;
             alertMessage.showAlertValidateFailed("Campos inválidos");
         }
-        
-        if(!validateHours(topic)){
+             
+        if(repeatedAgreement(agreement)){
             value = false;
-            alertMessage.showAlertValidateFailed("Ingresa la hora en formato HH:MM ");
-        }
-        
-        if(repeatedTopic(topic)){
-            value = false;
-            alertMessage.showAlertValidateFailed("Tema repetido");
+            alertMessage.showAlertValidateFailed("Acuerdo repetido");
         }
         return value;
     }
     
-    public boolean isEmptyFields(Topic topic){
+        
+    public boolean validateMinute(Minute minute){
+        boolean value = true;
+        AlertMessage alertMessage = new AlertMessage();
+        if(isEmptyFields(minute)){
+            value = false;
+            alertMessage.showAlertValidateFailed("Campos vacios");
+        }
+        
+        if(repeatedMinute(minute)){
+            value = false;
+            alertMessage.showAlertValidateFailed("Minuta repetida");
+        }
+        return value;
+    }
+    
+    public boolean isEmptyFields(Agreement agreement){
         boolean value = false;
-        if(topic.getStartTime().isEmpty()||topic.getFinishTime().isEmpty()||topic.getTopicName().isEmpty()){
+        if(agreement.getDescription().isEmpty()||agreement.getPeriod().isEmpty()||agreement.getProfessionalLicense().isEmpty()){
             value = true;
         }
         return value;
     }
     
-    public boolean invalidFields(Topic topic){
+    public boolean invalidFields(Agreement agreement){
         boolean value = false;
         Validation validation = new Validation();
-        if(validation.findInvalidField(topic.getTopicName())){
+        if(validation.findInvalidField(agreement.getDescription())){
            value = true;
         }
         return value;
     }
     
-    public boolean validateHours(Topic topic){
-        boolean value = false;
-        Validation validation = new Validation();
-        if(validation.validateHour(topic.getFinishTime())){
-            value = true;
-        }
-        return value;
-    }
-    
-    public boolean repeatedTopic(Topic topic){
+    public boolean repeatedAgreement(Agreement agreement){
         Boolean value = false;
         int i = 0;
-        while(!value && i<topics.size()){
-            if(topics.get(i).equals(topic)){
+        while(!value && i<agreements.size()){
+            if(agreements.get(i).equals(agreement)){
                 value = true;
             }
             i++;
@@ -228,5 +241,29 @@ public class MinuteRegisterController implements Initializable {
        return value;
     }
     
+    public boolean isEmptyFields(Minute minute){
+        boolean value = false;
+        if(minute.getDue().isEmpty()||minute.getNote().isEmpty()){
+            value = true;
+        }
+        return value;
+    }
     
+    
+    public boolean repeatedMinute(Minute minute){
+        boolean value = false;
+        AlertMessage alertMessage = new AlertMessage();
+        try {
+            MinuteDAO minuteDAO = new MinuteDAO();
+            minuteDAO.getIdMinute(minute);
+            value = true;
+        } catch (BusinessException ex) {
+            if(ex.getMessage().equals("DataBase connection failed ")){
+                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
+            }else{  
+                Log.logException(ex);
+            }
+        }
+        return value;
+    }
 }
