@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ReceptionWorkRegisterController">
+    <stylesheets>
+        <URL value="@receptionworkregister.css"/>
+    </stylesheets>
+    <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#242525" height="31.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="700.0" />
+      <Label layoutX="19.0" layoutY="101.0" text="Título " />
+      <Label layoutX="11.0" layoutY="135.0" text="Fecha de inicio:" />
+      <Label layoutX="16.0" layoutY="165.0" text="Fecha de fin: " />
+      <Label layoutX="19.0" layoutY="203.0" text="Descripción:" />
+      <TextField fx:id="tfTitle" layoutX="106.0" layoutY="97.0" prefHeight="25.0" prefWidth="252.0" />
+      <TextArea fx:id="taDescription" layoutX="106.0" layoutY="203.0" prefHeight="82.0" prefWidth="260.0" wrapText="true" />
+      <Button fx:id="btSave" layoutX="527.0" layoutY="461.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar" />
+      <Button fx:id="btExit" layoutX="599.0" layoutY="461.0" mnemonicParsing="false" onAction="#actionExit" prefHeight="25.0" prefWidth="59.0" text="Salir" />
+      <Label layoutX="19.0" layoutY="306.0" text="Director:" />
+      <TextField fx:id="tfDirector" layoutX="106.0" layoutY="302.0" prefHeight="25.0" prefWidth="260.0" promptText="Escribe la cedula del director " />
+      <Label layoutX="16.0" layoutY="339.0" text="Codirectores:" />
+      <TextArea fx:id="taCodirectors" layoutX="105.0" layoutY="340.0" prefHeight="82.0" prefWidth="260.0" promptText="Separa las cedulas de los participantes con una coma" wrapText="true" />
+      <TextField fx:id="tfNumberStudents" layoutX="540.0" layoutY="89.0" prefHeight="25.0" prefWidth="46.0" />
+      <Button fx:id="btOk" layoutX="583.0" layoutY="89.0" mnemonicParsing="false" onAction="#addStudents" text="Ok" />
+      <Label layoutX="386.0" layoutY="93.0" text="Número de estudiantes:" />
+      <Label layoutX="25.0" layoutY="41.0" text="Registro de Trabajo Recepcional ">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Pane fx:id="paneStudent" layoutX="374.0" layoutY="120.0" prefHeight="307.0" prefWidth="277.0" />
+      <DatePicker fx:id="dpStartDate" layoutX="193.0" layoutY="131.0" prefHeight="25.0" prefWidth="166.0" />
+      <DatePicker fx:id="dpEndDate" layoutX="193.0" layoutY="161.0" prefHeight="25.0" prefWidth="166.0" />
+   </children>
+    
+    
+</AnchorPane>

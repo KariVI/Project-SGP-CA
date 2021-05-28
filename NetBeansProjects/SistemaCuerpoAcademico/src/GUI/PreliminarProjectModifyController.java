@@ -60,6 +60,7 @@ public class PreliminarProjectModifyController implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String startDate;
         String endDate;
+        
 
         if(divisionCodirectorsSucessful(codirectors)){ 
             if(!validateFieldEmpty() && validateInformationField() ){
@@ -81,6 +82,8 @@ public class PreliminarProjectModifyController implements Initializable {
   private void updatePreliminarProject (){   
         PreliminarProjectDAO preliminarProjectDAO =  new PreliminarProjectDAO();
         try{  
+            deleteColaborators();
+            deleteStudents();
            if(preliminarProjectDAO.updatedSucessful(preliminarProjectRecover.getKey(), preliminarProjectNew)){  
                preliminarProjectNew.setKey(preliminarProjectDAO.getId(preliminarProjectNew));
                saveColaborators();
@@ -89,7 +92,6 @@ public class PreliminarProjectModifyController implements Initializable {
                alertMessage.showAlertSuccesfulSave("Anteproyecto");
            }
         } catch (BusinessException ex){ 
-            System.out.println("a");
             if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage = new AlertMessage();
                 alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
@@ -204,8 +206,7 @@ public class PreliminarProjectModifyController implements Initializable {
        try {
            getColaborators ();
            getStudents();
-           deleteColaborators();
-           deleteStudents();
+           
        } catch (BusinessException ex) {
           if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage = new AlertMessage();

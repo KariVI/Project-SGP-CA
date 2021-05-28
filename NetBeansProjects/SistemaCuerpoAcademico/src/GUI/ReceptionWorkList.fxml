@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ReceptionWorkListController">
+    <stylesheets>
+        <URL value="@receptionworklist.css"/>
+    </stylesheets>
+    <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#202122" height="31.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+      <Button fx:id="btRegister" layoutX="484.0" layoutY="46.0" mnemonicParsing="false" onAction="#actionRegister" text="Registrar Trabajo Recepcional " />
+      <ListView fx:id="lvOptions" layoutX="98.0" layoutY="123.0" prefHeight="200.0" prefWidth="375.0" />
+      <Label layoutX="98.0" layoutY="91.0" text="Selecciona la sección a la que te deseas dirigir:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+     </children>
+</AnchorPane>

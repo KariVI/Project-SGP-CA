@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package GUI;
 
 import businessLogic.MeetingDAO;
@@ -43,11 +39,7 @@ import javafx.util.converter.LocalDateStringConverter;
 import log.BusinessException;
 import log.Log;
 
-/**
- * FXML Controller class
- *
- * @author kari
- */
+
 public class MeetingModifyController implements Initializable {
 
     private ObservableList<Member> members;
@@ -69,28 +61,25 @@ public class MeetingModifyController implements Initializable {
     @FXML Button btSave;
     @FXML Button btDelete;
     private Meeting oldMeeting= new Meeting();
-    private Meeting newMeeting;
+    private Meeting newMeeting=new Meeting();
      
     
     @FXML 
     private void actionSave (ActionEvent actionEvent){    
-       /* String subject= tfSubject.getText();
+        String subject= tfSubject.getText();
         String hour= tfHour.getText();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         if(!validateFieldEmpty() && validateInformationField() && validateDate()){
-            String date= dpDate.getValue().format(formatter);
-            Meeting meeting = new Meeting(subject,date,hour);
-            System.out.println(hour);
-            if(!searchRepeateMeeting(meeting)){  
-                save(meeting);
-            }else{  
-                AlertMessage alertMessage = new AlertMessage();
-                alertMessage.showAlertValidateFailed("La reunión ya se encuentra registrado");
-
-            }        
+            String date= dpDate.getValue().format(formatter);           
+                newMeeting.setSubject(subject);
+                newMeeting.setDate(date);
+                newMeeting.setHourStart(hour);
+                newMeeting.setKey(oldMeeting.getKey());
+                update();
+                 
         }else{  
             sendAlert();
-        }*/
+        }
     }
     
     @FXML
@@ -132,7 +121,7 @@ public class MeetingModifyController implements Initializable {
     
      @FXML
     private void actionDelete(ActionEvent event){
-        oldPrerequisites.remove(indexPrerequisite);
+        prerequisites.remove(indexPrerequisite);
         cleanFields();
     }
     
@@ -186,22 +175,99 @@ public class MeetingModifyController implements Initializable {
         LocalDate localDate= LocalDate.parse(oldMeeting.getDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         dpDate.setValue(localDate);
         initializePrerequisites();
-        tvPrerequisites.setItems(oldPrerequisites);
-         initializeMembers();
+        tvPrerequisites.setItems(prerequisites);
+        initializeMembers();
         cbMember.setItems(members);
         cbMember.getSelectionModel().selectFirst();
         cbLeader.setItems(members);
-        cbSecretary.setItems(members);
-        
+        cbLeader.getSelectionModel().selectFirst();
+        cbSecretary.setItems(members);  
+        cbSecretary.getSelectionModel().selectFirst();
         recoverAssistants();
-
     }
+    
+    private void update(){  
+        try {
+            deleteOldPrerequisites();
+            deleteOldAssistants();
+            MeetingDAO meetingDAO = new MeetingDAO();
+            if( meetingDAO.updatedSucessful(newMeeting)){   
+               savePrerequisite(); 
+               saveAssistants();
+               AlertMessage alertMessage = new AlertMessage();
+               alertMessage.showUpdateMessage();
+            };
+        } catch (BusinessException ex) {
+            Log.logException(ex);
+        }
+        
+        
+    }
+    
+    private boolean searchRepeateMeeting(Meeting meeting)   { 
+       boolean value=false; 
+        try {   
+            MeetingDAO preliminarProjectDAO= new MeetingDAO();
+            preliminarProjectDAO.getId(meeting);
+            value=true;
+        }catch (BusinessException ex){ 
+            if(ex.getMessage().equals("DataBase connection failed ")){
+                AlertMessage alertMessage = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
+            }else{  
+                Log.logException(ex);
+            }
+        }
+        return value;
+    }
+    
+    private void deleteOldPrerequisites() throws BusinessException{ 
+        int i=0;
+        PrerequisiteDAO prerequisiteDAO = new PrerequisiteDAO();
+        while(i< oldPrerequisites.size()){ 
+            Prerequisite prerequisiteAuxiliar= oldPrerequisites.get(i);
+            prerequisiteDAO.deletedSucessful(prerequisiteAuxiliar.getKey());
+            i++;
+        }
+    }
+    
+    private void deleteOldAssistants() throws BusinessException{
+        MeetingDAO meetingDAO = new MeetingDAO();
+        meetingDAO.deletedSucessfulAssistants(oldMeeting);
+    }
+    
+    private void savePrerequisite() throws BusinessException{ 
+    PrerequisiteDAO prerequisiteDAO = new PrerequisiteDAO();
+        for(int i = 0; i < prerequisites.size(); i++){
+             prerequisiteDAO.savedSucessfulPrerequisites(prerequisites.get(i), newMeeting.getKey()); 
+           } 
+    }
+    
+     private boolean validateFieldEmpty(){ 
+          boolean value=false;
+          if(tfSubject.getText().isEmpty()  || tfHour.getText().isEmpty() || dpDate == null ){
+              value=true;
+          }
+          return value;
+    }
+    
+    private boolean validateInformationField(){ 
+         boolean value=true;
+        Validation validation=new Validation();
+        if(!(validation.validateHour(tfHour.getText()))
+        || validation.findInvalidField(tfSubject.getText())){   
+            value=false;
+        }  
+        return value;
+    }
+    
     
     private void initializePrerequisites(){
         PrerequisiteDAO prerequisiteDAO = new PrerequisiteDAO();
         try{
             ArrayList<Prerequisite> prerequisitesList = prerequisiteDAO.getPrerequisites(oldMeeting.getKey());
-            for(int i = 0; i < prerequisitesList.size(); i++){    
+            for(int i = 0; i < prerequisitesList.size(); i++){ 
+                prerequisites.add(prerequisitesList.get(i));
                 oldPrerequisites.add(prerequisitesList.get(i));
             }
             
@@ -227,6 +293,7 @@ public class MeetingModifyController implements Initializable {
         MeetingDAO meetingDAO = new MeetingDAO();
         try{
             ArrayList<Member> assistantsList = meetingDAO.getAssistants(oldMeeting.getKey());
+            oldMeeting.setAssistants(assistantsList);
             for(int i = 0; i < assistantsList.size(); i++){
                 Member memberAuxiliar = assistantsList.get(i);
                 if(memberAuxiliar.getRole().equals("Lider")){ 
@@ -239,6 +306,26 @@ public class MeetingModifyController implements Initializable {
             Log.logException(ex);
         }
     }    
+    
+    private void saveAssistants() throws BusinessException{  
+        MeetingDAO meetingDAO = new MeetingDAO();
+        Member leader= (Member) cbLeader.getSelectionModel().getSelectedItem();
+        leader.setRole("Lider");
+        Member secretary = (Member) cbSecretary.getSelectionModel().getSelectedItem();
+        secretary.setRole("Secretario");
+        ArrayList<Member> assistants= new ArrayList<Member> ();
+        assistants.add(leader);
+        assistants.add(secretary);
+        for(int i=0; i< members.size(); i++){
+            Member memberAuxiliar = (Member) members.get(i);
+            if((! memberAuxiliar.equals(leader)) && (! memberAuxiliar.equals(secretary))){
+                memberAuxiliar.setRole("Asistente");
+                assistants.add(memberAuxiliar);
+            }
+        }  
+        newMeeting.setAssistants(assistants);
+        meetingDAO.addedSucessfulAssistants(newMeeting);
+    }
     
     private Prerequisite getSelectedPrerequisite(){
         Prerequisite prerequisite = null;
@@ -286,6 +373,44 @@ public class MeetingModifyController implements Initializable {
         };
     }    
     
+    private boolean validateDate(){
+        boolean value=true;
+        LocalDate dateMeeting = dpDate.getValue();
+        LocalDate dateCurrently = LocalDate.now();
+        if(dateMeeting.isBefore(dateCurrently)){ 
+            value=false;
+        }
+        return value;
+    }
+    
+    public boolean repeatedPrerequisite(Prerequisite prerequisite){
+        Boolean value = false;
+        int i = 0;
+        while(!value && i<prerequisites.size()){
+            if(prerequisites.get(i).equals(prerequisite)){
+                value = true;
+            }
+            i++;
+        }
+       return value;
+    }
+    
+     private void sendAlert(){ 
+          AlertMessage alertMessage= new AlertMessage();
+          if(validateFieldEmpty() ){  
+              alertMessage.showAlertValidateFailed("No se han llenado todos los campos");
+          }
+          if(!validateInformationField()){
+             alertMessage.showAlertValidateFailed("Existen campos con caracteres invalidos");
+          }
+          
+          if(!validateDate()){  
+             alertMessage.showAlertValidateFailed("La fecha de reunión debe ser mayor  que la actual");
+
+          }
+
+      }
+     
     private void cleanFields(){
         tfDescription.setText("");
     }
