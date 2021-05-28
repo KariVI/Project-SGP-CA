@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Prerequisite {
     private int key;
     private String description;
-    public Member mandated;
+    private Member mandated;
 
     
     

@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -144,7 +142,7 @@ public class MenuController implements Initializable {
             break;
             
             case "Reuniones":;
-                   try {
+              try {
                loader = new FXMLLoader(getClass().getResource("MeetingList.fxml"));
                Parent root = loader.load();
                MeetingListController MeetingListController = loader.getController();

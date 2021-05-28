@@ -187,6 +187,9 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
                     String professionalLicense= resultSet.getString("cedula");
                     Prerequisite prerequisiteAuxiliar = new Prerequisite(description);
                     prerequisiteAuxiliar.setKey(key);
+                    MemberDAO memberDAO = new MemberDAO();
+                    Member memberAuxiliar = memberDAO.getMemberByLicense(professionalLicense);
+                    prerequisiteAuxiliar.setMandated(memberAuxiliar);
                     prerequisiteList.add(prerequisiteAuxiliar);
                     
                 }

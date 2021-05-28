@@ -2,23 +2,16 @@
 package sistemacuerpoacademico;
 
 
-import GUI.GroupAcademicShowController;
 import GUI.MenuController;
-import domain.GroupAcademic;
 import java.io.File;
 import log.Log;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 

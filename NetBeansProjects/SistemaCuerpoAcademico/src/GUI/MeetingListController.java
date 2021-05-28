@@ -2,15 +2,15 @@
 package GUI;
 
 import businessLogic.MeetingDAO;
-import businessLogic.PreliminarProjectDAO;
 import domain.Meeting;
-import domain.PreliminarProject;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -74,8 +74,12 @@ public class MeetingListController implements Initializable {
            FXMLLoader loader = new FXMLLoader(getClass().getResource("MeetingShow.fxml"));
             Parent root = loader.load();
             MeetingShowController meetingShowController = loader.getController();
-            /*meetingShowController.setMeeting(selectedMeeting);
-            meetingShowController.initializeMeeting();*/
+            meetingShowController.setMeeting(selectedMeeting);
+                 try {
+                     meetingShowController.initializeMeeting();
+                 } catch (BusinessException ex) {
+                    Log.logException(ex);
+                 }
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);

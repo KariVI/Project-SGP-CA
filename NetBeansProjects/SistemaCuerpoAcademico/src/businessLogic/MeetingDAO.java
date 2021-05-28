@@ -126,7 +126,8 @@ public class MeetingDAO implements IMeetingDAO{
                     String hourStart = resultSet.getString("hora");
                     String date = resultSet.getString("fecha");
                     String state= resultSet.getString("estado");
-                    Meeting meetingAuxiliar = new Meeting(keyMeeting,subject, hourStart, date, state);
+                    Meeting meetingAuxiliar = new Meeting(keyMeeting,subject,date, hourStart, state);
+                    
                     meetingList.add(meetingAuxiliar);
                 }
                 connectorDataBase.disconnect();
@@ -249,7 +250,7 @@ public class MeetingDAO implements IMeetingDAO{
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
-            String query="SELECT cedula FROM ParticipaReunion where idReunion=?";
+            String query="SELECT cedula,rol FROM ParticipaReunion where idReunion=?";
 
                PreparedStatement preparedStatement = connectionDataBase.prepareStatement(query);
                preparedStatement.setInt(1, idMeeting);
@@ -257,7 +258,9 @@ public class MeetingDAO implements IMeetingDAO{
                resultSet = preparedStatement.executeQuery();
                while(resultSet.next()){
                     String professionalLicense= resultSet.getString("cedula");
+                    String role =resultSet.getString("rol");
                     Member member = memberDAO.getMemberByLicense(professionalLicense);
+                    member.setRole(role);
                     assistants.add(member);
                     
                 }

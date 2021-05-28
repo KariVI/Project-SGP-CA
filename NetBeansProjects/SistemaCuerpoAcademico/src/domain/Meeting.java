@@ -11,7 +11,7 @@ public class Meeting {
     private String hourStart;
     private String state;
     private ArrayList<Prerequisite> listPrerequisites;
-    public ArrayList<Member> assistants;
+    private ArrayList<Member> assistants;
    
     
     public Meeting (String subject, String date, String hourStart){
@@ -29,6 +29,10 @@ public class Meeting {
       listPrerequisites= new ArrayList<Prerequisite> ();
       assistants=new ArrayList<Member>();
       
+    }
+
+    public Meeting() {
+         assistants=new ArrayList<Member>();
     }
 
     

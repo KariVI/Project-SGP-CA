@@ -6,7 +6,6 @@
 package GUI;
 
 import businessLogic.TopicDAO;
-import domain.Member;
 import domain.Topic;
 import java.net.URL;
 import java.util.ArrayList;
@@ -14,24 +13,16 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import log.BusinessException;
 
-/**
- * FXML Controller class
- *
- * @author Mariana
- */
 public class TopicShowController implements Initializable {
     private ObservableList<Topic> topics;
     TextField tfTopic;

@@ -26,7 +26,7 @@
       <Label fx:id="lbDirector" layoutX="79.0" layoutY="222.0" text="No hay director asignado " />
       <TextArea fx:id="taDescription" editable="false" layoutX="14.0" layoutY="166.0" prefHeight="47.0" prefWidth="614.0" />
       <TextArea fx:id="taCodirectors" editable="false" layoutX="14.0" layoutY="250.0" prefHeight="47.0" prefWidth="614.0" />
-      <Button layoutX="475.0" layoutY="451.0" mnemonicParsing="false" text="Regresar" />
+      <Button fx:id="btReturn" layoutX="475.0" layoutY="451.0" mnemonicParsing="false" onAction="#actionReturn" text="Regresar" />
       <Button fx:id="btUpdate" layoutX="566.0" layoutY="451.0" mnemonicParsing="false" onAction="#actionUpdate" text="Modificar" />
       <Text layoutX="10.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Anteproyecto">
          <font>
