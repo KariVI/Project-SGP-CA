@@ -167,12 +167,12 @@ public class MinuteRegisterController implements Initializable {
                }
                AlertMessage alertMessage = new AlertMessage();
                alertMessage.showAlertSuccesfulSave("La minuta");
+               Stage stage = (Stage)btFinish.getScene().getWindow();
+               stage.close();
            } catch (BusinessException ex) {
                 Log.logException(ex);
            }          
        }
-        Stage stage = (Stage)btFinish.getScene().getWindow();
-        stage.close();
     }
    
     

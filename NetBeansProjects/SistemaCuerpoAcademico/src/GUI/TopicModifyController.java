@@ -95,7 +95,9 @@ public class TopicModifyController implements Initializable {
     
     @FXML
     private void add(ActionEvent event){
-        String finishTime = "", startTime = "", topicName = "";
+        String finishTime = "";
+        String startTime = "";
+        String topicName = "";
         Member member = cbMember.getSelectionModel().getSelectedItem();
         finishTime = tfFinishTime.getText();
         startTime = tfFinishTime.getText();

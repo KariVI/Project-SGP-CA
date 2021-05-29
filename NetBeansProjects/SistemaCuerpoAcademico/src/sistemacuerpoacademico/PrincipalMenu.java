@@ -5,6 +5,8 @@ package sistemacuerpoacademico;
 import GUI.GroupAcademicShowController;
 import GUI.MenuController;
 import GUI.MinuteRegisterController;
+import GUI.TopicModifyController;
+import GUI.TopicShowController;
 import domain.GroupAcademic;
 import java.io.File;
 import log.Log;
@@ -35,7 +37,7 @@ public class PrincipalMenu extends Application {
                 FXMLLoader loader = new FXMLLoader(url);
                 loader.setLocation(url);
                 loader.load();
-                MinuteRegisterController minuteController =loader.getController();
+                MinuteRegisterController menu =loader.getController();
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);
@@ -54,6 +56,5 @@ public class PrincipalMenu extends Application {
     public static void main(String[] args){
         launch(args);
     }
-
     
 }
