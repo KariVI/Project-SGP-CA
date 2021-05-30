@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package GUI;
 
 import businessLogic.MemberDAO;
@@ -19,8 +15,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -66,6 +60,7 @@ public class PreliminarProjectModifyController implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String startDate;
         String endDate;
+        
 
         if(divisionCodirectorsSucessful(codirectors)){ 
             if(!validateFieldEmpty() && validateInformationField() ){
@@ -78,9 +73,6 @@ public class PreliminarProjectModifyController implements Initializable {
                 preliminarProjectNew.setDateStart(startDate);
                 preliminarProjectNew.setDateEnd(endDate);
                 updatePreliminarProject ();
-
-
-
             }else{  
                 sendAlert();
             }
@@ -90,6 +82,8 @@ public class PreliminarProjectModifyController implements Initializable {
   private void updatePreliminarProject (){   
         PreliminarProjectDAO preliminarProjectDAO =  new PreliminarProjectDAO();
         try{  
+            deleteColaborators();
+            deleteStudents();
            if(preliminarProjectDAO.updatedSucessful(preliminarProjectRecover.getKey(), preliminarProjectNew)){  
                preliminarProjectNew.setKey(preliminarProjectDAO.getId(preliminarProjectNew));
                saveColaborators();
@@ -98,7 +92,6 @@ public class PreliminarProjectModifyController implements Initializable {
                alertMessage.showAlertSuccesfulSave("Anteproyecto");
            }
         } catch (BusinessException ex){ 
-            System.out.println("a");
             if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage = new AlertMessage();
                 alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
@@ -213,8 +206,7 @@ public class PreliminarProjectModifyController implements Initializable {
        try {
            getColaborators ();
            getStudents();
-           deleteColaborators();
-           deleteStudents();
+           
        } catch (BusinessException ex) {
           if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage = new AlertMessage();

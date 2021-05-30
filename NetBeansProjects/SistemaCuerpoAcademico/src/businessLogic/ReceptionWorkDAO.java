@@ -389,6 +389,5 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
         return lgacs;
     }
     
-
-    
+   
 }

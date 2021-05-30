@@ -128,6 +128,11 @@ public class GroupAcademicModifyController implements Initializable {
     private void actionReturn(ActionEvent actionEvent) throws BusinessException{  
         Stage stage = (Stage) btReturn.getScene().getWindow();
         stage.close();
+        openShowWindow();
+        
+    }
+    
+    private void openShowWindow() throws BusinessException{  
         try{ 
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/groupAcademicShow.fxml").toURI().toURL();
@@ -157,6 +162,7 @@ public class GroupAcademicModifyController implements Initializable {
        } catch (MalformedURLException ex) {
                 Log.logException(ex);
         }
+    
     }
     
     public void updateGroupAcademic (){    
