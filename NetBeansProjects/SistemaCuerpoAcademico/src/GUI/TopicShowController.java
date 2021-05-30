@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import businessLogic.MinuteDAO;
 import businessLogic.TopicDAO;
 import domain.Member;
 import domain.Topic;
@@ -64,8 +65,12 @@ public class TopicShowController implements Initializable {
         topics = FXCollections.observableArrayList();
         initializeTopics();
         tvTopic.setItems(topics);
+        
     }  
-    
+    public void initializeMinute(){
+        MinuteDAO minuteDAO = new MinuteDAO();
+       
+    }
     public void initializeTopics(){
         TopicDAO topicDAO = new TopicDAO();
         try {

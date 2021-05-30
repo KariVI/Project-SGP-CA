@@ -19,6 +19,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -38,6 +40,7 @@ public class MemberViewController implements Initializable {
     @FXML Label lDegreeYear = new Label();
     @FXML Label lUniversityName = new Label();
     private Member member ;
+
     
     
     @Override
@@ -97,4 +100,6 @@ public class MemberViewController implements Initializable {
             Logger.getLogger(MemberViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+
 }

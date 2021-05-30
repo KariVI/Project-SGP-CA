@@ -242,5 +242,34 @@ public class MinuteDAO implements IMinuteDAO {
         
         return idMinute;
     }
+    
+    @Override
+    public Minute getMinute(int idMeeting) throws BusinessException {
+        Minute minute = null ;
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+               PreparedStatement preparedStatement = connectionDataBase.prepareStatement("SELECT * FROM Minuta where idReunion = ?");
+               preparedStatement.setInt(1, idMeeting);
+               ResultSet resultSet;
+               resultSet = preparedStatement.executeQuery(); 
+               if(resultSet.next()){
+                    int idMinute = resultSet.getInt("idMinuta");
+                    String due = resultSet.getString("pendiente");
+                    String note = resultSet.getString("nota");
+                    String state = resultSet.getString("estado");
+                    minute = new Minute(idMinute,due,state,note,idMeeting);                
+               }else{
+                 throw new BusinessException("minute not found");
+               }
+                connectorDataBase.disconnect();
+            }catch(SQLException sqlException) {
+                   throw new BusinessException("Database failed ", sqlException);         
+            }catch(ClassNotFoundException ex) {
+                        Log.logException(ex);
+            }
+        
+        return minute;
+    }
 
 }

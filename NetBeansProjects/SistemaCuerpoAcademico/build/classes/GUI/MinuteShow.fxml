@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Rectangle?>
@@ -25,9 +26,9 @@
       <HBox layoutX="88.0" layoutY="219.0" prefHeight="26.0" prefWidth="458.0" />
       <Label layoutX="22.0" layoutY="242.0" text="Notas:" />
       <Label layoutX="23.0" layoutY="362.0" text="Pendientes:" />
-      <TextArea fx:id="taNote" layoutX="38.0" layoutY="266.0" opacity="0.0" prefHeight="86.0" prefWidth="491.0" />
-      <TextArea fx:id="taDue" layoutX="34.0" layoutY="395.0" opacity="0.0" prefHeight="87.0" prefWidth="498.0" />
-      <Button fx:id="btFinish" layoutX="679.0" layoutY="487.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="81.0" text="Regresar" />
+      <TextArea fx:id="taNote" editable="false" layoutX="38.0" layoutY="266.0" prefHeight="86.0" prefWidth="491.0" />
+      <TextArea fx:id="taDue" editable="false" layoutX="34.0" layoutY="395.0" prefHeight="87.0" prefWidth="498.0" wrapText="true" />
+      <Button fx:id="btReturn" layoutX="679.0" layoutY="487.0" mnemonicParsing="false" onAction="#actionReturn" prefHeight="26.0" prefWidth="81.0" text="Regresar" />
       <Label layoutX="14.0" layoutY="43.0" text="Registrar minuta">
          <font>
             <Font size="27.0" />
@@ -35,8 +36,11 @@
       </Label>
       <HBox layoutX="499.0" layoutY="63.0" prefHeight="46.0" prefWidth="273.0" spacing="15.0">
          <children>
-            <RadioButton mnemonicParsing="false" text="Estoy de acuerdo" />
-            <RadioButton mnemonicParsing="false" text="No estoy de acuerdo" />
+            <RadioButton mnemonicParsing="false" text="Estoy de acuerdo">
+               <toggleGroup>
+                  <ToggleGroup fx:id="tgApproveMinute" />
+               </toggleGroup></RadioButton>
+            <RadioButton mnemonicParsing="false" onAction="#goMinuteComment" text="No estoy de acuerdo" toggleGroup="$tgApproveMinute" />
          </children>
       </HBox>
    </children>

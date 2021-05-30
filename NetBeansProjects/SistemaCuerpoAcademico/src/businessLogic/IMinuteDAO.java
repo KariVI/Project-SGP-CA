@@ -15,4 +15,5 @@ public interface IMinuteDAO {
     public ArrayList<MinuteComment>  getMinutesComments(int idMinute) throws BusinessException;
     public boolean update(Minute newMinute) throws BusinessException;
     public ArrayList<Member> getMembersApprove(Minute minute) throws BusinessException;
+    public Minute getMinute(int idMeeting) throws BusinessException;
 }

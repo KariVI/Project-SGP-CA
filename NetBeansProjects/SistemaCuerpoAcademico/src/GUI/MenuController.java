@@ -3,6 +3,7 @@ package GUI;
 
 import businessLogic.GroupAcademicDAO;
 import domain.GroupAcademic;
+import domain.Member;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -94,12 +95,16 @@ public class MenuController implements Initializable {
         options.add("Reuniones");
         options.add("Miembros");
     }
-        
+    
+    public void initializeMenu(Member member){
+        if(member.getRole().equals("Responsable")){
+            fillOptions();
+        }
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        options = FXCollections.observableArrayList();
-       fillOptions();      
+        options = FXCollections.observableArrayList();     
       lvOptions.setItems(options);
       lvOptions.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
           public void changed(ObservableValue<? extends String> observaleValue, String oldValue, String newValue) {
