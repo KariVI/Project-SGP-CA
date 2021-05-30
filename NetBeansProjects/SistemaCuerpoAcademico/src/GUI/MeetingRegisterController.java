@@ -332,11 +332,14 @@ public class MeetingRegisterController implements Initializable {
     }
     
     private boolean validateDate(){
-        boolean value=true;
-        LocalDate dateMeeting = dpDate.getValue();
-        LocalDate dateCurrently = LocalDate.now();
-        if(dateMeeting.isBefore(dateCurrently)){ 
-            value=false;
+        boolean value=false;
+        
+        if(dpDate.getValue()!=null){
+            LocalDate dateMeeting = dpDate.getValue();
+            LocalDate dateCurrently = LocalDate.now();
+          if(dateMeeting.isAfter(dateCurrently) ){ 
+               value=true;
+         }
         }
         return value;
     }

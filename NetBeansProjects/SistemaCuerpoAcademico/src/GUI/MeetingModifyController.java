@@ -75,6 +75,12 @@ public class MeetingModifyController implements Initializable {
                 newMeeting.setDate(date);
                 newMeeting.setHourStart(hour);
                 newMeeting.setKey(oldMeeting.getKey());
+            try {
+                deleteOldPrerequisites();
+                deleteOldAssistants();
+            } catch (BusinessException ex) {
+                Log.logException(ex);
+            }
                 update();
                  
         }else{  
@@ -186,40 +192,29 @@ public class MeetingModifyController implements Initializable {
         recoverAssistants();
     }
     
-    private void update(){  
+    private void update(){ 
+         AlertMessage alertMessage = new AlertMessage();
         try {
-            deleteOldPrerequisites();
-            deleteOldAssistants();
-            MeetingDAO meetingDAO = new MeetingDAO();
-            if( meetingDAO.updatedSucessful(newMeeting)){   
-               savePrerequisite(); 
-               saveAssistants();
-               AlertMessage alertMessage = new AlertMessage();
-               alertMessage.showUpdateMessage();
-            };
-        } catch (BusinessException ex) {
-            Log.logException(ex);
-        }
+                MeetingDAO meetingDAO = new MeetingDAO();
+                if( meetingDAO.updatedSucessful(newMeeting)){   
+                   savePrerequisite(); 
+                   saveAssistants();               
+                   alertMessage.showUpdateMessage();
+           
+                }
+            } catch (BusinessException ex) {
+                if(ex.getMessage().equals("DataBase connection failed ")){
+                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
+                 }else{  
+                    Log.logException(ex);
+                }
+            }
+        
         
         
     }
     
-    private boolean searchRepeateMeeting(Meeting meeting)   { 
-       boolean value=false; 
-        try {   
-            MeetingDAO preliminarProjectDAO= new MeetingDAO();
-            preliminarProjectDAO.getId(meeting);
-            value=true;
-        }catch (BusinessException ex){ 
-            if(ex.getMessage().equals("DataBase connection failed ")){
-                AlertMessage alertMessage = new AlertMessage();
-                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
-            }else{  
-                Log.logException(ex);
-            }
-        }
-        return value;
-    }
+
     
     private void deleteOldPrerequisites() throws BusinessException{ 
         int i=0;
@@ -231,9 +226,17 @@ public class MeetingModifyController implements Initializable {
         }
     }
     
-    private void deleteOldAssistants() throws BusinessException{
+    private boolean deleteOldAssistants() throws BusinessException{
+        boolean value=true;
         MeetingDAO meetingDAO = new MeetingDAO();
-        meetingDAO.deletedSucessfulAssistants(oldMeeting);
+        ArrayList <Member> assistants = oldMeeting.getAssistants();
+        for(int i=0; i < assistants.size(); i++){
+            value=meetingDAO.deletedSucessfulAssistants(oldMeeting, assistants.get(i));
+        }
+        
+        ArrayList<Member> assistantsList = meetingDAO.getAssistants(oldMeeting.getKey());
+         
+        return value;
     }
     
     private void savePrerequisite() throws BusinessException{ 
@@ -374,11 +377,13 @@ public class MeetingModifyController implements Initializable {
     }    
     
     private boolean validateDate(){
-        boolean value=true;
-        LocalDate dateMeeting = dpDate.getValue();
-        LocalDate dateCurrently = LocalDate.now();
-        if(dateMeeting.isBefore(dateCurrently)){ 
-            value=false;
+        boolean value=false;      
+        if(dpDate.getValue()!=null){
+            LocalDate dateMeeting = dpDate.getValue();
+            LocalDate dateCurrently = LocalDate.now();
+          if(dateMeeting.isAfter(dateCurrently) ){ 
+               value=true;
+         }
         }
         return value;
     }

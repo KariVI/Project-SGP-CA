@@ -112,11 +112,12 @@ public class MenuController implements Initializable {
     
     private void showViewOption(String option){  
         FXMLLoader loader;
+        Parent root;
         switch(option){ 
             case "Anteproyectos": ;
                 try {
                loader = new FXMLLoader(getClass().getResource("PreliminarProjectList.fxml"));
-               Parent root = loader.load();
+               root = loader.load();
                PreliminarProjectListController PreliminarProjectListController = loader.getController();
                Scene scene = new Scene(root);
                Stage stage = new Stage();
@@ -131,7 +132,7 @@ public class MenuController implements Initializable {
             case "Miembros":;
                    try {
                loader = new FXMLLoader(getClass().getResource("MemberList.fxml"));
-               Parent root = loader.load();
+               root = loader.load();
                MemberListController MemberListController = loader.getController();
                Scene scene = new Scene(root);
                Stage stage = new Stage();
@@ -146,8 +147,23 @@ public class MenuController implements Initializable {
             case "Reuniones":;
               try {
                loader = new FXMLLoader(getClass().getResource("MeetingList.fxml"));
-               Parent root = loader.load();
+               root = loader.load();
                MeetingListController MeetingListController = loader.getController();
+               Scene scene = new Scene(root);
+               Stage stage = new Stage();
+               stage.setScene(scene);
+               stage.initModality(Modality.APPLICATION_MODAL);
+               stage.showAndWait();
+               } catch (IOException ex) {
+                   Log.logException(ex);
+               }
+            break;
+            
+            case "Trabajos recepcionales":; 
+                try {
+               loader = new FXMLLoader(getClass().getResource("ReceptionWorkList.fxml"));
+               root = loader.load();
+               ReceptionWorkListController ReceptionWorkListController = loader.getController();
                Scene scene = new Scene(root);
                Stage stage = new Stage();
                stage.setScene(scene);

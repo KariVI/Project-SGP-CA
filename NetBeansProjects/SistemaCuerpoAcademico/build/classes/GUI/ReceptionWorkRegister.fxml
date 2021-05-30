@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ReceptionWorkRegisterController">
+<AnchorPane id="AnchorPane" prefHeight="580.0" prefWidth="771.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ReceptionWorkRegisterController">
     <stylesheets>
-        <URL value="@receptionworkregister.css"/>
+        <URL value="@receptionworkregister.css" />
     </stylesheets>
+    <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#242525" height="31.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="771.0" />
+      <Label layoutX="19.0" layoutY="101.0" text="Título " />
+      <Label layoutX="11.0" layoutY="135.0" text="Fecha de inicio:" />
+      <Label layoutX="16.0" layoutY="165.0" text="Fecha de fin: " />
+      <Label layoutX="21.0" layoutY="374.0" text="Descripción:" />
+      <TextField fx:id="tfTitle" layoutX="150.0" layoutY="89.0" prefHeight="25.0" prefWidth="252.0" />
+      <TextArea fx:id="taDescription" layoutX="133.0" layoutY="361.0" prefHeight="82.0" prefWidth="277.0" wrapText="true" />
+      <Button fx:id="btSave" layoutX="614.0" layoutY="537.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar" />
+      <Button fx:id="btExit" layoutX="680.0" layoutY="536.0" mnemonicParsing="false" onAction="#actionExit" prefHeight="25.0" prefWidth="59.0" text="Salir" />
+      <Label layoutX="13.0" layoutY="467.0" text="Director:" />
+      <TextField fx:id="tfDirector" layoutX="132.0" layoutY="463.0" prefHeight="25.0" prefWidth="285.0" promptText="Escribe la cedula del director " />
+      <Label layoutX="16.0" layoutY="515.0" text="Codirectores:" />
+      <TextArea fx:id="taCodirectors" layoutX="132.0" layoutY="497.0" prefHeight="69.0" prefWidth="285.0" promptText="Separa las cedulas de los participantes con una coma" wrapText="true" />
+      <TextField fx:id="tfNumberStudents" layoutX="680.0" layoutY="161.0" prefHeight="25.0" prefWidth="46.0" />
+      <Button fx:id="btOk" layoutX="727.0" layoutY="161.0" mnemonicParsing="false" onAction="#addStudents" text="Ok" />
+      <Label layoutX="555.0" layoutY="165.0" text="Número de estudiantes:" />
+      <Label layoutX="25.0" layoutY="41.0" text="Registro de Trabajo Recepcional ">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Pane fx:id="paneStudent" layoutX="448.0" layoutY="188.0" prefHeight="345.0" prefWidth="304.0" />
+      <DatePicker fx:id="dpStartDate" layoutX="236.0" layoutY="131.0" prefHeight="25.0" prefWidth="166.0" />
+      <DatePicker fx:id="dpEndDate" layoutX="236.0" layoutY="161.0" prefHeight="25.0" prefWidth="166.0" />
+      <Label layoutX="12.0" layoutY="195.0" text="Tipo:" />
+      <ComboBox fx:id="cbType" layoutX="190.0" layoutY="191.0" prefHeight="25.0" prefWidth="218.0" />
+      <Pane fx:id="lgacsPane" accessibleRole="CHECK_BOX" cache="true" layoutX="10.0" layoutY="232.0" prefHeight="120.0" prefWidth="418.0" />
+      <ComboBox fx:id="cbPreliminarProject" layoutX="475.0" layoutY="119.0" prefHeight="25.0" prefWidth="277.0" />
+      <Label layoutX="462.0" layoutY="93.0" text="Anteproyecto:" />
+   </children>
+    
+    
 </AnchorPane>

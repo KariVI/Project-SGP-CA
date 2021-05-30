@@ -4,4 +4,12 @@
 
 .mainFxmlClass {
 
+    
+     .check-box {    
+    -fx-background-color: transparent;
+    -fx-font-family: System;
+    -fx-font-size: 11px;
+    -fx-wrap-text: true;
+  
+  }
 }

@@ -216,24 +216,24 @@ public class MeetingDAO implements IMeetingDAO{
     }
 
     @Override
-    public boolean deletedSucessfulAssistants(Meeting meeting) throws BusinessException {
+    public boolean deletedSucessfulAssistants(Meeting meeting, Member assistant) throws BusinessException {
         boolean deleteSucess=false;
         int idMeeting=meeting.getKey();
         ArrayList<Member> assistants= meeting.getAssistants();
         try{
             Connector connectorDataBase=new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
-            String delete = "delete from ParticipaReunion where cedula=? and idReunion=?";
+            String delete = "delete from participareunion where cedula=? and idReunion=? and rol=?";
      
             PreparedStatement preparedStatement = connectionDataBase.prepareStatement(delete);
-            int i=0;
-            while(i< assistants.size()){
-               preparedStatement.setString(1, assistants.get(i).getProfessionalLicense());
+               preparedStatement.setString(1, assistant.getProfessionalLicense());
                preparedStatement.setInt(2, idMeeting);
+               preparedStatement.setString(3, assistant.getRole());
                preparedStatement.executeUpdate();
-               i++;
-            }
-            deleteSucess=true;
+        
+               deleteSucess=true;
+            
+            
             connectorDataBase.disconnect();         
         }catch(SQLException sqlException) {
             throw new BusinessException("DataBase connection failed ", sqlException);

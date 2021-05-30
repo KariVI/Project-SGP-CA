@@ -56,12 +56,12 @@ public class PreliminarProjectRegisterController implements Initializable {
         GridPane gridPane= new GridPane();
         Validation validation =new Validation();
         if(!tfNumberStudents.getText().isEmpty() && (validation.validateNumberField(tfNumberStudents.getText()))){
-            Integer lgacs=Integer.parseInt(tfNumberStudents.getText());  
+            Integer students=Integer.parseInt(tfNumberStudents.getText());  
             gridPane.setHgap (5);
             gridPane.setVgap (5);
             int i=0;
             int sizeRows=3;
-           while (i < ( lgacs * sizeRows)){  
+           while (i < ( students * sizeRows)){  
                 TextField tfEnrollmentStudent = new TextField();
                 tfEnrollmentStudent .setPromptText("Matricula: ");   
                 TextField tfNameStudent = new TextField();
@@ -282,7 +282,7 @@ public class PreliminarProjectRegisterController implements Initializable {
           }
 
           if(searchRepeatePreliminarProject()){
-              alertMessage.showAlertValidateFailed("El cuerpo académico ya se encuentra registrado");
+              alertMessage.showAlertValidateFailed("El anteproyecto ya se encuentra registrado");
           }
       }
      
