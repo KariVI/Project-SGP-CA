@@ -23,8 +23,8 @@
       <Label layoutX="19.0" layoutY="203.0" text="Descripción:" />
       <TextField fx:id="tfTitle" layoutX="106.0" layoutY="97.0" prefHeight="25.0" prefWidth="252.0" />
       <TextArea fx:id="taDescription" layoutX="106.0" layoutY="203.0" prefHeight="82.0" prefWidth="260.0" wrapText="true" />
-      <Button fx:id="btSave" layoutX="491.0" layoutY="461.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar" />
-      <Button fx:id="btExit" layoutX="563.0" layoutY="461.0" mnemonicParsing="false" onAction="#actionExit" prefHeight="25.0" prefWidth="59.0" text="Salir" />
+      <Button fx:id="btSave" layoutX="527.0" layoutY="461.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar" />
+      <Button fx:id="btExit" layoutX="599.0" layoutY="461.0" mnemonicParsing="false" onAction="#actionExit" prefHeight="25.0" prefWidth="59.0" text="Salir" />
       <Label layoutX="19.0" layoutY="306.0" text="Director:" />
       <TextField fx:id="tfDirector" layoutX="106.0" layoutY="302.0" prefHeight="25.0" prefWidth="260.0" promptText="Escribe la cedula del director " />
       <Label layoutX="16.0" layoutY="339.0" text="Codirectores:" />

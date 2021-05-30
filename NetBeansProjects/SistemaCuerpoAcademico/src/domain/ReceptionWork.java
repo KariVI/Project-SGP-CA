@@ -31,6 +31,12 @@ public class ReceptionWork {
         lgacs=new ArrayList<LGAC>();
          
     }
+
+    public ReceptionWork() {
+        students=new ArrayList<Student>();
+        members=new ArrayList<Member>();
+        lgacs=new ArrayList<LGAC>();
+    }
     
     public int getKey(){
         return key;
@@ -153,5 +159,18 @@ public class ReceptionWork {
         }  
         return value;
     }
+    
+     public String toString(){
+        return title;
+    }
+
+    public void setStudents(ArrayList<Student> students) {
+        this.students= students;
+    }
+
+    public void setLGACs(ArrayList<LGAC> lgacs) {
+        this.lgacs=lgacs;
+    }
+    
 }
 

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package GUI;
 
 import domain.Member;
@@ -24,11 +20,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author Mariana
- */
+
 public class MemberViewController implements Initializable {
     @FXML Button btReturn = new Button();
     @FXML Button btUpdate = new Button();

@@ -68,31 +68,7 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
         return saveSuccess;
     }
 
-    public String getPrerequisiteDescription(int id, int idMeeting) throws BusinessException {
-        String description=" ";
-        try{
-            Connector connectorDataBase=new Connector();
-            Connection connectionDataBase = connectorDataBase.getConnection();
-            ResultSet resultSet;
-            String selectIdPrerequisite = "SELECT descripcion from  Prerequisito where idPrerequisito=? and idReunion=? ";
-     
-            PreparedStatement preparedStatement = connectionDataBase.prepareStatement(selectIdPrerequisite);
-            preparedStatement.setInt(1, id);          
-            preparedStatement.setInt(2, idMeeting);
-            
-            
-            resultSet=preparedStatement.executeQuery();
-            if(resultSet.next()){
-                description=resultSet.getString("descripcion");
-            }
-                connectorDataBase.disconnect();
-        }catch(SQLException sqlException) {
-            throw new BusinessException("DataBase connection failed ", sqlException);
-        } catch (ClassNotFoundException ex) {
-            Log.logException(ex);
-        }
-        return description;
-    }
+   
 
  
      public boolean updatedSucessfulPrerequisite(int id, Prerequisite prerequisite) throws BusinessException{
@@ -187,6 +163,9 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
                     String professionalLicense= resultSet.getString("cedula");
                     Prerequisite prerequisiteAuxiliar = new Prerequisite(description);
                     prerequisiteAuxiliar.setKey(key);
+                    MemberDAO memberDAO = new MemberDAO();
+                    Member memberAuxiliar = memberDAO.getMemberByLicense(professionalLicense);
+                    prerequisiteAuxiliar.setMandated(memberAuxiliar);
                     prerequisiteList.add(prerequisiteAuxiliar);
                     
                 }
@@ -199,6 +178,28 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
             return prerequisiteList;
         }
      
+    /* public boolean deletedSucessfulPrerequisites(ArrayList<Prerequisite> prerequisites, int idMeeting ) throws BusinessException{ 
+            boolean deleteSucess=false;
+            try{
+            Connector connectorDataBase=new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String selectIdPrerequisite = "DELETE FROM Prerequisito where idReunion=?";
      
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement(selectIdPrerequisite);
+            int i=0;
+            while(i< prerequisites.size()){
+                preparedStatement.setInt(1, idMeeting);
+                preparedStatement.executeUpdate();
+                deleteSucess=true;
+                i++;
+            }
+            connectorDataBase.disconnect();         
+        }catch(SQLException sqlException) {
+            throw new BusinessException("DataBase connection failed ", sqlException);
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return deleteSucess;
+     }*/
 
 }

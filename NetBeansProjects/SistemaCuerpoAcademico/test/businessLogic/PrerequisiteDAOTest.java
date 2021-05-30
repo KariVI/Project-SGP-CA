@@ -15,28 +15,7 @@ public class PrerequisiteDAOTest {
     }
 
 
-    
-     @Test
-    public void testGetPrerequisiteDescription() throws BusinessException {
-        System.out.println("getPrerequisiteDescription");
-        int id = 2;
-        PrerequisiteDAO instance = new PrerequisiteDAO();
-        String expected = "Verificar situacion de FEIBook";
-        String result = instance.getPrerequisiteDescription(id,1 );
-        assertEquals(expected, result);
   
-    }
-    
-    @Test
-    public void testGetPrerequisiteDescriptionFailed() throws BusinessException {
-        System.out.println("getPrerequisiteDescriptionFailed");
-        int id = 3;
-        PrerequisiteDAO instance = new PrerequisiteDAO();
-        String expected = "Situacion preinscripciones";
-        String result = instance.getPrerequisiteDescription(id,1 );
-        assertNotEquals(expected, result);
-  
-    }
     
     @Test
     public void testsearchId() throws BusinessException {

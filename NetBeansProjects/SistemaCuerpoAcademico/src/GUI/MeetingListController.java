@@ -2,9 +2,7 @@
 package GUI;
 
 import businessLogic.MeetingDAO;
-import businessLogic.PreliminarProjectDAO;
 import domain.Meeting;
-import domain.PreliminarProject;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -74,8 +72,12 @@ public class MeetingListController implements Initializable {
            FXMLLoader loader = new FXMLLoader(getClass().getResource("MeetingShow.fxml"));
             Parent root = loader.load();
             MeetingShowController meetingShowController = loader.getController();
-            /*meetingShowController.setMeeting(selectedMeeting);
-            meetingShowController.initializeMeeting();*/
+            meetingShowController.setMeeting(selectedMeeting);
+                 try {
+                     meetingShowController.initializeMeeting();
+                 } catch (BusinessException ex) {
+                    Log.logException(ex);
+                 }
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);

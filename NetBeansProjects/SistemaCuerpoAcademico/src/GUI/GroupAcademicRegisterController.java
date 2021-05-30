@@ -30,11 +30,11 @@ import javafx.stage.Stage;
 
 public class GroupAcademicRegisterController implements Initializable  {
     @FXML private TextFieldLimited tfName;
-    @FXML private TextField tfKey;
+    @FXML private TextFieldLimited tfKey;
     @FXML private TextArea tAObjetive;
     @FXML private TextArea tAVision;
     @FXML private TextArea tAMision; 
-    @FXML private TextField tflgacsNumber;
+    @FXML private TextFieldLimited tflgacsNumber;
     @FXML private Button btOk;
     @FXML private Button btSave;
     @FXML private Button btCancel;
@@ -71,6 +71,7 @@ public class GroupAcademicRegisterController implements Initializable  {
     private void actionCancel(ActionEvent actionEvent){   
         Stage stage = (Stage) btCancel.getScene().getWindow();
         stage.close();
+         
     }
  
     
@@ -256,13 +257,17 @@ public class GroupAcademicRegisterController implements Initializable  {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-     tfName.setMaxlength(200);
+     tfName.setMaxlength(100);
+     tfKey.setMaxlength(10);
+     tflgacsNumber.setMaxlength(1);
+
      consolidateGrades= FXCollections.observableArrayList();
      consolidateGrades.add("En formación");
      consolidateGrades.add("En consolidación");
      consolidateGrades.add("Consolidado");
      cbConsolidateGrade.setItems(consolidateGrades);
      cbConsolidateGrade.setValue ("En formación");
+     
     }
     
    

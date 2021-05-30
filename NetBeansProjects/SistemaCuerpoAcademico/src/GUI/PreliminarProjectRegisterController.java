@@ -7,17 +7,20 @@ import businessLogic.StudentDAO;
 import domain.Member;
 import domain.PreliminarProject;
 import domain.Student;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -53,12 +56,12 @@ public class PreliminarProjectRegisterController implements Initializable {
         GridPane gridPane= new GridPane();
         Validation validation =new Validation();
         if(!tfNumberStudents.getText().isEmpty() && (validation.validateNumberField(tfNumberStudents.getText()))){
-            Integer lgacs=Integer.parseInt(tfNumberStudents.getText());  
+            Integer students=Integer.parseInt(tfNumberStudents.getText());  
             gridPane.setHgap (5);
             gridPane.setVgap (5);
             int i=0;
             int sizeRows=3;
-           while (i < ( lgacs * sizeRows)){  
+           while (i < ( students * sizeRows)){  
                 TextField tfEnrollmentStudent = new TextField();
                 tfEnrollmentStudent .setPromptText("Matricula: ");   
                 TextField tfNameStudent = new TextField();
@@ -83,30 +86,25 @@ public class PreliminarProjectRegisterController implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String startDate;
         String endDate;
-        System.out.println("a");
 
         if(divisionCodirectorsSucessful(codirectors)){  
-            System.out.println("uy se pudo");
-        }else{  
-           System.out.println("uy no se pudo");
+            if(!validateFieldEmpty() && validateInformationField() ){
+                startDate = dpStartDate.getValue().format(formatter);
+                endDate = dpEndDate.getValue().format(formatter);
+                preliminarProject.setTitle(title);
+                preliminarProject.setDescription(description);
+                preliminarProject.setDateStart(startDate);
+                preliminarProject.setDateEnd(endDate);
+                if(!searchRepeatePreliminarProject ()){    
+                    savePreliminarProject ();
+                }else{  
+                    sendAlert();
+                }
 
-        }
-        if(!validateFieldEmpty() && validateInformationField() ){
-            startDate = dpStartDate.getValue().format(formatter);
-            endDate = dpEndDate.getValue().format(formatter);
-            preliminarProject.setTitle(title);
-            preliminarProject.setDescription(description);
-            preliminarProject.setDateStart(startDate);
-            preliminarProject.setDateEnd(endDate);
-            if(!searchRepeatePreliminarProject ()){    
-                savePreliminarProject ();
+
             }else{  
                 sendAlert();
             }
-        
-            
-        }else{  
-            sendAlert();
         }
     }
     
@@ -121,7 +119,6 @@ public class PreliminarProjectRegisterController implements Initializable {
                alertMessage.showAlertSuccesfulSave("Anteproyecto");
            }
         } catch (BusinessException ex){ 
-            System.out.println("a");
             if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage = new AlertMessage();
                 alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
@@ -135,6 +132,24 @@ public class PreliminarProjectRegisterController implements Initializable {
     private void actionExit(ActionEvent actionEvent){   
         Stage stage = (Stage) btExit.getScene().getWindow();
         stage.close();
+        try{ 
+            Stage primaryStage= new Stage();
+            URL url = new File("src/GUI/preliminarProjectList.fxml").toURI().toURL();
+           try{
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              PreliminarProjectListController preliminarProjectListController =loader.getController();      
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);       
+            } catch (IOException ex) {
+                    Log.logException(ex);
+            }
+            primaryStage.show();
+       } catch (MalformedURLException ex) {
+           Log.logException(ex);
+       } 
     }
     
     private void saveColaborators(){    
@@ -152,7 +167,6 @@ public class PreliminarProjectRegisterController implements Initializable {
                 Member codirector= memberDAO.getMemberByLicense(codirectorsParts[i]);
                 codirector.setRole("Codirector");
                  preliminarProject.addMember(codirector);
-
             } 
          preliminarProjectDAO.addedSucessfulColaborators(preliminarProject);
         } catch (BusinessException ex) {
@@ -222,8 +236,7 @@ public class PreliminarProjectRegisterController implements Initializable {
             }
         }
     }
-    
-   
+       
     private boolean searchRepeateStudent(Student student){ 
         boolean value=false;
         StudentDAO studentDAO = new StudentDAO();
@@ -269,7 +282,7 @@ public class PreliminarProjectRegisterController implements Initializable {
           }
 
           if(searchRepeatePreliminarProject()){
-              alertMessage.showAlertValidateFailed("El cuerpo académico ya se encuentra registrado");
+              alertMessage.showAlertValidateFailed("El anteproyecto ya se encuentra registrado");
           }
       }
      

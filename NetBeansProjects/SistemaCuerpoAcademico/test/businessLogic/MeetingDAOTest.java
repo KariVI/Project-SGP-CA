@@ -127,7 +127,7 @@ public class MeetingDAOTest {
         Meeting meeting= new Meeting(1, "Revisión de avances en proyectos actuales" ,"04/05/2021","11:30", "Registrada");
         Member assistant= new Member("7938268","Maria Karen Cortes Verdin","Lider");
         meeting.addAssistant(assistant);
-        assertTrue(meetingDAO.deletedSucessfulAssistants(meeting));
+        assertTrue(meetingDAO.deletedSucessfulAssistants(meeting,assistant));
     }
 }
 

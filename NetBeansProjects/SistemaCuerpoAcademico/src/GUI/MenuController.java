@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -91,9 +89,11 @@ public class MenuController implements Initializable {
          
     private void fillOptions() {   
         options.add("Anteproyectos");
+        options.add("Miembros");
+         options.add("Trabajos recepcionales");
         options.add("Proyectos");
         options.add("Reuniones");
-        options.add("Miembros");
+       
     }
     
     public void initializeMenu(Member member){
@@ -117,11 +117,12 @@ public class MenuController implements Initializable {
     
     private void showViewOption(String option){  
         FXMLLoader loader;
+        Parent root;
         switch(option){ 
             case "Anteproyectos": ;
                 try {
                loader = new FXMLLoader(getClass().getResource("PreliminarProjectList.fxml"));
-               Parent root = loader.load();
+               root = loader.load();
                PreliminarProjectListController PreliminarProjectListController = loader.getController();
                Scene scene = new Scene(root);
                Stage stage = new Stage();
@@ -136,7 +137,7 @@ public class MenuController implements Initializable {
             case "Miembros":;
                    try {
                loader = new FXMLLoader(getClass().getResource("MemberList.fxml"));
-               Parent root = loader.load();
+               root = loader.load();
                MemberListController MemberListController = loader.getController();
                Scene scene = new Scene(root);
                Stage stage = new Stage();
@@ -149,10 +150,25 @@ public class MenuController implements Initializable {
             break;
             
             case "Reuniones":;
-                   try {
+              try {
                loader = new FXMLLoader(getClass().getResource("MeetingList.fxml"));
-               Parent root = loader.load();
+               root = loader.load();
                MeetingListController MeetingListController = loader.getController();
+               Scene scene = new Scene(root);
+               Stage stage = new Stage();
+               stage.setScene(scene);
+               stage.initModality(Modality.APPLICATION_MODAL);
+               stage.showAndWait();
+               } catch (IOException ex) {
+                   Log.logException(ex);
+               }
+            break;
+            
+            case "Trabajos recepcionales":; 
+                try {
+               loader = new FXMLLoader(getClass().getResource("ReceptionWorkList.fxml"));
+               root = loader.load();
+               ReceptionWorkListController ReceptionWorkListController = loader.getController();
                Scene scene = new Scene(root);
                Stage stage = new Stage();
                stage.setScene(scene);

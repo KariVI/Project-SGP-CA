@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MeetingShowController">
+<AnchorPane id="AnchorPane" prefHeight="483.0" prefWidth="603.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MeetingShowController">
     <stylesheets>
-        <URL value="@meetingshow.css"/>
+        <URL value="@meetingshow.css" />
     </stylesheets>
+   <children>
+      <Button fx:id="btShowSchedule" layoutX="420.0" layoutY="451.0" mnemonicParsing="false" onAction="#actionShowSchedule" text="Ver agenda" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2c2c2c" height="25.0" stroke="BLACK" strokeType="INSIDE" width="603.0" />
+      <Text layoutX="14.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reunión">
+         <font>
+            <Font name="System Bold" size="27.0" />
+         </font>
+      </Text>
+      <Button fx:id="btUpdate" layoutX="504.0" layoutY="451.0" mnemonicParsing="false" onAction="#actionUpdate" prefHeight="25.0" prefWidth="77.0" text="Modificar" />
+      <Button layoutX="336.0" layoutY="451.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Regresar" />
+      <Button fx:id="btMeetingStart" layoutX="477.0" layoutY="30.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0" text="Iniciar reunión" />
+      <Label fx:id="lbSubject" layoutX="14.0" layoutY="75.0" text="Asunto:" />
+      <Label fx:id="lbDate" layoutX="14.0" layoutY="101.0" text="Fecha:" />
+      <Label fx:id="lbHour" layoutX="17.0" layoutY="131.0" text="Hora:" />
+      <TableView fx:id="tvAssistants" layoutX="19.0" layoutY="178.0" prefHeight="108.0" prefWidth="458.0">
+        <columns>
+          <TableColumn fx:id="tcRole" prefWidth="135.0" text="Rol" />
+          <TableColumn fx:id="tcMember" prefWidth="322.0" text="Miembro" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tvPrerequisites" layoutX="19.0" layoutY="301.0" prefHeight="126.0" prefWidth="458.0">
+        <columns>
+          <TableColumn fx:id="tcDescription" prefWidth="227.0" text="Descripción" />
+          <TableColumn fx:id="tcMandated" prefWidth="230.0" text="Encargado" />
+        </columns>
+      </TableView>
+   </children>
 </AnchorPane>
