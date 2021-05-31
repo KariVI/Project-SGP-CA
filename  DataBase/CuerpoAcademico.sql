@@ -2,9 +2,9 @@ drop database cuerpoAcademico;
 CREATE SCHEMA IF NOT EXISTS CuerpoAcademico;
 USE  CuerpoAcademico;
 
-CREATE TABLE IF NOT EXISTS Anteproyecto(idAnteproyecto int NOT NULL, 
+CREATE TABLE IF NOT EXISTS Anteproyecto(idAnteproyecto int NOT NULL auto_increment, 
   titulo varchar(200) NOT NULL, 
-  descripcion varchar(400) NOT NULL, fechaInicio varchar(30) NOT NULL, 
+  descripcion varchar(1000) NOT NULL, fechaInicio varchar(30) NOT NULL, 
   fechaFin varchar(30)  NOT NULL, primary key (idAnteproyecto));
 
    CREATE TABLE IF NOT EXISTS TrabajoRecepcional (idTrabajoRecepcional int NOT NULL auto_increment, 
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS Anteproyecto(idAnteproyecto int NOT NULL,
   
 
   CREATE TABLE IF NOT EXISTS CuerpoAcademico(clave varchar(10) NOT NULL, 
-nombre varchar(100) NOT NULL, objetivo varchar(400) NOT NULL, 
+nombre varchar(100) NOT NULL, horaobjetivo varchar(400) NOT NULL, 
 mision varchar(500) NOT NULL,vision varchar(500) NOT NULL, 
 gradoConsolidacion varchar(30) NOT NULL, primary Key (clave));
 
@@ -27,15 +27,21 @@ CREATE TABLE IF NOT EXISTS CuerpoLGAC( claveCuerpoAcademico varchar(10) NOT NULL
 nombreLGAC varchar(200) NOT NULL,  foreign key (nombreLGAC) REFERENCES  LGAC (nombre) ,
  foreign key (claveCuerpoAcademico) REFERENCES  CuerpoAcademico (clave)  );
 
+CREATE TABLE IF NOT EXISTS Miembro(cedula VARCHAR(10),
+nombre varchar(150) NOT NULL, rol VARCHAR(20) NOT NULL,
+gradoMaximo VARCHAR(50), correo VARCHAR(50) NOT NULL, clave_CA VARCHAR(10), 
+primary key(cedula), foreign key(clave_CA) references CuerpoAcademico(clave));
+
 CREATE TABLE  IF NOT EXISTS Reunion (idReunion int auto_increment NOT NULL , 
 asunto varchar(200) NOT NULL , hora varchar(10) NOT NULL ,
  fecha varchar(20) NOT NULL, estado varchar(30) NOT NULL , 
  primary key (idReunion) );
  
  CREATE TABLE IF NOT EXISTS Prerequisito(idPrerequisito int auto_increment NOT NULL , 
-  descripcion varchar(200) NOT NULL , idReunion int NOT NULL ,
+  descripcion varchar(200) NOT NULL , idReunion int NOT NULL , cedula varchar(10) not null,
   primary key (idPrerequisito), 
-  foreign key (idReunion) REFERENCES Reunion (idReunion) ON DELETE CASCADE);
+  foreign key (idReunion) REFERENCES Reunion (idReunion) ON DELETE CASCADE, 
+   foreign key (cedula) REFERENCES Miembro(cedula));
 
 
   CREATE TABLE IF NOT EXISTS Estudiante(matricula varchar(10) NOT NULL, 
@@ -55,6 +61,16 @@ idTema int NOT NULL, tema varchar(200) NOT NULL, horaInicio varchar(10) NOT NULL
 horaFin varchar(10) NOT NULL, primary key(idAgenda,idTema),
 foreign key (idAgenda)  REFERENCES agenda(idAgenda)ON DELETE CASCADE);
 
+CREATE TABLE IF NOT EXISTS Tema(
+idTema int NOT NULL AUTO_INCREMENT, tema varchar(200) NOT NULL, horaInicio varchar(10) NOT NULL,
+idReunion int NOT NULL, horaFin varchar(10) NOT NULL, primary key(idTema,idReunion), cedula varchar(10) NOT NULL,
+foreign key (idReunion)  REFERENCES Reunion(idReunion)ON DELETE CASCADE,
+foreign key (cedula)  REFERENCES miembro(cedula)ON DELETE CASCADE);
+CREATE TABLE IF NOT EXISTS Minuta(idMinuta int NOT NULL AUTO_INCREMENT ,
+nota varchar(500), estado varchar(30) NOT NULL,
+pendiente varchar(500), idReunion int NOT NULL, 
+primary key(idMinuta), foreign key(idReunion) references reunion(idReunion)ON DELETE CASCADE);
+
 CREATE TABLE IF NOT EXISTS Minuta(idMinuta int NOT NULL AUTO_INCREMENT ,
 nota varchar(500), estado varchar(30) NOT NULL,
 pendiente varchar(500), idReunion int NOT NULL, 
@@ -65,69 +81,6 @@ periodo varchar(30) NOT NULL, descripcion varchar(200) NOT NULL,
 idMinuta int NOT NULL, primary key(idAcuerdo),
 foreign key (idMinuta) references Minuta(idMinuta)ON DELETE CASCADE);
 
-
-
-CREATE TABLE IF NOT EXISTS CapituloLibro(idCapituloLibro int not null AUTO_INCREMENT,
-titulo varchar(100) NOT NULL, descripcion varchar(300) NOT NULL, estado varchar(30) NOT NULL, 
-editorial varchar(50) NOT NULL, ISBN varchar (8) NOT NULL, tituloLibro varchar (100) NOT NULL,
-id_Proyecto int, primary key (idCapituloLibro), foreign key (id_Proyecto) references Proyecto (idProyecto));
-
-CREATE TABLE IF NOT EXISTS  Memoria(idMemoria int NOT NULL auto_increment, 
-titulo varchar(100) NOT NULL, descripcion varchar (300) NOT NULL, estado varchar(30) NOT NULL,
-congreso varchar(100) NOT NULL,  proposito varchar(300) NOT NULL,
-id_Proyecto int, primary key (idMemoria), foreign key (id_Proyecto) references Proyecto (idProyecto));
-
-CREATE TABLE IF NOT EXISTS  Prototipo(idPrototipo int NOT NULL auto_increment, 
-titulo varchar(100) NOT NULL, descripcion varchar(300) NOT NULL, estado varchar(30) NOT NULL, 
-institucion varchar(100) NOT NULL,  caracteristicas varchar(400),
-id_Proyecto int, primary key (idPrototipo), foreign key (id_Proyecto) references Proyecto (idProyecto));
-
-CREATE TABLE if NOT EXISTS PlanTrabajo(clave VARCHAR(10) NOT NULL,
-objetivo VARCHAR(200) NOT NULL, periodo VARCHAR(50) NOT NULL, clave_CA VARCHAR(10), 
-primary key(clave), foreign key(clave_CA) references CuerpoAcademico(clave));
- 
-CREATE TABLE IF NOT EXISTS Meta(idMeta int NOT NULL AUTO_INCREMENT,
-descripcion VARCHAR(300) NOT NULL, clave_CA VARCHAR(10), 
-PRIMARY KEY(idMeta), FOREIGN KEY(clave_CA) references CuerpoAcademico(clave));
-
-CREATE TABLE IF NOT EXISTS Accion(idAccion int NOT NULL AUTO_INCREMENT,
-descripcion VARCHAR(300) NOT NULL, clave_Plan VARCHAR(10), 
-PRIMARY KEY(idAccion), FOREIGN KEY(clave_Plan) references PlanTrabajo(clave));
-
-CREATE TABLE IF NOT EXISTS Recurso(idRecurso int NOT NULL AUTO_INCREMENT,
-descripcion VARCHAR(100) NOT NULL, PRIMARY KEY(idRecurso));
-
-CREATE TABLE IF NOT EXISTS Miembro(cedula VARCHAR(10),
-nombre varchar(150) NOT NULL, rol VARCHAR(20) NOT NULL,
-gradoMaximo VARCHAR(50), correo VARCHAR(50) NOT NULL, clave_CA VARCHAR(10), 
-primary key(cedula), foreign key(clave_CA) references CuerpoAcademico(clave));
-
-CREATE TABLE IF NOT EXISTS ParticipaPlanTrabajo(clave VARCHAR(10) NOT NULL, 
-cedula VARCHAR(10) NOT NULL , primary key(clave, cedula), 
-foreign key(clave) references PlanTrabajo(clave), 
-foreign key(cedula) references Miembro(cedula));
-
-CREATE TABLE IF NOT EXISTS Requiere(idAccion int NOT NULL,
-idRecurso int NOT NULL, primary key(idAccion,idRecurso),
-foreign key(idAccion) references Accion(idAccion),
-foreign key(idRecurso) references Recurso(idRecurso));
-
-CREATE TABLE IF NOT EXISTS Encarga(Cedula VARCHAR(10) NOT NULL,
-idAccion int NOT NULL, estadoAccion varchar(30) NOT NULL,
-primary key(cedula,idAccion), foreign key(idAccion) 
-references Accion(idAccion), foreign key(cedula) 
-references miembro(cedula));
-
-CREATE TABLE IF NOT EXISTS  Articulo(idArticulo int NOT NULL auto_increment, 
-  titulo varchar(100) NOT NULL, estado varchar(30) NOT NULL, 
-  nombreRevista varchar(50) NOT NULL, editorial varchar(50) NOT NULL, 
-  ISNN varchar (8) NOT NULL , descripcion varchar(300) NOT NULL, id_Proyecto int, tipo varchar(15) not null, 
-  primary key (idArticulo), foreign key (id_Proyecto) references Proyecto (idProyecto));
-
-  CREATE TABLE IF NOT EXISTS  Libro(idLibro int NOT NULL auto_increment, 
-  titulo varchar(100) NOT NULL,descripcion varchar(300) NOT NULL, estado varchar(30) NOT NULL, 
-  editorial varchar(50) NOT NULL, ISBN varchar (8) NOT NULL , id_Proyecto int,
-  primary key (idLibro), foreign key (id_Proyecto) references Proyecto (idProyecto));
 
 CREATE TABLE IF NOT EXISTS ParticipaTrabajoRecepcional(idTrabajoRecepcional int NOT NULL,
 matricula varchar(10), primary key(idTrabajoRecepcional, matricula), foreign key(idTrabajoRecepcional) 
@@ -149,19 +102,76 @@ primary key(matricula,idAnteproyecto),
  foreign key(idAnteproyecto) references Anteproyecto(idAnteproyecto), 
  foreign key(matricula) references Estudiante(matricula));
  
- CREATE TABLE IF NOT EXISTS Prerequisito_Encargado( idPrerequisito int not null ,cedula VARCHAR(10) NOT NULL,
-matricula varchar(10) NOT NULL, primary key(matricula,idPrerequisito),
- foreign key(idPrerequisito) references Prerequisito(idPrerequisito), 
- foreign key(cedula) references Miembro(cedula));
 
-CREATE TABLE IF NOT EXISTS ParticipaReunion( idReunion int not null ,cedula VARCHAR(10) NOT NULL,
+CREATE TABLE IF NOT EXISTS ParticipaReunion( idReunion int not null ,cedula VARCHAR(10) NOT NULL, rol varchar(50) NOT NULL,
 primary key(cedula,idReunion), foreign key(idReunion) 
 references Reunion(idReunion), foreign key(cedula) 
 references Miembro(cedula));
 
-use cuerpoacademico;
-select * from reunion;
-select * from prerequisito;
+
+CREATE TABLE IF NOT EXISTS CultivaProyecto(idProyecto int NOT NULL,
+nombreLGAC varchar(200), primary key(idProyecto, nombreLGAC), foreign key(idProyecto) 
+references Proyecto(idProyecto), foreign key(nombreLGAC) 
+references LGAC(nombre));
+
+
+CREATE TABLE IF NOT EXISTS CultivaTrabajoRecepcional(idTrabajoRecepcional int NOT NULL,
+nombreLGAC varchar(200), primary key(idTrabajoRecepcional, nombreLGAC), foreign key(idTrabajoRecepcional) 
+references TrabajoRecepcional(idTrabajoRecepcional), foreign key(nombreLGAC) 
+references LGAC(nombre));
+
+
+/*INSERT INTO ParticipaReunion (idReunion, cedula, rol) values (1, "8325134", "Asistente");
+INSERT INTO Prerequisito_Encargado(cedula, idPrerequisito) values ("8325134", 1);
+INSERT INTO Prerequisito(idReunion, descripcion, cedula) values (1, "Verificar situacion de FEIBook", "8325134");
+INSERT INTO Prerequisito(idReunion, descripcion, cedula) values (1, "Evaluar el plan de trabajo", "8325134");
+INSERT INTO LGAC(nombre,descripcion) values("Evaluación del modelo de calidad de seguridad para arquitecturas de software ",  "Se orienta al estudio de los diversos métodos y enfoques para la gestión, modelado y desarrollo de software, de manera que se obtenga software de calidad. Gestión de las diversas etapas del proceso de desarrollo, incluyendo hasta la medición del proceso y artefactos. Modelado de los diversos artefactos en las distintas etapas del proceso de desarrollo.");
+INSERT INTO Anteproyecto(titulo, descripcion, fechaInicio, fechaFin) values ("Evaluación del modelo de calidad de seguridad para arquitecturas de software",
+"Una arquitectura de software define no sólo la estructura o estructuras de un sistema de software, sino las características de calidad del propio sistema. Una característica o atributo de calidad altamente crítico en nuestros días es la seguridad. Esta característica, por supuesto que también es importante considerar en el desarrollo de la plataforma de comunicación y educación", 
+"13/11/2019", "13/07/2020");
+INSERT INTO LGAC(nombre,descripcion) values("Aplicaciones de las técnicas estadísticas",  "Se orienta al estudio de los diversos métodos");
+INSERT INTO Anteproyecto (titulo, descripcion, fechaInicio, fechaFin) values ("Revisión de articulos sobre microservicios ",
+        "Revisión de articulos relacionados al apartado de microservicios",
+        "13/01/2021", "13/07/2021");
+INSERT INTO Estudiante(matricula, nombre) values ("S19014023", "Karina Valdes Iglesias");
+
+INSERT INTO Reunion(asunto,hora, fecha, estado) VALUES ("Actualizar plan de trabajo de la LIS","13:00","11/05/2021", "Registrada");
+INSERT INTO CuerpoAcademico(clave, nombre, objetivo, mision, vision, gradoConsolidacion) values ( "UVCA184", "Tecnología Computacional y Educativa", "Analizar y evaluar software relacionado con las innovaciones educativas desde el enfoque pedagógico y técnico.",
+"El CA adscrito a la FEI de la UV tiene como misión desarrollar las áreas de sistemas operativos, lenguajes de programación, tecnología educativa, bases de datos, multimedia que permiten fortalecer la formación de los estudiantes de los programas educativo de la FEI, particularmente de la Licenciatura de Informática",
+"Se visualiza un CA integrado y consistente, con líneas definidas de generación y aplicación del conocimiento, que produce soluciones a problemas y conocimientos básicos de las áreas de redes, sistemas operativos, bases de datos, lenguajes de programación",
+"En formación");
+
+INSERT INTO TrabajoRecepcional(titulo, tipo, descripcion, fechaInicio,fechaFin, estadoActual, idAnteproyecto ) VALUES ("Propuesta de Aplicación de Aprendizaje Máquina y Cómputo Evolutivo en la Clasificación de Requisitos de Calidad", "Tesis",
+"Propuesta de uso de aprendizaje máquina en la clasificación de requisitos", "14/11/2019", "14/05/2021", "Concluido", 8);
+
+INSERT INTO Colabora(idAnteproyecto, cedula, rol ) values (20,"8325134", "Codirector");
+INSERT INTO Realiza(idAnteproyecto, matricula) values (7, "S19014013");
+INSERT INTO Realiza(idAnteproyecto, matricula) values (7, "S19014023");
+INSERT INTO CuerpoLGAC (claveCuerpoAcademico, nombreLGAC) values ("JDOEIJ804","Evaluación del modelo de calidad de seguridad para arquitecturas de software ");
+INSERT INTO LGAC (nombre,descripcion) values ("Evaluación de modelos matematico", "Estudio y administración de modelos matematicos");
+INSERT INTO cuerpoLGAC(claveCuerpoAcademico, nombreLGAC) values("UVCA107","Divulgación de la Estadística");
+INSERT INTO cuerpoLGAC(claveCuerpoAcademico, nombreLGAC) values("CA424","Grafos aplicados a busquedas");
+INSERT INTO TrabajoRecepcional(titulo, tipo, descripcion, fechaInicio,fechaFin, estadoActual, idAnteproyecto ) VALUES ("Prácticas automatizadas sobre la elicitación de requisitos", "Tesis",
+"Propuesta de uso de aprendizaje máquina en elicitación de requisitos y fases posteriores", "18/02/2019", "14/05/2020", "Concluido", 20);
+INSERT INTO TrabajoRecepcional(titulo, tipo, descripcion, fechaInicio,fechaFin, estadoActual, idAnteproyecto ) VALUES ("Los microservicios enfocados en la ingeniería de software", "Tesis",
+        "Los microservicios enfocados en la ingeniería de software y sus distintas aplicaciones", "14/11/2019", "14/05/2021", "Concluido",26);
+INSERT INTO TrabajoRecepcional(titulo, tipo, descripcion, fechaInicio,fechaFin, estadoActual, idAnteproyecto ) VALUES ("Los microservicios enfocados en la ingeniería de software", "Tesis",
+        "Los microservicios enfocados en la ingeniería de software y sus distintas aplicaciones", "14/11/2019", "14/05/2021", "Concluido",26);
+
+
+insert into dirige(idTrabajoRecepcional,cedula,rol) values(5,"8325134","Director");
+
+insert into participatrabajorecepcional (idTrabajoRecepcional,matricula) values (5, "S19014023");
+
+insert into dirige(idTrabajoRecepcional,cedula,rol) values(2,"7938268","Codirector");
+
+insert into dirige(idTrabajoRecepcional,cedula,rol) values(6,"7938268","Codirector");
+insert into participatrabajorecepcional (idTrabajoRecepcional,matricula) values (6, "S19014013");
+insert into dirige(idTrabajoRecepcional,cedula,rol) values(6,"7938268","Codirector");
+insert into participatrabajorecepcional (idTrabajoRecepcional,matricula) values (6, "S19014013");
+
+
+*/
 /*create user 'integrante'@'localhost' identified by 'password';
 Grant SELECT, UPDATE, DELETE, INSERT on cuerpoAcademico.* TO 'integrante'@'localhost'; /
 
