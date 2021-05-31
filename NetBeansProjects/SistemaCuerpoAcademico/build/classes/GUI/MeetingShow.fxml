@@ -24,7 +24,7 @@
       </Text>
       <Button fx:id="btUpdate" layoutX="504.0" layoutY="451.0" mnemonicParsing="false" onAction="#actionUpdate" prefHeight="25.0" prefWidth="77.0" text="Modificar" />
       <Button layoutX="336.0" layoutY="451.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Regresar" />
-      <Button fx:id="btMeetingStart" layoutX="477.0" layoutY="30.0" mnemonicParsing="false" onAction="#actionRegisterMinute" prefHeight="25.0" prefWidth="97.0" text="Iniciar reunión" />
+      <Button fx:id="btMeetingStart" layoutX="477.0" layoutY="30.0" mnemonicParsing="false" onAction="#actionMinute" prefHeight="25.0" prefWidth="97.0" text="Iniciar reunión" />
       <Label fx:id="lbSubject" layoutX="14.0" layoutY="75.0" text="Asunto:" />
       <Label fx:id="lbDate" layoutX="14.0" layoutY="101.0" text="Fecha:" />
       <Label fx:id="lbHour" layoutX="17.0" layoutY="131.0" text="Hora:" />

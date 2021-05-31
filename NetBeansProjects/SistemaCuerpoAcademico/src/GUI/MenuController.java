@@ -34,7 +34,7 @@ public class MenuController implements Initializable {
     @FXML ListView lvOptions;
     GroupAcademic groupAcademic;
     private ObservableList<String> options ;
-
+    private Member member;
     
     
     
@@ -97,6 +97,7 @@ public class MenuController implements Initializable {
     }
     
     public void initializeMenu(Member member){
+        this.member = member;
         if(member.getRole().equals("Responsable")){
             fillOptions();
         }
@@ -153,7 +154,8 @@ public class MenuController implements Initializable {
               try {
                loader = new FXMLLoader(getClass().getResource("MeetingList.fxml"));
                root = loader.load();
-               MeetingListController MeetingListController = loader.getController();
+               MeetingListController meetingListController = loader.getController();
+               meetingListController.setMember(member);
                Scene scene = new Scene(root);
                Stage stage = new Stage();
                stage.setScene(scene);

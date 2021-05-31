@@ -19,9 +19,9 @@
             <Font size="33.0" />
          </font>
       </Label>
-      <TextArea layoutX="54.0" layoutY="147.0" prefHeight="176.0" prefWidth="482.0" />
+      <TextArea fx:id="taComment" layoutX="54.0" layoutY="147.0" prefHeight="176.0" prefWidth="482.0" />
       <Label layoutX="62.0" layoutY="118.0" text="Comentarios" />
-      <Button layoutX="486.0" layoutY="350.0" mnemonicParsing="false" text="Guardar" />
-      <Button layoutX="414.0" layoutY="351.0" mnemonicParsing="false" text="Cancelar" />
+      <Button fx:id="btSave" layoutX="393.0" layoutY="351.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar" />
+      <Button fx:id="btCancel" layoutX="470.0" layoutY="351.0" mnemonicParsing="false" onAction="#actionCancel" text="Cancelar" />
    </children>
 </AnchorPane>

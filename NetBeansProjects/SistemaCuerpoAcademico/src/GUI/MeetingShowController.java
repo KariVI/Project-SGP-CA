@@ -54,7 +54,7 @@ public class MeetingShowController implements Initializable {
     private ObservableList<Prerequisite> prerequisites;
     private ObservableList<Member> assistants;
     private Meeting meeting= new Meeting();
-    
+    private Member member;
     
     public void setMeeting(Meeting meeting){
         this.meeting.setKey(meeting.getKey());
@@ -147,8 +147,7 @@ public class MeetingShowController implements Initializable {
       MeetingDAO meetingDAO = new MeetingDAO();
       if(meeting.getState().equals("Concluida")){   
           disableModifyButton();
-      }
-      
+      }else    
       if(dateMeeting.equals(dateCurrently)){    
           meeting.setState("Proxima");
           meetingDAO.changedStateSucessful(meeting);
@@ -166,8 +165,19 @@ public class MeetingShowController implements Initializable {
         btMeetingStart.setDisable(false);
     }
     
+    public void setMember(Member member){
+       this.member = member;
+   }
     @FXML
-    private void actionRegisterMinute(ActionEvent actionEvent){  
+    private void actionMinute(){
+        if(btMeetingStart.getText().equals("Ver minuta")){
+            showMinute();
+        }else{
+            registerMinute();
+        }
+    }
+    private void registerMinute(){  
+       
          try{ 
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/minuteRegister.fxml").toURI().toURL();
@@ -175,8 +185,32 @@ public class MeetingShowController implements Initializable {
               FXMLLoader loader = new FXMLLoader(url);
               loader.setLocation(url);
               loader.load();
-              MinuteRegisterController MinuteRegisterController =loader.getController(); 
-              MinuteRegisterController.initializeMeeting(meeting.getKey());          
+              MinuteRegisterController minuteRegisterController =loader.getController(); 
+              minuteRegisterController.initializeMeeting(meeting.getKey());          
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);
+            } catch (IOException ex) {
+                    Log.logException(ex);
+            }
+            primaryStage.show();
+       } catch (MalformedURLException ex) {
+           Log.logException(ex);
+       }
+    }
+    
+    private void showMinute(){  
+       
+         try{ 
+            Stage primaryStage= new Stage();
+            URL url = new File("src/GUI/minuteShow.fxml").toURI().toURL();
+           try{
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              MinuteShowController minuteShowController =loader.getController(); 
+               minuteShowController.setMember(member);
+               minuteShowController.initializeMinute(meeting); 
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);

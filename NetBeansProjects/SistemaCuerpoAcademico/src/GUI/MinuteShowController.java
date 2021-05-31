@@ -2,9 +2,12 @@ package GUI;
 
 import businessLogic.MinuteDAO;
 import businessLogic.AgreementDAO;
+import businessLogic.MeetingDAO;
 import domain.Agreement;
+import domain.Meeting;
 import domain.Member;
 import domain.Minute;
+import domain.MinuteComment;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -46,14 +49,18 @@ public class MinuteShowController implements Initializable {
     @FXML TableColumn tcNumber;
     @FXML TextArea taDue;
     @FXML TextArea taNote;
+    @FXML RadioButton rbApproveMinute;
+    @FXML RadioButton rbDisapproveMinute;
     @FXML TableView<Agreement> tvAgreement;
     @FXML Button btReturn;
-    private int idMinute = 1;
-    private int idMeeting = 1;
+    private int idMinute = 0;
+    private int idMeeting = 0;
     private int indexAgreement;
     private Minute minute;
     private ListChangeListener<Agreement> tableAgreementListener;
     @FXML private ToggleGroup tgApproveMinute;
+    private Member member;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tcMember.setCellValueFactory(new PropertyValueFactory<Member,String>("professionalLicense"));
@@ -61,22 +68,90 @@ public class MinuteShowController implements Initializable {
         tcPeriod.setCellValueFactory(new PropertyValueFactory<Agreement,String>("period"));
         agreements = FXCollections.observableArrayList();
         initializeAgreements();
-        initializeMinute();
         tvAgreement.setItems(agreements);
     }
     
-    public void initializeMinute(){
+    public void initializeMinute(Meeting meeting){    
+        idMeeting = meeting.getKey();
         try {
             MinuteDAO minuteDAO = new MinuteDAO();
-            this.minute = minuteDAO.getMinute(idMeeting);
-            System.out.println("h"+minute.getDue());
+            this.minute = minuteDAO.getMinute(idMeeting); 
+            this.idMinute = minute.getIdMinute();
             taDue.setText(minute.getDue());
             taNote.setText(minute.getNote());
+            verifyApprove();
         } catch (BusinessException ex) {
             Logger.getLogger(MinuteShowController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+   public boolean verifyMinuteStateApprove(){
+       boolean value = false;
+       MinuteDAO minuteDAO = new MinuteDAO();
+       MeetingDAO meetingDAO = new MeetingDAO();
+        try {
+            ArrayList<Member> ListMemberApprove = minuteDAO.getMembersApprove(minute);
+            ArrayList<Member> ListMemberAssistants = meetingDAO.getAssistants(idMeeting);
+            if(ListMemberAssistants.size() == ListMemberApprove.size()){
+                value = true;
+                minute.setState("Aprobada");
+                minuteDAO.update(minute);
+            }
+        } catch (BusinessException ex) {
+            Logger.getLogger(MinuteShowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       return value;
+   }
+   public boolean verifyMemberApproved(){
+       boolean value = false;
+         try {
+            MinuteDAO minuteDAO = new MinuteDAO();
+            ArrayList<MinuteComment> ListMemberDisapprove = minuteDAO.getMinutesComments(idMinute);
+            ArrayList<Member> ListMemberApprove = minuteDAO.getMembersApprove(minute);
+            int i = 0;
+            System.out.println(ListMemberDisapprove.size());
+            while(i<ListMemberApprove.size()){
+                if(ListMemberApprove.get(i).getProfessionalLicense().equals(member.getProfessionalLicense())){
+                    value = true;
+                    i = ListMemberApprove.size();
+                }
+                i++;
+            }
+            i = 0;
+           while(i<ListMemberDisapprove.size()){
+               System.out.println(ListMemberDisapprove.get(i).getProfessionalLicense());
+               System.out.println(member.getProfessionalLicense());
+               
+                if(ListMemberDisapprove.get(i).getProfessionalLicense().equals(member.getProfessionalLicense())){
+                      value = true;
+                  
+                    i = ListMemberDisapprove.size();
+                }
+                i++;
+            }
+        } catch (BusinessException ex) {
+            Logger.getLogger(MinuteShowController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+         return value;
+   }
    
+   public void verifyApprove(){
+     if(verifyMemberApproved()||verifyMinuteStateApprove()){
+         disableRadioButtons();
+     }
+     if(verifyMinuteStateApprove()){
+         
+     }
+   }
+   
+    public void disableRadioButtons(){
+        System.out.println("hhh");
+        rbApproveMinute.setOpacity(0);
+        rbDisapproveMinute.setOpacity(0);
+        rbApproveMinute.setDisable(true);
+        rbDisapproveMinute.setDisable(true);
+    }
+    
+    
     public void initializeAgreements(){
         AgreementDAO agreementDAO = new AgreementDAO();
         try {
@@ -89,30 +164,49 @@ public class MinuteShowController implements Initializable {
             Logger.getLogger(TopicShowController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    @FXML
+    
+    @FXMLs
     public void actionReturn(){
-        System.out.println("hh");
         String approveMinute = ((RadioButton) tgApproveMinute.getSelectedToggle()).getText();
-        if(approveMinute.equals("No estoy de acuerdo")){
-         
+        if(approveMinute.equals("Estoy de acuerdo")){
+            try {
+                MinuteDAO minuteDAO = new MinuteDAO();
+                minuteDAO.approveMinute(idMinute, member.getProfessionalLicense());
+                AlertMessage alertMessage= new AlertMessage();
+                alertMessage.showAlertSuccesfulSave("Validacion");
+            
+            } catch (BusinessException ex) {
+                Logger.getLogger(MinuteShowController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        Stage stage = (Stage) btReturn.getScene().getWindow();
+        stage.close();
     } 
     
-    public void goMinuteComment(){
+    public void setMember(Member member){
+        this.member = member;
+        System.out.println(member.getName());
+    }
+    
+    public void actionMinuteComment(){
          try {
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/MinuteComment.fxml").toURI().toURL();
             FXMLLoader loader = new FXMLLoader(url);
             loader.setLocation(url);
             loader.load();
-            MinuteCommentController minuteComment =loader.getController();
+            MinuteCommentController minuteCommentController =loader.getController();
+            minuteCommentController.setMember(member);
+            minuteCommentController.setMinute(minute);
             Parent root = loader.getRoot();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             Stage stage = (Stage) btReturn.getScene().getWindow();
             primaryStage.show();
+            stage.close();
         }catch (IOException ex) {
             Logger.getLogger(MemberViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
 }

@@ -3,7 +3,9 @@ package GUI;
 import businessLogic.MemberDAO;
 import businessLogic.MinuteDAO;
 import businessLogic.AgreementDAO;
+import businessLogic.MeetingDAO;
 import domain.Agreement;
+import domain.Meeting;
 import domain.Member;
 import domain.Minute;
 import java.net.URL;
@@ -173,6 +175,7 @@ public class MinuteRegisterController implements Initializable {
                }
                AlertMessage alertMessage = new AlertMessage();
                alertMessage.showAlertSuccesfulSave("La minuta");
+               changeStateMeeting();
                Stage stage = (Stage)btFinish.getScene().getWindow();
                stage.close();
            } catch (BusinessException ex) {
@@ -180,8 +183,18 @@ public class MinuteRegisterController implements Initializable {
            }          
        }
     }
-   
-    
+  
+    public void changeStateMeeting(){
+        try {
+            MeetingDAO meetingDAO = new MeetingDAO();
+            Meeting meeting = meetingDAO.getMeetingById(idMeeting);
+            meeting.setState("Concluida");
+            meetingDAO.changedStateSucessful(meeting);
+            
+        } catch (BusinessException ex) {
+            Logger.getLogger(MinuteRegisterController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public boolean validateAgreement(Agreement agreement){
         boolean value = true;
         AlertMessage alertMessage = new AlertMessage();

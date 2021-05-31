@@ -6,12 +6,13 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="538.0" prefWidth="786.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MinuteModifyController">
+<AnchorPane id="AnchorPane" prefHeight="538.0" prefWidth="786.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MinuteShowController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#050505" height="98.0" layoutY="-55.0" stroke="BLACK" strokeType="INSIDE" width="787.0" />
       <TableView fx:id="tvAgreement" layoutX="30.0" layoutY="107.0" prefHeight="129.0" prefWidth="698.0">
@@ -27,7 +28,7 @@
       <Label layoutX="23.0" layoutY="362.0" text="Pendientes:" />
       <TextArea fx:id="taNote" layoutX="38.0" layoutY="266.0" opacity="0.0" prefHeight="86.0" prefWidth="491.0" />
       <TextArea fx:id="taDue" layoutX="34.0" layoutY="395.0" opacity="0.0" prefHeight="87.0" prefWidth="498.0" />
-      <Button fx:id="btFinish" layoutX="679.0" layoutY="487.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="81.0" text="Regresar" />
+      <Button fx:id="btReturn" layoutX="679.0" layoutY="487.0" mnemonicParsing="false" onAction="#actionReturn" prefHeight="26.0" prefWidth="81.0" text="Regresar" />
       <Label layoutX="14.0" layoutY="43.0" text="Registrar minuta">
          <font>
             <Font size="27.0" />
@@ -35,8 +36,11 @@
       </Label>
       <HBox layoutX="499.0" layoutY="63.0" prefHeight="46.0" prefWidth="273.0" spacing="15.0">
          <children>
-            <RadioButton mnemonicParsing="false" text="Estoy de acuerdo" />
-            <RadioButton mnemonicParsing="false" text="No estoy de acuerdo" />
+            <RadioButton fx:id="rbApproveMinute" mnemonicParsing="false" text="Estoy de acuerdo">
+               <toggleGroup>
+                  <ToggleGroup fx:id="tgApproveMinute" />
+               </toggleGroup></RadioButton>
+            <RadioButton fx:id="rbDisapproveMinute" mnemonicParsing="false" onAction="#actionMinuteComment" text="No estoy de acuerdo" toggleGroup="$tgApproveMinute" />
          </children>
       </HBox>
    </children>

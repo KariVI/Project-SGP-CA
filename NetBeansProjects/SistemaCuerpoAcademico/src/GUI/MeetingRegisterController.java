@@ -65,6 +65,7 @@ public class MeetingRegisterController implements Initializable {
     @FXML Button btAddPrerequisite;
     @FXML Button btDelete;
     int idMeeting;
+   
 
     
     @FXML
@@ -116,6 +117,8 @@ public class MeetingRegisterController implements Initializable {
         }
     }
     
+  
+   
     @FXML
     private void actionExit(ActionEvent actionEvent){   
         Stage stage = (Stage) btExit.getScene().getWindow();
