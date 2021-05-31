@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [SistemaCuerpoAcademico]">
+  <test name="businessLogic.LoginCredentialDAOTest(failed)" junit="true">
+    <classes>
+      <class name="businessLogic.LoginCredentialDAOTest">
+        <methods>
+          <include name="testSearchLoginCredential"/>
+        </methods>
+      </class> <!-- businessLogic.LoginCredentialDAOTest -->
+    </classes>
+  </test> <!-- businessLogic.LoginCredentialDAOTest(failed) -->
+</suite> <!-- Failed suite [SistemaCuerpoAcademico] -->

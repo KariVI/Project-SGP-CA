@@ -40,13 +40,10 @@ public class LoginController implements Initializable {
     public void login(){
        String password = "";
        String user = "";
-       Blob passwordBlob = null;
        user = tfUser.getText();
        password = pfPassword.getText();
        user = tfUser.getText();
-       Validation validation = new Validation();
-       passwordBlob = validation.stringToBlob(password);
-       LoginCredential credential = new LoginCredential(user,passwordBlob);     
+       LoginCredential credential = new LoginCredential(user,password);     
        if(verificarCredenciales(credential)){
             MemberDAO memberDAO = new MemberDAO();
             Member member = null;
@@ -81,9 +78,13 @@ public class LoginController implements Initializable {
             LoginCredentialDAO credentialDAO = new LoginCredentialDAO();
             credentialRetrieved = credentialDAO.searchLoginCredential(credential);        
             if(!credentialRetrieved.getPassword().equals(credential.getPassword())
-                    &&!credentialRetrieved.getUser().equals(credentialRetrieved.getUser())){
+                    ||!credentialRetrieved.getUser().equals(credentialRetrieved.getUser())){
                 value = false;
+                System.out.println(credential.getPassword()+" "+credentialRetrieved.getPassword());
+                AlertMessage alertMessage = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Credenciales incorrectas");
             }
+            //
             
         } catch (BusinessException ex) {
             value = false;

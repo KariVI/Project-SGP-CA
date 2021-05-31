@@ -1,20 +1,18 @@
 package domain;
 
-import java.sql.Blob;
-
 public class LoginCredential {
     private String user;
-    private Blob password;
+    private String password;
     private String professionalLicense;
     
-    public LoginCredential(String user, Blob password, String professionalLicense){
+    public LoginCredential(String user, String password, String professionalLicense){
         this.user = user;
         this.password = password;
         this.professionalLicense = professionalLicense;
     }
     
     
-    public LoginCredential(String user, Blob password ){
+    public LoginCredential(String user, String password ){
        this.user = user;
        this.password = password;
     }
@@ -27,13 +25,14 @@ public class LoginCredential {
         return user;
     }
     
-    public void setPassword(Blob password){
+    public void setPassword(String password){
         this.password = password;
     }
     
-    public Blob getPassword(){
+    public String getPassword(){
         return password;
     }
+    
     
     public void setProfessionalLicense(String professionalLicense){
         this.professionalLicense = professionalLicense;

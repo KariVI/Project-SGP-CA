@@ -21,9 +21,9 @@ public class LoginCredentialDAO implements ILoginCredentialDAO {
             Connection connectionDataBase;
             connectionDataBase = connectorDataBase.getConnection();   
             PreparedStatement insertStatment;
-            insertStatment = connectionDataBase.prepareStatement("INSERT INTO Credenciales(usuario,contrasenia,cedula) VALUES(?,?,?) ");
+            insertStatment = connectionDataBase.prepareStatement("INSERT INTO Credenciales(usuario,contrasenia,cedula) VALUES(?,hex(AES_ENCRYPT(?,'key')),?)");
             insertStatment.setString(1, credential.getUser());
-            insertStatment.setBlob(2, credential.getPassword());
+            insertStatment.setString(2, credential.getPassword());      
             insertStatment.setString(3, credential.getProfessionalLicense());
             
             insertStatment.executeUpdate();
@@ -45,14 +45,15 @@ public class LoginCredentialDAO implements ILoginCredentialDAO {
             Connection connectionDataBase = connectorDataBase.getConnection();
           try{
             ResultSet resultSet;
-            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("SELECT usuario,cedula,contrasenia from Credenciales where usuario=? ");
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("SELECT usuario,cedula,(AES_DECRYPT(unhex(contrasenia),'key')) from Credenciales where usuario=? ");
+     
             preparedStatement.setString(1, credential.getUser());          
             
             resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
                 String user = resultSet.getString("usuario");
                 String professionalLicense = resultSet.getString("cedula");
-                Blob password = resultSet.getBlob("contrasenia");
+                String password = resultSet.getString("(AES_DECRYPT(unhex(contrasenia),'key'))");
                 retrievedCredential = new LoginCredential(user,password,professionalLicense);
             }
                 connectorDataBase.disconnect();

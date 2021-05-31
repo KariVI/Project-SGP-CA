@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS Anteproyecto(idAnteproyecto int NOT NULL,
   fechaFin varchar(20) NOT NULL , estadoActual varchar(30) NOT NULL,  idAnteproyecto int NOT NULL, 
   primary key (idTrabajoRecepcional),
   foreign key (idAnteproyecto) REFERENCES Anteproyecto (idAnteproyecto) ON DELETE CASCADE);
-  
+  CREATE TABLE IF NOT EXISTS Credenciales(cedula varchar(10) not null, usuario varchar(15) not null, contrasenia  varchar(200)  not null, primary key(cedula), foreign key (cedula) references Miembro(cedula));
 
   CREATE TABLE IF NOT EXISTS CuerpoAcademico(clave varchar(10) NOT NULL, 
 nombre varchar(100) NOT NULL, objetivo varchar(400) NOT NULL, 
