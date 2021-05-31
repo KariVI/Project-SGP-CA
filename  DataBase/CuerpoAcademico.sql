@@ -156,7 +156,7 @@ matricula varchar(10) NOT NULL, primary key(matricula,idPrerequisito),
  foreign key(idPrerequisito) references Prerequisito(idPrerequisito), 
  foreign key(cedula) references Miembro(cedula));
 
-CREATE TABLE IF NOT EXISTS ParticipaReunion( idReunion int not null ,cedula VARCHAR(10) NOT NULL,
+CREATE TABLE IF NOT EXISTS ParticipaReunion( idReunion int not null ,cedula VARCHAR(10) NOT NULL, rol varchar(50) NOT NULL,
 primary key(cedula,idReunion), foreign key(idReunion) 
 references Reunion(idReunion), foreign key(cedula) 
 references Miembro(cedula));

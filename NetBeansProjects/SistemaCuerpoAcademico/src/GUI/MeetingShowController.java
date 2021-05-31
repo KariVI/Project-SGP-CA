@@ -166,7 +166,30 @@ public class MeetingShowController implements Initializable {
         btMeetingStart.setDisable(false);
     }
     
-        private void disableModifyButton(){ 
+    @FXML
+    private void actionRegisterMinute(ActionEvent actionEvent){  
+         try{ 
+            Stage primaryStage= new Stage();
+            URL url = new File("src/GUI/minuteRegister.fxml").toURI().toURL();
+           try{
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              MinuteRegisterController MinuteRegisterController =loader.getController(); 
+              MinuteRegisterController.initializeMeeting(meeting.getKey());          
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);
+            } catch (IOException ex) {
+                    Log.logException(ex);
+            }
+            primaryStage.show();
+       } catch (MalformedURLException ex) {
+           Log.logException(ex);
+       }
+    }
+    
+    private void disableModifyButton(){ 
         btUpdate.setOpacity(0);
         btUpdate.setDisable(true);
         btMeetingStart.setOpacity(1);

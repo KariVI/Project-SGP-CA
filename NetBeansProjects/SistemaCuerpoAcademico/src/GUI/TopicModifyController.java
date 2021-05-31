@@ -44,7 +44,7 @@ public class TopicModifyController implements Initializable {
     @FXML Button btSave;
     @FXML Button btCancel;
     @FXML Button btUpdate;
-    private int idMeeting = 1;
+    private int idMeeting = 0;
     private int indexTopic;
     private ListChangeListener<Topic> tableTopicListener;
     
@@ -56,7 +56,6 @@ public class TopicModifyController implements Initializable {
         tcMember.setCellValueFactory(new PropertyValueFactory<Topic,String>("professionalLicense"));
         topics = FXCollections.observableArrayList();
         oldTopics = FXCollections.observableArrayList();
-        initializeTopics();
         tvTopic.setItems(topics);
        
         members = FXCollections.observableArrayList();
@@ -76,6 +75,11 @@ public class TopicModifyController implements Initializable {
                 setSelectedTopic();
             }
         };
+    }
+    
+    public void initializeMeeting(int idMeeting){
+        this.idMeeting = idMeeting;
+        initializeTopics();
     }
     
     public void initializeTopics(){

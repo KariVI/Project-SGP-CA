@@ -90,6 +90,7 @@ public class MeetingRegisterController implements Initializable {
        }
     }
     
+    
     public void setTopics(ObservableList<Topic> topics){
        this.topics = topics;
     }
@@ -187,7 +188,8 @@ public class MeetingRegisterController implements Initializable {
         TopicDAO topicDAO = new TopicDAO();
         try {
           for(int i = 0; i < topics.size(); i++){
-             topicDAO.save(topics.get(i));
+              topics.get(i).setIdMeeting(idMeeting);
+             topicDAO.save(topics.get(i));           
            }   
         } catch (BusinessException ex) {
                Logger.getLogger(TopicRegisterController.class.getName()).log(Level.SEVERE, null, ex);

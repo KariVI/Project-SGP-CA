@@ -71,7 +71,8 @@ public class MinuteRegisterController implements Initializable {
              }
             }
         );
-
+        
+        
         tableAgreementListener = new ListChangeListener<Agreement>(){
             @Override
             public void onChanged(ListChangeListener.Change<? extends Agreement> agreement) {
@@ -79,7 +80,12 @@ public class MinuteRegisterController implements Initializable {
             }
         };        
     }
-        private Agreement getSelectedAgreement(){
+    
+    public void initializeMeeting(int idMeeting){
+            this.idMeeting = idMeeting;
+    }
+    
+    private Agreement getSelectedAgreement(){
         Agreement agreement = null;
         int tamTable = 1;
         if(tvAgreement != null){

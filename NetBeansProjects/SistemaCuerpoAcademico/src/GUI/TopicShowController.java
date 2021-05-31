@@ -43,8 +43,9 @@ public class TopicShowController implements Initializable {
     @FXML TableColumn<Topic,String> tcMember;
     @FXML TableColumn<Topic,String> tcTopic;
     @FXML TableView<Topic> tvTopic;
-    Button btDelete;
-    Button btAdd;
+    @FXML Button btDelete;
+    @FXML Button btAdd;
+    @FXML Button btUpdate;
     private int idMeeting = 0;
 
     
@@ -54,28 +55,47 @@ public class TopicShowController implements Initializable {
         tcStartTime.setCellValueFactory(new PropertyValueFactory<Topic,String>("startTime"));
         tcFinishTime.setCellValueFactory(new PropertyValueFactory<Topic,String>("finishTime"));
         tcMember.setCellValueFactory(new PropertyValueFactory<Topic,String>("professionalLicense"));
-        topics = FXCollections.observableArrayList();
-        initializeTopics();
+        topics = FXCollections.observableArrayList();      
         tvTopic.setItems(topics);
         
     }  
     public void initializeMeeting(Meeting meeting){
         idMeeting = meeting.getKey();
+        initializeTopics();
     }
     
     public void initializeTopics(){
         TopicDAO topicDAO = new TopicDAO();
         try {
             ArrayList<Topic> topicList = new ArrayList<Topic>();
+            System.out.println(idMeeting);
             topicList = topicDAO.getAgendaTopics(idMeeting);
             for(int i = 0; i < topicList.size(); i++){
                 topics.add(topicList.get(i));
-                System.out.println(topicList.get(i).getProfessionalLicense());
+   
             }
         } catch (BusinessException ex) {
             Logger.getLogger(TopicShowController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }       
     }
      
+    public void actionUpdate(){
+          try {
+            Stage primaryStage= new Stage();
+            URL url = new File("src/GUI/topicModify.fxml").toURI().toURL();
+            FXMLLoader loader = new FXMLLoader(url);
+            loader.setLocation(url);
+            loader.load();
+            TopicModifyController topicModifyController = loader.getController();
+            topicModifyController.initializeMeeting(idMeeting);
+            Parent root = loader.getRoot();
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            Stage stage = (Stage) btUpdate.getScene().getWindow();
+            stage.close();
+            primaryStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(MemberViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

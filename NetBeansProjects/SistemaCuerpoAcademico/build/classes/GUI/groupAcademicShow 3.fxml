@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="520.0" prefWidth="703.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GroupAcademicShowController">
+    <stylesheets>
+        <URL value="@groupacademicshow.css" />
+    </stylesheets>
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2b2b2c" height="34.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" width="703.0" />
+      <Label layoutX="48.0" layoutY="83.0" prefHeight="15.0" prefWidth="39.0" text="Nombre:">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label layoutX="54.0" layoutY="98.0" text="Clave:">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label layoutX="48.0" layoutY="119.0" text="Grado de consolidación:">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Button fx:id="btReturn" layoutX="538.0" layoutY="472.0" mnemonicParsing="false" onAction="#actionReturn" text="Regresar" />
+      <Button fx:id="btUpdate" layoutX="622.0" layoutY="472.0" mnemonicParsing="false" onAction="#actionUpdate" text="Modificar" />
+      <TextArea fx:id="taObjetive" editable="false" layoutX="23.0" layoutY="146.0" prefHeight="44.0" prefWidth="660.0" wrapText="true">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </TextArea>
+      <TextArea fx:id="taVision" editable="false" layoutX="22.0" layoutY="190.0" prefHeight="53.0" prefWidth="660.0" wrapText="true">
+         <font>
+            <Font size="10.0" />
+         </font></TextArea>
+      <TextArea fx:id="taMision" editable="false" layoutX="22.0" layoutY="243.0" prefHeight="53.0" prefWidth="660.0" wrapText="true">
+         <font>
+            <Font size="10.0" />
+         </font></TextArea>
+      <Pane fx:id="lgacsPane" layoutX="19.0" layoutY="297.0" prefHeight="169.0" prefWidth="667.0" />
+      <Label fx:id="lbName" layoutX="194.0" layoutY="83.0" text="Label">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbKey" layoutX="194.0" layoutY="98.0" text="Label">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbConsolidateGrade" layoutX="194.0" layoutY="119.0" text="Label">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Text layoutX="14.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cuerpo Académico">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
