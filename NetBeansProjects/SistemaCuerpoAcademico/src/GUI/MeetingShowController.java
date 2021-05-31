@@ -92,7 +92,8 @@ public class MeetingShowController implements Initializable {
               FXMLLoader loader = new FXMLLoader(url);
               loader.setLocation(url);
               loader.load();
-              TopicShowController topicShowController =loader.getController();      
+              TopicShowController topicShowController =loader.getController(); 
+              topicShowController.initializeMeeting(meeting);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);       

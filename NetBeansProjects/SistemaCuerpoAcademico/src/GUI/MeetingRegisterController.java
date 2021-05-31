@@ -4,9 +4,11 @@ package GUI;
 import businessLogic.MeetingDAO;
 import businessLogic.MemberDAO;
 import businessLogic.PrerequisiteDAO;
+import businessLogic.TopicDAO;
 import domain.Meeting;
 import domain.Member;
 import domain.Prerequisite;
+import domain.Topic;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -44,6 +46,7 @@ public class MeetingRegisterController implements Initializable {
 
     private ObservableList<Member> members;
     private ObservableList<Prerequisite> prerequisites;
+    private ObservableList<Topic> topics;
     @FXML TextField tfSubject;
     @FXML TextField tfHour;
     @FXML Button btExit;
@@ -73,10 +76,11 @@ public class MeetingRegisterController implements Initializable {
               FXMLLoader loader = new FXMLLoader(url);
               loader.setLocation(url);
               loader.load();
-              TopicRegisterController topicRegisterController =loader.getController();      
+              TopicRegisterController topicRegisterController =loader.getController(); 
+              topicRegisterController.initializeMeeting(idMeeting,this);          
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
-              primaryStage.setScene(scene);       
+              primaryStage.setScene(scene);
             } catch (IOException ex) {
                     Log.logException(ex);
             }
@@ -84,6 +88,10 @@ public class MeetingRegisterController implements Initializable {
        } catch (MalformedURLException ex) {
            Log.logException(ex);
        }
+    }
+    
+    public void setTopics(ObservableList<Topic> topics){
+       this.topics = topics;
     }
     
     @FXML 
@@ -158,6 +166,7 @@ public class MeetingRegisterController implements Initializable {
             if(meetingDAO.savedSucessful(meeting)){
                 idMeeting= meetingDAO.getId(meeting);
                 savePrerequisite();
+                saveTopics();
                 meeting.setKey(idMeeting);
                 saveAssistants( meeting);
                 AlertMessage alertMessage = new AlertMessage();
@@ -173,6 +182,16 @@ public class MeetingRegisterController implements Initializable {
         for(int i = 0; i < prerequisites.size(); i++){
              prerequisiteDAO.savedSucessfulPrerequisites(prerequisites.get(i), idMeeting); 
            } 
+    }
+    public void saveTopics(){
+        TopicDAO topicDAO = new TopicDAO();
+        try {
+          for(int i = 0; i < topics.size(); i++){
+             topicDAO.save(topics.get(i));
+           }   
+        } catch (BusinessException ex) {
+               Logger.getLogger(TopicRegisterController.class.getName()).log(Level.SEVERE, null, ex);
+         }    
     }
     
     private void saveAssistants(Meeting meeting) throws BusinessException{  

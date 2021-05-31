@@ -2,6 +2,8 @@ drop database cuerpoAcademico;
 CREATE SCHEMA IF NOT EXISTS CuerpoAcademico;
 USE  CuerpoAcademico;
 
+CREATE TABLE IF NOT EXISTS Prerequisito(idPrerequisito int auto_increment NOT NULL , descripcion varchar(200) NOT NULL , idReunion int NOT NULL , primary key (idPrerequisito), foreign key (idReunion) REFERENCES Reunion (idReunion) ON DELETE CASCADE);
+
 CREATE TABLE IF NOT EXISTS Anteproyecto(idAnteproyecto int NOT NULL, 
   titulo varchar(200) NOT NULL, 
   descripcion varchar(400) NOT NULL, fechaInicio varchar(30) NOT NULL, 

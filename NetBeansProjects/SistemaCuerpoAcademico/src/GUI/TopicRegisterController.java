@@ -2,6 +2,7 @@ package GUI;
 
 import businessLogic.MemberDAO;
 import businessLogic.TopicDAO;
+import domain.Meeting;
 import domain.Member;
 import domain.Topic;
 import java.net.URL;
@@ -42,8 +43,9 @@ public class TopicRegisterController implements Initializable {
     @FXML Button btAdd;
     @FXML Button btSave;
     @FXML Button btCancel;
-    private int idMeeting = 1;
+    private int idMeeting = 0;
     private int indexTopic;
+    private MeetingRegisterController meetingRegisterController;
     private ListChangeListener<Topic> tableTopicListener;
     
     @Override
@@ -72,6 +74,11 @@ public class TopicRegisterController implements Initializable {
                 setSelectedTopic();
             }
         };
+    }
+    
+    public void initializeMeeting(int idMeeting, MeetingRegisterController meetingRegisterController){
+        this.idMeeting = idMeeting;
+        this.meetingRegisterController = meetingRegisterController;
     }
     
     @FXML
@@ -147,21 +154,22 @@ public class TopicRegisterController implements Initializable {
     }
     
    public void actionSave(){
-       TopicDAO topicDAO = new TopicDAO();
-       
-        try {
-          for(int i = 0; i < topics.size(); i++){
-             topicDAO.save(topics.get(i));
-           }   
-           AlertMessage alertMessage = new AlertMessage();
-           alertMessage.showAlertSuccesfulSave("Los temas fueron registrados con éxito");
-         } catch (BusinessException ex) {
-               Logger.getLogger(TopicRegisterController.class.getName()).log(Level.SEVERE, null, ex);
-         }
+      
+       meetingRegisterController.setTopics(topics);
+       // try {
+          //for(int i = 0; i < topics.size(); i++){
+             //topicDAO.save(topics.get(i));
+           //}   
+          // AlertMessage alertMessage = new AlertMessage();
+          // alertMessage.showAlertSuccesfulSave("Los temas fueron registrados con éxito");
+        // } catch (BusinessException ex) {
+            //   Logger.getLogger(TopicRegisterController.class.getName()).log(Level.SEVERE, null, ex);
+         //}
        
         Stage stage = (Stage)btSave.getScene().getWindow();
         stage.close();
     }
+
    
    public void actionCancel(){
       Stage stage = (Stage)btCancel.getScene().getWindow();

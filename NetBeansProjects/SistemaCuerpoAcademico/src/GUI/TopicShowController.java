@@ -7,6 +7,7 @@ package GUI;
 
 import businessLogic.MinuteDAO;
 import businessLogic.TopicDAO;
+import domain.Meeting;
 import domain.Topic;
 import java.io.File;
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class TopicShowController implements Initializable {
     @FXML TableView<Topic> tvTopic;
     Button btDelete;
     Button btAdd;
-    private int idMeeting = 1;
+    private int idMeeting = 0;
 
     
     @Override
@@ -58,10 +59,10 @@ public class TopicShowController implements Initializable {
         tvTopic.setItems(topics);
         
     }  
-    public void initializeMinute(){
-        MinuteDAO minuteDAO = new MinuteDAO();
-       
+    public void initializeMeeting(Meeting meeting){
+        idMeeting = meeting.getKey();
     }
+    
     public void initializeTopics(){
         TopicDAO topicDAO = new TopicDAO();
         try {
