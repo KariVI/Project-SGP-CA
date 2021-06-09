@@ -210,7 +210,12 @@ public class MeetingRegisterController implements Initializable {
             if(validation.findInvalidField(prerequisite.getDescription())){   
                 value=false;
                alertMessage.showAlertValidateFailed("Campos invalidos");
-            }  
+            } 
+            
+            if(repeatedPrerequisite(prerequisite)){ 
+               value=false;
+               alertMessage.showAlertValidateFailed("Prerequisito repetido");
+            }
         return value;
     }
     
@@ -244,7 +249,7 @@ public class MeetingRegisterController implements Initializable {
                 members.add(memberList.get(i));
             }
         } catch (BusinessException ex) {
-            Logger.getLogger(MemberListController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
     

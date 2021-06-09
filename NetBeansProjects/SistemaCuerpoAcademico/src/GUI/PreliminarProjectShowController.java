@@ -65,9 +65,9 @@ public class PreliminarProjectShowController implements Initializable {
              colaborators=preliminarProjectDAO.getColaborators(preliminarProject.getKey());
              for(int i=0; i< colaborators.size(); i++){ 
                  if(colaborators.get(i).getRole().equals("Director")){  
-                     lbDirector.setText(colaborators.get(i).getProfessionalLicense());
+                     lbDirector.setText(colaborators.get(i).getName());
                  }else{ 
-                     codirectors= codirectors + colaborators.get(i).getProfessionalLicense();
+                     codirectors= codirectors + colaborators.get(i).getName();
                      codirectors= codirectors + ",";
                  }
              }

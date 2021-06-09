@@ -3,18 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/ReceptionWorkModifyController.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/ReceptionWorkRegisterController.java</file>
-            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/GroupAcademicRegisterController.java</file>
-            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/PreliminarProjectShowController.java</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/Validation.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/ReceptionWorkListController.java</file>
-            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/PreliminarProjectListController.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/domain/ReceptionWork.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/ReceptionWorkShowController.java</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/test/businessLogic/PreliminarProjectDAOTest.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/ReceptionWorkDAO.java</file>
-            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/receptionworkshow.css</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/PreliminarProjectRegisterController.java</file>
             <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/MeetingRegisterController.java</file>
-            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/preliminarprojectshow.css</file>
         </group>
     </open-files>
 </project-private>

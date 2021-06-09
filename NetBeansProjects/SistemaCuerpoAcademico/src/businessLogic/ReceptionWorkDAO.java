@@ -95,8 +95,11 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
                 String dateStart= resultSet.getString("fechaInicio");
                 String dateEnd= resultSet.getString("fechaFin");
                 String actualState= resultSet.getString("estadoActual");
+                int idPreliminarProject = resultSet.getInt("idAnteproyecto");
                 receptionWork=new ReceptionWork(title,type, description, dateStart, dateEnd, actualState);
                 receptionWork.setKey(idReceptionWork);
+                PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
+                receptionWork.setPreliminarProject(preliminarProjectDAO.getById(idPreliminarProject));
             }
             
         } catch (ClassNotFoundException ex) {
@@ -156,8 +159,11 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
                     String dateStart=resultSet.getString("fechaInicio");
                     String dateEnd=resultSet.getString("fechaFin");
                     String actualState = resultSet.getString("estadoActual");
+                    int idPreliminarProject = resultSet.getInt("idAnteproyecto");
                     ReceptionWork receptionWorkAuxiliar = new ReceptionWork(title,type, description, dateStart, dateEnd, actualState);
                     receptionWorkAuxiliar.setKey(key);
+                   PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
+                   receptionWorkAuxiliar.setPreliminarProject(preliminarProjectDAO.getById(idPreliminarProject));
                     receptionWorkList.add(receptionWorkAuxiliar);
                 }
                 connectorDataBase.disconnect();

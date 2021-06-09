@@ -91,7 +91,7 @@ public class ReceptionWork {
     }
     
     public void setActualState(String actualState){ 
-        this.type=type;
+        this.actualState=actualState;
     }
     
     public PreliminarProject getPreliminarProject(){

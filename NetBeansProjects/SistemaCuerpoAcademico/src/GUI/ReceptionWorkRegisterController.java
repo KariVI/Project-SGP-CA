@@ -20,8 +20,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -59,9 +57,12 @@ public class ReceptionWorkRegisterController implements Initializable {
     @FXML private Pane lgacsPane;
     @FXML private ComboBox cbType;
     @FXML private ComboBox cbPreliminarProject;
+    @FXML private ComboBox cbState;
     @FXML DatePicker dpStartDate;
     @FXML DatePicker dpEndDate;
     private ObservableList<String> types;
+   private ObservableList<String> states;
+
     private ObservableList<PreliminarProject> preliminarProjects;
     private String[] codirectorsParts;
     private ReceptionWork receptionWork = new ReceptionWork();
@@ -102,11 +103,12 @@ public class ReceptionWorkRegisterController implements Initializable {
         String director= tfDirector.getText();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String type = (String) cbType.getSelectionModel().getSelectedItem();
+        String state = (String) cbState.getSelectionModel().getSelectedItem();
         PreliminarProject preliminarProject = (PreliminarProject) cbPreliminarProject.getSelectionModel().getSelectedItem();        
         String startDate;
         String endDate;
-        if(divisionCodirectorsSucessful(codirectors)){  
-            if(!validateFieldEmpty() && validateInformationField() ){
+        if((!validateFieldEmpty()) && validateInformationField() ){
+            if(divisionCodirectorsSucessful(codirectors) && validateDates()){ 
                 startDate = dpStartDate.getValue().format(formatter);
                 endDate = dpEndDate.getValue().format(formatter);
                 receptionWork.setTitle(title);
@@ -115,16 +117,18 @@ public class ReceptionWorkRegisterController implements Initializable {
                 receptionWork.setDateEnd(endDate);
                 receptionWork.setType(type);
                 receptionWork.setPreliminarProject(preliminarProject);
+                receptionWork.setActualState(state);
+
                 if(!searchRepeateReceptionWork ()){    
                     saveReceptionWork ();
                 }else{  
                     sendAlert();
                 }
-
-
             }else{  
                 sendAlert();
             }
+        }else{
+            sendAlert();
         }
     }
     
@@ -156,13 +160,19 @@ public class ReceptionWorkRegisterController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             types=FXCollections.observableArrayList();
+            states = FXCollections.observableArrayList();
             types.add("Práctico técnico");
             types.add("Práctico");
             types.add("Tesis");
             types.add("Tesina");
             types.add("Monografía");
+            states.add("Concluido");
+            states.add("Abandonado");
+            states.add("Registrado");
             cbType.setItems(types);
+            cbState.setItems(states);
             cbType.getSelectionModel().selectFirst();
+            cbState.getSelectionModel().selectFirst();
             preliminarProjects=FXCollections.observableArrayList();
             initializePreliminarProjects();
             cbPreliminarProject.setItems(preliminarProjects);
@@ -177,14 +187,19 @@ public class ReceptionWorkRegisterController implements Initializable {
     private void saveReceptionWork(){   
          ReceptionWorkDAO receptionWorkDAO =  new ReceptionWorkDAO();
         try{  
-           if(receptionWorkDAO.savedSucessful(receptionWork)){  
-               receptionWork.setKey(receptionWorkDAO.getId(receptionWork));
-               saveColaborators();
-               recoverStudents();
-               recoverLgacs();
-               AlertMessage alertMessage = new AlertMessage();
-               alertMessage.showAlertSuccesfulSave("Trabajo recepcional");
-           }
+            if(! findRepeateColaborators()){
+                if(receptionWorkDAO.savedSucessful(receptionWork)){  
+                    receptionWork.setKey(receptionWorkDAO.getId(receptionWork));
+                    saveColaborators();
+                    recoverStudents();
+                    recoverLgacs();
+                    AlertMessage alertMessage = new AlertMessage();
+                    alertMessage.showAlertSuccesfulSave("Trabajo recepcional");
+                }
+           }else{    
+          AlertMessage alertMessage = new AlertMessage();
+          alertMessage.showAlertValidateFailed("El director y el codirector no pueden ser el mismo");
+      }
         } catch (BusinessException ex){ 
             if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage = new AlertMessage();
@@ -208,13 +223,28 @@ public class ReceptionWorkRegisterController implements Initializable {
         return value;
     }
     
+    private boolean findRepeateColaborators(){ 
+        boolean value= false;
+        String director= tfDirector.getText();
+        int i=0; 
+        while(i< codirectorsParts.length && value==false){  
+            if(director.equals(codirectorsParts[i])){   
+                value=true;
+            }; 
+            i++;
+        }
+    
+        return value;
+    }
+    
     
      private void saveColaborators(){    
        String directorProfessionalLicense= tfDirector.getText();
        ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
        MemberDAO memberDAO = new MemberDAO();
        ArrayList<Member> members = new ArrayList<Member>();
-        try {
+      
+              try {
             Member director = memberDAO.getMemberByLicense(directorProfessionalLicense);
             director.setRole("Director");
             if(director!=null){
@@ -234,6 +264,7 @@ public class ReceptionWorkRegisterController implements Initializable {
                 Log.logException(ex);
             }
         }
+      
     }
     
     private void recoverStudents() throws BusinessException{   
@@ -292,6 +323,13 @@ public class ReceptionWorkRegisterController implements Initializable {
           if(searchRepeateReceptionWork()){
               alertMessage.showAlertValidateFailed("El trabajo recepcional ya se encuentra registrado");
           }
+          
+          if(!validateDates()){
+            alertMessage.showAlertValidateFailed("La fecha de fin debe ser mayor a la de inicio");
+
+          }
+          
+          
       }
     
     private void addStudentsInPreliminarProject(){ 

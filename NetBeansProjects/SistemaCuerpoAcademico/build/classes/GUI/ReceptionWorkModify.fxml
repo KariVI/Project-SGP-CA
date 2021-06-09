@@ -12,28 +12,29 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="580.0" prefWidth="771.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ReceptionWorkRegisterController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="GUI.ReceptionWorkModifyController">
     <stylesheets>
-        <URL value="@receptionworkregister.css" />
+        <URL value="@receptionworkmodify.css" />
     </stylesheets>
+    
     <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#242525" height="31.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="771.0" />
       <Label layoutX="19.0" layoutY="101.0" text="Título " />
       <Label layoutX="11.0" layoutY="135.0" text="Fecha de inicio:" />
       <Label layoutX="16.0" layoutY="165.0" text="Fecha de fin: " />
-      <Label layoutX="21.0" layoutY="374.0" text="Descripción:" />
+      <Label layoutX="21.0" layoutY="361.0" text="Descripción:" />
       <TextField fx:id="tfTitle" layoutX="150.0" layoutY="89.0" prefHeight="25.0" prefWidth="252.0" />
-      <TextArea fx:id="taDescription" layoutX="133.0" layoutY="361.0" prefHeight="82.0" prefWidth="277.0" wrapText="true" />
+      <TextArea fx:id="taDescription" layoutX="132.0" layoutY="350.0" prefHeight="82.0" prefWidth="277.0" wrapText="true" />
       <Button fx:id="btSave" layoutX="614.0" layoutY="537.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar" />
       <Button fx:id="btExit" layoutX="680.0" layoutY="536.0" mnemonicParsing="false" onAction="#actionExit" prefHeight="25.0" prefWidth="59.0" text="Salir" />
-      <Label layoutX="13.0" layoutY="467.0" text="Director:" />
-      <TextField fx:id="tfDirector" layoutX="132.0" layoutY="463.0" prefHeight="25.0" prefWidth="285.0" promptText="Escribe la cedula del director " />
-      <Label layoutX="16.0" layoutY="515.0" text="Codirectores:" />
-      <TextArea fx:id="taCodirectors" layoutX="132.0" layoutY="497.0" prefHeight="69.0" prefWidth="285.0" promptText="Separa las cedulas de los participantes con una coma" wrapText="true" />
+      <Label layoutX="15.0" layoutY="455.0" text="Director:" />
+      <TextField fx:id="tfDirector" layoutX="207.0" layoutY="443.0" prefHeight="25.0" prefWidth="204.0" promptText="Escribe la cedula del director " />
+      <Label layoutX="17.0" layoutY="502.0" text="Codirectores:" />
+      <TextArea fx:id="taCodirectors" layoutX="132.0" layoutY="486.0" prefHeight="66.0" prefWidth="277.0" promptText="Separa las cedulas de los participantes con una coma" wrapText="true" />
       <TextField fx:id="tfNumberStudents" layoutX="680.0" layoutY="161.0" prefHeight="25.0" prefWidth="46.0" />
       <Button fx:id="btOk" layoutX="727.0" layoutY="161.0" mnemonicParsing="false" onAction="#addStudents" text="Ok" />
       <Label layoutX="555.0" layoutY="165.0" text="Número de estudiantes:" />
-      <Label layoutX="25.0" layoutY="41.0" text="Registro de Trabajo Recepcional ">
+      <Label layoutX="25.0" layoutY="41.0" text="Actualización de Trabajo Recepcional ">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -43,12 +44,11 @@
       <DatePicker fx:id="dpEndDate" layoutX="236.0" layoutY="161.0" prefHeight="25.0" prefWidth="166.0" />
       <Label layoutX="12.0" layoutY="195.0" text="Tipo:" />
       <ComboBox fx:id="cbType" layoutX="190.0" layoutY="191.0" prefHeight="25.0" prefWidth="218.0" />
-      <Pane fx:id="lgacsPane" accessibleRole="CHECK_BOX" cache="true" layoutX="10.0" layoutY="253.0" prefHeight="99.0" prefWidth="418.0" />
+      <Pane fx:id="lgacsPane" accessibleRole="CHECK_BOX" cache="true" layoutX="11.0" layoutY="260.0" prefHeight="82.0" prefWidth="418.0" />
       <ComboBox fx:id="cbPreliminarProject" layoutX="475.0" layoutY="119.0" prefHeight="25.0" prefWidth="277.0" />
       <Label layoutX="462.0" layoutY="93.0" text="Anteproyecto:" />
       <ComboBox fx:id="cbState" layoutX="190.0" layoutY="228.0" prefHeight="24.0" prefWidth="218.0" />
       <Label layoutX="11.0" layoutY="232.0" text="Estado:" />
    </children>
-    
     
 </AnchorPane>

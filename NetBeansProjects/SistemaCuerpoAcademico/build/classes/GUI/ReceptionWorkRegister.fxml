@@ -43,9 +43,11 @@
       <DatePicker fx:id="dpEndDate" layoutX="236.0" layoutY="161.0" prefHeight="25.0" prefWidth="166.0" />
       <Label layoutX="12.0" layoutY="195.0" text="Tipo:" />
       <ComboBox fx:id="cbType" layoutX="190.0" layoutY="191.0" prefHeight="25.0" prefWidth="218.0" />
-      <Pane fx:id="lgacsPane" accessibleRole="CHECK_BOX" cache="true" layoutX="10.0" layoutY="232.0" prefHeight="120.0" prefWidth="418.0" />
+      <Pane fx:id="lgacsPane" accessibleRole="CHECK_BOX" cache="true" layoutX="10.0" layoutY="253.0" prefHeight="99.0" prefWidth="418.0" />
       <ComboBox fx:id="cbPreliminarProject" layoutX="475.0" layoutY="119.0" prefHeight="25.0" prefWidth="277.0" />
       <Label layoutX="462.0" layoutY="93.0" text="Anteproyecto:" />
+      <ComboBox fx:id="cbState" layoutX="190.0" layoutY="228.0" prefHeight="24.0" prefWidth="218.0" />
+      <Label layoutX="11.0" layoutY="232.0" text="Estado:" />
    </children>
     
     

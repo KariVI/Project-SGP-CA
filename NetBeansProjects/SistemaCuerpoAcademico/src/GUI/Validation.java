@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 public class Validation {
     public boolean findInvalidField(String field){ 
         boolean value=false;
-        Pattern pattern = Pattern.compile("[0-9!#$%&'*+/=?^_`{|}~-]");
+        Pattern pattern = Pattern.compile("[!#$%&'*+/=?^_`{|}~-]");
         Matcher mather = pattern.matcher(field);
         if(mather.find()){  
             value=true;

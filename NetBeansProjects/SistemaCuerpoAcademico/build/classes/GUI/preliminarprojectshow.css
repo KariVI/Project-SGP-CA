@@ -21,7 +21,7 @@
 .text-area {    
     -fx-background-color: transparent;
     -fx-font-family: System;
-    -fx-font-size: 12px;
+    -fx-font-size: 13px;
     -fx-editable: false;
     -fx-wrap-text: true;
   
@@ -30,6 +30,6 @@
 .label {    
     -fx-background-color: transparent;
     -fx-font-family: System;
-    -fx-font-size: 12px;
+    -fx-font-size: 13px;
  }
 }
