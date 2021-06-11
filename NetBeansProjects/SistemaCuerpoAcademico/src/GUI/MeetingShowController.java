@@ -2,7 +2,6 @@
 package GUI;
 
 import businessLogic.MeetingDAO;
-import businessLogic.MemberDAO;
 import businessLogic.PrerequisiteDAO;
 import domain.Meeting;
 import domain.Member;
@@ -15,7 +14,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -44,6 +42,8 @@ public class MeetingShowController implements Initializable {
     @FXML TableView tvAssistants;
     @FXML Button btMeetingStart;
     @FXML Button btUpdate;
+    @FXML Button btShowMinute;
+     @FXML Button btRegisterMinute;
     @FXML TableView<Prerequisite> tvPrerequisites;
     private ListChangeListener<Prerequisite> tablePrerequisiteListener;
     private ListChangeListener tableAssistantsListener;
@@ -147,8 +147,7 @@ public class MeetingShowController implements Initializable {
       MeetingDAO meetingDAO = new MeetingDAO();
       if(meeting.getState().equals("Concluida")){   
           disableModifyButton();
-      }else    
-      if(dateMeeting.equals(dateCurrently)){    
+      }else if(dateMeeting.equals(dateCurrently)){    
           meeting.setState("Proxima");
           meetingDAO.changedStateSucessful(meeting);
           activateMeetingStartButton();
@@ -190,6 +189,8 @@ public class MeetingShowController implements Initializable {
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);
+              Stage stage = (Stage) btMeetingStart.getScene().getWindow();
+              stage.close();
             } catch (IOException ex) {
                     Log.logException(ex);
             }
@@ -254,6 +255,5 @@ public class MeetingShowController implements Initializable {
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
-    }
-    
+    }    
 }

@@ -53,6 +53,8 @@ public class MinuteShowController implements Initializable {
     @FXML RadioButton rbDisapproveMinute;
     @FXML TableView<Agreement> tvAgreement;
     @FXML Button btReturn;
+    @FXML Button btModify;
+    @FXML Button btShowComments;
     private int idMinute = 0;
     private int idMeeting = 0;
     private int indexAgreement;
@@ -61,25 +63,21 @@ public class MinuteShowController implements Initializable {
     @FXML private ToggleGroup tgApproveMinute;
     private Member member;
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        tcMember.setCellValueFactory(new PropertyValueFactory<Member,String>("professionalLicense"));
-        tcAgreement.setCellValueFactory(new PropertyValueFactory<Agreement,String>("description"));
-        tcPeriod.setCellValueFactory(new PropertyValueFactory<Agreement,String>("period"));
-        agreements = FXCollections.observableArrayList();
-        initializeAgreements();
-        tvAgreement.setItems(agreements);
-    }
+  
     
-    public void initializeMinute(Meeting meeting){    
-        idMeeting = meeting.getKey();
+    public void initializeMinute(Meeting meeting){  
+        idMeeting = meeting.getKey();        
         try {
             MinuteDAO minuteDAO = new MinuteDAO();
             this.minute = minuteDAO.getMinute(idMeeting); 
             this.idMinute = minute.getIdMinute();
             taDue.setText(minute.getDue());
             taNote.setText(minute.getNote());
+            agreements = FXCollections.observableArrayList();
+            initializeAgreements();
+            tvAgreement.setItems(agreements);
             verifyApprove();
+            verifyMember();
         } catch (BusinessException ex) {
             Logger.getLogger(MinuteShowController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -108,7 +106,7 @@ public class MinuteShowController implements Initializable {
             ArrayList<MinuteComment> ListMemberDisapprove = minuteDAO.getMinutesComments(idMinute);
             ArrayList<Member> ListMemberApprove = minuteDAO.getMembersApprove(minute);
             int i = 0;
-            System.out.println(ListMemberDisapprove.size());
+           
             while(i<ListMemberApprove.size()){
                 if(ListMemberApprove.get(i).getProfessionalLicense().equals(member.getProfessionalLicense())){
                     value = true;
@@ -118,9 +116,6 @@ public class MinuteShowController implements Initializable {
             }
             i = 0;
            while(i<ListMemberDisapprove.size()){
-               System.out.println(ListMemberDisapprove.get(i).getProfessionalLicense());
-               System.out.println(member.getProfessionalLicense());
-               
                 if(ListMemberDisapprove.get(i).getProfessionalLicense().equals(member.getProfessionalLicense())){
                       value = true;
                   
@@ -139,12 +134,11 @@ public class MinuteShowController implements Initializable {
          disableRadioButtons();
      }
      if(verifyMinuteStateApprove()){
-         
+         disableBtShowComments();
      }
    }
    
     public void disableRadioButtons(){
-        System.out.println("hhh");
         rbApproveMinute.setOpacity(0);
         rbDisapproveMinute.setOpacity(0);
         rbApproveMinute.setDisable(true);
@@ -167,8 +161,10 @@ public class MinuteShowController implements Initializable {
     
     @FXML
     public void actionReturn(){
+        if(!rbApproveMinute.isDisabled()){
         String approveMinute = ((RadioButton) tgApproveMinute.getSelectedToggle()).getText();
-        if(approveMinute.equals("Estoy de acuerdo")){
+        System.out.println(approveMinute);
+        if(approveMinute != null && approveMinute.equals("Estoy de acuerdo")){
             try {
                 MinuteDAO minuteDAO = new MinuteDAO();
                 minuteDAO.approveMinute(idMinute, member.getProfessionalLicense());
@@ -178,14 +174,45 @@ public class MinuteShowController implements Initializable {
             } catch (BusinessException ex) {
                 Logger.getLogger(MinuteShowController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+        } 
+    }
         Stage stage = (Stage) btReturn.getScene().getWindow();
-        stage.close();
-    } 
+        stage.close();    
+    }
     
     public void setMember(Member member){
-        this.member = member;
-        System.out.println(member.getName());
+        this.member = member;      
+    }
+    
+    public void verifyMember(){
+ 
+        if(!verifyRole()){
+            disableBtShowComments();         
+        }
+    }
+    
+    public boolean verifyRole(){
+        MeetingDAO meetingDAO = new MeetingDAO();
+         boolean value = false;    
+        try {
+            ArrayList<Member> listAssistants = meetingDAO.getAssistants(idMeeting);
+            int i = 0;
+            while(i < listAssistants.size()){
+                if(member.getProfessionalLicense().equals(listAssistants.get(i).getProfessionalLicense())&&
+                   (listAssistants.get(i).getRole().equals("Lider") || listAssistants.get(i).getRole().equals( "Secretario"))){
+                    value = true;
+                }
+                i++;
+            }
+        } catch (BusinessException ex) {
+            Logger.getLogger(MinuteShowController.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return value;
+    }
+         
+    public void disableBtShowComments(){
+        btShowComments.setOpacity(0);       
+        btShowComments.setDisable(true);
     }
     
     public void actionMinuteComment(){
@@ -207,6 +234,14 @@ public class MinuteShowController implements Initializable {
         }catch (IOException ex) {
             Logger.getLogger(MemberViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+     @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        tcMember.setCellValueFactory(new PropertyValueFactory<Member,String>("professionalLicense"));
+        tcAgreement.setCellValueFactory(new PropertyValueFactory<Agreement,String>("description"));
+        tcPeriod.setCellValueFactory(new PropertyValueFactory<Agreement,String>("period"));
+  
     }
     
 }

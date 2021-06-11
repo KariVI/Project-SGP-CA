@@ -26,10 +26,10 @@
       <HBox layoutX="88.0" layoutY="219.0" prefHeight="26.0" prefWidth="458.0" />
       <Label layoutX="22.0" layoutY="242.0" text="Notas:" />
       <Label layoutX="23.0" layoutY="362.0" text="Pendientes:" />
-      <TextArea fx:id="taNote" layoutX="38.0" layoutY="266.0" opacity="0.0" prefHeight="86.0" prefWidth="491.0" />
-      <TextArea fx:id="taDue" layoutX="34.0" layoutY="395.0" opacity="0.0" prefHeight="87.0" prefWidth="498.0" />
-      <Button fx:id="btReturn" layoutX="679.0" layoutY="487.0" mnemonicParsing="false" onAction="#actionReturn" prefHeight="26.0" prefWidth="81.0" text="Regresar" />
-      <Label layoutX="14.0" layoutY="43.0" text="Registrar minuta">
+      <TextArea fx:id="taNote" editable="false" layoutX="38.0" layoutY="266.0" opacity="0.63" prefHeight="86.0" prefWidth="491.0" text=" mmm" />
+      <TextArea fx:id="taDue" editable="false" layoutX="34.0" layoutY="395.0" opacity="0.68" prefHeight="87.0" prefWidth="498.0" />
+      <Button fx:id="btReturn" layoutX="579.0" layoutY="488.0" mnemonicParsing="false" onAction="#actionReturn" prefHeight="26.0" prefWidth="81.0" text="Regresar" />
+      <Label layoutX="14.0" layoutY="43.0" text="Minuta">
          <font>
             <Font size="27.0" />
          </font>
@@ -43,5 +43,6 @@
             <RadioButton fx:id="rbDisapproveMinute" mnemonicParsing="false" onAction="#actionMinuteComment" text="No estoy de acuerdo" toggleGroup="$tgApproveMinute" />
          </children>
       </HBox>
+      <Button fx:id="btShowComments" layoutX="674.0" layoutY="488.0" mnemonicParsing="false" text="Ver comentarios " />
    </children>
 </AnchorPane>
