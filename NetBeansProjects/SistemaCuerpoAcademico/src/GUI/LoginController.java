@@ -21,11 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import log.BusinessException;
 
-/**
- * FXML Controller class
- *
- * @author Mariana
- */
+
 public class LoginController implements Initializable {
     @FXML PasswordField pfPassword;
     @FXML TextField tfUser;
@@ -54,21 +50,24 @@ public class LoginController implements Initializable {
             }
             Stage primaryStage= new Stage();
             try{
-            URL url = new File("src/GUI/Menu.fxml").toURI().toURL();
-            FXMLLoader loader = new FXMLLoader(url);
-            loader.setLocation(url);
-            loader.load();
-            MenuController menu = loader.getController();
-            menu.initializeMenu(member);
-            Parent root = loader.getRoot();
-            Scene scene = new Scene(root);
-            primaryStage.setScene(scene);
-            Stage stage = (Stage) btLogin.getScene().getWindow();
-            stage.close();
-            primaryStage.show();
+              URL url = new File("src/GUI/Menu.fxml").toURI().toURL();
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              MenuController menu = loader.getController();
+              menu.initializeMenu(member);
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);
+              Stage stage = (Stage) btLogin.getScene().getWindow();
+              stage.close();
+              primaryStage.show();
             }catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
+       }else{
+           AlertMessage alertMessage = new AlertMessage();
+           alertMessage.showAlertValidateFailed("Credenciales incorrectas");
        }
     }
     
@@ -79,12 +78,8 @@ public class LoginController implements Initializable {
             credentialRetrieved = credentialDAO.searchLoginCredential(credential);        
             if(!credentialRetrieved.getPassword().equals(credential.getPassword())
                     ||!credentialRetrieved.getUser().equals(credentialRetrieved.getUser())){
-                value = false;
-                System.out.println(credential.getPassword()+" "+credentialRetrieved.getPassword());
-                AlertMessage alertMessage = new AlertMessage();
-                alertMessage.showAlertValidateFailed("Credenciales incorrectas");
-            }
-            //
+                value = false;      
+            }           
             
         } catch (BusinessException ex) {
             value = false;

@@ -165,7 +165,7 @@ public class MinuteShowController implements Initializable {
         }
     }
     
-    @FXMLs
+    @FXML
     public void actionReturn(){
         String approveMinute = ((RadioButton) tgApproveMinute.getSelectedToggle()).getText();
         if(approveMinute.equals("Estoy de acuerdo")){
