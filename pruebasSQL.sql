@@ -50,3 +50,5 @@ INSERT INTO Dirige(idTrabajoRecepcional, cedula,rol) VALUES (3,"8325134","Direct
 INSERT INTO ParticipaTrabajoRecepciona(idTrabajoRecepcional,matricula) values (3,"S19014023");
 INSERT INTO ParticipaTrabajoRecepciona(idTrabajoRecepcional,matricula) values (4,"S19014013");
 INSERT INTO CultivaTrabajoRecepcional(idTrabajoRecepcional, nombreLGAC) values(3,"Tecnologías de software");
+
+INSERT INTO Credenciales(cedula,usuario,contrasenia) VALUES("8325134","JuanPer",hex(AES_ENCRYPT("12345",'key')));
