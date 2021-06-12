@@ -47,6 +47,9 @@ INSERT INTO TrabajoRecepcional(titulo, tipo, descripcion, fechaInicio,fechaFin, 
 INSERT INTO Dirige(idTrabajoRecepcional, cedula,rol) VALUES (4,"7938268","Director");
 
 INSERT INTO Dirige(idTrabajoRecepcional, cedula,rol) VALUES (3,"8325134","Director");
-INSERT INTO ParticipaTrabajoRecepciona(idTrabajoRecepcional,matricula) values (3,"S19014023");
-INSERT INTO ParticipaTrabajoRecepciona(idTrabajoRecepcional,matricula) values (4,"S19014013");
+INSERT INTO ParticipaTrabajoRecepcional(idTrabajoRecepcional,matricula) values (3,"S19014023");
+INSERT INTO ParticipaTrabajoRecepcional(idTrabajoRecepcional,matricula) values (4,"S19014013");
 INSERT INTO CultivaTrabajoRecepcional(idTrabajoRecepcional, nombreLGAC) values(3,"Tecnologías de software");
+
+
+SELECT * FROM TrabajoRecepcional where clave_CA="JDOEIJ804";
