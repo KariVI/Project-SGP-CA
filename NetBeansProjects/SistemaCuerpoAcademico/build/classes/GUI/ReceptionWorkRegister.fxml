@@ -5,6 +5,8 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,7 +14,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="580.0" prefWidth="771.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ReceptionWorkRegisterController">
+<AnchorPane id="AnchorPane" prefHeight="667.0" prefWidth="779.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ReceptionWorkRegisterController">
     <stylesheets>
         <URL value="@receptionworkregister.css" />
     </stylesheets>
@@ -24,12 +26,9 @@
       <Label layoutX="21.0" layoutY="374.0" text="Descripción:" />
       <TextField fx:id="tfTitle" layoutX="150.0" layoutY="89.0" prefHeight="25.0" prefWidth="252.0" />
       <TextArea fx:id="taDescription" layoutX="133.0" layoutY="361.0" prefHeight="82.0" prefWidth="277.0" wrapText="true" />
-      <Button fx:id="btSave" layoutX="614.0" layoutY="537.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar" />
-      <Button fx:id="btExit" layoutX="680.0" layoutY="536.0" mnemonicParsing="false" onAction="#actionExit" prefHeight="25.0" prefWidth="59.0" text="Salir" />
-      <Label layoutX="13.0" layoutY="467.0" text="Director:" />
-      <TextField fx:id="tfDirector" layoutX="132.0" layoutY="463.0" prefHeight="25.0" prefWidth="285.0" promptText="Escribe la cedula del director " />
-      <Label layoutX="16.0" layoutY="515.0" text="Codirectores:" />
-      <TextArea fx:id="taCodirectors" layoutX="132.0" layoutY="497.0" prefHeight="69.0" prefWidth="285.0" promptText="Separa las cedulas de los participantes con una coma" wrapText="true" />
+      <Button fx:id="btSave" layoutX="614.0" layoutY="614.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar" />
+      <Button fx:id="btExit" layoutX="697.0" layoutY="614.0" mnemonicParsing="false" onAction="#actionExit" prefHeight="25.0" prefWidth="59.0" text="Salir" />
+      <Label layoutX="14.0" layoutY="458.0" text="Director:" />
       <TextField fx:id="tfNumberStudents" layoutX="680.0" layoutY="161.0" prefHeight="25.0" prefWidth="46.0" />
       <Button fx:id="btOk" layoutX="727.0" layoutY="161.0" mnemonicParsing="false" onAction="#addStudents" text="Ok" />
       <Label layoutX="555.0" layoutY="165.0" text="Número de estudiantes:" />
@@ -38,14 +37,25 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Pane fx:id="paneStudent" layoutX="448.0" layoutY="188.0" prefHeight="345.0" prefWidth="304.0" />
+      <Pane fx:id="paneStudent" layoutX="448.0" layoutY="188.0" prefHeight="409.0" prefWidth="304.0" />
       <DatePicker fx:id="dpStartDate" layoutX="236.0" layoutY="131.0" prefHeight="25.0" prefWidth="166.0" />
       <DatePicker fx:id="dpEndDate" layoutX="236.0" layoutY="161.0" prefHeight="25.0" prefWidth="166.0" />
       <Label layoutX="12.0" layoutY="195.0" text="Tipo:" />
       <ComboBox fx:id="cbType" layoutX="190.0" layoutY="191.0" prefHeight="25.0" prefWidth="218.0" />
-      <Pane fx:id="lgacsPane" accessibleRole="CHECK_BOX" cache="true" layoutX="10.0" layoutY="232.0" prefHeight="120.0" prefWidth="418.0" />
+      <Pane fx:id="lgacsPane" accessibleRole="CHECK_BOX" cache="true" layoutX="10.0" layoutY="253.0" prefHeight="99.0" prefWidth="418.0" />
       <ComboBox fx:id="cbPreliminarProject" layoutX="475.0" layoutY="119.0" prefHeight="25.0" prefWidth="277.0" />
       <Label layoutX="462.0" layoutY="93.0" text="Anteproyecto:" />
+      <ComboBox fx:id="cbState" layoutX="190.0" layoutY="228.0" prefHeight="24.0" prefWidth="218.0" />
+      <Label layoutX="11.0" layoutY="232.0" text="Estado:" />
+      <ComboBox fx:id="cbDirector" layoutX="152.0" layoutY="453.0" prefHeight="25.0" prefWidth="260.0" />
+      <TableView fx:id="tvCodirectors" layoutX="86.0" layoutY="490.0" prefHeight="139.0" prefWidth="326.0">
+         <columns>
+            <TableColumn fx:id="tcCodirector" prefWidth="325.0" text="Codirectores" />
+         </columns>
+      </TableView>
+      <Button fx:id="btDelete" layoutX="412.0" layoutY="604.0" mnemonicParsing="false" onAction="#actionDelete" text="X" />
+      <ComboBox fx:id="cbCodirectors" layoutX="89.0" layoutY="629.0" prefHeight="25.0" prefWidth="243.0" />
+      <Button fx:id="btAddCodirector" layoutX="332.0" layoutY="630.0" mnemonicParsing="false" onAction="#actionAddCodirector" prefHeight="7.0" prefWidth="70.0" text="Añadir" />
    </children>
     
     

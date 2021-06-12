@@ -10,12 +10,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="590.0" prefWidth="694.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="GUI.ReceptionWorkShowController">
+<AnchorPane id="AnchorPane" prefHeight="590.0" prefWidth="715.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ReceptionWorkShowController">
     <stylesheets>
         <URL value="@receptionworkshow.css" />
     </stylesheets>
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#171717" height="31.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="694.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#171717" height="31.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="723.0" />
       <Label fx:id="lbTitle" layoutX="14.0" layoutY="82.0" text="Título:">
          <font>
             <Font size="10.0" />
@@ -26,44 +26,49 @@
             <Font name="System Bold" size="19.0" />
          </font>
       </Text>
-      <Label fx:id="lbStartDate" layoutX="12.0" layoutY="97.0" prefHeight="8.0" prefWidth="54.0" text="Fecha inicio:">
+      <Label fx:id="lbStartDate" layoutX="14.0" layoutY="97.0" prefHeight="19.0" prefWidth="395.0" text="Fecha inicio:">
          <font>
             <Font size="10.0" />
          </font>
       </Label>
-      <Label fx:id="lbEndDate" layoutX="17.0" layoutY="120.0" text="Fecha fin:">
+      <Label fx:id="lbEndDate" layoutX="14.0" layoutY="120.0" prefHeight="19.0" prefWidth="323.0" text="Fecha fin:">
          <font>
             <Font size="10.0" />
          </font>
       </Label>
-      <Label fx:id="lbType" layoutX="17.0" layoutY="135.0" text="Tipo:">
+      <Label fx:id="lbType" layoutX="14.0" layoutY="139.0" text="Tipo:">
          <font>
             <Font size="10.0" />
          </font>
       </Label>
-      <TextArea fx:id="taDescription" editable="false" layoutX="14.0" layoutY="156.0" prefHeight="63.0" prefWidth="663.0" wrapText="true">
+      <TextArea fx:id="taDescription" editable="false" layoutX="6.0" layoutY="186.0" prefHeight="57.0" prefWidth="663.0" wrapText="true">
          <font>
             <Font size="10.0" />
          </font>
       </TextArea>
-      <Label fx:id="lbDirector" layoutX="19.0" layoutY="229.0" text="Director:">
+      <Label fx:id="lbDirector" layoutX="14.0" layoutY="239.0" text="Director:">
          <font>
             <Font size="10.0" />
          </font>
       </Label>
-      <TextArea fx:id="taCodirectors" editable="false" layoutX="16.0" layoutY="251.0" prefHeight="44.0" prefWidth="663.0" wrapText="true">
+      <TextArea fx:id="taCodirectors" editable="false" layoutX="6.0" layoutY="258.0" prefHeight="44.0" prefWidth="663.0" wrapText="true">
          <font>
             <Font size="10.0" />
          </font>
       </TextArea>
-      <Label fx:id="lbPreliminarProject" layoutX="11.0" layoutY="298.0" text="Anteproyecto:">
+      <Label fx:id="lbPreliminarProject" layoutX="14.0" layoutY="306.0" text="Anteproyecto:">
          <font>
             <Font size="10.0" />
          </font>
       </Label>
-      <Pane fx:id="lgacsPane" layoutX="17.0" layoutY="313.0" prefHeight="80.0" prefWidth="611.0" />
-      <Pane fx:id="studentPane" layoutX="12.0" layoutY="393.0" prefHeight="145.0" prefWidth="637.0" />
-      <Button fx:id="btReturn" layoutX="524.0" layoutY="543.0" mnemonicParsing="false" text="Regresar" />
-      <Button fx:id="btUpdate" layoutX="602.0" layoutY="543.0" mnemonicParsing="false" text="Modificar" />
+      <Pane fx:id="lgacsPane" layoutX="15.0" layoutY="325.0" prefHeight="80.0" prefWidth="611.0" />
+      <Pane fx:id="studentPane" layoutX="11.0" layoutY="405.0" prefHeight="115.0" prefWidth="637.0" />
+      <Button fx:id="btReturn" layoutX="524.0" layoutY="543.0" mnemonicParsing="false" onAction="#actionReturn" text="Regresar" />
+      <Button fx:id="btUpdate" layoutX="602.0" layoutY="543.0" mnemonicParsing="false" onAction="#actionUpdate" text="Modificar" />
+      <Label fx:id="lbState" layoutX="14.0" layoutY="167.0" text="Estado:">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -22,14 +22,14 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
             try {
                 Connector connectorDataBase=new Connector();
                 Connection connectionDataBase = connectorDataBase.getConnection();
-                String insertPreliminarProject = "INSERT INTO Anteproyecto(titulo,descripcion, fechaInicio,fechaFin ) VALUES (?,?,?,?)";
+                String insertPreliminarProject = "INSERT INTO Anteproyecto(titulo,descripcion, fechaInicio,fechaFin, clave_CA ) VALUES (?,?,?,?,?)";
             
                 PreparedStatement preparedStatement = connectionDataBase.prepareStatement(insertPreliminarProject );
                 preparedStatement.setString(1, preliminarProject.getTitle());
                 preparedStatement.setString(2, preliminarProject.getDescription());
                 preparedStatement.setString(3, preliminarProject.getDateStart());
                 preparedStatement.setString(4, preliminarProject.getDateEnd());
-                
+                 preparedStatement.setString(5, preliminarProject.getKeyGroupAcademic());
                 
                 preparedStatement.executeUpdate();
                 value=true;
@@ -49,13 +49,14 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
             Connector connectorDataBase=new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
             ResultSet resultSet;
-            String selectId = "SELECT idAnteproyecto from  Anteproyecto where titulo=? and descripcion=? and fechaInicio=? and fechaFin=?;";
+            String selectId = "SELECT idAnteproyecto from  Anteproyecto where titulo=?  and fechaInicio=? and fechaFin=? and clave_CA=?;";
      
             PreparedStatement preparedStatement = connectionDataBase.prepareStatement(selectId);
             preparedStatement.setString(1, preliminarProject.getTitle());
-            preparedStatement.setString(2, preliminarProject.getDescription());
-            preparedStatement.setString(3, preliminarProject.getDateStart());
-            preparedStatement.setString(4, preliminarProject.getDateEnd());      
+            preparedStatement.setString(2, preliminarProject.getDateStart());
+            preparedStatement.setString(3, preliminarProject.getDateEnd());  
+            preparedStatement.setString(4, preliminarProject.getKeyGroupAcademic());      
+
             resultSet=preparedStatement.executeQuery();
            
             if(resultSet.next()){
@@ -100,15 +101,16 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
     }
 
     @Override
-    public ArrayList<PreliminarProject> getPreliminarProjects() throws BusinessException {
+    public ArrayList<PreliminarProject> getPreliminarProjects(String keyGroupAcademic) throws BusinessException {
        ArrayList<PreliminarProject> preliminarProjectList = new ArrayList<PreliminarProject>();
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
-            String queryPreliminarProject="SELECT * FROM Anteproyecto";
+            String queryPreliminarProject="SELECT * FROM Anteproyecto where clave_CA=?";
 
                PreparedStatement preparedStatement;
                preparedStatement = connectionDataBase.prepareStatement(queryPreliminarProject);
+               preparedStatement.setString(1, keyGroupAcademic);
                ResultSet resultSet;
                resultSet = preparedStatement.executeQuery();
                while(resultSet.next()){
@@ -117,7 +119,8 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
                     String description = resultSet.getString("descripcion");
                     String dateStart=resultSet.getString("fechaInicio");
                     String dateEnd=resultSet.getString("fechaFin");
-                    PreliminarProject preliminarProjectAuxiliar = new PreliminarProject(title,description, dateStart, dateEnd);
+                    String groupAcademic= resultSet.getString("clave_CA");
+                    PreliminarProject preliminarProjectAuxiliar = new PreliminarProject(title,description, dateStart, dateEnd, groupAcademic);
                     preliminarProjectAuxiliar.setKey(key);
                     preliminarProjectList.add(preliminarProjectAuxiliar);
                 }
@@ -148,7 +151,9 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
                 String description=resultSet.getString("descripcion");
                 String dateStart= resultSet.getString("fechaInicio");
                 String dateEnd= resultSet.getString("fechaFin");
-                preliminarProject=new PreliminarProject(title, description, dateStart, dateEnd);
+                String groupAcademic= resultSet.getString("clave_CA");
+
+                preliminarProject=new PreliminarProject(title, description, dateStart, dateEnd, groupAcademic);
                 preliminarProject.setKey(idPreliminarProject);
             }
             
