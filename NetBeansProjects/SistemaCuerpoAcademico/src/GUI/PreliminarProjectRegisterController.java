@@ -15,8 +15,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -63,10 +61,15 @@ public class PreliminarProjectRegisterController implements Initializable {
     @FXML TableView<Member> tvCodirectors;
     private ListChangeListener<Member> tableCodirectorsListener;
     private int indexCodirectors;
+    private String keyGroupAcademic;
     private PreliminarProject preliminarProject = new PreliminarProject();
    private ObservableList<Member> codirectors ;
 
 
+   public void setKeyGroupAcademic(String keyGroupAcademic){
+       this.keyGroupAcademic= keyGroupAcademic;
+   }
+   
     @FXML 
     private void addStudents(ActionEvent actionEvent){  
         GridPane gridPane= new GridPane();
@@ -108,6 +111,7 @@ public class PreliminarProjectRegisterController implements Initializable {
                 preliminarProject.setDescription(description);
                 preliminarProject.setDateStart(startDate);
                 preliminarProject.setDateEnd(endDate);
+                preliminarProject.setKeyGroupAcademic(keyGroupAcademic);
                 if(!searchRepeatePreliminarProject ()){    
                     savePreliminarProject ();
                 }else{  
@@ -127,6 +131,9 @@ public class PreliminarProjectRegisterController implements Initializable {
                recoverStudents();
                AlertMessage alertMessage = new AlertMessage();
                alertMessage.showAlertSuccesfulSave("Anteproyecto");
+               
+
+               
            }
         } catch (BusinessException ex){ 
             if(ex.getMessage().equals("DataBase connection failed ")){
@@ -153,6 +160,11 @@ public class PreliminarProjectRegisterController implements Initializable {
     private void actionExit(ActionEvent actionEvent){   
         Stage stage = (Stage) btExit.getScene().getWindow();
         stage.close();
+        returnPreliminarProjectList();
+        
+    }
+    
+    private void returnPreliminarProjectList(){ 
         try{ 
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/preliminarProjectList.fxml").toURI().toURL();
@@ -199,6 +211,10 @@ public class PreliminarProjectRegisterController implements Initializable {
             Member director=(Member) cbDirector.getSelectionModel().getSelectedItem();
             director.setRole("Director");
             preliminarProject.addMember(director);
+            
+            for(int i=0; i < codirectors.size(); i++){   
+                preliminarProject.addMember(codirectors.get(i));
+            }
          preliminarProjectDAO.addedSucessfulColaborators(preliminarProject);
         } catch (BusinessException ex) {
             if(ex.getMessage().equals("DataBase connection failed ")){

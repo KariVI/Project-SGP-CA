@@ -11,7 +11,7 @@ public interface IReceptionWorkDAO {
     public boolean savedSucessful(ReceptionWork receptionWork)  throws BusinessException;
     public boolean updatedSucessful(int id, ReceptionWork receptionWork)  throws BusinessException;
     public ReceptionWork getReceptionWorkById(int id) throws BusinessException;
-    public ArrayList<ReceptionWork> getReceptionWorks() throws BusinessException;
+    public ArrayList<ReceptionWork> getReceptionWorks(String keyGroupAcademic) throws BusinessException;
     public boolean addedSucessfulColaborators(ReceptionWork receptionWork)throws BusinessException;
     public boolean addedSucessfulStudents (ReceptionWork receptionWork) throws BusinessException;
     public int getId(ReceptionWork receptionWork) throws BusinessException;

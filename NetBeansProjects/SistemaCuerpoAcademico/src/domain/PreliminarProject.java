@@ -13,9 +13,18 @@ public class PreliminarProject {
     private ArrayList<Student> students;
     private ArrayList<Member> members;
     private ArrayList<LGAC> lgacs;
+    private String keyGroupAcademic;
+
+    public String getKeyGroupAcademic() {
+        return keyGroupAcademic;
+    }
+
+    public void setKeyGroupAcademic(String keyGroupAcademic) {
+        this.keyGroupAcademic = keyGroupAcademic;
+    }
 
     
-    public PreliminarProject(String title, String description, String dateStart, String dateEnd){
+    public PreliminarProject(String title, String description, String dateStart, String dateEnd, String keyGroupAcademic){
         this.title=title;
         this.description=description;
         this.dateStart=dateStart;
@@ -23,6 +32,8 @@ public class PreliminarProject {
         students=new ArrayList<Student>();
         members=new ArrayList<Member>();
         lgacs=new ArrayList<LGAC>();
+        this.keyGroupAcademic = keyGroupAcademic;
+        
          
     }
 

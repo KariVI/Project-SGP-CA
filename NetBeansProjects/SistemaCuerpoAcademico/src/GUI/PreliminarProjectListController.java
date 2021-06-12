@@ -34,6 +34,12 @@ public class PreliminarProjectListController implements Initializable {
     @FXML private Button btAddPreliminarProject;
     @FXML private Button btReturn;
     private ObservableList<PreliminarProject> preliminarProjects ;
+    private String keyGroupAcademic="JDOEIJ804";
+
+    public void setKeyGroupAcademic(String keyGroupAcademic) {
+        this.keyGroupAcademic = keyGroupAcademic;
+    }
+            
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -67,7 +73,7 @@ public class PreliminarProjectListController implements Initializable {
         PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
         ArrayList<PreliminarProject> preliminarProjectList;  
         try {
-            preliminarProjectList = preliminarProjectDAO.getPreliminarProjects();
+            preliminarProjectList = preliminarProjectDAO.getPreliminarProjects(keyGroupAcademic);
             for(int i=0; i< preliminarProjectList.size(); i++){
             preliminarProjects.add(preliminarProjectList.get(i));
            }
@@ -87,6 +93,7 @@ public class PreliminarProjectListController implements Initializable {
               loader.setLocation(url);
               loader.load();
               PreliminarProjectRegisterController preliminarProjectRegisterController =loader.getController();      
+              preliminarProjectRegisterController.setKeyGroupAcademic(keyGroupAcademic);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);       

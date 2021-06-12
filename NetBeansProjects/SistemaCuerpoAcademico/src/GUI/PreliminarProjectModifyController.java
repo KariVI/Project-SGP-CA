@@ -49,18 +49,17 @@ public class PreliminarProjectModifyController implements Initializable {
     @FXML private Button btSave;
     @FXML private Button btExit;
     @FXML private Pane paneStudent;
-    @FXML DatePicker dpStartDate;
-    @FXML DatePicker dpEndDate;
-
+    @FXML private DatePicker dpStartDate;
+    @FXML private DatePicker dpEndDate;
     private PreliminarProject preliminarProjectRecover = new PreliminarProject();
     private PreliminarProject preliminarProjectNew = new PreliminarProject();
-    @FXML ComboBox cbDirector;
-    @FXML ComboBox cbCodirectors;
-    @FXML TableColumn tcCodirector;
-    @FXML Button btAddCodirector;
-    @FXML Button btDelete;
-    @FXML TableView<Member> tvCodirectors;
-       private ObservableList<Member> members;
+    @FXML private ComboBox cbDirector;
+    @FXML private ComboBox cbCodirectors;
+    @FXML private TableColumn tcCodirector;
+    @FXML private Button btAddCodirector;
+    @FXML private Button btDelete;
+    @FXML private  TableView<Member> tvCodirectors;
+    private ObservableList<Member> members;
     private ListChangeListener<Member> tableCodirectorsListener;
     private int indexCodirectors;
     private ObservableList<Member> codirectors ;
@@ -75,7 +74,6 @@ public class PreliminarProjectModifyController implements Initializable {
         String startDate;
         String endDate;
         
-
             if(!validateFieldEmpty() && validateInformationField() ){
                 startDate = dpStartDate.getValue().format(formatter);
                 endDate = dpEndDate.getValue().format(formatter);
@@ -85,11 +83,13 @@ public class PreliminarProjectModifyController implements Initializable {
                 preliminarProjectNew.setDescription(description);
                 preliminarProjectNew.setDateStart(startDate);
                 preliminarProjectNew.setDateEnd(endDate);
-                updatePreliminarProject ();
+                preliminarProjectNew.setKeyGroupAcademic(preliminarProjectRecover.getKeyGroupAcademic());
+                if(validateColaborators()){
+                    updatePreliminarProject ();
+                }
             }else{  
                 sendAlert();
-            }
-        
+            }        
     }
     
   private void updatePreliminarProject (){   
@@ -102,7 +102,7 @@ public class PreliminarProjectModifyController implements Initializable {
                saveColaborators();
                recoverStudents();
                AlertMessage alertMessage = new AlertMessage();
-               alertMessage.showAlertSuccesfulSave("Anteproyecto");
+               alertMessage.showUpdateMessage();
            }
         } catch (BusinessException ex){ 
             if(ex.getMessage().equals("DataBase connection failed ")){
@@ -173,18 +173,20 @@ public class PreliminarProjectModifyController implements Initializable {
     }
     
     private void saveColaborators(){    
-       String directorProfessionalLicense="";
        PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
        MemberDAO memberDAO = new MemberDAO();
        ArrayList<Member> members = new ArrayList<Member>();
         try {
-            Member director = memberDAO.getMemberByLicense(directorProfessionalLicense);
+            Member director = (Member) cbDirector.getSelectionModel().getSelectedItem();
             director.setRole("Director");
             if(director!=null){
                 preliminarProjectNew.addMember(director);
+            }                        
+            for(int i=0; i < codirectorsNew.size(); i++){   
+                preliminarProjectNew.addMember(codirectorsNew.get(i));
             }
             
-         preliminarProjectDAO.addedSucessfulColaborators(preliminarProjectNew);
+            preliminarProjectDAO.addedSucessfulColaborators(preliminarProjectNew);
         } catch (BusinessException ex) {
             if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage = new AlertMessage();
@@ -205,6 +207,7 @@ public class PreliminarProjectModifyController implements Initializable {
                 cbDirector.setValue(members.get(i));
             }else{  
                 codirectors.add(members.get(i));
+                codirectorsNew.add(members.get(i));
             }
             
             i++;
@@ -266,9 +269,6 @@ public class PreliminarProjectModifyController implements Initializable {
             paneStudent.getChildren().add(gridPane);
     }
     
-
-
-    
     private void recoverStudents() throws BusinessException{   
         GridPane gridPane= (GridPane) paneStudent.getChildren().get(0);
         ArrayList<Student> students = new ArrayList<Student>();
@@ -290,7 +290,7 @@ public class PreliminarProjectModifyController implements Initializable {
            addStudentsInPreliminarProject();
     }
     
-     private boolean validateFieldsStudent(TextField enrollment, TextField name){
+    private boolean validateFieldsStudent(TextField enrollment, TextField name){
         boolean value=true;
         AlertMessage alertMessage =new AlertMessage();
         Validation validation=new Validation();
@@ -380,7 +380,7 @@ public class PreliminarProjectModifyController implements Initializable {
     private void actionAddCodirector(ActionEvent actionEvent){    
         Member codirector = (Member) cbCodirectors.getSelectionModel().getSelectedItem();    
         if(!repeatedCodirector(codirector)){
-           codirectors.add(codirector);
+           codirectorsNew.add(codirector);
         }else{  
             AlertMessage alertMessage = new AlertMessage();
             alertMessage.showAlertValidateFailed("Codirector repetido");
@@ -389,7 +389,7 @@ public class PreliminarProjectModifyController implements Initializable {
     
     @FXML
     private void actionDelete(ActionEvent event){
-        codirectors.remove(indexCodirectors);
+        codirectorsNew.remove(indexCodirectors);
     }
     
     
@@ -408,8 +408,8 @@ public class PreliminarProjectModifyController implements Initializable {
     public boolean repeatedCodirector(Member codirector){
         Boolean value = false;
         int i = 0;
-        while((value==false) && (i<codirectors.size())){
-            String enrollmentCodirector= codirectors.get(i).getProfessionalLicense();
+        while((value==false) && (i<codirectorsNew.size())){
+            String enrollmentCodirector= codirectorsNew.get(i).getProfessionalLicense();
             if(enrollmentCodirector.equals(codirector.getProfessionalLicense())){
                 value = true;
             }
@@ -431,6 +431,17 @@ public class PreliminarProjectModifyController implements Initializable {
         }
     }
     
+    public boolean validateColaborators(){  
+        boolean value = true;
+        Member director = (Member) cbDirector.getSelectionModel().getSelectedItem();
+        if(repeatedCodirector(director)){
+                 value=false; 
+                AlertMessage alertMessage = new AlertMessage();
+                alertMessage.showAlertValidateFailed("El director y el codirector no pueden ser el mismo");  
+            }
+        return value;
+    }
+    
     public void initialize(URL url, ResourceBundle rb) {
         tcCodirector.setCellValueFactory(new PropertyValueFactory<Member,String>("name"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -438,12 +449,13 @@ public class PreliminarProjectModifyController implements Initializable {
         dpEndDate.setConverter(new LocalDateStringConverter(formatter, null));
         members = FXCollections.observableArrayList();
         codirectors= FXCollections.observableArrayList();
+        codirectorsNew= FXCollections.observableArrayList();
         initializeMembers();
         cbDirector.setItems(members);
         cbDirector.getSelectionModel().selectFirst();
         cbCodirectors.setItems(members);
         cbCodirectors.getSelectionModel().selectFirst();
-        tvCodirectors.setItems(codirectors);
+        tvCodirectors.setItems(codirectorsNew);
         tvCodirectors.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                  setSelectedCodirector();

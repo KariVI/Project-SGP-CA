@@ -39,7 +39,7 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Pane fx:id="paneStudent" layoutX="411.0" layoutY="120.0" prefHeight="391.0" prefWidth="287.0" />
+      <Pane fx:id="paneStudent" layoutX="417.0" layoutY="119.0" prefHeight="391.0" prefWidth="287.0" />
       <DatePicker fx:id="dpStartDate" layoutX="193.0" layoutY="131.0" prefHeight="25.0" prefWidth="200.0" />
       <DatePicker fx:id="dpEndDate" layoutX="193.0" layoutY="161.0" prefHeight="25.0" prefWidth="200.0" />
       <ComboBox fx:id="cbDirector" layoutX="133.0" layoutY="302.0" prefHeight="25.0" prefWidth="260.0" />

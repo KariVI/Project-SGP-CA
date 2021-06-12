@@ -19,8 +19,10 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,11 +36,15 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.converter.LocalDateStringConverter;
 import log.BusinessException;
 import log.Log;
 
@@ -46,9 +52,7 @@ import log.Log;
 public class ReceptionWorkRegisterController implements Initializable {
 
     @FXML private TextField tfTitle;
-    @FXML private TextField tfDirector;
     @FXML private TextArea taDescription;
-    @FXML private TextArea taCodirectors;
     @FXML private TextField tfNumberStudents;
     @FXML private Button btOk;
     @FXML private Button btSave;
@@ -61,11 +65,31 @@ public class ReceptionWorkRegisterController implements Initializable {
     @FXML DatePicker dpStartDate;
     @FXML DatePicker dpEndDate;
     private ObservableList<String> types;
-   private ObservableList<String> states;
-
+    private ObservableList<String> states;
+    @FXML private ComboBox cbDirector;
+    @FXML private ComboBox cbCodirectors;
+    @FXML private TableColumn tcCodirector;
+    @FXML private Button btAddCodirector;
+    @FXML private Button btDelete;
+    @FXML private TableView<Member> tvCodirectors;
+    private ListChangeListener<Member> tableCodirectorsListener;
+    private int indexCodirectors;
+    private ObservableList<Member> codirectors ;
+    private ObservableList<Member> members ;
     private ObservableList<PreliminarProject> preliminarProjects;
     private String[] codirectorsParts;
     private ReceptionWork receptionWork = new ReceptionWork();
+    private String keyGroupAcademic;
+    
+    
+    public void setPreliminarProjects(ObservableList<PreliminarProject> preliminarProjects) {  
+         for( int i = 0; i<preliminarProjects.size(); i++) {
+                  this.preliminarProjects.add(preliminarProjects.get(i));
+            }
+        cbPreliminarProject.getSelectionModel().selectFirst();
+
+    }
+    
     
     
     @FXML
@@ -99,8 +123,6 @@ public class ReceptionWorkRegisterController implements Initializable {
     private void actionSave(ActionEvent actionEvent){
       String title =tfTitle.getText();
         String description= taDescription.getText();
-        String codirectors = taCodirectors.getText();
-        String director= tfDirector.getText();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String type = (String) cbType.getSelectionModel().getSelectedItem();
         String state = (String) cbState.getSelectionModel().getSelectedItem();
@@ -108,7 +130,7 @@ public class ReceptionWorkRegisterController implements Initializable {
         String startDate;
         String endDate;
         if((!validateFieldEmpty()) && validateInformationField() ){
-            if(divisionCodirectorsSucessful(codirectors) && validateDates()){ 
+            if( validateDates()){ 
                 startDate = dpStartDate.getValue().format(formatter);
                 endDate = dpEndDate.getValue().format(formatter);
                 receptionWork.setTitle(title);
@@ -118,6 +140,7 @@ public class ReceptionWorkRegisterController implements Initializable {
                 receptionWork.setType(type);
                 receptionWork.setPreliminarProject(preliminarProject);
                 receptionWork.setActualState(state);
+                receptionWork.setKeyGroupAcademic(keyGroupAcademic);
 
                 if(!searchRepeateReceptionWork ()){    
                     saveReceptionWork ();
@@ -156,6 +179,23 @@ public class ReceptionWorkRegisterController implements Initializable {
        } 
     
     }
+    
+     @FXML 
+    private void actionAddCodirector(ActionEvent actionEvent){    
+        Member codirector = (Member) cbCodirectors.getSelectionModel().getSelectedItem();    
+        if(!repeatedCodirector(codirector)){
+           codirectors.add(codirector);
+        }else{  
+            AlertMessage alertMessage = new AlertMessage();
+            alertMessage.showAlertValidateFailed("Codirector repetido");
+        }
+    }
+    
+    @FXML
+    private void actionDelete(ActionEvent event){
+        codirectors.remove(indexCodirectors);
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -174,20 +214,64 @@ public class ReceptionWorkRegisterController implements Initializable {
             cbType.getSelectionModel().selectFirst();
             cbState.getSelectionModel().selectFirst();
             preliminarProjects=FXCollections.observableArrayList();
-            initializePreliminarProjects();
             cbPreliminarProject.setItems(preliminarProjects);
             cbPreliminarProject.getSelectionModel().selectFirst();
-            addlgacs();
-        } catch (BusinessException ex) {
-            Log.logException(ex);
-        }
+             tcCodirector.setCellValueFactory(new PropertyValueFactory<Member,String>("name"));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            dpStartDate.setConverter(new LocalDateStringConverter(formatter, null));
+            dpEndDate.setConverter(new LocalDateStringConverter(formatter, null));
+            members = FXCollections.observableArrayList();
+            codirectors= FXCollections.observableArrayList();
+            initializeMembers();
+            cbDirector.setItems(members);
+            cbDirector.getSelectionModel().selectFirst();
+            cbCodirectors.setItems(members);
+            cbCodirectors.getSelectionModel().selectFirst();
+            tvCodirectors.setItems(codirectors);
+            tvCodirectors.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                if (newSelection != null) {
+                     setSelectedCodirector();
+                 }
+                }
+            );
 
+            tableCodirectorsListener = new ListChangeListener<Member>(){
+                @Override
+                public void onChanged(ListChangeListener.Change<? extends Member> codirector) {
+                    setSelectedCodirector();
+                }
+            };
+                addlgacs();
+            } catch (BusinessException ex) {
+                Log.logException(ex);
+            }
     }    
+    
+     private Member getSelectedCodirector(){
+        Member codirector = null;
+        int tamTable = 1;
+        if(tvCodirectors != null){
+            List<Member> codirectorTable = tvCodirectors.getSelectionModel().getSelectedItems();
+            if(codirectorTable.size() == tamTable){
+                codirector = codirectorTable.get(0);
+            }
+        }
+        return codirector;
+    }
+    
+    private void setSelectedCodirector(){
+        Member codirector = getSelectedCodirector();
+        indexCodirectors = codirectors.indexOf(codirector);
+            if(codirector != null){
+                cbCodirectors.getSelectionModel().select(codirector);
+            }
+    }
+    
     
     private void saveReceptionWork(){   
          ReceptionWorkDAO receptionWorkDAO =  new ReceptionWorkDAO();
         try{  
-            if(! findRepeateColaborators()){
+            if(validateColaborators()){
                 if(receptionWorkDAO.savedSucessful(receptionWork)){  
                     receptionWork.setKey(receptionWorkDAO.getId(receptionWork));
                     saveColaborators();
@@ -223,39 +307,31 @@ public class ReceptionWorkRegisterController implements Initializable {
         return value;
     }
     
-    private boolean findRepeateColaborators(){ 
-        boolean value= false;
-        String director= tfDirector.getText();
-        int i=0; 
-        while(i< codirectorsParts.length && value==false){  
-            if(director.equals(codirectorsParts[i])){   
-                value=true;
-            }; 
-            i++;
-        }
-    
+    public boolean validateColaborators(){  
+        boolean value = true;
+        Member director = (Member) cbDirector.getSelectionModel().getSelectedItem();
+        if(repeatedCodirector(director)){
+                 value=false; 
+                AlertMessage alertMessage = new AlertMessage();
+                alertMessage.showAlertValidateFailed("El director y el codirector no pueden ser el mismo");  
+            }
         return value;
     }
+   
     
-    
-     private void saveColaborators(){    
-       String directorProfessionalLicense= tfDirector.getText();
+    private boolean saveColaborators(){    
+        boolean value=false;
        ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
        MemberDAO memberDAO = new MemberDAO();
        ArrayList<Member> members = new ArrayList<Member>();
-      
-              try {
-            Member director = memberDAO.getMemberByLicense(directorProfessionalLicense);
+        try {
+            Member director=(Member) cbDirector.getSelectionModel().getSelectedItem();
             director.setRole("Director");
-            if(director!=null){
-                receptionWork.addMember(director);
+            receptionWork.addMember(director);
+            for(int i=0; i < codirectors.size(); i++){   
+               receptionWork.addMember(codirectors.get(i));
             }
-            for(int i=0; i< codirectorsParts.length; i++ ){  
-                Member codirector= memberDAO.getMemberByLicense(codirectorsParts[i]);
-                codirector.setRole("Codirector");
-                 receptionWork.addMember(codirector);
-            } 
-         receptionWorkDAO.addedSucessfulColaborators(receptionWork);
+            receptionWorkDAO.addedSucessfulColaborators(receptionWork);
         } catch (BusinessException ex) {
             if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage = new AlertMessage();
@@ -264,8 +340,10 @@ public class ReceptionWorkRegisterController implements Initializable {
                 Log.logException(ex);
             }
         }
-      
+        return value;
     }
+    
+    
     
     private void recoverStudents() throws BusinessException{   
         GridPane gridPane= (GridPane) paneStudent.getChildren().get(0);
@@ -286,7 +364,7 @@ public class ReceptionWorkRegisterController implements Initializable {
                }
            }
            receptionWork.setStudents(students);
-           addStudentsInPreliminarProject();
+           addStudentsInReceptionWork();
     }
     
      private boolean validateFieldsStudent(TextField enrollment, TextField name){
@@ -328,11 +406,9 @@ public class ReceptionWorkRegisterController implements Initializable {
             alertMessage.showAlertValidateFailed("La fecha de fin debe ser mayor a la de inicio");
 
           }
-          
-          
       }
     
-    private void addStudentsInPreliminarProject(){ 
+    private void addStudentsInReceptionWork(){ 
         ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
         try {
            receptionWorkDAO.addedSucessfulStudents(receptionWork);
@@ -370,30 +446,12 @@ public class ReceptionWorkRegisterController implements Initializable {
         return primaryNode;
    }
     
-    
-     private boolean divisionCodirectorsSucessful (String codirectors){  
-        boolean value=false;
-        int sizeProfessionalLicense=7;
-        if(codirectors.length() == sizeProfessionalLicense ){   
-            codirectorsParts= new String[1];
-            codirectorsParts[0]= codirectors;
-            value=true;
-        }else{
-            if (codirectors.contains(",")){
-                 codirectorsParts = codirectors.split(",");
-                 value=true;
-            } else {
-                AlertMessage alertMessage = new AlertMessage ();
-                alertMessage.showAlertValidateFailed("Por favor escribe las cedulas separadas por comas");    
-            }
-        }
-        return value;
-    }
+   
      
      private boolean validateFieldEmpty(){ 
           boolean value=false;
-          if(tfTitle.getText().isEmpty()  || taCodirectors.getText().isEmpty()
-           || taDescription.getText().isEmpty() || tfDirector.getText().isEmpty() || dpStartDate == null 
+          if(tfTitle.getText().isEmpty() 
+           || taDescription.getText().isEmpty()  || dpStartDate == null 
             || dpEndDate==null  
            ){
               value=true;
@@ -405,12 +463,25 @@ public class ReceptionWorkRegisterController implements Initializable {
          boolean value=true;
         Validation validation=new Validation();
         if(validation.findInvalidField(tfTitle.getText())
-        || validation.findInvalidField(taDescription.getText()) || validation.findInvalidKeyAlphanumeric(tfDirector.getText()) 
-        || validation.findInvalidKeyAlphanumeric(taCodirectors.getText()) ){   
+        || validation.findInvalidField(taDescription.getText())  ){   
             value=false;
         }  
         return value;
     }
+    
+     public boolean repeatedCodirector(Member codirector){
+        Boolean value = false;
+        int i = 0;
+        while((value==false) && (i<codirectors.size())){
+            String enrollmentCodirector= codirectors.get(i).getProfessionalLicense();
+            if(enrollmentCodirector.equals(codirector.getProfessionalLicense())){
+                value = true;
+            }
+            i++;
+        }
+       return value;
+    }
+     
     
     private void addlgacs() throws BusinessException{    
         
@@ -477,11 +548,24 @@ public class ReceptionWorkRegisterController implements Initializable {
      
     public void initializePreliminarProjects() throws BusinessException{   
             PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
-                ArrayList <PreliminarProject> preliminarProjectList = preliminarProjectDAO.getPreliminarProjects() ;
+                ArrayList <PreliminarProject> preliminarProjectList = preliminarProjectDAO.getPreliminarProjects(keyGroupAcademic) ;
                
             for( int i = 0; i<preliminarProjectList.size(); i++) {
                   preliminarProjects.add(preliminarProjectList.get(i));
             }
+    }
+    
+     private void initializeMembers() {
+        try {
+            MemberDAO memberDAO = new MemberDAO();
+            ArrayList <Member> memberList = new ArrayList<Member>();
+            memberList = memberDAO.getMembers();
+            for( int i = 0; i<memberList.size(); i++) {
+                members.add(memberList.get(i));
+            }
+        } catch (BusinessException ex) {
+            Log.logException(ex);
+        }
     }
     
 }

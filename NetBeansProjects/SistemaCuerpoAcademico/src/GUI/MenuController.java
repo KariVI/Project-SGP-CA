@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -34,6 +36,15 @@ public class MenuController implements Initializable {
     GroupAcademic groupAcademic;
     private ObservableList<String> options ;
 
+    private void initializeGroupAcademic(){ 
+        GroupAcademicDAO groupAcademicDAO= new GroupAcademicDAO();
+        try {
+            groupAcademic= groupAcademicDAO.getGroupAcademicById("JDOEIJ804");
+        } catch (BusinessException ex) {
+
+            Log.logException(ex);
+        }
+    }
     
     
     
@@ -113,12 +124,14 @@ public class MenuController implements Initializable {
     private void showViewOption(String option){  
         FXMLLoader loader;
         Parent root;
+        initializeGroupAcademic();
         switch(option){ 
             case "Anteproyectos": ;
                 try {
                loader = new FXMLLoader(getClass().getResource("PreliminarProjectList.fxml"));
                root = loader.load();
-               PreliminarProjectListController PreliminarProjectListController = loader.getController();
+               PreliminarProjectListController preliminarProjectListController = loader.getController();
+               preliminarProjectListController.setKeyGroupAcademic(groupAcademic.getKey());
                Scene scene = new Scene(root);
                Stage stage = new Stage();
                stage.setScene(scene);
@@ -163,7 +176,8 @@ public class MenuController implements Initializable {
                 try {
                loader = new FXMLLoader(getClass().getResource("ReceptionWorkList.fxml"));
                root = loader.load();
-               ReceptionWorkListController ReceptionWorkListController = loader.getController();
+               ReceptionWorkListController receptionWorkListController = loader.getController();
+               receptionWorkListController.setKeyGroupAcademic(groupAcademic.getKey());
                Scene scene = new Scene(root);
                Stage stage = new Stage();
                stage.setScene(scene);

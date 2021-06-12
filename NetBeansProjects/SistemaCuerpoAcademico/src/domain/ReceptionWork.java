@@ -15,11 +15,34 @@ public class ReceptionWork {
     private String actualState;
     private PreliminarProject preliminarProject;
     private ArrayList<Student> students;
+
+  
     private ArrayList<Member> members;
     private ArrayList<LGAC> lgacs;
+    private String keyGroupAcademic;
+
+      public void setMembers(ArrayList<Member> members) {
+        this.members = members;
+    }
+      
+    public ArrayList<LGAC> getLgacs() {
+        return lgacs;
+    }
+
+    public void setLgacs(ArrayList<LGAC> lgacs) {
+        this.lgacs = lgacs;
+    }
+
+    public String getKeyGroupAcademic() {
+        return keyGroupAcademic;
+    }
+
+    public void setKeyGroupAcademic(String keyGroupAcademic) {
+        this.keyGroupAcademic = keyGroupAcademic;
+    }
     
     
-    public ReceptionWork(String title, String type, String description, String dateStart, String dateEnd, String actualState){
+    public ReceptionWork(String title, String type, String description, String dateStart, String dateEnd, String actualState,String keyGroupAcademic){
         this.title=title;
         this.type=type;
         this.description=description;
@@ -29,6 +52,7 @@ public class ReceptionWork {
         students=new ArrayList<Student>();
         members=new ArrayList<Member>();
         lgacs=new ArrayList<LGAC>();
+        this.keyGroupAcademic = keyGroupAcademic;
          
     }
 

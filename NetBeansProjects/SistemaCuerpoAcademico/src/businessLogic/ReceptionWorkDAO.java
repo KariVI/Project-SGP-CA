@@ -23,7 +23,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
             try {
                 Connector connectorDataBase=new Connector();
                 Connection connectionDataBase = connectorDataBase.getConnection();
-                String insertPreliminarProject = "INSERT INTO TrabajoRecepcional(titulo, tipo, descripcion, fechaInicio,fechaFin, estadoActual, idAnteproyecto ) VALUES (?,?,?,?,?,?,?)";
+                String insertPreliminarProject = "INSERT INTO TrabajoRecepcional(titulo, tipo, descripcion, fechaInicio,fechaFin, estadoActual, idAnteproyecto ,clave_CA) VALUES (?,?,?,?,?,?,?,?)";
             
                 PreparedStatement preparedStatement = connectionDataBase.prepareStatement(insertPreliminarProject );
                 preparedStatement.setString(1, receptionWork.getTitle());
@@ -33,6 +33,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
                 preparedStatement.setString(5, receptionWork.getDateEnd());
                 preparedStatement.setString(6, receptionWork.getActualState());
                 preparedStatement.setInt(7,idPreliminarProject );
+                preparedStatement.setString(8, receptionWork.getKeyGroupAcademic());
                 
                 preparedStatement.executeUpdate();
                 value=true;
@@ -96,7 +97,8 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
                 String dateEnd= resultSet.getString("fechaFin");
                 String actualState= resultSet.getString("estadoActual");
                 int idPreliminarProject = resultSet.getInt("idAnteproyecto");
-                receptionWork=new ReceptionWork(title,type, description, dateStart, dateEnd, actualState);
+                String keyGroupAcademic = resultSet.getString("clave_CA");
+                receptionWork=new ReceptionWork(title,type, description, dateStart, dateEnd, actualState,keyGroupAcademic);
                 receptionWork.setKey(idReceptionWork);
                 PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
                 receptionWork.setPreliminarProject(preliminarProjectDAO.getById(idPreliminarProject));
@@ -140,15 +142,16 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
         }
         return id;
     }
-    public ArrayList<ReceptionWork> getReceptionWorks() throws BusinessException {
+    public ArrayList<ReceptionWork> getReceptionWorks(String keyGroupAcademic) throws BusinessException {
         ArrayList<ReceptionWork> receptionWorkList = new ArrayList<ReceptionWork>();
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
-            String queryReceptionWork="SELECT * FROM TrabajoRecepcional";
+            String queryReceptionWork="SELECT * FROM TrabajoRecepcional where clave_CA=?";
 
                PreparedStatement preparedStatement;
                preparedStatement = connectionDataBase.prepareStatement(queryReceptionWork);
+               preparedStatement.setString(1, keyGroupAcademic);
                ResultSet resultSet;
                resultSet = preparedStatement.executeQuery();
                while(resultSet.next()){
@@ -160,7 +163,9 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
                     String dateEnd=resultSet.getString("fechaFin");
                     String actualState = resultSet.getString("estadoActual");
                     int idPreliminarProject = resultSet.getInt("idAnteproyecto");
-                    ReceptionWork receptionWorkAuxiliar = new ReceptionWork(title,type, description, dateStart, dateEnd, actualState);
+                     String keyGroup = resultSet.getString("clave_CA");
+                   
+                    ReceptionWork receptionWorkAuxiliar = new ReceptionWork(title,type, description, dateStart, dateEnd, actualState, keyGroup);
                     receptionWorkAuxiliar.setKey(key);
                    PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
                    receptionWorkAuxiliar.setPreliminarProject(preliminarProjectDAO.getById(idPreliminarProject));
