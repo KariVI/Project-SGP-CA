@@ -3,13 +3,12 @@ package GUI;
 
 import businessLogic.GroupAcademicDAO;
 import domain.GroupAcademic;
+import domain.Member;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -35,16 +34,7 @@ public class MenuController implements Initializable {
     @FXML ListView lvOptions;
     GroupAcademic groupAcademic;
     private ObservableList<String> options ;
-
-    private void initializeGroupAcademic(){ 
-        GroupAcademicDAO groupAcademicDAO= new GroupAcademicDAO();
-        try {
-            groupAcademic= groupAcademicDAO.getGroupAcademicById("JDOEIJ804");
-        } catch (BusinessException ex) {
-
-            Log.logException(ex);
-        }
-    }
+    private Member member;
     
     
     
@@ -105,12 +95,17 @@ public class MenuController implements Initializable {
         options.add("Reuniones");
        
     }
-        
+    
+    public void initializeMenu(Member member){
+        this.member = member;
+        if(member.getRole().equals("Responsable")){
+            fillOptions();
+        }
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        options = FXCollections.observableArrayList();
-       fillOptions();      
+        options = FXCollections.observableArrayList();     
       lvOptions.setItems(options);
       lvOptions.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
           public void changed(ObservableValue<? extends String> observaleValue, String oldValue, String newValue) {
@@ -124,14 +119,12 @@ public class MenuController implements Initializable {
     private void showViewOption(String option){  
         FXMLLoader loader;
         Parent root;
-        initializeGroupAcademic();
         switch(option){ 
             case "Anteproyectos": ;
                 try {
                loader = new FXMLLoader(getClass().getResource("PreliminarProjectList.fxml"));
                root = loader.load();
-               PreliminarProjectListController preliminarProjectListController = loader.getController();
-               preliminarProjectListController.setKeyGroupAcademic(groupAcademic.getKey());
+               PreliminarProjectListController PreliminarProjectListController = loader.getController();
                Scene scene = new Scene(root);
                Stage stage = new Stage();
                stage.setScene(scene);
@@ -161,7 +154,8 @@ public class MenuController implements Initializable {
               try {
                loader = new FXMLLoader(getClass().getResource("MeetingList.fxml"));
                root = loader.load();
-               MeetingListController MeetingListController = loader.getController();
+               MeetingListController meetingListController = loader.getController();
+               meetingListController.setMember(member);
                Scene scene = new Scene(root);
                Stage stage = new Stage();
                stage.setScene(scene);
@@ -176,8 +170,7 @@ public class MenuController implements Initializable {
                 try {
                loader = new FXMLLoader(getClass().getResource("ReceptionWorkList.fxml"));
                root = loader.load();
-               ReceptionWorkListController receptionWorkListController = loader.getController();
-               receptionWorkListController.setKeyGroupAcademic(groupAcademic.getKey());
+               ReceptionWorkListController ReceptionWorkListController = loader.getController();
                Scene scene = new Scene(root);
                Stage stage = new Stage();
                stage.setScene(scene);
