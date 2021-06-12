@@ -61,25 +61,27 @@ public class ReceptionWorkModifyController implements Initializable {
     @FXML private ComboBox cbType;
     @FXML private ComboBox cbPreliminarProject;
     @FXML private ComboBox cbState;
-    @FXML DatePicker dpStartDate;
-    @FXML DatePicker dpEndDate;
+    @FXML private DatePicker dpStartDate;
+    @FXML private  DatePicker dpEndDate;
     private ObservableList<String> types;
     private ObservableList<String> states;
     private ObservableList<PreliminarProject> preliminarProjects;
     private ObservableList<Member> codirectors ;
     private ObservableList<Member> members ;
     private ObservableList <Member> codirectorsNew;
-    @FXML ComboBox cbDirector;
-    @FXML ComboBox cbCodirectors;
-    @FXML TableColumn tcCodirector;
-    @FXML Button btAddCodirector;
-    @FXML Button btDelete;
-    @FXML TableView<Member> tvCodirectors;
+    @FXML private ComboBox cbDirector;
+    @FXML private ComboBox cbCodirectors;
+    @FXML private TableColumn tcCodirector;
+    @FXML private Button btAddCodirector;
+    @FXML private Button btDelete;
+    @FXML private TableView<Member> tvCodirectors;
     private ListChangeListener<Member> tableCodirectorsListener;
     private int indexCodirectors;
     private ReceptionWork receptionWorkRecover;
     private ReceptionWork receptionWorkNew;
 
+    
+    
     
     
      public void setReceptionWork(ReceptionWork receptionWork){
@@ -345,7 +347,13 @@ public class ReceptionWorkModifyController implements Initializable {
         return value;
     }
     
-    
+    public void setPreliminarProjects(ObservableList<PreliminarProject> preliminarProjects) {  
+         for( int i = 0; i<preliminarProjects.size(); i++) {
+                  this.preliminarProjects.add(preliminarProjects.get(i));
+            }
+        cbPreliminarProject.getSelectionModel().selectFirst();
+
+    }
       
     @Override
     public void initialize(URL url, ResourceBundle rb) {

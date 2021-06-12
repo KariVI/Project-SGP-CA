@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,31 +33,35 @@ import javafx.stage.Stage;
 import log.BusinessException;
 import log.Log;
 
-/**
- * FXML Controller class
- *
- * @author kari
- */
+
 public class ReceptionWorkShowController implements Initializable {
 
  
-       @FXML private Label lbTitle;
+    @FXML private Label lbTitle;
     @FXML private  Label lbDirector;
     @FXML private TextArea taDescription;
     @FXML private TextArea taCodirectors;
-    @FXML Label lbStartDate;
-    @FXML  Label lbEndDate;
-    @FXML  Label lbType;
-    @FXML  Label lbPreliminarProject;
-    @FXML  Label lbState;
-    @FXML Button btUpdate;
-    @FXML Button btReturn;
-    @FXML Pane studentPane;
-    @FXML  Pane lgacsPane;
+    @FXML private Label lbStartDate;
+    @FXML private Label lbEndDate;
+    @FXML private  Label lbType;
+    @FXML private  Label lbPreliminarProject;
+    @FXML  private Label lbState;
+    @FXML private Button btUpdate;
+    @FXML private Button btReturn;
+    @FXML private Pane studentPane;
+    @FXML  private Pane lgacsPane;
     private String codirectors="";  
     private PreliminarProject preliminarProject;
     private ReceptionWork receptionWork;
+      private ObservableList<PreliminarProject> preliminarProjectsUnassigned;
     
+    
+
+    public void setPreliminarProjectsUnassigned(ObservableList<PreliminarProject> preliminarProjectsUnassigned) {
+          for( int i = 0; i<preliminarProjectsUnassigned.size(); i++) {
+                  this.preliminarProjectsUnassigned.add(preliminarProjectsUnassigned.get(i));
+            }
+    }
  
     @FXML 
     private void actionReturn(ActionEvent actionEvent) throws BusinessException{  
@@ -77,6 +83,7 @@ public class ReceptionWorkShowController implements Initializable {
               ReceptionWorkModifyController receptionWorkController =loader.getController(); 
               receptionWorkController.setReceptionWork(receptionWork);
               receptionWorkController.initializeReceptionWork();
+              receptionWorkController.setPreliminarProjects(preliminarProjectsUnassigned);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);       
@@ -203,6 +210,7 @@ public class ReceptionWorkShowController implements Initializable {
       
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        preliminarProjectsUnassigned= FXCollections.observableArrayList();
     }    
     
 }

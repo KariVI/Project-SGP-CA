@@ -98,9 +98,10 @@ public class MenuController implements Initializable {
     
     public void initializeMenu(Member member){
         this.member = member;
-        if(member.getRole().equals("Responsable")){
+        fillOptions();
+        /*if(member.getRole().equals("Responsable")){
             fillOptions();
-        }
+        }*/
     }
     
     @Override
@@ -124,7 +125,10 @@ public class MenuController implements Initializable {
                 try {
                loader = new FXMLLoader(getClass().getResource("PreliminarProjectList.fxml"));
                root = loader.load();
-               PreliminarProjectListController PreliminarProjectListController = loader.getController();
+               PreliminarProjectListController preliminarProjectListController = loader.getController();
+               String keyGroupAcademic = member.getKeyGroupAcademic();
+               preliminarProjectListController.setKeyGroupAcademic(keyGroupAcademic);
+               
                Scene scene = new Scene(root);
                Stage stage = new Stage();
                stage.setScene(scene);
@@ -170,7 +174,9 @@ public class MenuController implements Initializable {
                 try {
                loader = new FXMLLoader(getClass().getResource("ReceptionWorkList.fxml"));
                root = loader.load();
-               ReceptionWorkListController ReceptionWorkListController = loader.getController();
+               ReceptionWorkListController receptionWorkListController = loader.getController();
+                String keyGroupAcademic = member.getKeyGroupAcademic();
+               receptionWorkListController.setKeyGroupAcademic(keyGroupAcademic);
                Scene scene = new Scene(root);
                Stage stage = new Stage();
                stage.setScene(scene);

@@ -90,8 +90,7 @@ public class ReceptionWorkRegisterController implements Initializable {
 
     }
     
-    
-    
+
     @FXML
     private void addStudents(ActionEvent actionEvent){
          GridPane gridPane= new GridPane();
@@ -320,7 +319,7 @@ public class ReceptionWorkRegisterController implements Initializable {
    
     
     private boolean saveColaborators(){    
-        boolean value=false;
+       boolean value=false;
        ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
        MemberDAO memberDAO = new MemberDAO();
        ArrayList<Member> members = new ArrayList<Member>();

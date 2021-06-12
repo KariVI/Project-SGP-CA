@@ -2,6 +2,7 @@
 package GUI;
 
 import businessLogic.PreliminarProjectDAO;
+import domain.Member;
 import domain.PreliminarProject;
 import java.io.File;
 import java.io.IOException;
@@ -34,17 +35,19 @@ public class PreliminarProjectListController implements Initializable {
     @FXML private Button btAddPreliminarProject;
     @FXML private Button btReturn;
     private ObservableList<PreliminarProject> preliminarProjects ;
-    private String keyGroupAcademic="JDOEIJ804";
-
+    private String keyGroupAcademic;
+    
+    
     public void setKeyGroupAcademic(String keyGroupAcademic) {
         this.keyGroupAcademic = keyGroupAcademic;
+        getPreliminarProjects();
     }
-            
+
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        preliminarProjects = FXCollections.observableArrayList();
-       getPreliminarProjects();      
+             
       lvPreliminarProjects.setItems(preliminarProjects);
       lvPreliminarProjects.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<PreliminarProject>() {
           @Override

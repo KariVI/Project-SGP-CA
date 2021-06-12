@@ -38,13 +38,14 @@ public class ReceptionWorkListController implements Initializable {
      private ObservableList <PreliminarProject> preliminarProjectsAssigned ;
      private ObservableList <PreliminarProject> preliminarProjectsUnassigned ;
      private String keyGroupAcademic;
-
+     
+     
+     
     public void setKeyGroupAcademic(String keyGroupAcademic) {
         this.keyGroupAcademic = keyGroupAcademic;
         getReceptionWorks();   
     }
 
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         receptionWorks  = FXCollections.observableArrayList();
@@ -56,20 +57,22 @@ public class ReceptionWorkListController implements Initializable {
           public void changed(ObservableValue<? extends ReceptionWork> observaleValue, ReceptionWork oldValue, ReceptionWork newValue) {
              ReceptionWork selectedReceptionWork = (ReceptionWork) lvReceptionWorks.getSelectionModel().getSelectedItem();
             try {
-           FXMLLoader loader = new FXMLLoader(getClass().getResource("ReceptionWorkShow.fxml"));
-            Parent root = loader.load();
-            ReceptionWorkShowController receptionWorkShowController = loader.getController();
-            receptionWorkShowController.setReceptionWork(selectedReceptionWork);
-            receptionWorkShowController.initializeReceptionWork();
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
+                fillPreliminarProjectsUnassigned();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("ReceptionWorkShow.fxml"));
+                 Parent root = loader.load();
+                 ReceptionWorkShowController receptionWorkShowController = loader.getController();
+                 receptionWorkShowController.setReceptionWork(selectedReceptionWork);
+                 receptionWorkShowController.initializeReceptionWork();    
+                 receptionWorkShowController.setPreliminarProjectsUnassigned(preliminarProjectsUnassigned);
+                 Scene scene = new Scene(root);
+                 Stage stage = new Stage();
+                 stage.setScene(scene);
+                 stage.initModality(Modality.APPLICATION_MODAL);
+                 stage.showAndWait();
         } catch (IOException ex) {
             Log.logException(ex);
         }
-          }
+       }
       });
     }    
     
@@ -97,9 +100,14 @@ public class ReceptionWorkListController implements Initializable {
            }
     }
     
-     private void fillPreliminarProjectsUnassigned() throws BusinessException{   
+     private void fillPreliminarProjectsUnassigned() {   
          PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
-         ArrayList<PreliminarProject> preliminarProjects = preliminarProjectDAO.getPreliminarProjects(keyGroupAcademic);
+         ArrayList<PreliminarProject> preliminarProjects = null;
+         try {
+             preliminarProjects = preliminarProjectDAO.getPreliminarProjects(keyGroupAcademic);
+         } catch (BusinessException ex) {
+             Log.logException(ex);
+         }
          for(int i=0; i< receptionWorks.size(); i++){
             PreliminarProject preliminarProject = preliminarProjects.get(i);
                 if(!repeatedPreliminarProject(preliminarProject)){
@@ -143,9 +151,7 @@ public class ReceptionWorkListController implements Initializable {
             primaryStage.show();
        } catch (MalformedURLException ex) {
            Log.logException(ex);
-       } catch (BusinessException ex) {
-           Log.logException(ex);
-       }
+       } 
     }
     
     @FXML 
