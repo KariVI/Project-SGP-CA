@@ -2,23 +2,8 @@ drop database cuerpoAcademico;
 CREATE SCHEMA IF NOT EXISTS CuerpoAcademico;
 USE  CuerpoAcademico;
 
-
-
-CREATE TABLE IF NOT EXISTS Anteproyecto(idAnteproyecto int NOT NULL auto_increment, 
-  titulo varchar(200) NOT NULL, 
-  descripcion varchar(1000) NOT NULL, fechaInicio varchar(30) NOT NULL, 
-  fechaFin varchar(30)  NOT NULL, primary key (idAnteproyecto));
-
-   CREATE TABLE IF NOT EXISTS TrabajoRecepcional (idTrabajoRecepcional int NOT NULL auto_increment, 
-  titulo varchar(200) NOT NULL, tipo varchar(30) NOT NULL, 
-  descripcion varchar(400) NOT NULL, fechaInicio varchar(20) NOT NULL, 
-  fechaFin varchar(20) NOT NULL , estadoActual varchar(30) NOT NULL,  idAnteproyecto int NOT NULL, 
-  primary key (idTrabajoRecepcional),
-  foreign key (idAnteproyecto) REFERENCES Anteproyecto (idAnteproyecto) ON DELETE CASCADE);
-  
-
-  CREATE TABLE IF NOT EXISTS CuerpoAcademico(clave varchar(10) NOT NULL, 
-nombre varchar(100) NOT NULL, horaobjetivo varchar(400) NOT NULL, 
+ CREATE TABLE IF NOT EXISTS CuerpoAcademico(clave varchar(10) NOT NULL, 
+nombre varchar(100) NOT NULL, objetivo varchar(400) NOT NULL, 
 mision varchar(500) NOT NULL,vision varchar(500) NOT NULL, 
 gradoConsolidacion varchar(30) NOT NULL, primary Key (clave));
 
@@ -29,13 +14,38 @@ CREATE TABLE IF NOT EXISTS CuerpoLGAC( claveCuerpoAcademico varchar(10) NOT NULL
 nombreLGAC varchar(200) NOT NULL,  foreign key (nombreLGAC) REFERENCES  LGAC (nombre) ,
  foreign key (claveCuerpoAcademico) REFERENCES  CuerpoAcademico (clave)  );
 
-CREATE TABLE IF NOT EXISTS Miembro(cedula VARCHAR(10),
-nombre varchar(150) NOT NULL, rol VARCHAR(20) NOT NULL,
-gradoMaximo VARCHAR(50), correo VARCHAR(50) NOT NULL, clave_CA VARCHAR(10), 
-primary key(cedula), foreign key(clave_CA) references CuerpoAcademico(clave));
+CREATE TABLE IF NOT EXISTS Anteproyecto(idAnteproyecto int NOT NULL auto_increment, 
+  titulo varchar(200) NOT NULL, 
+  descripcion varchar(1000) NOT NULL, fechaInicio varchar(30) NOT NULL, 
+  fechaFin varchar(30)  NOT NULL,clave_CA VARCHAR(10), primary key (idAnteproyecto),foreign key(clave_CA) references CuerpoAcademico(clave));
 
-    CREATE TABLE IF NOT EXISTS Credenciales(cedula varchar(10) not null, usuario varchar(15) not null, 
-    contrasenia  varchar(200)  not null, primary key(cedula), foreign key (cedula) references Miembro(cedula));
+   CREATE TABLE IF NOT EXISTS TrabajoRecepcional (idTrabajoRecepcional int NOT NULL auto_increment, 
+  titulo varchar(200) NOT NULL, tipo varchar(30) NOT NULL, 
+  descripcion varchar(400) NOT NULL, fechaInicio varchar(20) NOT NULL, 
+  fechaFin varchar(20) NOT NULL , estadoActual varchar(30) NOT NULL,  idAnteproyecto int NOT NULL, 
+  primary key (idTrabajoRecepcional),clave_CA VARCHAR(10),
+  foreign key (idAnteproyecto) REFERENCES Anteproyecto (idAnteproyecto) ON DELETE CASCADE,foreign key(clave_CA) references CuerpoAcademico(clave));
+  
+
+ 
+
+CREATE TABLE Miembro (
+  cedula varchar(10) NOT NULL,
+  nombre varchar(150) NOT NULL,
+  rol varchar(20) NOT NULL,
+  grado varchar(50) DEFAULT NULL,
+  nombreGrado varchar(200) NOT NULL,
+  universidad varchar(200) NOT NULL,
+  anio int NOT NULL,
+  clave varchar(10) DEFAULT NULL,
+  estado varchar(50) DEFAULT NULL,
+  PRIMARY KEY (cedula),
+  KEY clave (clave),
+ FOREIGN KEY (clave) REFERENCES CuerpoAcademico (clave)
+);
+
+CREATE TABLE IF NOT EXISTS Credenciales(cedula varchar(10) not null, usuario varchar(15) not null, 
+contrasenia  varchar(200)  not null, primary key(cedula), foreign key (cedula) references Miembro(cedula));
 
 CREATE TABLE  IF NOT EXISTS Reunion (idReunion int auto_increment NOT NULL , 
 asunto varchar(200) NOT NULL , hora varchar(10) NOT NULL ,
