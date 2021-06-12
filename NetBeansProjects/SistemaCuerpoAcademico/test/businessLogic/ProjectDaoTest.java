@@ -100,7 +100,7 @@ public class ProjectDaoTest {
         Project project = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021");
         ReceptionWork receptionWork = new ReceptionWork("VaraAppX: Aplicación móvil para registro de datos detallados sobre varamientos de mamíferos marinos",
         "Práctico técnico","Aplicación enfocada al registro de datos sobre varamientos mamiferos",
-        "20/12/2019","20/08/2020", "Concluido");
+        "20/12/2019","20/08/2020", "Concluido","JDOEIJ804");
         receptionWork.setKey(1);
         project.setReceptionWork(receptionWork);
         ProjectDAO projectDAO= new ProjectDAO();
@@ -113,7 +113,7 @@ public class ProjectDaoTest {
         "parte de esta democratización. ","04/05/2021","05/11/2021");
         ReceptionWork receptionWork = new ReceptionWork("VaraAppX: Aplicación móvil para registro de datos detallados sobre varamientos de mamíferos marinos",
         "Práctico técnico","Aplicación enfocada al registro de datos sobre varamientos mamiferos",
-        "20/12/2019","20/08/2020", "Concluido");
+        "20/12/2019","20/08/2020", "Concluido","JDOEIJ804");
         receptionWork.setKey(1);
         project.setReceptionWork(receptionWork);
         ProjectDAO projectDAO= new ProjectDAO();
