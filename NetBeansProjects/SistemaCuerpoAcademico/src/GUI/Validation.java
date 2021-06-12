@@ -1,6 +1,13 @@
 
 package GUI;
 
+import dataaccess.Connector;
+import java.io.UnsupportedEncodingException;
+import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,4 +71,21 @@ public class Validation {
         return value;  
     }
     
+    public Blob stringToBlob(String contrasenia){
+         Blob blobData = null;
+         try {
+             Connector db = new Connector();
+             Connection dbConnection = db.getConnection();
+             byte[] byteData = contrasenia.getBytes("UTF-8");
+             blobData = dbConnection.createBlob();
+             blobData.setBytes(1, byteData);
+         } catch (SQLException ex) {
+             Logger.getLogger(Validation.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (UnsupportedEncodingException ex) {
+             Logger.getLogger(Validation.class.getName()).log(Level.SEVERE, null, ex);
+         } catch (ClassNotFoundException ex) {
+             Logger.getLogger(Validation.class.getName()).log(Level.SEVERE, null, ex);
+         }
+    return blobData;
+  }
 }

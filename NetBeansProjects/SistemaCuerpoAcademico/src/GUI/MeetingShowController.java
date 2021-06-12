@@ -2,7 +2,6 @@
 package GUI;
 
 import businessLogic.MeetingDAO;
-import businessLogic.MemberDAO;
 import businessLogic.PrerequisiteDAO;
 import domain.Meeting;
 import domain.Member;
@@ -15,7 +14,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -44,6 +42,8 @@ public class MeetingShowController implements Initializable {
     @FXML TableView tvAssistants;
     @FXML Button btMeetingStart;
     @FXML Button btUpdate;
+    @FXML Button btShowMinute;
+     @FXML Button btRegisterMinute;
     @FXML TableView<Prerequisite> tvPrerequisites;
     private ListChangeListener<Prerequisite> tablePrerequisiteListener;
     private ListChangeListener tableAssistantsListener;
@@ -54,7 +54,7 @@ public class MeetingShowController implements Initializable {
     private ObservableList<Prerequisite> prerequisites;
     private ObservableList<Member> assistants;
     private Meeting meeting= new Meeting();
-    
+    private Member member;
     
     public void setMeeting(Meeting meeting){
         this.meeting.setKey(meeting.getKey());
@@ -92,7 +92,8 @@ public class MeetingShowController implements Initializable {
               FXMLLoader loader = new FXMLLoader(url);
               loader.setLocation(url);
               loader.load();
-              TopicShowController topicShowController =loader.getController();      
+              TopicShowController topicShowController =loader.getController(); 
+              topicShowController.initializeMeeting(meeting);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);       
@@ -146,9 +147,7 @@ public class MeetingShowController implements Initializable {
       MeetingDAO meetingDAO = new MeetingDAO();
       if(meeting.getState().equals("Concluida")){   
           disableModifyButton();
-      }
-      
-      if(dateMeeting.equals(dateCurrently)){    
+      }else if(dateMeeting.equals(dateCurrently)){    
           meeting.setState("Proxima");
           meetingDAO.changedStateSucessful(meeting);
           activateMeetingStartButton();
@@ -165,7 +164,67 @@ public class MeetingShowController implements Initializable {
         btMeetingStart.setDisable(false);
     }
     
-        private void disableModifyButton(){ 
+    public void setMember(Member member){
+       this.member = member;
+   }
+    @FXML
+    private void actionMinute(){
+        if(btMeetingStart.getText().equals("Ver minuta")){
+            showMinute();
+        }else{
+            registerMinute();
+        }
+    }
+    private void registerMinute(){  
+       
+         try{ 
+            Stage primaryStage= new Stage();
+            URL url = new File("src/GUI/minuteRegister.fxml").toURI().toURL();
+           try{
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              MinuteRegisterController minuteRegisterController =loader.getController(); 
+              minuteRegisterController.initializeMeeting(meeting.getKey());          
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);
+              Stage stage = (Stage) btMeetingStart.getScene().getWindow();
+              stage.close();
+            } catch (IOException ex) {
+                    Log.logException(ex);
+            }
+            primaryStage.show();
+       } catch (MalformedURLException ex) {
+           Log.logException(ex);
+       }
+    }
+    
+    private void showMinute(){  
+       
+         try{ 
+            Stage primaryStage= new Stage();
+            URL url = new File("src/GUI/minuteShow.fxml").toURI().toURL();
+           try{
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              MinuteShowController minuteShowController =loader.getController(); 
+               minuteShowController.setMember(member);
+               minuteShowController.initializeMinute(meeting); 
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);
+            } catch (IOException ex) {
+                    Log.logException(ex);
+            }
+            primaryStage.show();
+       } catch (MalformedURLException ex) {
+           Log.logException(ex);
+       }
+    }
+    
+    private void disableModifyButton(){ 
         btUpdate.setOpacity(0);
         btUpdate.setDisable(true);
         btMeetingStart.setOpacity(1);
@@ -196,6 +255,5 @@ public class MeetingShowController implements Initializable {
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
-    }
-    
+    }    
 }

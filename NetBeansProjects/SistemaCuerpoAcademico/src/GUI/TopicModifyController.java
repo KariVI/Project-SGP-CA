@@ -44,7 +44,7 @@ public class TopicModifyController implements Initializable {
     @FXML Button btSave;
     @FXML Button btCancel;
     @FXML Button btUpdate;
-    private int idMeeting = 1;
+    private int idMeeting = 0;
     private int indexTopic;
     private ListChangeListener<Topic> tableTopicListener;
     
@@ -56,7 +56,6 @@ public class TopicModifyController implements Initializable {
         tcMember.setCellValueFactory(new PropertyValueFactory<Topic,String>("professionalLicense"));
         topics = FXCollections.observableArrayList();
         oldTopics = FXCollections.observableArrayList();
-        initializeTopics();
         tvTopic.setItems(topics);
        
         members = FXCollections.observableArrayList();
@@ -78,6 +77,11 @@ public class TopicModifyController implements Initializable {
         };
     }
     
+    public void initializeMeeting(int idMeeting){
+        this.idMeeting = idMeeting;
+        initializeTopics();
+    }
+    
     public void initializeTopics(){
         TopicDAO topicDAO = new TopicDAO();
         try {
@@ -95,7 +99,9 @@ public class TopicModifyController implements Initializable {
     
     @FXML
     private void add(ActionEvent event){
-        String finishTime = "", startTime = "", topicName = "";
+        String finishTime = "";
+        String startTime = "";
+        String topicName = "";
         Member member = cbMember.getSelectionModel().getSelectedItem();
         finishTime = tfFinishTime.getText();
         startTime = tfFinishTime.getText();
@@ -169,9 +175,11 @@ public class TopicModifyController implements Initializable {
           for(int i = 0; i < oldTopics.size(); i++){
                topicDAO.delete(oldTopics.get(i));
            }  
+          
            for(int i = 0; i < topics.size(); i++){
                topicDAO.save(topics.get(i));
            }
+           
            AlertMessage alertMessage = new AlertMessage();
            alertMessage.showAlertSuccesfulSave("Los temas fueron registrados con éxito");
          } catch (BusinessException ex) {

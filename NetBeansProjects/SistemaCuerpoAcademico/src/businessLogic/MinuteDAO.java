@@ -215,4 +215,61 @@ public class MinuteDAO implements IMinuteDAO {
         return members;
     }
 
+    @Override
+    public int getIdMinute(Minute minute) throws BusinessException {
+        int idMinute = 0;
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+               PreparedStatement preparedStatement = connectionDataBase.prepareStatement("SELECT * FROM Minuta where estado = ? and pendiente = ? and nota = ? and idReunion = ?");
+               preparedStatement.setString(1, minute.getSate());
+               preparedStatement.setString(2, minute.getDue());
+               preparedStatement.setString(3, minute.getNote());
+               preparedStatement.setInt(4, minute.getIdMeeting());
+               ResultSet resultSet;
+               resultSet = preparedStatement.executeQuery(); 
+               if(resultSet.next()){
+                    idMinute = resultSet.getInt("idMinuta");
+               }else{
+                 throw new BusinessException("minute not found");
+               }
+                connectorDataBase.disconnect();
+            }catch(SQLException sqlException) {
+                   throw new BusinessException("Database failed ", sqlException);         
+            }catch(ClassNotFoundException ex) {
+                        Log.logException(ex);
+            }
+        
+        return idMinute;
+    }
+    
+    @Override
+    public Minute getMinute(int idMeeting) throws BusinessException {
+        Minute minute = null ;
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+               PreparedStatement preparedStatement = connectionDataBase.prepareStatement("SELECT * FROM Minuta where idReunion = ?");
+               preparedStatement.setInt(1, idMeeting);
+               ResultSet resultSet;
+               resultSet = preparedStatement.executeQuery(); 
+               if(resultSet.next()){
+                    int idMinute = resultSet.getInt("idMinuta");
+                    String due = resultSet.getString("pendiente");
+                    String note = resultSet.getString("nota");
+                    String state = resultSet.getString("estado");
+                    minute = new Minute(idMinute,due,state,note,idMeeting);                
+               }else{
+                 throw new BusinessException("minute not found");
+               }
+                connectorDataBase.disconnect();
+            }catch(SQLException sqlException) {
+                   throw new BusinessException("Database failed ", sqlException);         
+            }catch(ClassNotFoundException ex) {
+                        Log.logException(ex);
+            }
+        
+        return minute;
+    }
+
 }

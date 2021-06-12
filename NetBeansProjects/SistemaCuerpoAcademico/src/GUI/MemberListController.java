@@ -38,7 +38,7 @@ public class MemberListController implements  Initializable {
     @FXML private Button btRegisterMember;
     @FXML private ListView<Member> lvMembers = new ListView<Member>();
     private ObservableList <Member> members ;
-    
+  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
       members = FXCollections.observableArrayList();

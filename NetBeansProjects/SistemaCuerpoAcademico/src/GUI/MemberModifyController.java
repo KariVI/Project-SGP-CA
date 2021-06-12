@@ -18,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -59,7 +60,7 @@ public class MemberModifyController implements Initializable {
      degrees.add("Doctorado");
      cbDegrees.setItems(degrees);
      years = FXCollections.observableArrayList();
-     for(int i = getActualYear(); i>1899; i--){
+     for(int i = getCurrentYear(); i>1899; i--){
             years.add(i);
      }
      cbYears.setItems(years);
@@ -68,7 +69,13 @@ public class MemberModifyController implements Initializable {
 
     @FXML 
     public void save(){
-       String name = "", role = "", degree = "", professionalLicense = "", nameDegree = "", universityName = "",state = "";
+       String name = "";
+       String role = "";
+       String degree = "";
+       String professionalLicense = "";
+       String nameDegree = "";
+       String universityName = "";
+       String state = "";
        int degreeYear = 0;
        name = tfName.getText();
        role = cbRoles.getSelectionModel().getSelectedItem();
@@ -129,8 +136,9 @@ public class MemberModifyController implements Initializable {
             Logger.getLogger(MemberViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-     
-    public int getActualYear(){
+    
+    
+    public int getCurrentYear(){
         Date date = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);

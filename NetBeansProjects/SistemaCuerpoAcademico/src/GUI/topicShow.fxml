@@ -26,7 +26,7 @@
             <Font size="26.0" />
          </font>
       </Label>
-      <Button layoutX="427.0" layoutY="343.0" mnemonicParsing="false" text="Modificar" />
+      <Button fx:id="btUpdate" layoutX="427.0" layoutY="343.0" mnemonicParsing="false" onAction="#actionUpdate" text="Modificar" />
       <Button layoutX="508.0" layoutY="343.0" mnemonicParsing="false" text="Regresar" />
    </children>
 </AnchorPane>

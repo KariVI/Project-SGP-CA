@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MinuteCommentController">
+    <stylesheets>
+        <URL value="@minutecomment.css" />
+    </stylesheets>
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="127.0" layoutX="-37.0" layoutY="-86.0" stroke="BLACK" strokeType="INSIDE" width="638.0" />
+      <Label layoutX="178.0" layoutY="55.0" text="Desaprobar minuta">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="taComment" layoutX="54.0" layoutY="147.0" prefHeight="176.0" prefWidth="482.0" />
+      <Label layoutX="62.0" layoutY="118.0" text="Comentarios" />
+      <Button fx:id="btSave" layoutX="393.0" layoutY="351.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar" />
+      <Button fx:id="btCancel" layoutX="470.0" layoutY="351.0" mnemonicParsing="false" onAction="#actionCancel" text="Cancelar" />
+   </children>
+</AnchorPane>

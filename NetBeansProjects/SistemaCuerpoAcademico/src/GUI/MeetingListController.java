@@ -3,6 +3,7 @@ package GUI;
 
 import businessLogic.MeetingDAO;
 import domain.Meeting;
+import domain.Member;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -31,7 +32,8 @@ public class MeetingListController implements Initializable {
     @FXML private Button btAddMeeting;
     @FXML private Button btReturn;
     private ObservableList<Meeting> meetings ;
-       
+    private Member member;
+    
      @FXML 
     public void actionAddMeeting(ActionEvent actionEvent){    
          try{ 
@@ -54,6 +56,10 @@ public class MeetingListController implements Initializable {
        }
     }
     
+    public void setMember(Member member){
+        this.member = member;
+    }
+    
     @FXML 
     private void actionReturn(ActionEvent actionEvent){   
         Stage stage = (Stage) btReturn.getScene().getWindow();
@@ -73,6 +79,7 @@ public class MeetingListController implements Initializable {
             Parent root = loader.load();
             MeetingShowController meetingShowController = loader.getController();
             meetingShowController.setMeeting(selectedMeeting);
+            meetingShowController.setMember(member);
                  try {
                      meetingShowController.initializeMeeting();
                  } catch (BusinessException ex) {
