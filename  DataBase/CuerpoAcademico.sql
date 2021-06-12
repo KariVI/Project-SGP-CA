@@ -2,6 +2,8 @@ drop database cuerpoAcademico;
 CREATE SCHEMA IF NOT EXISTS CuerpoAcademico;
 USE  CuerpoAcademico;
 
+
+
 CREATE TABLE IF NOT EXISTS Anteproyecto(idAnteproyecto int NOT NULL auto_increment, 
   titulo varchar(200) NOT NULL, 
   descripcion varchar(1000) NOT NULL, fechaInicio varchar(30) NOT NULL, 
@@ -14,7 +16,6 @@ CREATE TABLE IF NOT EXISTS Anteproyecto(idAnteproyecto int NOT NULL auto_increme
   primary key (idTrabajoRecepcional),
   foreign key (idAnteproyecto) REFERENCES Anteproyecto (idAnteproyecto) ON DELETE CASCADE);
   
-    CREATE TABLE IF NOT EXISTS Credenciales(cedula varchar(10) not null, usuario varchar(15) not null, contrasenia  varchar(200)  not null, primary key(cedula), foreign key (cedula) references Miembro(cedula));
 
   CREATE TABLE IF NOT EXISTS CuerpoAcademico(clave varchar(10) NOT NULL, 
 nombre varchar(100) NOT NULL, horaobjetivo varchar(400) NOT NULL, 
@@ -32,6 +33,9 @@ CREATE TABLE IF NOT EXISTS Miembro(cedula VARCHAR(10),
 nombre varchar(150) NOT NULL, rol VARCHAR(20) NOT NULL,
 gradoMaximo VARCHAR(50), correo VARCHAR(50) NOT NULL, clave_CA VARCHAR(10), 
 primary key(cedula), foreign key(clave_CA) references CuerpoAcademico(clave));
+
+    CREATE TABLE IF NOT EXISTS Credenciales(cedula varchar(10) not null, usuario varchar(15) not null, 
+    contrasenia  varchar(200)  not null, primary key(cedula), foreign key (cedula) references Miembro(cedula));
 
 CREATE TABLE  IF NOT EXISTS Reunion (idReunion int auto_increment NOT NULL , 
 asunto varchar(200) NOT NULL , hora varchar(10) NOT NULL ,
@@ -53,14 +57,7 @@ CREATE TABLE IF NOT EXISTS Proyecto(idProyecto int NOT NULL AUTO_INCREMENT ,
 titulo varchar(200) NOT NULL, descripcion varchar(400) NOT NULL,fechaInicio varchar(30) not null, 
 fechaFin varchar(30) not null , primary key(idProyecto) );
 
-CREATE TABLE IF NOT EXISTS Agenda(idAgenda int NOT NULL AUTO_INCREMENT , 
-primary key (idAgenda), idReunion int NOT NULL,
-foreign key (idReunion) REFERENCES Reunion (idReunion) ON DELETE CASCADE);
 
-CREATE TABLE IF NOT EXISTS Agenda_Tema(idAgenda int NOT NULL AUTO_INCREMENT , 
-idTema int NOT NULL, tema varchar(200) NOT NULL, horaInicio varchar(10) NOT NULL,
-horaFin varchar(10) NOT NULL, primary key(idAgenda,idTema),
-foreign key (idAgenda)  REFERENCES agenda(idAgenda)ON DELETE CASCADE);
 
 CREATE TABLE IF NOT EXISTS Tema(
 idTema int NOT NULL AUTO_INCREMENT, tema varchar(200) NOT NULL, horaInicio varchar(10) NOT NULL,
