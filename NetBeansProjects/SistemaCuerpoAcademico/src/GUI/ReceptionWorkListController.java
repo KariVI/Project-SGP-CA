@@ -37,10 +37,11 @@ public class ReceptionWorkListController implements Initializable {
      private ObservableList<ReceptionWork> receptionWorks ;
      private ObservableList <PreliminarProject> preliminarProjectsAssigned ;
      private ObservableList <PreliminarProject> preliminarProjectsUnassigned ;
-     private String keyGroupAcademic="JDOEIJ804";
+     private String keyGroupAcademic;
 
     public void setKeyGroupAcademic(String keyGroupAcademic) {
         this.keyGroupAcademic = keyGroupAcademic;
+        getReceptionWorks();   
     }
 
     
@@ -49,7 +50,6 @@ public class ReceptionWorkListController implements Initializable {
         receptionWorks  = FXCollections.observableArrayList();
         preliminarProjectsAssigned= FXCollections.observableArrayList();
         preliminarProjectsUnassigned= FXCollections.observableArrayList();
-       getReceptionWorks();   
        fillPreliminarProjectsAssigned();
       lvReceptionWorks.setItems(receptionWorks);
       lvReceptionWorks.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ReceptionWork>() {

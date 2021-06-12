@@ -21,7 +21,7 @@ public class MeetingDAO implements IMeetingDAO{
             try {
                 Connector connectorDataBase=new Connector();
                 Connection connectionDataBase = connectorDataBase.getConnection();
-                String insertMeeting = "INSERT INTO Reunion(asunto,hora, fecha, estado) VALUES (?,?,?,?)";
+                String insertMeeting = "INSERT INTO Reunion(asunto,hora, fecha, estado,clave_CA) VALUES (?,?,?,?,?)";
             
                 PreparedStatement preparedStatement = connectionDataBase.prepareStatement(insertMeeting);
                 
@@ -29,6 +29,7 @@ public class MeetingDAO implements IMeetingDAO{
                 preparedStatement.setString(2, meeting.getHourStart());
                 preparedStatement.setString(3, meeting.getDate());
                 preparedStatement.setString(4, "Registrada");
+                preparedStatement.setString(5, meeting.getKeyGroupAcademic() );
                 
                 preparedStatement.executeUpdate();
                 saveSuccess=true;
@@ -96,8 +97,9 @@ public class MeetingDAO implements IMeetingDAO{
                 String hourStart= resultSet.getString("hora");
                 String date= resultSet.getString("fecha");
                 String state=resultSet.getString("estado");
-               
+                String keyGroupAcademic= resultSet.getString("clave_CA");
                 meetingAuxiliar=new Meeting(id,subject,date,hourStart, state);
+                meetingAuxiliar.setKeyGroupAcademic(keyGroupAcademic);
             }
                 connectorDataBase.disconnect();
         }catch(SQLException sqlException) {
@@ -109,16 +111,17 @@ public class MeetingDAO implements IMeetingDAO{
         
     }
 
-    public ArrayList<Meeting>  getMeetings(){
+    public ArrayList<Meeting>  getMeetings(String keyGroupAcademic){
         ArrayList<Meeting> meetingList = new ArrayList<Meeting>();
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
-            String queryMeeting="SELECT * FROM Reunion";
+            String queryMeeting="SELECT * FROM Reunion where clave_CA=?";
 
                PreparedStatement preparedStatement;
                preparedStatement = connectionDataBase.prepareStatement(queryMeeting);
                ResultSet resultSet;
+               preparedStatement.setString(1, keyGroupAcademic);
                resultSet = preparedStatement.executeQuery();
                while(resultSet.next()){
                     int keyMeeting=resultSet.getInt(1);
@@ -126,7 +129,9 @@ public class MeetingDAO implements IMeetingDAO{
                     String hourStart = resultSet.getString("hora");
                     String date = resultSet.getString("fecha");
                     String state= resultSet.getString("estado");
+                    
                     Meeting meetingAuxiliar = new Meeting(keyMeeting,subject,date, hourStart, state);
+                    meetingAuxiliar.setKeyGroupAcademic(keyGroupAcademic);
                     
                     meetingList.add(meetingAuxiliar);
                 }

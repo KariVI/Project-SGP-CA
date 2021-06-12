@@ -49,8 +49,8 @@ contrasenia  varchar(200)  not null, primary key(cedula), foreign key (cedula) r
 
 CREATE TABLE  IF NOT EXISTS Reunion (idReunion int auto_increment NOT NULL , 
 asunto varchar(200) NOT NULL , hora varchar(10) NOT NULL ,
- fecha varchar(20) NOT NULL, estado varchar(30) NOT NULL , 
- primary key (idReunion) );
+ fecha varchar(20) NOT NULL, estado varchar(30) NOT NULL , clave_CA VARCHAR(10),
+ primary key (idReunion),foreign key(clave_CA) references CuerpoAcademico(clave) );
  
  CREATE TABLE IF NOT EXISTS Prerequisito(idPrerequisito int auto_increment NOT NULL , 
   descripcion varchar(200) NOT NULL , idReunion int NOT NULL , cedula varchar(10) not null,
