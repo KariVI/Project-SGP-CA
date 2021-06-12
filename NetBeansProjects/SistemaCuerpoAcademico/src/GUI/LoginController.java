@@ -6,7 +6,6 @@ import domain.Member;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Blob;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
