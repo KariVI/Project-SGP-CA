@@ -27,21 +27,19 @@ public class MemberRegisterController implements Initializable {
     private ObservableList<String> roles;
     private ObservableList<String> degrees;
     private ObservableList<Integer> years;
-    private ObservableList<GroupAcademic> academicGroups;
-    @FXML private ComboBox<GroupAcademic> cbAcademicGroups;
     @FXML private ComboBox<Integer> cbYears;
     @FXML private ComboBox<String> cbRoles;
     @FXML private ComboBox<String> cbDegrees;
-    @FXML private TextFieldLimited tfName;
+    @FXML private TextField tfName;
     @FXML private TextField tfProfessionalLicense;
     @FXML private TextField tfNameDegree;
     @FXML private TextField tfUniversity;
     @FXML private Button btClose;
+    private String groupAcademicKey;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-      tfName.setMaxlength(10);
-     roles = FXCollections.observableArrayList();
+      roles = FXCollections.observableArrayList();
      roles.add("Integrante");
      roles.add("Colaborador");
      roles.add("Responsable");
@@ -51,22 +49,18 @@ public class MemberRegisterController implements Initializable {
      degrees.add("Doctorado");
      cbDegrees.setItems(degrees);
      years = FXCollections.observableArrayList();
-     academicGroups = FXCollections.observableArrayList();
-     initializeAcademicGroups();
-     cbAcademicGroups.setItems(academicGroups);
      for(int i = getActualYear(); i>1899; i--){
             years.add(i);
      }
      cbYears.setItems(years);
      cbYears.getSelectionModel().selectFirst();
-     cbAcademicGroups.getSelectionModel().selectFirst();
+
     }    
 
     @FXML 
     public void save(){
        String name = "", role = "", degree = "", professionalLicense = "", nameDegree = "", universityName = "";
        int degreeYear = 0;
-       GroupAcademic groupAcademic;
        name = tfName.getText();
        role = cbRoles.getSelectionModel().getSelectedItem();
        degree = cbDegrees.getValue();
@@ -74,8 +68,7 @@ public class MemberRegisterController implements Initializable {
        nameDegree = tfNameDegree.getText();
        degreeYear = cbYears.getSelectionModel().getSelectedItem();
        universityName = tfUniversity.getText();
-       groupAcademic = cbAcademicGroups.getSelectionModel().getSelectedItem();
-       Member newMember = new Member(professionalLicense, name, role, degree,nameDegree,universityName, degreeYear,groupAcademic.getKey());
+       Member newMember = new Member(professionalLicense, name, role, degree,nameDegree,universityName, degreeYear,groupAcademicKey);
        MemberDAO memberDAO = new MemberDAO();
        if(validateMember(newMember)){
              try { 
@@ -95,17 +88,7 @@ public class MemberRegisterController implements Initializable {
         stage.close();
     }
     
-    public void initializeAcademicGroups(){
-        try {
-            GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO();
-            GroupAcademic academicGroup = groupAcademicDAO.getGroupAcademicById("1491");
-            academicGroups.add(academicGroup);
-        } catch (BusinessException ex) {
-            Logger.getLogger(MemberRegisterController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    
+   
     public int getActualYear(){
         Date date = new Date();
         Calendar calendar = Calendar.getInstance();
@@ -131,6 +114,9 @@ public class MemberRegisterController implements Initializable {
         }
         
         return value;
+    }
+    public void setGroupAcademicKey(String groupAcademicKey){
+        this.groupAcademicKey = groupAcademicKey;
     }
     
     public boolean isEmptyFields(Member member){

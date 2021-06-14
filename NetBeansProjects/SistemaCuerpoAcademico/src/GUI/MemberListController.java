@@ -42,11 +42,12 @@ public class MemberListController implements  Initializable {
     @FXML private Button btRegisterMember;
     @FXML private ListView<Member> lvMembers = new ListView<Member>();
     private ObservableList <Member> members ;
+    private String groupAcademicKey;
   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
       members = FXCollections.observableArrayList();
-      initializeMembers();
+     
       lvMembers.setItems(members);
       lvMembers.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Member>() {
           @Override
@@ -80,7 +81,9 @@ public class MemberListController implements  Initializable {
             ArrayList <Member> memberList = new ArrayList<Member>();
             memberList = memberDAO.getMembers();
             for( int i = 0; i<memberList.size(); i++) {
-                members.add(memberList.get(i));
+                if(memberList.get(i).getKeyGroupAcademic().equals(groupAcademicKey)){
+                    members.add(memberList.get(i));
+                }         
             }
         } catch (BusinessException ex) {
             Logger.getLogger(MemberListController.class.getName()).log(Level.SEVERE, null, ex);
@@ -93,6 +96,11 @@ public class MemberListController implements  Initializable {
         stage.close();
     }
     
+    public void setGroupAcademic(String groupAcademicKey){
+        this.groupAcademicKey = groupAcademicKey;
+        initializeMembers();
+    }
+    
     @FXML 
     public void actionRegister(){
         try {
@@ -102,6 +110,7 @@ public class MemberListController implements  Initializable {
             loader.setLocation(url);
             loader.load();
             MemberRegisterController memberRegisterController = loader.getController();
+            memberRegisterController.setGroupAcademicKey(groupAcademicKey);
             Parent root = loader.getRoot();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);

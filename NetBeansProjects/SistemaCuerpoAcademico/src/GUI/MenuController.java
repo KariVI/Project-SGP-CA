@@ -139,7 +139,8 @@ public class MenuController implements Initializable {
                    try {
                loader = new FXMLLoader(getClass().getResource("MemberList.fxml"));
                root = loader.load();
-               MemberListController MemberListController = loader.getController();
+               MemberListController memberListController = loader.getController();
+               memberListController.setGroupAcademic(member.getKeyGroupAcademic());
                Scene scene = new Scene(root);
                Stage stage = new Stage();
                stage.setScene(scene);
