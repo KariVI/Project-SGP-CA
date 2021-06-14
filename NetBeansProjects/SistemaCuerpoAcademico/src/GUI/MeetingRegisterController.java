@@ -66,6 +66,11 @@ public class MeetingRegisterController implements Initializable {
     @FXML private Button btDelete;
     private int idMeeting;
     private String keyGroupAcademic;
+    private Member member;
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
 
     public String getKeyGroupAcademic() {
         return keyGroupAcademic;
@@ -138,7 +143,8 @@ public class MeetingRegisterController implements Initializable {
               FXMLLoader loader = new FXMLLoader(url);
               loader.setLocation(url);
               loader.load();
-              MeetingListController meetingListController =loader.getController();      
+              MeetingListController meetingListController =loader.getController();   
+              meetingListController.setMember(member);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);       

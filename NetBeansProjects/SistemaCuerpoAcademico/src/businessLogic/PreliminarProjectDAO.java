@@ -261,7 +261,7 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
      
             PreparedStatement preparedStatement = connectionDataBase.prepareStatement(delete);
             int i=0;
-            while(i< colaborators.size()){
+            while(i < colaborators.size()){
                preparedStatement.setString(1, colaborators.get(i).getProfessionalLicense());
                preparedStatement.setInt(2, idPreliminarProject);
                preparedStatement.executeUpdate();

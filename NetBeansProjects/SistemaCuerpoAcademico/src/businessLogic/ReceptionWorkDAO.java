@@ -155,7 +155,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
                ResultSet resultSet;
                resultSet = preparedStatement.executeQuery();
                while(resultSet.next()){
-                   int key= resultSet.getInt(1);
+                    int key= resultSet.getInt(1);
                     String title = resultSet.getString("titulo");
                     String description = resultSet.getString("descripcion");
                     String type = resultSet.getString("tipo");

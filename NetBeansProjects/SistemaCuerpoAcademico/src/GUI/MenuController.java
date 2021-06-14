@@ -29,15 +29,53 @@ import log.Log;
 
 public class MenuController implements Initializable {
 
-    @FXML Button btRegister;
-    @FXML Button btConsult;
-    @FXML ListView lvOptions;
-    GroupAcademic groupAcademic;
+    @FXML private Button btRegister;
+    @FXML private Button btConsult;
+    @FXML private ListView lvOptions;
+    @FXML private Button btExit;
+    private GroupAcademic groupAcademic;
     private ObservableList<String> options ;
     private Member member;
     
     
     
+    private void  disableButtonRegister(){  
+        if(member.getRole().equals("Integrante")){
+            btRegister.setOpacity(0);
+            btRegister.setDisable(true);
+        }
+    }
+    
+    @FXML
+    private void actionExit(ActionEvent actionEvent){
+         Stage stage = (Stage) btExit.getScene().getWindow();
+        stage.close();
+        openLogin();
+    }
+    
+    private void  openLogin(){   
+        Stage primaryStage =  new Stage();
+        try{
+            
+            URL url = new File("src/GUI/Login.fxml").toURI().toURL();
+            try{
+                FXMLLoader loader = new FXMLLoader(url);
+                loader.setLocation(url);
+                loader.load();
+                LoginController login = loader.getController();
+                Parent root = loader.getRoot();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+                
+            } catch (IOException ex) {
+                Log.logException(ex);
+            }
+            primaryStage.show();
+            
+        } catch (MalformedURLException ex) {
+                Log.logException(ex);
+        }
+    }
     @FXML
     private void actionRegister(ActionEvent actionEvent){   
         try{ 
@@ -72,8 +110,9 @@ public class MenuController implements Initializable {
               loader.load();
                 GroupAcademicShowController groupAcademicShowController =loader.getController();
                 GroupAcademicDAO groupAcademicDAO= new GroupAcademicDAO();
-                 GroupAcademic groupAcademic= groupAcademicDAO.getGroupAcademicById("JDOEIJ804");
+                 GroupAcademic groupAcademic= groupAcademicDAO.getGroupAcademicById(member.getKeyGroupAcademic());
                 groupAcademicShowController.setGroupAcademic(groupAcademic);
+                groupAcademicShowController.setMember(member);
                 groupAcademicShowController.initializeGroupAcademic();
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
@@ -99,9 +138,8 @@ public class MenuController implements Initializable {
     public void initializeMenu(Member member){
         this.member = member;
         fillOptions();
-        /*if(member.getRole().equals("Responsable")){
-            fillOptions();
-        }*/
+        disableButtonRegister();
+        
     }
     
     @Override
@@ -109,6 +147,7 @@ public class MenuController implements Initializable {
         options = FXCollections.observableArrayList();     
       lvOptions.setItems(options);
       lvOptions.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+         
           public void changed(ObservableValue<? extends String> observaleValue, String oldValue, String newValue) {
              String selectedOption = (String) lvOptions.getSelectionModel().getSelectedItem();
              showViewOption(selectedOption);

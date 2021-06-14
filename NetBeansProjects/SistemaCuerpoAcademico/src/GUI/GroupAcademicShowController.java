@@ -4,6 +4,7 @@ package GUI;
 import businessLogic.GroupAcademicDAO;
 import domain.GroupAcademic;
 import domain.LGAC;
+import domain.Member;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -36,11 +37,27 @@ public class GroupAcademicShowController implements Initializable {
     @FXML private Pane lgacsPane;
     @FXML private Button btUpdate;
     @FXML private Button btReturn;
-
-    GroupAcademic groupAcademic;
+    private Member member;
+    private GroupAcademic groupAcademic;
     
     public void setGroupAcademic(GroupAcademic groupAcademic){   
         this.groupAcademic= groupAcademic;
+    }
+    
+     public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+    
+    private void disableButtonUpdate(){   
+        if(member.getRole().equals("Integrante")){  
+            btUpdate.setOpacity(0);
+            btUpdate.setDisable(true);
+        
+        }
     }
     
     public void initializeGroupAcademic(){
@@ -50,6 +67,7 @@ public class GroupAcademicShowController implements Initializable {
         taObjetive.setText("Objetivo: "+groupAcademic.getObjetive() );
         taVision.setText("Visión: "+groupAcademic.getVision());
         taMision.setText("Misión: "+groupAcademic.getMission());
+        disableButtonUpdate();
         try {
             getlgacs();
         } catch (BusinessException ex) {

@@ -327,7 +327,8 @@ public class ReceptionWorkRegisterController implements Initializable {
             Member director=(Member) cbDirector.getSelectionModel().getSelectedItem();
             director.setRole("Director");
             receptionWork.addMember(director);
-            for(int i=0; i < codirectors.size(); i++){   
+            for(int i=0; i < codirectors.size(); i++){  
+                codirectors.get(i).setRole("Codirector");
                receptionWork.addMember(codirectors.get(i));
             }
             receptionWorkDAO.addedSucessfulColaborators(receptionWork);

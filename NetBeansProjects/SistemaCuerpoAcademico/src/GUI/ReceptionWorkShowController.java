@@ -53,9 +53,12 @@ public class ReceptionWorkShowController implements Initializable {
     private String codirectors="";  
     private PreliminarProject preliminarProject;
     private ReceptionWork receptionWork;
-      private ObservableList<PreliminarProject> preliminarProjectsUnassigned;
+    private ObservableList<PreliminarProject> preliminarProjectsUnassigned;
+    private String keyGroupAcademic;
     
-    
+     public void setKeyGroupAcademic(String keyGroupAcademic) {
+        this.keyGroupAcademic = keyGroupAcademic;
+    }
 
     public void setPreliminarProjectsUnassigned(ObservableList<PreliminarProject> preliminarProjectsUnassigned) {
           for( int i = 0; i<preliminarProjectsUnassigned.size(); i++) {
@@ -73,6 +76,8 @@ public class ReceptionWorkShowController implements Initializable {
     
     @FXML
     private void actionUpdate(ActionEvent actionEvent){ 
+        Stage stage = (Stage) btUpdate.getScene().getWindow();
+        stage.close();
         try{ 
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/ReceptionWorkModify.fxml").toURI().toURL();
@@ -106,7 +111,7 @@ public class ReceptionWorkShowController implements Initializable {
               loader.setLocation(url);
               loader.load();
                 ReceptionWorkListController receptionWorkListController =loader.getController();
- 
+                receptionWorkListController.setKeyGroupAcademic(keyGroupAcademic);
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);

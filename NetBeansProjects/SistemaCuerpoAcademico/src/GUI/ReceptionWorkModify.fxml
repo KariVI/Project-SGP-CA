@@ -34,7 +34,7 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Pane fx:id="paneStudent" layoutX="462.0" layoutY="197.0" prefHeight="405.0" prefWidth="304.0" />
+      <Pane fx:id="paneStudent" layoutX="462.0" layoutY="165.0" prefHeight="437.0" prefWidth="304.0" />
       <DatePicker fx:id="dpStartDate" layoutX="236.0" layoutY="131.0" prefHeight="25.0" prefWidth="166.0" />
       <DatePicker fx:id="dpEndDate" layoutX="236.0" layoutY="161.0" prefHeight="25.0" prefWidth="166.0" />
       <Label layoutX="12.0" layoutY="195.0" text="Tipo:" />

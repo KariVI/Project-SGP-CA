@@ -213,6 +213,7 @@ public class PreliminarProjectRegisterController implements Initializable {
             preliminarProject.addMember(director);
             
             for(int i=0; i < codirectors.size(); i++){   
+                codirectors.get(i).setRole("Codirector");
                 preliminarProject.addMember(codirectors.get(i));
             }
          preliminarProjectDAO.addedSucessfulColaborators(preliminarProject);

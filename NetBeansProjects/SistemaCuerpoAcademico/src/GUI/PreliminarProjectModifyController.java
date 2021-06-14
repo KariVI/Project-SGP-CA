@@ -98,7 +98,7 @@ public class PreliminarProjectModifyController implements Initializable {
             deleteColaborators();
             deleteStudents();
            if(preliminarProjectDAO.updatedSucessful(preliminarProjectRecover.getKey(), preliminarProjectNew)){  
-               preliminarProjectNew.setKey(preliminarProjectDAO.getId(preliminarProjectNew));
+               preliminarProjectNew.setKey(preliminarProjectRecover.getKey());
                saveColaborators();
                recoverStudents();
                AlertMessage alertMessage = new AlertMessage();
@@ -156,12 +156,12 @@ public class PreliminarProjectModifyController implements Initializable {
     
     }
     
-    private boolean deleteColaborators() throws BusinessException{  
+    private boolean deleteColaborators() throws BusinessException{ 
         PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
         ArrayList<Member> colaborators = preliminarProjectDAO.getColaborators(preliminarProjectRecover.getKey());
         preliminarProjectRecover.setMembers(colaborators);
-    
-       return  preliminarProjectDAO.deletedSucessfulColaborators(preliminarProjectRecover);
+        return preliminarProjectDAO.deletedSucessfulColaborators(preliminarProjectRecover);
+
     }
     
     private boolean deleteStudents() throws BusinessException{  
@@ -169,7 +169,7 @@ public class PreliminarProjectModifyController implements Initializable {
         ArrayList<Student> students = preliminarProjectDAO.getStudents(preliminarProjectRecover.getKey());
         preliminarProjectRecover.setStudents(students);
     
-        return preliminarProjectDAO.deletedSucessfulColaborators(preliminarProjectRecover);
+        return preliminarProjectDAO.deletedSucessfulStudents(preliminarProjectRecover);
     }
     
     private void saveColaborators(){    
@@ -185,8 +185,9 @@ public class PreliminarProjectModifyController implements Initializable {
             for(int i=0; i < codirectorsNew.size(); i++){   
                 preliminarProjectNew.addMember(codirectorsNew.get(i));
             }
-            
+            ArrayList<Member> membersAuxiliar = new ArrayList<Member>();
             preliminarProjectDAO.addedSucessfulColaborators(preliminarProjectNew);
+            preliminarProjectNew.setMembers(membersAuxiliar);
         } catch (BusinessException ex) {
             if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage = new AlertMessage();
@@ -196,6 +197,9 @@ public class PreliminarProjectModifyController implements Initializable {
             }
         }
     }
+    
+    
+    
     
     private void initializeColaborators() throws BusinessException{  
         PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
@@ -271,10 +275,11 @@ public class PreliminarProjectModifyController implements Initializable {
     
     private void recoverStudents() throws BusinessException{   
         GridPane gridPane= (GridPane) paneStudent.getChildren().get(0);
+        ArrayList<Student> studentsOld = preliminarProjectRecover.getStudents();
         ArrayList<Student> students = new ArrayList<Student>();
             int i=1;
             int sizeRows=3;
-           while (i < (sizeRows * students.size())){
+           while (i < (sizeRows * studentsOld.size())){
                TextField enrollment = (TextField) getNodeFromGridPane( gridPane, 1, i);
                TextField name = (TextField) getNodeFromGridPane( gridPane, 1, (i + 1));
                i=i+3;

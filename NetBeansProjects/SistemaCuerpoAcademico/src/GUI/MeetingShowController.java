@@ -35,22 +35,23 @@ import log.Log;
 
 public class MeetingShowController implements Initializable {
     
-    @FXML Label lbSubject;
-    @FXML  Label lbDate;
-    @FXML  Label lbHour;
-    @FXML  Button btShowSchedule;
-    @FXML TableView tvAssistants;
-    @FXML Button btMeetingStart;
-    @FXML Button btUpdate;
-    @FXML Button btShowMinute;
-     @FXML Button btRegisterMinute;
-    @FXML TableView<Prerequisite> tvPrerequisites;
+    @FXML private Label lbSubject;
+    @FXML  private Label lbDate;
+    @FXML  private Label lbHour;
+    @FXML  private Button btShowSchedule;
+    @FXML  private Button btReturn;
+    @FXML private TableView tvAssistants;
+    @FXML private Button btMeetingStart;
+    @FXML private Button btUpdate;
+    @FXML private Button btShowMinute;
+     @FXML private  Button btRegisterMinute;
+    @FXML private TableView<Prerequisite> tvPrerequisites;
+    @FXML private TableColumn<Prerequisite,String>  tcDescription;
+    @FXML private TableColumn<Prerequisite,Member> tcMandated;
+    @FXML private TableColumn<Member,String> tcRole;
+    @FXML private TableColumn<Member,String> tcMember;
     private ListChangeListener<Prerequisite> tablePrerequisiteListener;
     private ListChangeListener tableAssistantsListener;
-    @FXML TableColumn<Prerequisite,String>  tcDescription;
-    @FXML TableColumn<Prerequisite,Member> tcMandated;
-    @FXML TableColumn<Member,String> tcRole;
-    @FXML TableColumn<Member,String> tcMember;
     private ObservableList<Prerequisite> prerequisites;
     private ObservableList<Member> assistants;
     private Meeting meeting= new Meeting();
@@ -63,7 +64,33 @@ public class MeetingShowController implements Initializable {
         this.meeting.setState(meeting.getState());
         this.meeting.setSubject(meeting.getSubject());
     
-    }   
+    } 
+    
+    @FXML
+    private void actionReturn(ActionEvent actionEvent){   
+        Stage stage = (Stage) btReturn.getScene().getWindow();
+        stage.close();
+         try{ 
+            Stage primaryStage= new Stage();
+            URL url = new File("src/GUI/meetingList.fxml").toURI().toURL();
+           try{
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              MeetingListController meetingListController =loader.getController();   
+              meetingListController.setMember(member);
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);       
+            } catch (IOException ex) {
+                    Log.logException(ex);
+            }
+            primaryStage.show();
+       } catch (MalformedURLException ex) {
+           Log.logException(ex);
+       } 
+    
+    }
     
     public void initializeMeeting() throws BusinessException{    
         String subject= "Asunto : " + meeting.getSubject();
@@ -80,6 +107,7 @@ public class MeetingShowController implements Initializable {
         tvPrerequisites.setItems(prerequisites);
         disableMeetingStartButton();
         evaluateDate();
+        disableButtonUpdate();
 
     }
     
@@ -154,6 +182,13 @@ public class MeetingShowController implements Initializable {
       }
     }
     
+    private void disableButtonUpdate(){   
+        if(member.getRole().equals("Integrante")){  
+            btUpdate.setOpacity(0);
+            btUpdate.setDisable(true);
+        
+        }
+    }
     private void disableMeetingStartButton(){ 
         btMeetingStart.setOpacity(0);
         btMeetingStart.setDisable(true);

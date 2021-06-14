@@ -78,7 +78,7 @@ public class ReceptionWorkModifyController implements Initializable {
     private ListChangeListener<Member> tableCodirectorsListener;
     private int indexCodirectors;
     private ReceptionWork receptionWorkRecover;
-    private ReceptionWork receptionWorkNew;
+    private ReceptionWork receptionWorkNew= new ReceptionWork();
 
     
     
@@ -89,14 +89,14 @@ public class ReceptionWorkModifyController implements Initializable {
     }
     
     public void initializeReceptionWork(){
-       tfTitle.setText("Título: "+ receptionWorkRecover.getTitle());
+       tfTitle.setText(receptionWorkRecover.getTitle());
        LocalDate localStartDate = LocalDate.parse(receptionWorkRecover.getDateStart(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
        LocalDate localEndDate = LocalDate.parse(receptionWorkRecover.getDateEnd(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
        dpStartDate.setValue(localStartDate);
        dpEndDate.setValue(localEndDate);
        cbType.setValue(receptionWorkRecover.getType());
        cbState.setValue(receptionWorkRecover.getActualState());
-       taDescription.setText("Descripción: " + receptionWorkRecover.getDescription());
+       taDescription.setText( receptionWorkRecover.getDescription());
            try {
                initializeColaborators();
                getStudents();
@@ -105,6 +105,17 @@ public class ReceptionWorkModifyController implements Initializable {
                Log.logException(ex);
            }
        
+    }
+    
+    public boolean validateColaborators(){  
+        boolean value = true;
+        Member director = (Member) cbDirector.getSelectionModel().getSelectedItem();
+        if(repeatedCodirector(director)){
+                 value=false; 
+                AlertMessage alertMessage = new AlertMessage();
+                alertMessage.showAlertValidateFailed("El director y el codirector no pueden ser el mismo");  
+            }
+        return value;
     }
     
     @FXML
@@ -142,15 +153,16 @@ public class ReceptionWorkModifyController implements Initializable {
       private void updateReceptionWork (){   
         ReceptionWorkDAO receptionWorkDAO =  new ReceptionWorkDAO();
         try{  
-            deleteColaborators();
-            deleteStudents();
-           if(receptionWorkDAO.updatedSucessful(receptionWorkRecover.getKey(), receptionWorkNew)){  
-               receptionWorkNew.setKey(receptionWorkDAO.getId(receptionWorkNew));
-               saveColaborators();
-               recoverStudents();
-               AlertMessage alertMessage = new AlertMessage();
-               alertMessage.showUpdateMessage();
-           }
+          if(deleteColaborators() && deleteStudents()){
+                if(receptionWorkDAO.updatedSucessful(receptionWorkRecover.getKey(), receptionWorkNew)){  
+                if(validateColaborators()){  
+                    saveColaborators();
+                    recoverStudents();
+                    AlertMessage alertMessage = new AlertMessage();
+                    alertMessage.showUpdateMessage();
+                }
+               }
+          }
         } catch (BusinessException ex){ 
             if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage = new AlertMessage();
@@ -174,7 +186,7 @@ public class ReceptionWorkModifyController implements Initializable {
     private void actionAddCodirector(ActionEvent actionEvent){    
         Member codirector = (Member) cbCodirectors.getSelectionModel().getSelectedItem();    
         if(!repeatedCodirector(codirector)){
-           codirectors.add(codirector);
+           codirectorsNew.add(codirector);
         }else{  
             AlertMessage alertMessage = new AlertMessage();
             alertMessage.showAlertValidateFailed("Codirector repetido");
@@ -183,7 +195,7 @@ public class ReceptionWorkModifyController implements Initializable {
     
     @FXML
     private void actionDelete(ActionEvent event){
-        codirectors.remove(indexCodirectors);
+        codirectorsNew.remove(indexCodirectors);
     }
     
     private boolean validateDates(){
@@ -199,16 +211,7 @@ public class ReceptionWorkModifyController implements Initializable {
         return value;
     }
     
-    public boolean validateColaborators(){  
-        boolean value = true;
-        Member director = (Member) cbDirector.getSelectionModel().getSelectedItem();
-        if(repeatedCodirector(director)){
-                 value=false; 
-                AlertMessage alertMessage = new AlertMessage();
-                alertMessage.showAlertValidateFailed("El director y el codirector no pueden ser el mismo");  
-            }
-        return value;
-    }
+
    
      private boolean validateFieldEmpty(){ 
           boolean value=false;
@@ -320,7 +323,7 @@ public class ReceptionWorkModifyController implements Initializable {
         ArrayList<Student> students = receptionWorkDAO.getStudents(receptionWorkRecover.getKey());
         receptionWorkRecover.setStudents(students);
     
-        return receptionWorkDAO.deletedSucessfulColaborators(receptionWorkRecover);
+        return receptionWorkDAO.deletedSucessfulStudents(receptionWorkRecover);
     }
     
      private boolean saveColaborators(){    
@@ -333,9 +336,12 @@ public class ReceptionWorkModifyController implements Initializable {
             director.setRole("Director");
             receptionWorkNew.addMember(director);
             for(int i=0; i < codirectors.size(); i++){   
+                codirectors.get(i).setRole("Codirector");
                receptionWorkNew.addMember(codirectors.get(i));
             }
+            ArrayList<Member> membersAuxiliar = new ArrayList<Member>();
             receptionWorkDAO.addedSucessfulColaborators(receptionWorkNew);
+            receptionWorkNew.setMembers(membersAuxiliar);
         } catch (BusinessException ex) {
             if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage = new AlertMessage();
@@ -491,25 +497,28 @@ public class ReceptionWorkModifyController implements Initializable {
     }
     
     private void recoverStudents() throws BusinessException{   
+        ArrayList<Student> studentsOld = receptionWorkRecover.getStudents();
+        if(studentsOld.size()>0){
         GridPane gridPane= (GridPane) paneStudent.getChildren().get(0);
         ArrayList<Student> students = new ArrayList<Student>();
-            int i=1;
-            
-            int sizeRows=3;
-           while (i < (sizeRows * students.size())){
-               TextField enrollment = (TextField) getNodeFromGridPane( gridPane, 1, i);
-               TextField name = (TextField) getNodeFromGridPane( gridPane, 1, (i + 1));
-               i=i+3;
-               if(validateFieldsStudent(enrollment,name)){         
-                 String enrollmentStudent= enrollment.getText();
-                 String nameStudent= name.getText(); 
-                 Student student = new Student(enrollmentStudent,nameStudent);
-                 students.add(student);
-                 saveStudent(student);
-               }
-           }
-           receptionWorkNew.setStudents(students);
-           addStudentsInReceptionWork();
+        
+                    int i=1;
+                    int sizeRows=3;
+                   while (i < (sizeRows * studentsOld.size())){
+                       TextField enrollment = (TextField) getNodeFromGridPane( gridPane, 1, i);
+                       TextField name = (TextField) getNodeFromGridPane( gridPane, 1, (i + 1));
+                       i=i+3;
+                       if(validateFieldsStudent(enrollment,name)){         
+                         String enrollmentStudent= enrollment.getText();
+                         String nameStudent= name.getText(); 
+                         Student student = new Student(enrollmentStudent,nameStudent);
+                         students.add(student);
+                         saveStudent(student);
+                       }
+                   }
+                   receptionWorkNew.setStudents(students);
+                   addStudentsInReceptionWork();
+        }
     }
     
     private boolean validateFieldsStudent(TextField enrollment, TextField name){

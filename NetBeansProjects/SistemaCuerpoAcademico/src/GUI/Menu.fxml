@@ -15,12 +15,13 @@
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#202122" height="31.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
       <Button fx:id="btRegister" layoutX="484.0" layoutY="46.0" mnemonicParsing="false" onAction="#actionRegister" text="Registrar Cuerpo " />
-      <Button fx:id="btConsult" layoutX="484.0" layoutY="353.0" mnemonicParsing="false" onAction="#actionQuery" text="Consultar Cuerpo" />
+      <Button fx:id="btConsult" layoutX="375.0" layoutY="353.0" mnemonicParsing="false" onAction="#actionQuery" text="Consultar Cuerpo" />
       <ListView fx:id="lvOptions" layoutX="98.0" layoutY="123.0" prefHeight="200.0" prefWidth="375.0" />
       <Label layoutX="98.0" layoutY="91.0" text="Selecciona la sección a la que te deseas dirigir:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
+      <Button fx:id="btExit" layoutX="499.0" layoutY="353.0" mnemonicParsing="false" onAction="#actionExit" prefHeight="25.0" prefWidth="87.0" text="Salir " />
    </children>
 </AnchorPane>

@@ -11,8 +11,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -62,6 +60,7 @@ public class ReceptionWorkListController implements Initializable {
                  Parent root = loader.load();
                  ReceptionWorkShowController receptionWorkShowController = loader.getController();
                  receptionWorkShowController.setReceptionWork(selectedReceptionWork);
+                 receptionWorkShowController.setKeyGroupAcademic(keyGroupAcademic);
                  receptionWorkShowController.initializeReceptionWork();    
                  receptionWorkShowController.setPreliminarProjectsUnassigned(preliminarProjectsUnassigned);
                  Scene scene = new Scene(root);
