@@ -47,25 +47,33 @@ public class MeetingRegisterController implements Initializable {
     private ObservableList<Member> members;
     private ObservableList<Prerequisite> prerequisites;
     private ObservableList<Topic> topics;
-    @FXML TextField tfSubject;
-    @FXML TextField tfHour;
-    @FXML Button btExit;
-    @FXML ComboBox cbLeader;
-    @FXML ComboBox cbSecretary;
-    @FXML DatePicker dpDate;
-    @FXML TableColumn tcDescription;
-    @FXML TableColumn tcMandated;
-    @FXML TextField tfDescription;
-    @FXML ComboBox cbMember;
+    @FXML private TextField tfSubject;
+    @FXML private TextField tfHour;
+    @FXML private Button btExit;
+    @FXML private ComboBox cbLeader;
+    @FXML private ComboBox cbSecretary;
+    @FXML private  DatePicker dpDate;
+    @FXML private TableColumn tcDescription;
+    @FXML private TableColumn tcMandated;
+    @FXML private TextField tfDescription;
+    @FXML private ComboBox cbMember;
     private int indexPrerequisite;
     @FXML TableView<Prerequisite> tvPrerequisite;
     private ListChangeListener<Prerequisite> tablePrerequisiteListener;
-    @FXML Button btAddTopic;
-    @FXML Button btSave;
-    @FXML Button btAddPrerequisite;
-    @FXML Button btDelete;
-    int idMeeting;
-   
+    @FXML private Button btAddTopic;
+    @FXML private Button btSave;
+    @FXML private Button btAddPrerequisite;
+    @FXML private Button btDelete;
+    private int idMeeting;
+    private String keyGroupAcademic;
+
+    public String getKeyGroupAcademic() {
+        return keyGroupAcademic;
+    }
+
+    public void setKeyGroupAcademic(String keyGroupAcademic) {
+        this.keyGroupAcademic = keyGroupAcademic;
+    }
 
     
     @FXML
@@ -103,7 +111,7 @@ public class MeetingRegisterController implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         if(!validateFieldEmpty() && validateInformationField() && validateDate()){
             String date= dpDate.getValue().format(formatter);
-            Meeting meeting = new Meeting(subject,date,hour);
+            Meeting meeting = new Meeting(subject,date,hour,keyGroupAcademic);
             System.out.println(hour);
             if(!searchRepeateMeeting(meeting)){  
                 save(meeting);
@@ -234,7 +242,12 @@ public class MeetingRegisterController implements Initializable {
             if(validation.findInvalidField(prerequisite.getDescription())){   
                 value=false;
                alertMessage.showAlertValidateFailed("Campos invalidos");
-            }  
+            } 
+            
+            if(repeatedPrerequisite(prerequisite)){ 
+               value=false;
+               alertMessage.showAlertValidateFailed("Prerequisito repetido");
+            }
         return value;
     }
     
@@ -268,7 +281,7 @@ public class MeetingRegisterController implements Initializable {
                 members.add(memberList.get(i));
             }
         } catch (BusinessException ex) {
-            Logger.getLogger(MemberListController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
     

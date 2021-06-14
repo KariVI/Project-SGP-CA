@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,15 +32,14 @@ public class PreliminarProjectShowController implements Initializable {
     @FXML private  Label lbDirector;
     @FXML private TextArea taDescription;
     @FXML private TextArea taCodirectors;
-    @FXML Label lbStartDate;
-    @FXML  Label lbEndDate;
-    @FXML Button btUpdate;
-    @FXML Button btReturn;
-    @FXML Pane paneStudents;
+    @FXML private Label lbStartDate;
+    @FXML  private Label lbEndDate;
+    @FXML private Button btUpdate;
+    @FXML private Button btReturn;
+    @FXML private Pane paneStudents;
     private String codirectors="";  
-    private PreliminarProject preliminarProject;
-    
-    
+    private PreliminarProject preliminarProject;  
+  
      public void setPreliminarProject(PreliminarProject preliminarProject){   
         this.preliminarProject= preliminarProject;
     }
@@ -65,9 +65,9 @@ public class PreliminarProjectShowController implements Initializable {
              colaborators=preliminarProjectDAO.getColaborators(preliminarProject.getKey());
              for(int i=0; i< colaborators.size(); i++){ 
                  if(colaborators.get(i).getRole().equals("Director")){  
-                     lbDirector.setText(colaborators.get(i).getProfessionalLicense());
+                     lbDirector.setText(colaborators.get(i).getName());
                  }else{ 
-                     codirectors= codirectors + colaborators.get(i).getProfessionalLicense();
+                     codirectors= codirectors + colaborators.get(i).getName();
                      codirectors= codirectors + ",";
                  }
              }

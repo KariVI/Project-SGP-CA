@@ -12,12 +12,22 @@ public class Meeting {
     private String state;
     private ArrayList<Prerequisite> listPrerequisites;
     private ArrayList<Member> assistants;
+    private String keyGroupAcademic;
+
+    public String getKeyGroupAcademic() {
+        return keyGroupAcademic;
+    }
+
+    public void setKeyGroupAcademic(String keyGroupAcademic) {
+        this.keyGroupAcademic = keyGroupAcademic;
+    }
    
     
-    public Meeting (String subject, String date, String hourStart){
+    public Meeting (String subject, String date, String hourStart,String keyGroupAcademic){
       this.subject= subject;
       this.date= date;
       this.hourStart= hourStart;
+      this.keyGroupAcademic= keyGroupAcademic;
       assistants=new ArrayList<Member>();
     }
     public Meeting (int key, String subject, String date, String hourStart, String state){

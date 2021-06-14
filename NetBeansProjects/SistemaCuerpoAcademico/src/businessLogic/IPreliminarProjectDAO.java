@@ -12,7 +12,7 @@ public interface IPreliminarProjectDAO {
     public boolean savedSucessful(PreliminarProject preliminarProject) throws BusinessException;
     public int getId(PreliminarProject preliminarProject)throws BusinessException;
     public boolean updatedSucessful(int id, PreliminarProject preliminarProject) throws BusinessException;
-    public ArrayList<PreliminarProject> getPreliminarProjects() throws BusinessException;
+    public ArrayList<PreliminarProject> getPreliminarProjects(String keyGroupAcademic) throws BusinessException;
     public PreliminarProject getById(int id) throws BusinessException ;
     public boolean addedSucessfulColaborators(PreliminarProject preliminarProject)throws BusinessException;
     public boolean addedSucessfulStudents(PreliminarProject preliminarProject) throws BusinessException;

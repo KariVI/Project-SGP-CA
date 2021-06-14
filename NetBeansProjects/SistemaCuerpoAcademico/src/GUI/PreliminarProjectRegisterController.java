@@ -13,7 +13,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,10 +26,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -35,10 +43,9 @@ import log.Log;
 
 
 public class PreliminarProjectRegisterController implements Initializable {
+    private ObservableList<Member> members;
     @FXML private TextField tfTitle;
-    @FXML private TextField tfDirector;
     @FXML private TextArea taDescription;
-    @FXML private TextArea taCodirectors;
     @FXML private TextField tfNumberStudents;
     @FXML private Button btOk;
     @FXML private Button btSave;
@@ -46,11 +53,23 @@ public class PreliminarProjectRegisterController implements Initializable {
     @FXML private Pane paneStudent;
     @FXML DatePicker dpStartDate;
     @FXML DatePicker dpEndDate;
-    private String[] codirectorsParts;
+    @FXML ComboBox cbDirector;
+    @FXML ComboBox cbCodirectors;
+    @FXML TableColumn tcCodirector;
+    @FXML Button btAddCodirector;
+    @FXML Button btDelete;
+    @FXML TableView<Member> tvCodirectors;
+    private ListChangeListener<Member> tableCodirectorsListener;
+    private int indexCodirectors;
+    private String keyGroupAcademic;
     private PreliminarProject preliminarProject = new PreliminarProject();
-    
+   private ObservableList<Member> codirectors ;
 
 
+   public void setKeyGroupAcademic(String keyGroupAcademic){
+       this.keyGroupAcademic= keyGroupAcademic;
+   }
+   
     @FXML 
     private void addStudents(ActionEvent actionEvent){  
         GridPane gridPane= new GridPane();
@@ -81,31 +100,26 @@ public class PreliminarProjectRegisterController implements Initializable {
     private void actionSave(ActionEvent actionEvent){   
         String title =tfTitle.getText();
         String description= taDescription.getText();
-        String codirectors = taCodirectors.getText();
-        String director= tfDirector.getText();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String startDate;
         String endDate;
 
-        if(divisionCodirectorsSucessful(codirectors)){  
-            if(!validateFieldEmpty() && validateInformationField() ){
+            if(!validateFieldEmpty() && validateInformationField() && validateColaborators() ){
                 startDate = dpStartDate.getValue().format(formatter);
                 endDate = dpEndDate.getValue().format(formatter);
                 preliminarProject.setTitle(title);
                 preliminarProject.setDescription(description);
                 preliminarProject.setDateStart(startDate);
                 preliminarProject.setDateEnd(endDate);
+                preliminarProject.setKeyGroupAcademic(keyGroupAcademic);
                 if(!searchRepeatePreliminarProject ()){    
                     savePreliminarProject ();
                 }else{  
                     sendAlert();
                 }
-
-
-            }else{  
+            }else{
                 sendAlert();
             }
-        }
     }
     
     private void savePreliminarProject (){   
@@ -117,6 +131,9 @@ public class PreliminarProjectRegisterController implements Initializable {
                recoverStudents();
                AlertMessage alertMessage = new AlertMessage();
                alertMessage.showAlertSuccesfulSave("Anteproyecto");
+               
+
+               
            }
         } catch (BusinessException ex){ 
             if(ex.getMessage().equals("DataBase connection failed ")){
@@ -128,10 +145,26 @@ public class PreliminarProjectRegisterController implements Initializable {
         }
     }
     
+    public boolean validateColaborators(){  
+        boolean value = true;
+        Member director = (Member) cbDirector.getSelectionModel().getSelectedItem();
+        if(repeatedCodirector(director)){
+                 value=false; 
+                AlertMessage alertMessage = new AlertMessage();
+                alertMessage.showAlertValidateFailed("El director y el codirector no pueden ser el mismo");  
+            }
+        return value;
+    }
+    
     @FXML 
     private void actionExit(ActionEvent actionEvent){   
         Stage stage = (Stage) btExit.getScene().getWindow();
         stage.close();
+        returnPreliminarProjectList();
+        
+    }
+    
+    private void returnPreliminarProjectList(){ 
         try{ 
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/preliminarProjectList.fxml").toURI().toURL();
@@ -152,22 +185,36 @@ public class PreliminarProjectRegisterController implements Initializable {
        } 
     }
     
-    private void saveColaborators(){    
-       String directorProfessionalLicense= tfDirector.getText();
+     @FXML 
+    private void actionAddCodirector(ActionEvent actionEvent){    
+        Member codirector = (Member) cbCodirectors.getSelectionModel().getSelectedItem();    
+        if(!repeatedCodirector(codirector)){
+           codirectors.add(codirector);
+        }else{  
+            AlertMessage alertMessage = new AlertMessage();
+            alertMessage.showAlertValidateFailed("Codirector repetido");
+        }
+    }
+    
+    @FXML
+    private void actionDelete(ActionEvent event){
+        codirectors.remove(indexCodirectors);
+    }
+    
+    
+    private boolean saveColaborators(){    
+        boolean value=false;
        PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
        MemberDAO memberDAO = new MemberDAO();
        ArrayList<Member> members = new ArrayList<Member>();
         try {
-            Member director = memberDAO.getMemberByLicense(directorProfessionalLicense);
+            Member director=(Member) cbDirector.getSelectionModel().getSelectedItem();
             director.setRole("Director");
-            if(director!=null){
-                preliminarProject.addMember(director);
+            preliminarProject.addMember(director);
+            
+            for(int i=0; i < codirectors.size(); i++){   
+                preliminarProject.addMember(codirectors.get(i));
             }
-            for(int i=0; i< codirectorsParts.length; i++ ){  
-                Member codirector= memberDAO.getMemberByLicense(codirectorsParts[i]);
-                codirector.setRole("Codirector");
-                 preliminarProject.addMember(codirector);
-            } 
          preliminarProjectDAO.addedSucessfulColaborators(preliminarProject);
         } catch (BusinessException ex) {
             if(ex.getMessage().equals("DataBase connection failed ")){
@@ -177,6 +224,7 @@ public class PreliminarProjectRegisterController implements Initializable {
                 Log.logException(ex);
             }
         }
+        return value;
     }
     
     private void recoverStudents() throws BusinessException{   
@@ -263,8 +311,8 @@ public class PreliminarProjectRegisterController implements Initializable {
     
     private boolean validateFieldEmpty(){ 
           boolean value=false;
-          if(tfTitle.getText().isEmpty()  || taCodirectors.getText().isEmpty()
-           || taDescription.getText().isEmpty() || tfDirector.getText().isEmpty() || dpStartDate == null 
+          if(tfTitle.getText().isEmpty()  || taDescription.getText().isEmpty()
+            || dpStartDate == null 
             || dpEndDate==null 
            ){
               value=true;
@@ -307,36 +355,86 @@ public class PreliminarProjectRegisterController implements Initializable {
          boolean value=true;
         Validation validation=new Validation();
         if(validation.findInvalidField(tfTitle.getText())
-        || validation.findInvalidField(taDescription.getText()) || validation.findInvalidKeyAlphanumeric(tfDirector.getText()) 
-        || validation.findInvalidKeyAlphanumeric(taCodirectors.getText()) ){   
+        || validation.findInvalidField(taDescription.getText())  ){   
             value=false;
         }  
         return value;
     }
     
-    private boolean divisionCodirectorsSucessful (String codirectors){  
-        boolean value=false;
-        int sizeProfessionalLicense=7;
-        if(codirectors.length() == sizeProfessionalLicense ){   
-            codirectorsParts= new String[1];
-            codirectorsParts[0]= codirectors;
-            value=true;
-        }else{
-            if (codirectors.contains(",")){
-                 codirectorsParts = codirectors.split(",");
-                 value=true;
-            } else {
-                AlertMessage alertMessage = new AlertMessage ();
-                alertMessage.showAlertValidateFailed("Por favor escribe las cedulas separadas por comas");    
+    private void initializeMembers() {
+        try {
+            MemberDAO memberDAO = new MemberDAO();
+            ArrayList <Member> memberList = new ArrayList<Member>();
+            memberList = memberDAO.getMembers();
+            for( int i = 0; i<memberList.size(); i++) {
+                members.add(memberList.get(i));
             }
+        } catch (BusinessException ex) {
+            Log.logException(ex);
         }
-        return value;
     }
-   
+    
     public void initialize(URL url, ResourceBundle rb) {
+        tcCodirector.setCellValueFactory(new PropertyValueFactory<Member,String>("name"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         dpStartDate.setConverter(new LocalDateStringConverter(formatter, null));
         dpEndDate.setConverter(new LocalDateStringConverter(formatter, null));
+        members = FXCollections.observableArrayList();
+        codirectors= FXCollections.observableArrayList();
+        initializeMembers();
+        cbDirector.setItems(members);
+        cbDirector.getSelectionModel().selectFirst();
+        cbCodirectors.setItems(members);
+        cbCodirectors.getSelectionModel().selectFirst();
+        tvCodirectors.setItems(codirectors);
+        tvCodirectors.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                 setSelectedCodirector();
+             }
+            }
+        );
+
+        tableCodirectorsListener = new ListChangeListener<Member>(){
+            @Override
+            public void onChanged(ListChangeListener.Change<? extends Member> codirector) {
+                setSelectedCodirector();
+            }
+        };
     }   
+    
+     private Member getSelectedCodirector(){
+        Member codirector = null;
+        int tamTable = 1;
+        if(tvCodirectors != null){
+            List<Member> codirectorTable = tvCodirectors.getSelectionModel().getSelectedItems();
+            if(codirectorTable.size() == tamTable){
+                codirector = codirectorTable.get(0);
+            }
+        }
+        return codirector;
+    }
+    
+    private void setSelectedCodirector(){
+        Member codirector = getSelectedCodirector();
+        indexCodirectors = codirectors.indexOf(codirector);
+            if(codirector != null){
+                cbCodirectors.getSelectionModel().select(codirector);
+            }
+    }
+    
+    
+    
+    public boolean repeatedCodirector(Member codirector){
+        Boolean value = false;
+        int i = 0;
+        while((value==false) && (i<codirectors.size())){
+            String enrollmentCodirector= codirectors.get(i).getProfessionalLicense();
+            if(enrollmentCodirector.equals(codirector.getProfessionalLicense())){
+                value = true;
+            }
+            i++;
+        }
+       return value;
+    }
     
 }

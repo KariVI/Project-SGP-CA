@@ -12,7 +12,7 @@ public class StudentDAOTest {
     @Test
     public void testSave() throws BusinessException {
         System.out.println("savedSucessful");
-        Student student = new Student("S19014013", "Mariana Yazmin Vargas Segura ");
+        Student student = new Student("S19014054", "Carlos Perez Perez");
         StudentDAO studentDAO = new StudentDAO();
         assertTrue(studentDAO.savedSucessful(student));
     }

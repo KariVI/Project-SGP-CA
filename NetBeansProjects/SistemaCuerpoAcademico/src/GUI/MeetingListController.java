@@ -43,7 +43,8 @@ public class MeetingListController implements Initializable {
               FXMLLoader loader = new FXMLLoader(url);
               loader.setLocation(url);
               loader.load();
-              MeetingRegisterController meetingRegisterController =loader.getController();      
+              MeetingRegisterController meetingRegisterController =loader.getController();  
+              meetingRegisterController.setKeyGroupAcademic(member.getKeyGroupAcademic());
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);       
@@ -58,6 +59,8 @@ public class MeetingListController implements Initializable {
     
     public void setMember(Member member){
         this.member = member;
+        String keyGroupAcademic = member.getKeyGroupAcademic();
+         getMeetings(keyGroupAcademic);  
     }
     
     @FXML 
@@ -68,7 +71,7 @@ public class MeetingListController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         meetings = FXCollections.observableArrayList();
-       getMeetings();      
+          
       lvMeetings.setItems(meetings);
       lvMeetings.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Meeting>() {
           @Override
@@ -98,10 +101,10 @@ public class MeetingListController implements Initializable {
     }    
     
     
-    private void getMeetings() {   
+    private void getMeetings( String keyGroupAcademic) {   
         MeetingDAO meetingDAO = new MeetingDAO();
         ArrayList<Meeting> meetingList;  
-        meetingList = meetingDAO.getMeetings();
+        meetingList = meetingDAO.getMeetings(keyGroupAcademic);
         for(int i=0; i< meetingList.size(); i++){
             meetings.add(meetingList.get(i));
         }
