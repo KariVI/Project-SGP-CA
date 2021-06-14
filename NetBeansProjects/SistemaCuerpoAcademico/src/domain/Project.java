@@ -3,38 +3,37 @@ package domain;
 import java.util.ArrayList;
 import java.util.Objects;
 
-/**
- *
- * @author Mariana
- */
 public class Project {
     private String title;
     private String description;
     private String startDate;
     private String finishDate;
+    private String groupAcademicKey;
     private int idProject;
     private ArrayList<Student> students;
     private ArrayList<Member> members;
     private ArrayList<LGAC> lgacs;
     private ArrayList<ReceptionWork> receptionWorks;
     
-    public Project(String title, String description, String startDate, String finishDate){
+    public Project(String title, String description, String startDate, String finishDate, String groupAcademicKey){
         this.title = title;
         this.description = description;
         this.startDate = startDate;
         this.finishDate = finishDate;
+        this.groupAcademicKey = groupAcademicKey;
         students = new ArrayList();
         members = new ArrayList();
         lgacs = new ArrayList();
         receptionWorks = new ArrayList();
     }
     
-    public Project(int idProject, String title, String description, String startDate, String finishDate){
+    public Project(int idProject, String title, String description, String startDate, String finishDate, String groupAcademicKey){
         this.idProject = idProject;
         this.title = title;
         this.description = description;
         this.startDate = startDate;
         this.finishDate = finishDate;
+        this.groupAcademicKey = groupAcademicKey;
         students = new ArrayList();
         members = new ArrayList();
         lgacs = new ArrayList();
@@ -113,6 +112,14 @@ public class Project {
         return receptionWorks;
     }
     
+    public void setGroupAcademciKey(String groupAcademicKey){
+        this.groupAcademicKey = groupAcademicKey;
+    }
+    
+    public String getGroupAcademicKey(){
+        return groupAcademicKey;
+    }
+    
     @Override
     public boolean equals(Object object){
         boolean value = false;
@@ -139,4 +146,8 @@ public class Project {
         return hash;
     }
     
+    @Override
+    public String toString(){
+        return title;
+    }
 }

@@ -1,4 +1,4 @@
-drop database cuerpoAcademico;
+
 CREATE SCHEMA IF NOT EXISTS CuerpoAcademico;
 USE  CuerpoAcademico;
 
@@ -64,8 +64,9 @@ asunto varchar(200) NOT NULL , hora varchar(10) NOT NULL ,
   
 
 CREATE TABLE IF NOT EXISTS Proyecto(idProyecto int NOT NULL AUTO_INCREMENT ,
-titulo varchar(200) NOT NULL, descripcion varchar(400) NOT NULL,fechaInicio varchar(30) not null, 
-fechaFin varchar(30) not null , primary key(idProyecto) );
+titulo varchar(200) NOT NULL, descripcion varchar(3000) NOT NULL,fechaInicio varchar(30) not null, 
+fechaFin varchar(30) not null, clave varchar(10) NOT NULL,foreign key(clave) references CuerpoAcademico(clave),
+ primary key(idProyecto) );
 
 
 
@@ -74,6 +75,7 @@ idTema int NOT NULL AUTO_INCREMENT, tema varchar(200) NOT NULL, horaInicio varch
 idReunion int NOT NULL, horaFin varchar(10) NOT NULL, primary key(idTema,idReunion), cedula varchar(10) NOT NULL,
 foreign key (idReunion)  REFERENCES Reunion(idReunion)ON DELETE CASCADE,
 foreign key (cedula)  REFERENCES miembro(cedula)ON DELETE CASCADE);
+
 CREATE TABLE IF NOT EXISTS Minuta(idMinuta int NOT NULL AUTO_INCREMENT ,
 nota varchar(500), estado varchar(30) NOT NULL,
 pendiente varchar(500), idReunion int NOT NULL, 
@@ -128,7 +130,40 @@ nombreLGAC varchar(200), primary key(idTrabajoRecepcional, nombreLGAC), foreign 
 references TrabajoRecepcional(idTrabajoRecepcional), foreign key(nombreLGAC) 
 references LGAC(nombre));
 
+CREATE TABLE IF NOT EXISTS ValidarMinuta (
+  idMinuta int NOT NULL,
+  cedula varchar(10) NOT NULL,
+  estado varchar(30),
+  comentario varchar(500),
+  PRIMARY KEY (IdMinuta,cedula),
+  FOREIGN KEY (idMinuta) REFERENCES Minuta(idMinuta),
+  FOREIGN KEY (cedula) REFERENCES Miembro(cedula)
+);
+CREATE TABLE IF NOT EXISTS ParticipaProyecto(
+  idProyecto int NOT NULL,
+  matricula varchar(10) NOT NULL,
+  PRIMARY KEY (idProyecto,matricula),
+  KEY matricula (matricula),
+  FOREIGN KEY (idProyecto) REFERENCES Proyecto(idProyecto),
+  FOREIGN KEY (matricula) REFERENCES Estudiante(matricula)
+);
+CREATE TABLE IF NOT EXISTS DesarrollaProyecto (
+  idProyecto int NOT NULL,
+  cedula varchar(10) NOT NULL,
+  PRIMARY KEY (IdProyecto,cedula),
+  KEY cedula (cedula),
+  FOREIGN KEY (idProyecto) REFERENCES ProyectO(idProyecto),
+   FOREIGN KEY (cedula) REFERENCES Miembro (cedula)
+);
 
+CREATE TABLE ProyectoTrabajoRecepcional(
+  idProyecto int NOT NULL,
+  idTrabajoRecepcional int NOT NULL,
+  PRIMARY KEY (idProyecto,idTrabajoRecepcional),
+  KEY idTrabajoRecepcional (idTrabajoRecepcional),
+  FOREIGN KEY (idProyecto) REFERENCES Proyecto(idProyecto),
+  FOREIGN KEY (idTrabajoRecepcional) REFERENCES TrabajoRecepcional(idTrabajoRecepcional)
+);
 /*INSERT INTO ParticipaReunion (idReunion, cedula, rol) values (1, "8325134", "Asistente");
 INSERT INTO Prerequisito_Encargado(cedula, idPrerequisito) values ("8325134", 1);
 INSERT INTO Prerequisito(idReunion, descripcion, cedula) values (1, "Verificar situacion de FEIBook", "8325134");

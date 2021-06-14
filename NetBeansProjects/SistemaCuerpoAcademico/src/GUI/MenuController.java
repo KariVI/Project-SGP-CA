@@ -187,6 +187,23 @@ public class MenuController implements Initializable {
                    Log.logException(ex);
                }
             break;
+            
+           case "Proyectos":;
+                try {
+               loader = new FXMLLoader(getClass().getResource("ProjectList.fxml"));
+               root = loader.load();
+               ProjectListController projectListController = loader.getController();
+               String keyGroupAcademic = member.getKeyGroupAcademic();
+               projectListController.setGroupAcademicKey(keyGroupAcademic);
+               Scene scene = new Scene(root);
+               Stage stage = new Stage();
+               stage.setScene(scene);
+               stage.initModality(Modality.APPLICATION_MODAL);
+               stage.showAndWait();
+               } catch (IOException ex) {
+                   Log.logException(ex);
+               }
+            break;
         
         }
     

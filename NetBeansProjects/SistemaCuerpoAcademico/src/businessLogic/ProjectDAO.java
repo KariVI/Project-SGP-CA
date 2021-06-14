@@ -14,10 +14,6 @@ import java.util.ArrayList;
 import log.Log;
 import log.BusinessException;
 
-/**
- *
- * @author Mariana
- */
 public class ProjectDAO implements IProjectDAO {
 
         @Override
@@ -29,11 +25,12 @@ public class ProjectDAO implements IProjectDAO {
                         try{
                             
                             PreparedStatement insertProjectStatment;
-                            insertProjectStatment = connectionDataBase.prepareStatement("INSERT INTO Proyecto(titulo,descripcion,fechaInicio,fechaFin) VALUES(?,?,?,?) ");
+                            insertProjectStatment = connectionDataBase.prepareStatement("INSERT INTO Proyecto(titulo,descripcion,fechaInicio,fechaFin,clave) VALUES(?,?,?,?,?) ");
                             insertProjectStatment.setString(1, project.getTitle());
                             insertProjectStatment.setString(2,  project.getDescription());
                             insertProjectStatment.setString(3, project.getStartDate());
                             insertProjectStatment.setString(4, project.getFinishDate());
+                            insertProjectStatment.setString(5, project.getGroupAcademicKey());
                             
                             insertProjectStatment.executeUpdate();
                             
@@ -68,7 +65,8 @@ public class ProjectDAO implements IProjectDAO {
                                 String description = projectResultSet.getString("descripcion");
                                 String startDate = projectResultSet.getString("fechaInicio");
                                 String finishDate = projectResultSet.getString("fechaFin");
-                                Project projectData = new Project(idProject,title, description, startDate, finishDate);
+                                String groupAcademicKey = projectResultSet.getString("clave");
+                                Project projectData = new Project(idProject,title, description, startDate, finishDate,groupAcademicKey);
                                 projectList.add(projectData);
                             }
                               
@@ -139,7 +137,8 @@ public class ProjectDAO implements IProjectDAO {
                                 String description = projectResultSet.getString("descripcion");
                                 String startDate = projectResultSet.getString("fechaInicio");
                                 String finishDate = projectResultSet.getString("fechaFin");
-                                project = new Project(id, title, description, startDate, finishDate);
+                                String groupAcademicKey = projectResultSet.getString("Clave");
+                                project = new Project(id, title, description, startDate, finishDate, groupAcademicKey);
                             }
                               
                             connectorDataBase.disconnect();

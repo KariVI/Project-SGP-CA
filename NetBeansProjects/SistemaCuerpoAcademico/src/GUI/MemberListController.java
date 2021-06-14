@@ -17,21 +17,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import log.BusinessException;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Modality;
 import log.Log;
 
-/**
- * FXML Controller class
- *
- * @author Mariana
- */
+
 public class MemberListController implements  Initializable {
    
     @FXML private Button btClose;
