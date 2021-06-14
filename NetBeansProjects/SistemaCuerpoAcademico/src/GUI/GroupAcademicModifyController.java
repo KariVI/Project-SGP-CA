@@ -142,14 +142,8 @@ public class GroupAcademicModifyController implements Initializable {
               loader.load();
                 GroupAcademicShowController groupAcademicShowController =loader.getController();
                 GroupAcademicDAO groupAcademicDAO= new GroupAcademicDAO();
-                GroupAcademic groupAcademic;
-                if(!tfKey.getText().isEmpty()){
-                    groupAcademic= groupAcademicDAO.getGroupAcademicById(groupAcademicNew.getKey());
-                    System.out.println(groupAcademicNew.getConsolidationGrade());
-
-                }else{  
-                    groupAcademic= groupAcademicDAO.getGroupAcademicById(this.groupAcademic.getKey());
-                }
+                GroupAcademic groupAcademic;          
+                groupAcademic= groupAcademicDAO.getGroupAcademicById(groupAcademicNew.getKey());
                 groupAcademicShowController.setGroupAcademic(groupAcademic);
                 groupAcademicShowController.initializeGroupAcademic();
                 Parent root = loader.getRoot();

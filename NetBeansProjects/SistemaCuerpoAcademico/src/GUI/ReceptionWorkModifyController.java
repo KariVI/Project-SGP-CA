@@ -78,8 +78,17 @@ public class ReceptionWorkModifyController implements Initializable {
     private ListChangeListener<Member> tableCodirectorsListener;
     private int indexCodirectors;
     private ReceptionWork receptionWorkRecover;
-    private ReceptionWork receptionWorkNew= new ReceptionWork();
+    private ReceptionWork receptionWorkNew= new ReceptionWork();    
+    private Member member;
+    private String keyGroupAcademic;
 
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public void setKeyGroupAcademic(String keyGroupAcademic) {
+        this.keyGroupAcademic = keyGroupAcademic;
+    }
     
     
     
@@ -248,6 +257,8 @@ public class ReceptionWorkModifyController implements Initializable {
                 ReceptionWork receptionWorkAuxiliar = receptionWorkDAO.getReceptionWorkById(receptionWorkRecover.getKey());
                 receptionWorkShowController.setReceptionWork(receptionWorkAuxiliar);
                 receptionWorkShowController.initializeReceptionWork();
+                receptionWorkShowController.setKeyGroupAcademic(keyGroupAcademic);
+                receptionWorkShowController.setMember(member);
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);

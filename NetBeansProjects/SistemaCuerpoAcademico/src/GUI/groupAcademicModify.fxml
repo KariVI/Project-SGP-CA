@@ -31,7 +31,7 @@
       <Button fx:id="btSave" layoutX="480.0" layoutY="450.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar" />
       <Button fx:id="btReturn" layoutX="557.0" layoutY="450.0" mnemonicParsing="false" onAction="#actionReturn" text="Regresar" />
       <TextField fx:id="tfName" layoutX="160.0" layoutY="95.0" prefHeight="25.0" prefWidth="185.0" />
-      <TextField fx:id="tfKey" layoutX="160.0" layoutY="134.0" prefHeight="25.0" prefWidth="185.0" />
+      <TextField fx:id="tfKey" editable="false" layoutX="160.0" layoutY="134.0" prefHeight="25.0" prefWidth="185.0" />
       <TextArea fx:id="taObjetive" layoutX="160.0" layoutY="210.0" prefHeight="75.0" prefWidth="185.0" wrapText="true" />
       <TextArea fx:id="taVision" layoutX="160.0" layoutY="300.0" prefHeight="75.0" prefWidth="185.0" wrapText="true" />
       <TextArea fx:id="taMision" layoutX="163.0" layoutY="387.0" prefHeight="84.0" prefWidth="185.0" wrapText="true" />

@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="GUI.MeetingModifyController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="720.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MeetingModifyController">
     <stylesheets>
         <URL value="@meetingmodify.css" />
     </stylesheets>
@@ -42,8 +42,8 @@
         </columns>
       </TableView>
       <Button fx:id="btAddPrerequisite" layoutX="479.0" layoutY="416.0" mnemonicParsing="false" onAction="#actionAddPrerequisite" prefHeight="20.0" prefWidth="59.0" text="Añadir" />
-      <Button fx:id="btSave" layoutX="589.0" layoutY="462.0" mnemonicParsing="false" onAction="#actionSave" prefHeight="25.0" prefWidth="59.0" text="Guardar" />
-      <Button fx:id="btExit" layoutX="659.0" layoutY="462.0" mnemonicParsing="false" onAction="#actionExit" prefHeight="25.0" prefWidth="59.0" text="Salir" />
+      <Button fx:id="btSave" layoutX="584.0" layoutY="463.0" mnemonicParsing="false" onAction="#actionSave" prefHeight="25.0" prefWidth="59.0" text="Guardar" />
+      <Button fx:id="btExit" layoutX="659.0" layoutY="463.0" mnemonicParsing="false" onAction="#actionExit" prefHeight="25.0" prefWidth="59.0" text="Salir" />
       <Label layoutX="17.0" layoutY="245.0" prefHeight="17.0" prefWidth="94.0" text="Prerequisitos:" />
       <HBox layoutX="11.0" layoutY="385.0" prefHeight="31.0" prefWidth="526.0">
          <children>

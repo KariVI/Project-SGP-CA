@@ -70,7 +70,13 @@ public class MeetingShowController implements Initializable {
     private void actionReturn(ActionEvent actionEvent){   
         Stage stage = (Stage) btReturn.getScene().getWindow();
         stage.close();
-         try{ 
+        openMeetingList();
+         
+    
+    }
+    
+    private void openMeetingList(){ 
+        try{ 
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/meetingList.fxml").toURI().toURL();
            try{
@@ -89,7 +95,6 @@ public class MeetingShowController implements Initializable {
        } catch (MalformedURLException ex) {
            Log.logException(ex);
        } 
-    
     }
     
     public void initializeMeeting() throws BusinessException{    
@@ -150,6 +155,7 @@ public class MeetingShowController implements Initializable {
               MeetingModifyController meetingModifyController =loader.getController();      
                meetingModifyController.setMeeting(meeting);
                meetingModifyController.initializeMeeting();
+               meetingModifyController.setMember(member);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);

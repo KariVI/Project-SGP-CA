@@ -38,7 +38,17 @@ public class PreliminarProjectShowController implements Initializable {
     @FXML private Button btReturn;
     @FXML private Pane paneStudents;
     private String codirectors="";  
-    private PreliminarProject preliminarProject;  
+    private PreliminarProject preliminarProject;
+    private Member member;
+    private String keyGroupAcademic;
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public void setKeyGroupAcademic(String keyGroupAcademic) {
+        this.keyGroupAcademic = keyGroupAcademic;
+    }
   
      public void setPreliminarProject(PreliminarProject preliminarProject){   
         this.preliminarProject= preliminarProject;
@@ -116,6 +126,8 @@ public class PreliminarProjectShowController implements Initializable {
               PreliminarProjectModifyController preliminarProjectModifyController =loader.getController();      
                preliminarProjectModifyController.setPreliminarProject(preliminarProject);
                preliminarProjectModifyController.initializePreliminarProject();
+               preliminarProjectModifyController.setKeyGroupAcademic(keyGroupAcademic);
+               preliminarProjectModifyController.setMember(member);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);
@@ -132,10 +144,35 @@ public class PreliminarProjectShowController implements Initializable {
     private void actionReturn(ActionEvent actionEvent){   
         Stage stage = (Stage) btReturn.getScene().getWindow();
         stage.close();
+        openPreliminarProjectList();
     }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-    }    
+    }   
+    
+     private void openPreliminarProjectList(){   
+         try{ 
+            Stage primaryStage= new Stage();
+            URL url = new File("src/GUI/preliminarProjectList.fxml").toURI().toURL();
+           try{
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              PreliminarProjectListController preliminarProjectListController =loader.getController();   
+              preliminarProjectListController.setMember(member);
+              preliminarProjectListController.setKeyGroupAcademic(keyGroupAcademic);
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);       
+            } catch (IOException ex) {
+                    Log.logException(ex);
+            }
+            primaryStage.show();
+       } catch (MalformedURLException ex) {
+           Log.logException(ex);
+       }     
+    }
     
 }

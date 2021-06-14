@@ -18,8 +18,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -107,6 +105,8 @@ public class MeetingRegisterController implements Initializable {
     
     public void setTopics(ObservableList<Topic> topics){
        this.topics = topics;
+       btSave.setDisable(false);
+       btAddTopic.setDisable(true);
     }
     
     @FXML 
@@ -117,7 +117,6 @@ public class MeetingRegisterController implements Initializable {
         if(!validateFieldEmpty() && validateInformationField() && validateDate()){
             String date= dpDate.getValue().format(formatter);
             Meeting meeting = new Meeting(subject,date,hour,keyGroupAcademic);
-            System.out.println(hour);
             if(!searchRepeateMeeting(meeting)){  
                 save(meeting);
             }else{  
@@ -158,6 +157,13 @@ public class MeetingRegisterController implements Initializable {
     
     }
     
+    private void disableButtonSave(){   
+        if(topics==null){   
+            btSave.setDisable(true);
+        
+        }
+    }
+    
     @FXML
     private void actionDelete(ActionEvent event){
         prerequisites.remove(indexPrerequisite);
@@ -181,18 +187,34 @@ public class MeetingRegisterController implements Initializable {
     private void save(Meeting meeting){ 
         MeetingDAO meetingDAO = new MeetingDAO ();
         try {
-            if(meetingDAO.savedSucessful(meeting)){
-                idMeeting= meetingDAO.getId(meeting);
-                savePrerequisite();
-                saveTopics();
-                meeting.setKey(idMeeting);
-                saveAssistants( meeting);
-                AlertMessage alertMessage = new AlertMessage();
-                alertMessage.showAlertSuccesfulSave("Reunión");
+            if( validateAssistants()){
+                if(meetingDAO.savedSucessful(meeting)){
+                    idMeeting= meetingDAO.getId(meeting);
+                    savePrerequisite();
+                    saveTopics();
+                    meeting.setKey(idMeeting);
+                    saveAssistants( meeting);
+                    AlertMessage alertMessage = new AlertMessage();
+                    alertMessage.showAlertSuccesfulSave("Reunión");
+                 }
             }
         } catch (BusinessException ex) {
             exceptionShow(ex);
         }
+    }
+    
+    private boolean validateAssistants(){  
+        boolean value = true;
+        Member leader= (Member) cbLeader.getSelectionModel().getSelectedItem();
+        Member secretary = (Member) cbSecretary.getSelectionModel().getSelectedItem();
+        if(leader.equals(secretary)){
+            value = false;
+        }else{  
+            AlertMessage alertMessage = new AlertMessage();
+            alertMessage.showAlertValidateFailed("El lider y secretario no pueden ser el mismo");
+        }
+        
+        return value;
     }
     
     private void savePrerequisite() throws BusinessException{ 
@@ -209,8 +231,8 @@ public class MeetingRegisterController implements Initializable {
              topicDAO.save(topics.get(i));           
            }   
         } catch (BusinessException ex) {
-               Logger.getLogger(TopicRegisterController.class.getName()).log(Level.SEVERE, null, ex);
-         }    
+            Log.logException(ex);
+        }    
     }
     
     private void saveAssistants(Meeting meeting) throws BusinessException{  
@@ -294,6 +316,7 @@ public class MeetingRegisterController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        // tfHour.setMaxlength(5);
+       disableButtonSave();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         dpDate.setConverter(new LocalDateStringConverter(formatter, null));
         tcDescription.setCellValueFactory(new PropertyValueFactory<Prerequisite,String>("description"));

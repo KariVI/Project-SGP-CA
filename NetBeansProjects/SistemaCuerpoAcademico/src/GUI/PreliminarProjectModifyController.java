@@ -64,6 +64,16 @@ public class PreliminarProjectModifyController implements Initializable {
     private int indexCodirectors;
     private ObservableList<Member> codirectors ;
     private ObservableList<Member> codirectorsNew;
+    private Member member;
+    private String keyGroupAcademic;
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public void setKeyGroupAcademic(String keyGroupAcademic) {
+        this.keyGroupAcademic = keyGroupAcademic;
+    }
     
 
     @FXML
@@ -143,6 +153,8 @@ public class PreliminarProjectModifyController implements Initializable {
                 PreliminarProject preliminarProjectAuxiliar = preliminarProjectDAO.getById(preliminarProjectRecover.getKey());
                 preliminarProjectShowController.setPreliminarProject(preliminarProjectAuxiliar);
                 preliminarProjectShowController.initializePreliminarProject();
+                preliminarProjectShowController.setKeyGroupAcademic(keyGroupAcademic);
+                preliminarProjectShowController.setMember(member);
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);

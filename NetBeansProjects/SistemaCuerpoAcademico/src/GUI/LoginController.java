@@ -22,9 +22,9 @@ import log.BusinessException;
 
 
 public class LoginController implements Initializable {
-    @FXML PasswordField pfPassword;
-    @FXML TextField tfUser;
-    @FXML Button btLogin;
+    @FXML private PasswordField pfPassword;
+    @FXML private TextField tfUser;
+    @FXML private Button btLogin;
     private LoginCredential credentialRetrieved = null;
     @Override
     public void initialize(URL url, ResourceBundle rb) {

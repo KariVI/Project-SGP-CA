@@ -45,25 +45,29 @@ public class MeetingModifyController implements Initializable {
     private ObservableList<Member> members;
     private ObservableList<Prerequisite> prerequisites;
     private ObservableList<Prerequisite> oldPrerequisites;
-    @FXML TextField tfSubject;
-    @FXML TextField tfHour;
-    @FXML Button btExit;
-    @FXML ComboBox cbLeader;
-    @FXML ComboBox cbSecretary;
-    @FXML DatePicker dpDate;
-    @FXML TableColumn tcDescription;
-    @FXML TableColumn tcMandated;
-    @FXML TextField tfDescription;
-    @FXML ComboBox cbMember;
+    @FXML private TextField tfSubject;
+    @FXML private TextField tfHour;
+    @FXML private Button btExit;
+    @FXML private ComboBox cbLeader;
+    @FXML private ComboBox cbSecretary;
+    @FXML private DatePicker dpDate;
+    @FXML private TableColumn tcDescription;
+    @FXML private TableColumn tcMandated;
+    @FXML private TextField tfDescription;
+    @FXML private ComboBox cbMember;
     private int indexPrerequisite;
-    @FXML TableView<Prerequisite> tvPrerequisites;
+    @FXML private TableView<Prerequisite> tvPrerequisites;
     private ListChangeListener<Prerequisite> tablePrerequisiteListener;
-    @FXML Button btSave;
-    @FXML Button btDelete;
+    @FXML private Button btSave;
+    @FXML private Button btDelete;
     private Meeting oldMeeting= new Meeting();
     private Meeting newMeeting=new Meeting();
-     
-    
+    private Member member;
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+         
     @FXML 
     private void actionSave (ActionEvent actionEvent){    
         String subject= tfSubject.getText();
@@ -111,6 +115,7 @@ public class MeetingModifyController implements Initializable {
               MeetingDAO meetingDAO = new MeetingDAO();
               Meeting meetingAuxiliar=meetingDAO.getMeetingById(oldMeeting.getKey());
               meetingShowController.setMeeting(meetingAuxiliar);
+              meetingShowController.setMember(member);
               meetingShowController.initializeMeeting();
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
@@ -158,6 +163,11 @@ public class MeetingModifyController implements Initializable {
                 value=false;
                alertMessage.showAlertValidateFailed("Campos invalidos");
             }  
+            
+             if(repeatedPrerequisite(prerequisite)){ 
+               value=false;
+               alertMessage.showAlertValidateFailed("Prerequisito repetido");
+            }
         return value;
     }
     
@@ -195,13 +205,14 @@ public class MeetingModifyController implements Initializable {
     private void update(){ 
          AlertMessage alertMessage = new AlertMessage();
         try {
+            if(validateAssistants()){  
                 MeetingDAO meetingDAO = new MeetingDAO();
                 if( meetingDAO.updatedSucessful(newMeeting)){   
                    savePrerequisite(); 
                    saveAssistants();               
-                   alertMessage.showUpdateMessage();
-           
+                   alertMessage.showUpdateMessage();          
                 }
+            }
             } catch (BusinessException ex) {
                 if(ex.getMessage().equals("DataBase connection failed ")){
                 alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
@@ -236,6 +247,20 @@ public class MeetingModifyController implements Initializable {
         
         ArrayList<Member> assistantsList = meetingDAO.getAssistants(oldMeeting.getKey());
          
+        return value;
+    }
+    
+     private boolean validateAssistants(){  
+        boolean value = true;
+        Member leader= (Member) cbLeader.getSelectionModel().getSelectedItem();
+        Member secretary = (Member) cbSecretary.getSelectionModel().getSelectedItem();
+        if(leader.equals(secretary)){
+            value = false;
+        }else{  
+            AlertMessage alertMessage = new AlertMessage();
+            alertMessage.showAlertValidateFailed("El lider y secretario no pueden ser el mismo");
+        }
+        
         return value;
     }
     
@@ -416,6 +441,7 @@ public class MeetingModifyController implements Initializable {
 
       }
      
+    
     private void cleanFields(){
         tfDescription.setText("");
     }

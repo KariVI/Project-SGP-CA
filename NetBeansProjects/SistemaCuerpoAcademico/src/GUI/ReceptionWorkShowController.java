@@ -55,6 +55,11 @@ public class ReceptionWorkShowController implements Initializable {
     private ReceptionWork receptionWork;
     private ObservableList<PreliminarProject> preliminarProjectsUnassigned;
     private String keyGroupAcademic;
+    private Member member;
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
     
      public void setKeyGroupAcademic(String keyGroupAcademic) {
         this.keyGroupAcademic = keyGroupAcademic;
@@ -89,6 +94,8 @@ public class ReceptionWorkShowController implements Initializable {
               receptionWorkController.setReceptionWork(receptionWork);
               receptionWorkController.initializeReceptionWork();
               receptionWorkController.setPreliminarProjects(preliminarProjectsUnassigned);
+              receptionWorkController.setKeyGroupAcademic(keyGroupAcademic);
+              receptionWorkController.setMember(member);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);       
@@ -112,6 +119,7 @@ public class ReceptionWorkShowController implements Initializable {
               loader.load();
                 ReceptionWorkListController receptionWorkListController =loader.getController();
                 receptionWorkListController.setKeyGroupAcademic(keyGroupAcademic);
+                receptionWorkListController.setMember(member);
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);

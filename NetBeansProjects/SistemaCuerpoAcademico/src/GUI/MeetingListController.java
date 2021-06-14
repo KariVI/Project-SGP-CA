@@ -80,7 +80,28 @@ public class MeetingListController implements Initializable {
     private void actionReturn(ActionEvent actionEvent){   
         Stage stage = (Stage) btReturn.getScene().getWindow();
         stage.close();
+        openViewMenu();
+        
     }
+    
+    private void openViewMenu(){   
+        Stage primaryStage = new Stage();
+        try{
+              URL url = new File("src/GUI/Menu.fxml").toURI().toURL();
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              MenuController menu = loader.getController();
+              menu.initializeMenu(member);
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);
+              primaryStage.show();
+            }catch (IOException ex) {
+                Log.logException(ex);
+            }
+    }
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -89,13 +110,22 @@ public class MeetingListController implements Initializable {
       lvMeetings.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Meeting>() {
           @Override
           public void changed(ObservableValue<? extends Meeting> observaleValue, Meeting oldValue, Meeting newValue) {
-             Meeting selectedMeeting = (Meeting) lvMeetings.getSelectionModel().getSelectedItem();
-                try {
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("MeetingShow.fxml"));
+             Meeting selectedMeeting = (Meeting) lvMeetings.getSelectionModel().getSelectedItem();   
+             Stage stage = (Stage) lvMeetings.getScene().getWindow();
+             stage.close();
+             openMeetingShow(selectedMeeting);
+                    
+                
+          }
+      }); 
+    }    
+    
+    private void openMeetingShow(Meeting meeting){ 
+        try {
+                 FXMLLoader loader = new FXMLLoader(getClass().getResource("MeetingShow.fxml"));
                  Parent root = loader.load();
                  MeetingShowController meetingShowController = loader.getController();
-                 meetingShowController.setMeeting(selectedMeeting);
+                 meetingShowController.setMeeting(meeting);
                  meetingShowController.setMember(member);
                       try {
                           meetingShowController.initializeMeeting();
@@ -105,14 +135,11 @@ public class MeetingListController implements Initializable {
                  Scene scene = new Scene(root);
                  Stage stage = new Stage();
                  stage.setScene(scene);
-                 stage.initModality(Modality.APPLICATION_MODAL);
                  stage.showAndWait();
              } catch (IOException ex) {
                  Log.logException(ex);
-             }
-          }
-      }); 
-    }    
+             }    
+    }
     
     
     private void getMeetings( String keyGroupAcademic) {   
