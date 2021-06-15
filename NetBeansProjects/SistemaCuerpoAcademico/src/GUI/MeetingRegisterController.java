@@ -244,9 +244,13 @@ public class MeetingRegisterController implements Initializable {
         ArrayList<Member> assistants= new ArrayList<Member> ();
         assistants.add(leader);
         assistants.add(secretary);
+        String professionalLicenseSecretary= secretary.getProfessionalLicense();
+        String professionalLicenseLeader= leader.getProfessionalLicense();
         for(int i=0; i< members.size(); i++){
             Member memberAuxiliar = (Member) members.get(i);
-            if((! memberAuxiliar.equals(leader)) && (! memberAuxiliar.equals(secretary))){
+            String professionalLicense= memberAuxiliar.getProfessionalLicense();
+            if((! professionalLicense.equals(professionalLicenseLeader))
+            && (! professionalLicense.equals(professionalLicenseSecretary))){
                 memberAuxiliar.setRole("Asistente");
                 assistants.add(memberAuxiliar);
             }
@@ -304,7 +308,7 @@ public class MeetingRegisterController implements Initializable {
         try {
             MemberDAO memberDAO = new MemberDAO();
             ArrayList <Member> memberList = new ArrayList<Member>();
-            memberList = memberDAO.getMembers();
+            memberList = memberDAO.getMembers(keyGroupAcademic);
             for( int i = 0; i<memberList.size(); i++) {
                 members.add(memberList.get(i));
             }

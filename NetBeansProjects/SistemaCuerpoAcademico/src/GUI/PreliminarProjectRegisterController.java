@@ -46,9 +46,9 @@ import log.Log;
 
 public class PreliminarProjectRegisterController implements Initializable {
     private ObservableList<Member> members;
-    @FXML private TextField tfTitle;
+    @FXML private TextFieldLimited tfTitle;
     @FXML private TextArea taDescription;
-    @FXML private TextField tfNumberStudents;
+    @FXML private TextFieldLimited tfNumberStudents;
     @FXML private Button btOk;
     @FXML private Button btSave;
     @FXML private Button btExit;
@@ -357,7 +357,7 @@ public class PreliminarProjectRegisterController implements Initializable {
         try {
             MemberDAO memberDAO = new MemberDAO();
             ArrayList <Member> memberList = new ArrayList<Member>();
-            memberList = memberDAO.getMembers();
+            memberList = memberDAO.getMembers(keyGroupAcademic);
             for( int i = 0; i<memberList.size(); i++) {
                 members.add(memberList.get(i));
             }
@@ -367,6 +367,8 @@ public class PreliminarProjectRegisterController implements Initializable {
     }
     
     public void initialize(URL url, ResourceBundle rb) {
+        tfTitle.setMaxlength(200);
+        tfNumberStudents.setMaxlength(2);
         tcCodirector.setCellValueFactory(new PropertyValueFactory<Member,String>("name"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         dpStartDate.setConverter(new LocalDateStringConverter(formatter, null));
