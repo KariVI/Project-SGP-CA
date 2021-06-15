@@ -6,10 +6,12 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.scene.control.DatePicker;
 
 
 
@@ -71,21 +73,17 @@ public class Validation {
         return value;  
     }
     
-    public Blob stringToBlob(String contrasenia){
-         Blob blobData = null;
-         try {
-             Connector db = new Connector();
-             Connection dbConnection = db.getConnection();
-             byte[] byteData = contrasenia.getBytes("UTF-8");
-             blobData = dbConnection.createBlob();
-             blobData.setBytes(1, byteData);
-         } catch (SQLException ex) {
-             Logger.getLogger(Validation.class.getName()).log(Level.SEVERE, null, ex);
-         } catch (UnsupportedEncodingException ex) {
-             Logger.getLogger(Validation.class.getName()).log(Level.SEVERE, null, ex);
-         } catch (ClassNotFoundException ex) {
-             Logger.getLogger(Validation.class.getName()).log(Level.SEVERE, null, ex);
-         }
-    return blobData;
-  }
+    public boolean validateDates(DatePicker dpStartDate, DatePicker dpEndDate){
+        boolean value = false;       
+        if(dpStartDate.getValue()!= null && dpEndDate.getValue()!= null){
+           LocalDate dateStart= dpStartDate.getValue();
+           LocalDate dateEnd = dpEndDate.getValue();
+          if(dateEnd.isAfter(dateStart)){ 
+              value=true;
+          }
+          
+       }
+        
+       return value;
+   }
 }

@@ -5,13 +5,11 @@
  */
 package GUI;
 
-import businessLogic.MinuteDAO;
 import businessLogic.TopicDAO;
 import domain.Meeting;
 import domain.Topic;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -31,7 +29,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import log.BusinessException;
-import log.Log;
 
 public class TopicShowController implements Initializable {
     private ObservableList<Topic> topics;

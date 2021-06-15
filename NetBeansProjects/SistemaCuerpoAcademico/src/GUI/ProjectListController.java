@@ -9,6 +9,7 @@ import businessLogic.ProjectDAO;
 import domain.Project;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -30,11 +31,6 @@ import javafx.stage.Stage;
 import log.BusinessException;
 import log.Log;
 
-/**
- * FXML Controller class
- *
- * @author Mariana
- */
 public class ProjectListController implements Initializable {
 
     @FXML private ListView<Project> lvProjects = new ListView<Project>();
@@ -98,6 +94,27 @@ public class ProjectListController implements Initializable {
 
     @FXML
     private void actionRegister(ActionEvent event) {
+        try {
+            URL url = new File("src/GUI/ProjectRegister.fxml").toURI().toURL();
+            FXMLLoader loader = new FXMLLoader(url);
+            loader.setLocation(url);
+            try {
+                loader.load();
+            } catch (IOException ex) {
+                Logger.getLogger(ProjectListController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ProjectRegisterController  projectRegisterController = loader.getController();
+            projectRegisterController.setGroupAcademic(groupAcademicKey);
+            Parent root = loader.getRoot();
+            Scene scene = new Scene(root);
+            Stage primaryStage= new Stage();
+            primaryStage.setScene(scene);
+            Stage stage = (Stage) btRegisterProject.getScene().getWindow();
+            stage.close();
+            primaryStage.show();
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(ProjectListController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

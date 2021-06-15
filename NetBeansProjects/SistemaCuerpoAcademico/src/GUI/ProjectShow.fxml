@@ -64,5 +64,6 @@
          </columns>
       </TableView>
       <Button fx:id="btReturn" layoutX="730.0" layoutY="543.0" mnemonicParsing="false" onAction="#actionReturn" prefHeight="32.0" prefWidth="75.0" text="Regresar" />
+      <Button fx:id="btUpdate" layoutX="644.0" layoutY="543.0" mnemonicParsing="false" onAction="#actionUpdate" prefHeight="32.0" prefWidth="75.0" text="Modificar" />
    </children>
 </AnchorPane>

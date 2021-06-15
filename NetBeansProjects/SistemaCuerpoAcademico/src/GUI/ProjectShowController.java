@@ -6,7 +6,6 @@ import domain.Member;
 import domain.Project;
 import domain.ReceptionWork;
 import domain.Student;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -15,20 +14,15 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import log.BusinessException;
-import log.Log;
 
 public class ProjectShowController implements Initializable {
 
@@ -45,6 +39,7 @@ public class ProjectShowController implements Initializable {
     @FXML private TableView<Student> tvStudent;
     @FXML private TableColumn<Student, String> tcStudent;
     @FXML private Button btReturn;
+    @FXML private Button btUpdate;
     private ObservableList<LGAC> lgacs;
     private ObservableList<Member> members;
     private ObservableList<Student> students;
@@ -108,6 +103,7 @@ public class ProjectShowController implements Initializable {
             Logger.getLogger(ProjectShowController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     private void initializeStudents(Project project){
         ProjectDAO projectDAO = new ProjectDAO();
         try {
@@ -120,6 +116,7 @@ public class ProjectShowController implements Initializable {
             Logger.getLogger(ProjectShowController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     private void initializeReceptionWorks(Project project){
         ProjectDAO projectDAO = new ProjectDAO();
         try {
@@ -132,9 +129,15 @@ public class ProjectShowController implements Initializable {
             Logger.getLogger(ProjectShowController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
     @FXML
     public void actionReturn(){
          Stage stage = (Stage) btReturn.getScene().getWindow();
          stage.close();                 
+    }
+    
+    @FXML
+    public void actionUpdate(){
+        
     }
 }

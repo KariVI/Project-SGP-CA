@@ -37,4 +37,9 @@ public class LGAC {
         }  
         return value;
     } 
+    
+   @Override
+    public String toString(){
+        return name;
+    }
 }
