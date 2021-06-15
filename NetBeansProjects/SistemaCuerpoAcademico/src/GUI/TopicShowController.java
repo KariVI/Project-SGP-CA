@@ -13,8 +13,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -29,6 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import log.BusinessException;
+import log.Log;
 
 public class TopicShowController implements Initializable {
     private ObservableList<Topic> topics;
@@ -72,7 +71,7 @@ public class TopicShowController implements Initializable {
    
             }
         } catch (BusinessException ex) {
-            Logger.getLogger(TopicShowController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }       
     }
      
@@ -92,7 +91,7 @@ public class TopicShowController implements Initializable {
             stage.close();
             primaryStage.show();
         } catch (IOException ex) {
-            Logger.getLogger(MemberViewController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
 }

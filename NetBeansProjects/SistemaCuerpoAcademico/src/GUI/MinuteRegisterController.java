@@ -12,8 +12,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -111,7 +109,7 @@ public class MinuteRegisterController implements Initializable {
                 cbMember.getSelectionModel().select(member);
                 
             } catch (BusinessException ex) {
-                Logger.getLogger(TopicRegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                Log.logException(ex);
             }
         }
     }
@@ -120,12 +118,12 @@ public class MinuteRegisterController implements Initializable {
         try {
             MemberDAO memberDAO = new MemberDAO();
             ArrayList <Member> memberList = new ArrayList<Member>();
-            memberList = memberDAO.getMembers();
+            memberList = memberDAO.getMembers("JDOEIJ804");
             for( int i = 0; i<memberList.size(); i++) {
                 members.add(memberList.get(i));
             }
         } catch (BusinessException ex) {
-            Logger.getLogger(MemberListController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
     
@@ -192,7 +190,7 @@ public class MinuteRegisterController implements Initializable {
             meetingDAO.changedStateSucessful(meeting);
             
         } catch (BusinessException ex) {
-            Logger.getLogger(MinuteRegisterController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
     public boolean validateAgreement(Agreement agreement){

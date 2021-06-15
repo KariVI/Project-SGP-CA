@@ -95,6 +95,6 @@ public class MemberDAOTest {
         memberList.add(member);
         memberList.add(member2);
         MemberDAO memberDAO = new MemberDAO();
-        assertEquals(memberDAO.getMembers(),memberList);
+        assertEquals(memberDAO.getMembers("JDOEIJ804"),memberList);
     }
 }

@@ -8,8 +8,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -79,7 +77,7 @@ public class ProjectListController implements Initializable {
                 }         
             }
         } catch (BusinessException ex) {
-            Logger.getLogger(ProjectListController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
     
@@ -96,7 +94,7 @@ public class ProjectListController implements Initializable {
             try {
                 loader.load();
             } catch (IOException ex) {
-                Logger.getLogger(ProjectListController.class.getName()).log(Level.SEVERE, null, ex);
+                Log.logException(ex);
             }
             ProjectRegisterController  projectRegisterController = loader.getController();
             projectRegisterController.setGroupAcademic(groupAcademicKey);
@@ -108,7 +106,7 @@ public class ProjectListController implements Initializable {
             stage.close();
             primaryStage.show();
         } catch (MalformedURLException ex) {
-            Logger.getLogger(ProjectListController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
     

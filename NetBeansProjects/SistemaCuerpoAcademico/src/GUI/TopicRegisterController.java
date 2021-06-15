@@ -1,16 +1,12 @@
 package GUI;
 
 import businessLogic.MemberDAO;
-import businessLogic.TopicDAO;
-import domain.Meeting;
 import domain.Member;
 import domain.Topic;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -25,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import log.BusinessException;
+import log.Log;
 
 
 public class TopicRegisterController implements Initializable {
@@ -135,7 +132,7 @@ public class TopicRegisterController implements Initializable {
                 cbMember.getSelectionModel().select(member);
                 
             } catch (BusinessException ex) {
-                Logger.getLogger(TopicRegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                Log.logException(ex);
             }
         }
     }
@@ -144,12 +141,12 @@ public class TopicRegisterController implements Initializable {
         try {
             MemberDAO memberDAO = new MemberDAO();
             ArrayList <Member> memberList = new ArrayList<Member>();
-            memberList = memberDAO.getMembers();
+            memberList = memberDAO.getMembers("JDOEIJ804");
             for( int i = 0; i<memberList.size(); i++) {
                 members.add(memberList.get(i));
             }
         } catch (BusinessException ex) {
-            Logger.getLogger(MemberListController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
     

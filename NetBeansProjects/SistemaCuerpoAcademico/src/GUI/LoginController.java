@@ -7,8 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,6 +17,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import log.BusinessException;
+import log.Log;
 
 
 public class LoginController implements Initializable {
@@ -45,7 +44,7 @@ public class LoginController implements Initializable {
             try {
                member = memberDAO.getMemberByLicense(credentialRetrieved.getProfessionalLicense());
             } catch (BusinessException ex) {
-               Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+               Log.logException(ex);
             }
             Stage primaryStage= new Stage();
             try{
@@ -62,7 +61,7 @@ public class LoginController implements Initializable {
               stage.close();
               primaryStage.show();
             }catch (IOException ex) {
-             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+             Log.logException(ex);
             }
        }else{
            AlertMessage alertMessage = new AlertMessage();
@@ -82,7 +81,7 @@ public class LoginController implements Initializable {
             
         } catch (BusinessException ex) {
             value = false;
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }   
        return value;
     }

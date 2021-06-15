@@ -15,8 +15,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -210,7 +208,7 @@ public class ProjectRegisterController implements Initializable {
                 value = true;
             }
         } catch (BusinessException ex) {
-            Logger.getLogger(ProjectRegisterController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
          return value;
    }
@@ -260,7 +258,7 @@ public class ProjectRegisterController implements Initializable {
             projectDAO.searchId(project);
             value = true;
         } catch (BusinessException ex) {
-            Logger.getLogger(ProjectRegisterController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
         
         return value;
@@ -536,15 +534,13 @@ public class ProjectRegisterController implements Initializable {
         MemberDAO memberDAO = new MemberDAO();
         try {
             ArrayList<Member> memberList = new ArrayList<Member>();
-            memberList = memberDAO.getMembers();
+            memberList = memberDAO.getMembers(groupAcademicKey);
             for(int i = 0; i< memberList.size(); i++){
-                if(memberList.get(i).getKeyGroupAcademic().equals(groupAcademicKey)){
-                     members.add(memberList.get(i));
-                }        
+                     members.add(memberList.get(i));                
             }
             cbMember.getSelectionModel().selectFirst();
         } catch (BusinessException ex) {
-            Logger.getLogger(ProjectShowController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
     
@@ -558,7 +554,7 @@ public class ProjectRegisterController implements Initializable {
             }
             cbLGAC.getSelectionModel().selectFirst();
         } catch (BusinessException ex) {
-            Logger.getLogger(ProjectShowController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
     
@@ -572,7 +568,7 @@ public class ProjectRegisterController implements Initializable {
             }
             cbReceptionWork.getSelectionModel().selectFirst();      
         } catch (BusinessException ex) {
-            Logger.getLogger(ProjectShowController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
     

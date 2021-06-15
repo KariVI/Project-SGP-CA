@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -69,14 +67,12 @@ public class MemberListController implements  Initializable {
         try {
             MemberDAO memberDAO = new MemberDAO();
             ArrayList <Member> memberList = new ArrayList<Member>();
-            memberList = memberDAO.getMembers();
+            memberList = memberDAO.getMembers(groupAcademicKey);
             for( int i = 0; i<memberList.size(); i++) {
-                if(memberList.get(i).getKeyGroupAcademic().equals(groupAcademicKey)){
-                    members.add(memberList.get(i));
-                }         
+                    members.add(memberList.get(i));     
             }
         } catch (BusinessException ex) {
-            Logger.getLogger(MemberListController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
     
@@ -108,7 +104,7 @@ public class MemberListController implements  Initializable {
             stage.close();
             primaryStage.show();
         } catch (IOException ex) {
-            Logger.getLogger(MemberViewController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
 }

@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,10 +13,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
+import log.Log;
 
 
 public class MemberViewController implements Initializable {
@@ -69,7 +65,7 @@ public class MemberViewController implements Initializable {
             stage.close();
             primaryStage.show();
         } catch (IOException ex) {
-            Logger.getLogger(MemberViewController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
  
@@ -89,7 +85,7 @@ public class MemberViewController implements Initializable {
             stage.close();
             primaryStage.show();
         } catch (IOException ex) {
-            Logger.getLogger(MemberViewController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
     

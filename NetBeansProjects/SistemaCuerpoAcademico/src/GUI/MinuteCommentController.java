@@ -11,14 +11,13 @@ import domain.Minute;
 import domain.MinuteComment;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import log.BusinessException;
+import log.Log;
 
 /**
  * FXML Controller class
@@ -52,7 +51,7 @@ public class MinuteCommentController implements Initializable {
             Stage stage = (Stage) btSave.getScene().getWindow();
             stage.close();
         } catch (BusinessException ex) {
-            Logger.getLogger(MinuteCommentController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
     

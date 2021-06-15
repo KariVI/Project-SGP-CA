@@ -13,8 +13,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -34,6 +32,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import log.BusinessException;
+import log.Log;
 
 
 public class MinuteShowController implements Initializable {
@@ -79,7 +78,7 @@ public class MinuteShowController implements Initializable {
             verifyApprove();
             verifyMember();
         } catch (BusinessException ex) {
-            Logger.getLogger(MinuteShowController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
    public boolean verifyMinuteStateApprove(){
@@ -95,7 +94,7 @@ public class MinuteShowController implements Initializable {
                 minuteDAO.update(minute);
             }
         } catch (BusinessException ex) {
-            Logger.getLogger(MinuteShowController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
        return value;
    }
@@ -124,7 +123,7 @@ public class MinuteShowController implements Initializable {
                 i++;
             }
         } catch (BusinessException ex) {
-            Logger.getLogger(MinuteShowController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         } 
          return value;
    }
@@ -155,7 +154,7 @@ public class MinuteShowController implements Initializable {
                 agreements.add(agreementList.get(i));
             }
         } catch (BusinessException ex) {
-            Logger.getLogger(TopicShowController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
     
@@ -172,7 +171,7 @@ public class MinuteShowController implements Initializable {
                 alertMessage.showAlertSuccesfulSave("Validacion");
             
             } catch (BusinessException ex) {
-                Logger.getLogger(MinuteShowController.class.getName()).log(Level.SEVERE, null, ex);
+                Log.logException(ex);
             }
         } 
     }
@@ -205,7 +204,7 @@ public class MinuteShowController implements Initializable {
                 i++;
             }
         } catch (BusinessException ex) {
-            Logger.getLogger(MinuteShowController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         } 
         return value;
     }
@@ -232,7 +231,7 @@ public class MinuteShowController implements Initializable {
             primaryStage.show();
             stage.close();
         }catch (IOException ex) {
-            Logger.getLogger(MemberViewController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
 

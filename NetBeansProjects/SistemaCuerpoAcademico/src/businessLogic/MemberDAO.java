@@ -184,7 +184,7 @@ public class MemberDAO implements IMemberDAO{
     }
 
     @Override
-    public ArrayList<Member> getMembers() throws BusinessException {
+    public ArrayList<Member> getMembers(String groupAcademicKey) throws BusinessException {
         ArrayList<Member> memberList = new ArrayList<Member>();
         try{
             Connector connectorDataBase = new Connector();
@@ -192,7 +192,8 @@ public class MemberDAO implements IMemberDAO{
             try{
                             
                 PreparedStatement getMemberStatment;
-                getMemberStatment = connectionDataBase.prepareStatement("SELECT * FROM Miembro");
+                getMemberStatment = connectionDataBase.prepareStatement("SELECT * FROM Miembro where clave = ?");
+                getMemberStatment.setString(1, groupAcademicKey);
                 ResultSet memberResultSet;                    
                 memberResultSet = getMemberStatment.executeQuery();
                             

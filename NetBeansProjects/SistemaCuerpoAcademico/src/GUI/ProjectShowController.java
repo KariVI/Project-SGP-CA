@@ -12,8 +12,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -29,6 +27,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import log.BusinessException;
+import log.Log;
 
 public class ProjectShowController implements Initializable {
 
@@ -93,7 +92,7 @@ public class ProjectShowController implements Initializable {
                 lgacs.add(lgacList.get(i));
             }
         } catch (BusinessException ex) {
-            Logger.getLogger(ProjectShowController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
     
@@ -106,7 +105,7 @@ public class ProjectShowController implements Initializable {
                 members.add(memberList.get(i));
             }
         } catch (BusinessException ex) {
-            Logger.getLogger(ProjectShowController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
     
@@ -119,7 +118,7 @@ public class ProjectShowController implements Initializable {
                 students.add(studentList.get(i));
             }
         } catch (BusinessException ex) {
-            Logger.getLogger(ProjectShowController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
     
@@ -132,7 +131,7 @@ public class ProjectShowController implements Initializable {
                 receptionWorks.add(receptionWorkList.get(i));
             }
         } catch (BusinessException ex) {
-            Logger.getLogger(ProjectShowController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
     
@@ -151,7 +150,7 @@ public class ProjectShowController implements Initializable {
             try {
                 loader.load();
             } catch (IOException ex) {
-                Logger.getLogger(ProjectListController.class.getName()).log(Level.SEVERE, null, ex);
+                Log.logException(ex);
             }
             ProjectModifyController  projectModifyController = loader.getController();
             projectModifyController.setProject(project);
@@ -163,7 +162,7 @@ public class ProjectShowController implements Initializable {
             stage.close();
             primaryStage.show();
         } catch (MalformedURLException ex) {
-            Logger.getLogger(ProjectListController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
     }
 }

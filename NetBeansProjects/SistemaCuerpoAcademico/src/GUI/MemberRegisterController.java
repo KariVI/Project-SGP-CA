@@ -1,16 +1,12 @@
 package GUI;
 
 
-import businessLogic.GroupAcademicDAO;
 import businessLogic.MemberDAO;
-import domain.GroupAcademic;
 import domain.Member;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

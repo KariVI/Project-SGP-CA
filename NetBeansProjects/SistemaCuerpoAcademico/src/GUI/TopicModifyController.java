@@ -8,8 +8,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -24,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import log.BusinessException;
+import log.Log;
 
 
 public class TopicModifyController implements Initializable {
@@ -92,7 +91,7 @@ public class TopicModifyController implements Initializable {
                 oldTopics.add(topicList.get(i));
             }
         } catch (BusinessException ex) {
-            Logger.getLogger(TopicShowController.class.getName()).log(Level.SEVERE, null, ex);
+            Log.logException(ex);
         }
         
     }
@@ -151,7 +150,7 @@ public class TopicModifyController implements Initializable {
                 cbMember.getSelectionModel().select(member);
                 
             } catch (BusinessException ex) {
-                Logger.getLogger(TopicRegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                Log.logException(ex);
             }
         }
     }
@@ -160,12 +159,12 @@ public class TopicModifyController implements Initializable {
         try {
             MemberDAO memberDAO = new MemberDAO();
             ArrayList <Member> memberList = new ArrayList<Member>();
-            memberList = memberDAO.getMembers();
+            memberList = memberDAO.getMembers("JDOEIJ804");
             for( int i = 0; i<memberList.size(); i++) {
                 members.add(memberList.get(i));
             }
         } catch (BusinessException ex) {
-            Logger.getLogger(MemberListController.class.getName()).log(Level.SEVERE, null, ex);
+          Log.logException(ex);
         }
     }
     
@@ -183,7 +182,7 @@ public class TopicModifyController implements Initializable {
            AlertMessage alertMessage = new AlertMessage();
            alertMessage.showAlertSuccesfulSave("Los temas fueron registrados con éxito");
          } catch (BusinessException ex) {
-               Logger.getLogger(TopicRegisterController.class.getName()).log(Level.SEVERE, null, ex);
+             Log.logException(ex);
          }
        
         Stage stage = (Stage)btSave.getScene().getWindow();
