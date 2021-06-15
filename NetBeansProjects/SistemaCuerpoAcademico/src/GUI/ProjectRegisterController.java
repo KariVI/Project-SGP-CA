@@ -4,13 +4,13 @@ import businessLogic.GroupAcademicDAO;
 import businessLogic.MemberDAO;
 import businessLogic.ProjectDAO;
 import businessLogic.ReceptionWorkDAO;
+import businessLogic.StudentDAO;
 import domain.LGAC;
 import domain.Member;
 import domain.Project;
 import domain.ReceptionWork;
 import domain.Student;
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -30,6 +30,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import log.BusinessException;
+import log.Log;
 
 public class ProjectRegisterController implements Initializable {
 
@@ -106,18 +107,82 @@ public class ProjectRegisterController implements Initializable {
          startDate = dpStartDate.getValue().format(formatter);
          finishDate = dpFinishDate.getValue().format(formatter);
          Project project = new Project(title,description,startDate,finishDate,groupAcademicKey);         
-         project.setStudents((ArrayList<Student>) studentsTable);
-         project.setMembers((ArrayList<Member>) membersTable);
-         project.setReceptionWorks((ArrayList<ReceptionWork>) receptionWorksTable);
-         project.setMembers((ArrayList<Member>) membersTable);
-         if(validateProject(project)){         
-             
-             
+         project = setProject(project);
+         if(validateProject(project)){   
+ 
+             try {
+                 saveStudents();
+                 ProjectDAO projectDAO = new ProjectDAO();
+                 projectDAO.save(project);
+                 project.setIdProject(projectDAO.searchId(project));
+                 projectDAO.addStudents(project);
+                 projectDAO.addLGAC(project);
+                 projectDAO.addColaborators(project);
+                 projectDAO.addReceptionWork(project);
+                 alertMessage.showAlertSuccesfulSave("Proyecto");
+             } catch (BusinessException ex) {
+                  if(ex.getMessage().equals("DataBase connection failed ")){
+                     alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
+                  }else{  
+                     Log.logException(ex);
+                  }
+             }
          }
        }else{
            alertMessage.showAlertValidateFailed("La fecha de fin debe ser mayor a la de inicio");
        }
            
+   }
+   private void saveStudents(){  
+       for(int i = 0; i < studentsTable.size(); i++){
+           if(!studentAlreadyRegistered(studentsTable.get(i))){
+               try {
+                   StudentDAO studentDAO = new StudentDAO();
+                   studentDAO.savedSucessful(studentsTable.get(i));
+               } catch (BusinessException ex) {
+                  if(ex.getMessage().equals("DataBase connection failed ")){
+                     AlertMessage alertMessage= new AlertMessage();
+                     alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
+                  }else{  
+                     Log.logException(ex);
+                  }
+               }
+           }     
+       }
+   }
+   
+   public boolean studentAlreadyRegistered(Student student){
+      boolean value = false;
+        try {
+            StudentDAO studentDAO = new StudentDAO();
+            Student studentRetrivied;
+            studentRetrivied = studentDAO.getByEnrollment(student.getEnrollment());
+            if(studentRetrivied.equals(student)){
+                value = true;
+            }
+        } catch (BusinessException ex) {
+            Logger.getLogger(ProjectRegisterController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         return value;
+   }
+   private Project setProject(Project project){
+       for(int i = 0; i < studentsTable.size(); i++){
+           project.setStudent(studentsTable.get(i));
+       }
+       
+       for(int i = 0; i < receptionWorksTable.size(); i++){
+           project.setReceptionWork(receptionWorksTable.get(i));
+       } 
+       
+       for(int i = 0; i < membersTable.size(); i++){
+           project.setMember(membersTable.get(i));
+       } 
+       
+       for(int i = 0; i < lgacsTable.size(); i++){
+           project.setLGAC(lgacsTable.get(i));
+       }  
+       
+       return project;
    }
    
    private boolean validateProject(Project project){
@@ -127,7 +192,28 @@ public class ProjectRegisterController implements Initializable {
            value = false;
            alertMessage.showAlertValidateFailed("Campos vacios");
        }
+       if(invalidFields(project)){
+           value = false;
+           alertMessage.showAlertValidateFailed("Campos invalidos");
+       }
+       if(projectAlreadyRegistered(project)){
+           value = false;
+           alertMessage.showAlertValidateFailed("El proyecto ya se encuentra registrado");
+       }
        return value;     
+   }
+   
+   private boolean projectAlreadyRegistered(Project project){
+        boolean value = false;
+        try {
+            ProjectDAO projectDAO = new ProjectDAO();
+            projectDAO.searchId(project);
+            value = true;
+        } catch (BusinessException ex) {
+            Logger.getLogger(ProjectRegisterController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return value;
    }
    
    private boolean emptyFields(Project project){
@@ -137,9 +223,19 @@ public class ProjectRegisterController implements Initializable {
           project.getStudents().isEmpty()||project.getLGACs().isEmpty()){
            value = true;
        }
+       
        return value;
    }
    
+   private boolean invalidFields(Project project){
+       boolean value = false;
+       Validation validation = new Validation();
+       if(validation.findInvalidField(project.getTitle())){
+           value = true;
+       }
+       
+       return value;
+   }
  
    @FXML
     private void addMember(ActionEvent event){
