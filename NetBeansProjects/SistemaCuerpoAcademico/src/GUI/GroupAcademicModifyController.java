@@ -23,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -44,7 +45,7 @@ public class GroupAcademicModifyController implements Initializable {
     @FXML private Button btSave;
     @FXML private Button btReturn;
     @FXML private Node groupAcademicPanel;
-    @FXML private Pane lgacPane;
+    @FXML private ScrollPane spLGACs;
     @FXML private ComboBox<String> cbConsolidateGrade;
      private ObservableList<String> consolidateGrades;
     private GroupAcademic groupAcademic= new GroupAcademic();
@@ -98,7 +99,7 @@ public class GroupAcademicModifyController implements Initializable {
                 i=i+3;
                 numberlgacs++;
            }
-            lgacPane.getChildren().add(gridPane);
+        spLGACs.setContent(gridPane);
     }
   
     @FXML
@@ -177,7 +178,7 @@ public class GroupAcademicModifyController implements Initializable {
     }
     
     private void recoverlgacs(){   
-        GridPane gridPane= (GridPane) lgacPane.getChildren().get(0);
+        GridPane gridPane= (GridPane) spLGACs.getContent();
             int i=1;
             int indexLGAC=0;
             ArrayList<LGAC> lgacs = groupAcademic.getLGACs();

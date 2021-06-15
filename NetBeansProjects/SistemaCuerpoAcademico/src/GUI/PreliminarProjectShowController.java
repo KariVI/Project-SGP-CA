@@ -97,15 +97,17 @@ public class PreliminarProjectShowController implements Initializable {
         GridPane gridPane= new GridPane();
         gridPane.setHgap (5);
         gridPane.setVgap (5);
-        while (i < ( students.size() * numberRows)){ 
-                Label lbEnrollmentStudent = new Label("Matricula: "+ students.get(numberStudent).getEnrollment());
-                Label lbNameStudent = new Label("Nombre: "+ students.get(numberStudent).getName());
-                gridPane.add(lbEnrollmentStudent,1,i);
-                gridPane.add(lbNameStudent,1, (i + 1));
-                i=i+2;
-                numberStudent++;
-           }
+        if(students.size()> 0){
+            Label label = new Label("Estudiantes");
+            gridPane.add(label,1, 0 );
+            while (i <= students.size()){ 
+                    Label lbNameStudent = new Label("->"+ students.get(numberStudent).getName());
+                    gridPane.add(lbNameStudent,1, i );
+                    i++;
+                    numberStudent++;
+            }
             paneStudents.getChildren().add(gridPane);
+        }
     }
   
     

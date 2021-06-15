@@ -4,10 +4,10 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -35,7 +35,7 @@
       <TextArea fx:id="taObjetive" layoutX="160.0" layoutY="210.0" prefHeight="75.0" prefWidth="185.0" wrapText="true" />
       <TextArea fx:id="taVision" layoutX="160.0" layoutY="300.0" prefHeight="75.0" prefWidth="185.0" wrapText="true" />
       <TextArea fx:id="taMision" layoutX="163.0" layoutY="387.0" prefHeight="84.0" prefWidth="185.0" wrapText="true" />
-      <Pane fx:id="lgacPane" layoutX="371.0" layoutY="74.0" prefHeight="360.0" prefWidth="277.0" />
       <ComboBox fx:id="cbConsolidateGrade" layoutX="160.0" layoutY="170.0" prefHeight="25.0" prefWidth="185.0" />
+      <ScrollPane fx:id="spLGACs" layoutX="357.0" layoutY="95.0" prefHeight="336.0" prefWidth="279.0" />
    </children>
 </AnchorPane>

@@ -5,14 +5,12 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-<?import GUI.TextFieldLimited?>
-
 
 <AnchorPane id="AnchorPane" fx:id="anchorPaneGroupRegister" prefHeight="500.0" prefWidth="662.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GroupAcademicRegisterController">
     <stylesheets>
@@ -29,18 +27,18 @@
       <Label id="lbObjetive" layoutX="24.0" layoutY="174.0" text="Objetivo:" />
       <Label id="lbMision" layoutX="33.0" layoutY="296.0" text="Misión:" />
       <Label id="lbVision" layoutX="27.0" layoutY="390.0" text="Visión:" />
-      <TextFieldLimited id="tfName" fx:id="tfName" layoutX="173.0" layoutY="69.0" prefHeight="25.0" prefWidth="185.0" />
-      <TextFieldLimited id="tfKey" fx:id="tfKey" layoutX="173.0" layoutY="100.0" prefHeight="25.0" prefWidth="185.0" />
+      <TextField id="tfName" fx:id="tfName" layoutX="173.0" layoutY="69.0" prefHeight="25.0" prefWidth="185.0" />
+      <TextField id="tfKey" fx:id="tfKey" layoutX="173.0" layoutY="100.0" prefHeight="25.0" prefWidth="185.0" />
       <TextArea id="tAObjetive" fx:id="tAObjetive" layoutX="173.0" layoutY="168.0" prefHeight="82.0" prefWidth="185.0" />
       <TextArea id="tAMision" fx:id="tAMision" layoutX="173.0" layoutY="268.0" prefHeight="90.0" prefWidth="185.0" />
       <TextArea id="tAVision" fx:id="tAVision" layoutX="173.0" layoutY="377.0" prefHeight="90.0" prefWidth="185.0" />
       <Button id="btSave" fx:id="btSave" layoutX="471.0" layoutY="454.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar " />
       <Button id="btCancel" fx:id="btCancel" layoutX="550.0" layoutY="454.0" mnemonicParsing="false" onAction="#actionCancel" text="Cancelar" />
       <Label layoutX="420.0" layoutY="65.0" text="Número de lgac:" />
-      <TextFieldLimited id="tfLgacsNumber" fx:id="tflgacsNumber" layoutX="536.0" layoutY="61.0" prefHeight="25.0" prefWidth="55.0" />
+      <TextField id="tfLgacsNumber" fx:id="tflgacsNumber" layoutX="536.0" layoutY="61.0" prefHeight="25.0" prefWidth="55.0" />
       <Button fx:id="btOk" layoutX="590.0" layoutY="61.0" mnemonicParsing="false" onAction="#addlgacs" text="Ok" />
       <Rectangle fx:id="groupAcademicPanel" arcHeight="5.0" arcWidth="5.0" fill="#0c0d0d" height="30.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="662.0" />
-      <Pane fx:id="anchorPanelgac" layoutX="371.0" layoutY="101.0" prefHeight="340.0" prefWidth="278.0" />
       <ComboBox fx:id="cbConsolidateGrade" layoutX="173.0" layoutY="130.0" prefHeight="25.0" prefWidth="185.0" />
+      <ScrollPane fx:id="spLgacs" layoutX="368.0" layoutY="93.0" prefHeight="351.0" prefWidth="281.0" />
    </children>
 </AnchorPane>

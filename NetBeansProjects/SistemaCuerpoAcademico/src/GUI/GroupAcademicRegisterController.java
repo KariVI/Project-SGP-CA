@@ -29,6 +29,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -39,18 +40,18 @@ import javafx.stage.Stage;
 
 
 public class GroupAcademicRegisterController implements Initializable  {
-    @FXML private TextFieldLimited tfName;
-    @FXML private TextFieldLimited tfKey;
+    @FXML private TextField tfName;
+    @FXML private TextField tfKey;
     @FXML private TextArea tAObjetive;
     @FXML private TextArea tAVision;
     @FXML private TextArea tAMision; 
-    @FXML private TextFieldLimited tflgacsNumber;
+    @FXML private TextField tflgacsNumber;
     @FXML private Button btOk;
     @FXML private Button btSave;
     @FXML private Button btCancel;
     @FXML private Node groupAcademicPanel;
     @FXML private AnchorPane anchorPaneGroupRegister;
-    @FXML private Pane anchorPanelgac;
+    @FXML private ScrollPane spLGACs;
     @FXML private ComboBox<String> cbConsolidateGrade;
      private ObservableList<String> consolidateGrades;
      private Member member;
@@ -168,7 +169,7 @@ public class GroupAcademicRegisterController implements Initializable  {
            }
             
         }
-        anchorPanelgac.getChildren().add(gridPane);
+        spLGACs.setContent(gridPane);
     }
     
     
@@ -189,7 +190,7 @@ public class GroupAcademicRegisterController implements Initializable  {
     
     
     private void recoverlgacs(GroupAcademic groupAcademic){   
-        GridPane gridPane= (GridPane) anchorPanelgac.getChildren().get(0);
+        GridPane gridPane= (GridPane) spLGACs.getContent();
             int i=1;
             Integer lgacs=Integer.parseInt(tflgacsNumber.getText());  
             int sizeRows=3;
@@ -304,9 +305,9 @@ public class GroupAcademicRegisterController implements Initializable  {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-     tfName.setMaxlength(100);
+     /*tfName.setMaxlength(100);
      tfKey.setMaxlength(10);
-     tflgacsNumber.setMaxlength(1);
+     tflgacsNumber.setMaxlength(1);*/
 
      consolidateGrades= FXCollections.observableArrayList();
      consolidateGrades.add("En formación");

@@ -538,7 +538,7 @@ public class ReceptionWorkRegisterController implements Initializable {
     
     private void addLGACs() throws BusinessException{
         ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
-        receptionWorkDAO.addLGACs(receptionWork);
+        receptionWorkDAO.addedSucessfulLGACs(receptionWork);
     }
     
      private boolean searchRepeateReceptionWork()   { 

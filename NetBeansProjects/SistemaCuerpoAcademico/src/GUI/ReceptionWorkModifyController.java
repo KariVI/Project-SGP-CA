@@ -299,28 +299,26 @@ public class ReceptionWorkModifyController implements Initializable {
         }
     }
     
-    
-      private void getLGACS() throws BusinessException{
-        
-         ReceptionWorkDAO receptionWorkDAO =new ReceptionWorkDAO();
-         
-         receptionWorkRecover.setLGACs(receptionWorkDAO.getLGACs(receptionWorkRecover.getKey()));
-          ArrayList<LGAC> lgacsReceptionWork= new ArrayList<LGAC>();
-          
-             lgacsReceptionWork= receptionWorkRecover.getLGACs();
-          
-         GridPane gridPane= new GridPane();
-         GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO ();
-            gridPane.setHgap(2);
-            gridPane.setVgap(2);
+ 
+    private void getLGACS() throws BusinessException{    
+        ReceptionWorkDAO receptionWorkDAO =new ReceptionWorkDAO();
+        ArrayList<LGAC> lgacsReceptionWork=null; 
+        if(receptionWorkDAO.getLGACs(receptionWorkRecover.getKey())!= null){  
+            lgacsReceptionWork= receptionWorkDAO.getLGACs(receptionWorkRecover.getKey());
+            receptionWorkRecover.setLGACs(lgacsReceptionWork);
+            receptionWorkDAO.deletedSucessfulLGACs(receptionWorkRecover);
+        }         
+        GridPane gridPane= new GridPane();
+        GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO ();
+        gridPane.setHgap(2);
+        gridPane.setVgap(2);
             int i=0;
             gridPane.add(new Label ("Selecciona LGAC relacionadas: "),1,0);
             int indexGridPane=1;
             ArrayList <LGAC> lgacs = groupAcademicDAO.getLGACs(keyGroupAcademic);
            while (i < lgacs.size()){  
-                CheckBox checkBox = new CheckBox(lgacs.get(i).getName());
-                
-                if(searchLgacs(lgacs.get(i), lgacsReceptionWork)){      
+                CheckBox checkBox = new CheckBox(lgacs.get(i).getName());                
+                if(lgacsReceptionWork!= null && searchLgacs(lgacs.get(i), lgacsReceptionWork)){      
                     checkBox.setSelected(true);
                 }
                 gridPane.add(checkBox,1,indexGridPane);
@@ -397,7 +395,6 @@ public class ReceptionWorkModifyController implements Initializable {
       
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         try {
             types=FXCollections.observableArrayList();
             states = FXCollections.observableArrayList();
             types.add("Práctico técnico");
@@ -441,10 +438,7 @@ public class ReceptionWorkModifyController implements Initializable {
                     setSelectedCodirector();
                 }
             };
-                getLGACS();
-            } catch (BusinessException ex) {
-                Log.logException(ex);
-            }
+           
     }    
     
      private Member getSelectedCodirector(){
@@ -535,7 +529,7 @@ public class ReceptionWorkModifyController implements Initializable {
     
     private void addLGACs() throws BusinessException{
         ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
-        receptionWorkDAO.addLGACs(receptionWorkNew);
+        receptionWorkDAO.addedSucessfulLGACs(receptionWorkNew);
     }
     
     private void recoverStudents() throws BusinessException{   

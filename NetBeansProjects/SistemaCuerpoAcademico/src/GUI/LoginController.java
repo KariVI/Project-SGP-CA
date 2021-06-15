@@ -48,7 +48,12 @@ public class LoginController implements Initializable {
                 if(member.getKeyGroupAcademic()!=null){
                     openMenu(member);
                 }else{  
-                
+                    if(member.getRole().equals("Responsable")){ 
+                        openMissingGroupAcademic(member);
+                    }else{  
+                        AlertMessage alertMessage = new AlertMessage();
+                        alertMessage.showAlertValidateFailed("Lo lamento todavía no hay un cuerpo académico registrado");                       
+                    }
                 }
             } catch (BusinessException ex) {
                 Log.logException(ex);

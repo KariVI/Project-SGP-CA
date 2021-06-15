@@ -349,7 +349,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
 
     }
 
-    public boolean addLGACs(ReceptionWork receptionWork) throws BusinessException {
+    public boolean addedSucessfulLGACs(ReceptionWork receptionWork) throws BusinessException {
         boolean addLGACSucces = false;
         int idReceptionWork = receptionWork.getKey();
         ArrayList<LGAC> lgacs = receptionWork.getLGACs();
@@ -399,6 +399,36 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
 
         return lgacs;
     }
+
+    @Override
+    public boolean deletedSucessfulLGACs(ReceptionWork receptionWork) throws BusinessException {
+        boolean deleteSucess=false;
+        int idReceptionWork=receptionWork.getKey();
+        ArrayList<LGAC> lgacs= receptionWork.getLGACs();
+        try{
+            Connector connectorDataBase=new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String delete = "delete from CultivaTrabajoRecepcional where nombreLGAC=? and idTrabajoRecepcional=?";
+     
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement(delete);
+            int i=0;
+            while(i< lgacs.size()){
+               preparedStatement.setString(1, lgacs.get(i).getName());
+               preparedStatement.setInt(2, idReceptionWork);
+               preparedStatement.executeUpdate();
+               i++;
+            }
+            deleteSucess=true;
+            connectorDataBase.disconnect();         
+        }catch(SQLException sqlException) {
+            throw new BusinessException("DataBase connection failed ", sqlException);
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return deleteSucess; 
+    }
+
+   
     
    
 }

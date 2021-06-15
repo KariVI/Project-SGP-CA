@@ -19,4 +19,8 @@ public interface IReceptionWorkDAO {
     public boolean deletedSucessfulColaborators(ReceptionWork receptionWork) throws BusinessException;
     public ArrayList<Student> getStudents(int idReceptionWork) throws BusinessException;
     public boolean deletedSucessfulStudents(ReceptionWork receptionWork) throws BusinessException;
+    public boolean deletedSucessfulLGACs(ReceptionWork receptionWork) throws BusinessException;
+    public boolean addedSucessfulLGACs(ReceptionWork receptionWork) throws BusinessException;
+
+
 }
