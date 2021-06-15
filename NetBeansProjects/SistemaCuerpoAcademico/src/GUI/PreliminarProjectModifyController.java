@@ -30,6 +30,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -48,9 +49,9 @@ public class PreliminarProjectModifyController implements Initializable {
     @FXML private TextArea taDescription;
     @FXML private Button btSave;
     @FXML private Button btExit;
-    @FXML private Pane paneStudent;
     @FXML private DatePicker dpStartDate;
     @FXML private DatePicker dpEndDate;
+    @FXML private ScrollPane spStudents;
     private PreliminarProject preliminarProjectRecover = new PreliminarProject();
     private PreliminarProject preliminarProjectNew = new PreliminarProject();
     @FXML private ComboBox cbDirector;
@@ -282,11 +283,11 @@ public class PreliminarProjectModifyController implements Initializable {
                 i=i+3;
                 numberStudent++;
            }
-            paneStudent.getChildren().add(gridPane);
+            spStudents.setContent(gridPane);
     }
     
     private void recoverStudents() throws BusinessException{   
-        GridPane gridPane= (GridPane) paneStudent.getChildren().get(0);
+        GridPane gridPane= (GridPane) spStudents.getContent();
         ArrayList<Student> studentsOld = preliminarProjectRecover.getStudents();
         ArrayList<Student> students = new ArrayList<Student>();
             int i=1;

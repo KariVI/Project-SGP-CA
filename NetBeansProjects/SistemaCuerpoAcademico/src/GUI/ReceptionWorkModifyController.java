@@ -36,6 +36,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -56,8 +57,8 @@ public class ReceptionWorkModifyController implements Initializable {
     @FXML private TextArea taCodirectors;
     @FXML private Button btSave;
     @FXML private Button btExit;
-    @FXML private Pane paneStudent;
-    @FXML private Pane lgacsPane;
+    @FXML private ScrollPane spStudents;
+    @FXML private ScrollPane spLgacs;
     @FXML private ComboBox cbType;
     @FXML private ComboBox cbPreliminarProject;
     @FXML private ComboBox cbState;
@@ -167,6 +168,7 @@ public class ReceptionWorkModifyController implements Initializable {
                 if(validateColaborators()){  
                     saveColaborators();
                     recoverStudents();
+                    recoverLgacs();
                     AlertMessage alertMessage = new AlertMessage();
                     alertMessage.showUpdateMessage();
                 }
@@ -293,32 +295,53 @@ public class ReceptionWorkModifyController implements Initializable {
                     i=i+2;
                     numberStudent++;
             }
-            paneStudent.getChildren().add(gridPane);
+            spStudents.setContent(gridPane);
         }
     }
     
     
       private void getLGACS() throws BusinessException{
-        ReceptionWorkDAO receptionWorkDAO =new ReceptionWorkDAO();
+        
+         ReceptionWorkDAO receptionWorkDAO =new ReceptionWorkDAO();
+         
          receptionWorkRecover.setLGACs(receptionWorkDAO.getLGACs(receptionWorkRecover.getKey()));
-         ArrayList<LGAC> lgacs= receptionWorkRecover.getLGACs();
-         int i=0;
-         int indexGridPane=1;
-        GridPane gridPane= new GridPane();
-        gridPane.setHgap (2);
-        gridPane.setVgap (2);
-        gridPane.add(new Label("LGACs relacionadas: "),1,0);
-
-        if(lgacs.size()> 0){
-            while (i <lgacs.size()){ 
-                    CheckBox checkBoxLGAC = new CheckBox(lgacs.get(i).getName());
-                    gridPane.add(checkBoxLGAC,1,indexGridPane);
-                    i++;
-                    indexGridPane++;
-                    
+          ArrayList<LGAC> lgacsReceptionWork= new ArrayList<LGAC>();
+          
+             lgacsReceptionWork= receptionWorkRecover.getLGACs();
+          
+         GridPane gridPane= new GridPane();
+         GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO ();
+            gridPane.setHgap(2);
+            gridPane.setVgap(2);
+            int i=0;
+            gridPane.add(new Label ("Selecciona LGAC relacionadas: "),1,0);
+            int indexGridPane=1;
+            ArrayList <LGAC> lgacs = groupAcademicDAO.getLGACs(keyGroupAcademic);
+           while (i < lgacs.size()){  
+                CheckBox checkBox = new CheckBox(lgacs.get(i).getName());
+                
+                if(searchLgacs(lgacs.get(i), lgacsReceptionWork)){      
+                    checkBox.setSelected(true);
+                }
+                gridPane.add(checkBox,1,indexGridPane);
+                i++;
+                indexGridPane++;
+           }  
+            spLgacs.setContent(gridPane);
+        
+    }
+      
+    private boolean searchLgacs(LGAC lgac, ArrayList<LGAC> lgacs){  
+        boolean value= false;
+        int i=0;
+        while(i< lgacs.size() && (value==false)){   
+            if(lgacs.get(i).equals(lgacs)){ 
+                value=true;
             }
-            lgacsPane.getChildren().add(gridPane);
+            i++;
         }
+        
+        return value;
     }
       
       
@@ -418,7 +441,7 @@ public class ReceptionWorkModifyController implements Initializable {
                     setSelectedCodirector();
                 }
             };
-                addlgacs();
+                getLGACS();
             } catch (BusinessException ex) {
                 Log.logException(ex);
             }
@@ -470,24 +493,7 @@ public class ReceptionWorkModifyController implements Initializable {
         }
     }
     
-    private void addlgacs() throws BusinessException{    
-        
-         GridPane gridPane= new GridPane();
-         GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO ();
-            gridPane.setHgap (2);
-            gridPane.setVgap (2);
-            int i=0;
-            gridPane.add(new Label ("Selecciona LGAC relacionadas: "),1,0);
-            int indexGridPane=1;
-            ArrayList <LGAC> lgacs = groupAcademicDAO.getLGACs("JDOEIJ804");
-           while (i < lgacs.size()){  
-                CheckBox checkBox = new CheckBox(lgacs.get(i).getName());
-                gridPane.add(checkBox,1,indexGridPane);
-                i++;
-                indexGridPane++;
-           }  
-    }
-    
+   
     
      private void initializeColaborators() throws BusinessException{  
         ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
@@ -507,10 +513,35 @@ public class ReceptionWorkModifyController implements Initializable {
         
     }
     
+        private void recoverLgacs() throws BusinessException{    
+        GridPane gridPane= (GridPane) spLgacs.getContent();
+        ArrayList<LGAC> lgacs = new ArrayList<LGAC>();
+        LGACDAO lgacDAO = new LGACDAO();
+            int i=1;
+            int indexLGACs =0;
+            GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO ();
+            ArrayList <LGAC> lgacsAuxiliar = groupAcademicDAO.getLGACs("JDOEIJ804");
+           while (i ==lgacsAuxiliar.size() ){
+               CheckBox checkBox = (CheckBox) getNodeFromGridPane( gridPane, 1, i);
+               if(checkBox.isSelected()){   
+                 LGAC lgac= lgacDAO.getLgacByName(checkBox.getText());
+                 lgacs.add(lgac);
+               }
+               i++;
+           }
+           receptionWorkNew.setLGACs(lgacs);
+           addLGACs();
+    }
+    
+    private void addLGACs() throws BusinessException{
+        ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
+        receptionWorkDAO.addLGACs(receptionWorkNew);
+    }
+    
     private void recoverStudents() throws BusinessException{   
         ArrayList<Student> studentsOld = receptionWorkRecover.getStudents();
         if(studentsOld.size()>0){
-        GridPane gridPane= (GridPane) paneStudent.getChildren().get(0);
+        GridPane gridPane= (GridPane) spStudents.getContent();
         ArrayList<Student> students = new ArrayList<Student>();
         
                     int i=1;

@@ -36,6 +36,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -57,8 +58,8 @@ public class ReceptionWorkRegisterController implements Initializable {
     @FXML private Button btOk;
     @FXML private Button btSave;
     @FXML private Button btExit;
-    @FXML private Pane paneStudent;
-    @FXML private Pane lgacsPane;
+    @FXML private ScrollPane spStudent = new ScrollPane();
+    @FXML private ScrollPane spLgacs;
     @FXML private ComboBox cbType;
     @FXML private ComboBox cbPreliminarProject;
     @FXML private ComboBox cbState;
@@ -80,6 +81,15 @@ public class ReceptionWorkRegisterController implements Initializable {
     private String[] codirectorsParts;
     private ReceptionWork receptionWork = new ReceptionWork();
     private String keyGroupAcademic;
+    private Member member;
+
+    public void setKeyGroupAcademic(String keyGroupAcademic) {
+        this.keyGroupAcademic = keyGroupAcademic;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
     
     
     public void setPreliminarProjects(ObservableList<PreliminarProject> preliminarProjects) {  
@@ -114,7 +124,7 @@ public class ReceptionWorkRegisterController implements Initializable {
                 i=i+3;
            }  
         }
-        paneStudent.getChildren().add(gridPane);
+        spStudent.setContent(gridPane);
     }
     
     
@@ -165,7 +175,9 @@ public class ReceptionWorkRegisterController implements Initializable {
               FXMLLoader loader = new FXMLLoader(url);
               loader.setLocation(url);
               loader.load();
-              ReceptionWorkListController receptionWorkListController =loader.getController();      
+              ReceptionWorkListController receptionWorkListController =loader.getController();     
+              receptionWorkListController.setKeyGroupAcademic(keyGroupAcademic);
+              receptionWorkListController.setMember(member);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);       
@@ -346,7 +358,7 @@ public class ReceptionWorkRegisterController implements Initializable {
     
     
     private void recoverStudents() throws BusinessException{   
-        GridPane gridPane= (GridPane) paneStudent.getChildren().get(0);
+        GridPane gridPane= (GridPane) spStudent.getContent();
         ArrayList<Student> students = new ArrayList<Student>();
             int i=1;
             Integer lgacs=Integer.parseInt(tfNumberStudents.getText());  
@@ -500,12 +512,12 @@ public class ReceptionWorkRegisterController implements Initializable {
                 indexGridPane++;
            }  
         
-            lgacsPane.getChildren().add(gridPane);
 
+           spLgacs.setContent(gridPane);
     }
     
     private void recoverLgacs() throws BusinessException{    
-        GridPane gridPane= (GridPane) lgacsPane.getChildren().get(0);
+        GridPane gridPane= (GridPane) spLgacs.getContent();
         ArrayList<LGAC> lgacs = new ArrayList<LGAC>();
         LGACDAO lgacDAO = new LGACDAO();
             int i=1;

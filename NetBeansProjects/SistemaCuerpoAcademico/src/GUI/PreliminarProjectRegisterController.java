@@ -29,6 +29,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -60,6 +61,7 @@ public class PreliminarProjectRegisterController implements Initializable {
     @FXML Button btAddCodirector;
     @FXML Button btDelete;
     @FXML TableView<Member> tvCodirectors;
+    @FXML ScrollPane spStudents;
     private ListChangeListener<Member> tableCodirectorsListener;
     private int indexCodirectors;
     private String keyGroupAcademic;
@@ -98,7 +100,8 @@ public class PreliminarProjectRegisterController implements Initializable {
                 i=i+3;
            }  
         }
-        paneStudent.getChildren().add(gridPane);
+        
+        spStudents.setContent(gridPane);
     }
 
     @FXML
@@ -213,7 +216,7 @@ public class PreliminarProjectRegisterController implements Initializable {
     }
     
     private void recoverStudents() throws BusinessException{   
-        GridPane gridPane= (GridPane) paneStudent.getChildren().get(0);
+        GridPane gridPane= (GridPane) spStudents.getContent();
         ArrayList<Student> students = new ArrayList<Student>();
             int i=1;
             Integer lgacs=Integer.parseInt(tfNumberStudents.getText());  

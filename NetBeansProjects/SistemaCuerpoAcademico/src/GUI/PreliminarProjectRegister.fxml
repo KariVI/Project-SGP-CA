@@ -5,13 +5,13 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -39,7 +39,6 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Pane fx:id="paneStudent" layoutX="417.0" layoutY="119.0" prefHeight="391.0" prefWidth="287.0" />
       <DatePicker fx:id="dpStartDate" layoutX="193.0" layoutY="131.0" prefHeight="25.0" prefWidth="200.0" />
       <DatePicker fx:id="dpEndDate" layoutX="193.0" layoutY="161.0" prefHeight="25.0" prefWidth="200.0" />
       <ComboBox fx:id="cbDirector" layoutX="133.0" layoutY="302.0" prefHeight="25.0" prefWidth="260.0" />
@@ -55,5 +54,6 @@
          </children>
       </HBox>
       <Button fx:id="btDelete" layoutX="393.0" layoutY="453.0" mnemonicParsing="false" onAction="#actionDelete" text="X" />
+      <ScrollPane fx:id="spStudents" layoutX="424.0" layoutY="125.0" prefHeight="384.0" prefWidth="277.0" />
    </children>
 </AnchorPane>
