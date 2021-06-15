@@ -11,6 +11,7 @@ import domain.Project;
 import domain.ReceptionWork;
 import domain.Student;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +31,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import log.BusinessException;
 import log.Log;
 
-public class ProjectRegisterController implements Initializable {
+public class ProjectModifyController implements Initializable {
 
     @FXML private DatePicker dpFinishDate;
     @FXML private DatePicker dpStartDate;
@@ -63,27 +63,22 @@ public class ProjectRegisterController implements Initializable {
     @FXML private ComboBox<LGAC> cbLGAC;
     private ObservableList<LGAC> lgacs;
     private ObservableList<LGAC> lgacsTable;
+    private ObservableList<LGAC> lgacsTableOld;
     private ObservableList<Member> members;
     private ObservableList<Member> membersTable;
     private ObservableList<Student> studentsTable;
+    private ObservableList<Member> membersTableOld;
+    private ObservableList<Student> studentsTableOld;
     private ObservableList<ReceptionWork> receptionWorks;
     private ObservableList<ReceptionWork> receptionWorksTable;
+    private ObservableList<ReceptionWork> receptionWorksTableOld;
     private String groupAcademicKey;
     int indexMember;
     int indexLGAC;
     int indexReceptionWork;
     int indexStudent;
-    @FXML
-    private AnchorPane scrollBar;
-    @FXML
-    private Button btDeleteLGAC;
-    @FXML
-    private Button btDeleteReceptionWork;
-    @FXML
-    private Button btDeleteMember;
-    @FXML
-    private Button btDeleteStudent;
- 
+    Project projectRetrieved;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tcLGAC.setCellValueFactory(new PropertyValueFactory<LGAC,String>("name"));
@@ -93,11 +88,15 @@ public class ProjectRegisterController implements Initializable {
         tcReceptionWork.setCellValueFactory(new PropertyValueFactory<ReceptionWork,String>("title"));
         lgacs = FXCollections.observableArrayList();  
         lgacsTable = FXCollections.observableArrayList(); 
+        lgacsTableOld = FXCollections.observableArrayList(); 
         members = FXCollections.observableArrayList();  
         membersTable = FXCollections.observableArrayList(); 
+        membersTableOld = FXCollections.observableArrayList(); 
         receptionWorks = FXCollections.observableArrayList();  
         receptionWorksTable = FXCollections.observableArrayList();  
+        receptionWorksTableOld = FXCollections.observableArrayList();
         studentsTable = FXCollections.observableArrayList(); 
+        studentsTableOld = FXCollections.observableArrayList(); 
         cbLGAC.setItems(lgacs);
         cbMember.setItems(members);
         cbReceptionWork.setItems(receptionWorks);
@@ -112,6 +111,7 @@ public class ProjectRegisterController implements Initializable {
              }
             }
         );
+        
         tvStudent.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                  setSelectedStudent();
@@ -147,22 +147,19 @@ public class ProjectRegisterController implements Initializable {
          description = taDescription.getText();
          startDate = dpStartDate.getValue().format(formatter);
          finishDate = dpFinishDate.getValue().format(formatter);
-         Project project = new Project(title,description,startDate,finishDate,groupAcademicKey);         
-         project = setProject(project);
+         Project project = new Project(title,description,startDate,finishDate,groupAcademicKey);  
+          project = setProjectInfo(project);
          if(validateProject(project)){   
  
              try {
                  saveStudents();
                  ProjectDAO projectDAO = new ProjectDAO();
-                 projectDAO.save(project);
-                 project.setIdProject(projectDAO.searchId(project));
-                 projectDAO.addStudents(project);
-                 projectDAO.addLGAC(project);
-                 projectDAO.addColaborators(project);
-                 projectDAO.addReceptionWork(project);
+                 project.setIdProject(projectDAO.searchId(projectRetrieved));
+                 deleteProjectInfo(project);
+                 addProjectInfo(project);
                  alertMessage.showAlertSuccesfulSave("Proyecto");
-                  Stage stage = (Stage)btSave.getScene().getWindow();
-                  stage.close();
+                 Stage stage = (Stage)btSave.getScene().getWindow();
+                 stage.close();
              } catch (BusinessException ex) {
                   if(ex.getMessage().equals("DataBase connection failed ")){
                      alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
@@ -177,7 +174,33 @@ public class ProjectRegisterController implements Initializable {
            
    }
    
-   @FXML public void actionCancel(){
+   public void deleteProjectInfo(Project project){
+        try {
+            ProjectDAO projectDAO = new ProjectDAO();
+            projectDAO.update(project);
+            projectDAO.deleteStudents(project);
+            projectDAO.deleteLGACS(project);
+            projectDAO.deleteColaborators(project);
+            projectDAO.deleteReceptionWorks(project);            
+        } catch (BusinessException ex) {
+            Logger.getLogger(ProjectModifyController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   }
+   
+      public void addProjectInfo(Project project){
+        try {
+           ProjectDAO projectDAO = new ProjectDAO();
+           projectDAO.addStudents(project);
+           projectDAO.addLGAC(project);
+           projectDAO.addColaborators(project);
+           projectDAO.addReceptionWork(project);          
+        } catch (BusinessException ex) {
+          Logger.getLogger(ProjectModifyController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   }
+   
+   @FXML
+   public void actionCancel(){
        Stage stage = (Stage)btCancel.getScene().getWindow();
        stage.close();
    }
@@ -215,7 +238,8 @@ public class ProjectRegisterController implements Initializable {
          return value;
    }
    
-   private Project setProject(Project project){
+   private Project setProjectInfo(Project project){
+       
        for(int i = 0; i < studentsTable.size(); i++){
            project.setStudent(studentsTable.get(i));
        }
@@ -246,26 +270,9 @@ public class ProjectRegisterController implements Initializable {
            value = false;
            alertMessage.showAlertValidateFailed("Campos invalidos");
        }
-       if(projectAlreadyRegistered(project)){
-           value = false;
-           alertMessage.showAlertValidateFailed("El proyecto ya se encuentra registrado");
-       }
        return value;     
    }
-   
-   private boolean projectAlreadyRegistered(Project project){
-        boolean value = false;
-        try {
-            ProjectDAO projectDAO = new ProjectDAO();
-            projectDAO.searchId(project);
-            value = true;
-        } catch (BusinessException ex) {
-            Logger.getLogger(ProjectRegisterController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return value;
-   }
-   
+    
    private boolean emptyFields(Project project){
        boolean value = false;
        if(project.getDescription().isEmpty()||project.getTitle().isEmpty()||
@@ -437,12 +444,11 @@ public class ProjectRegisterController implements Initializable {
         String enrollment = "";
         name = tfName.getText();
         enrollment = tfEnrollment.getText();
-        Student student = new Student(enrollment,name);
+        Student student = new Student(enrollment, name);
         if(validateStudent(student)){
             studentsTable.add(student); 
             cleanFields();
-        }
-        
+        }       
     }  
     
     private boolean validateStudent(Student student){
@@ -483,13 +489,25 @@ public class ProjectRegisterController implements Initializable {
             tfEnrollment.setText(student.getEnrollment());
         }
     }
-
     
     @FXML
     private void actionDeleteStudent(ActionEvent event){
        studentsTable.remove(indexStudent);
        cleanFields();
     }
+    
+    @FXML
+    public void actionUpdateStudent(){
+        String name = "";
+        String enrollment = "";
+        name = tfName.getText();
+        enrollment = tfEnrollment.getText();
+        Student student = new Student(enrollment, name);
+        if(validateStudent(student)){    
+            studentsTable.set(indexStudent,student);
+        }
+        cleanFields();
+   }
     
     private void cleanFields(){
         tfName.setText("");
@@ -513,12 +531,6 @@ public class ProjectRegisterController implements Initializable {
         return value;
     }
 
-    public void setGroupAcademic(String groupAcademicKey){
-        this.groupAcademicKey = groupAcademicKey;    
-        initializeMembers();
-        initializeLGACs();
-        initializeReceptionWorks();
-    }
     
     private boolean repeatedStudent(Student student){
         Boolean value = false;
@@ -576,8 +588,82 @@ public class ProjectRegisterController implements Initializable {
         }
     }
     
+    public void setProject(Project projectRetrieved){
+        this.projectRetrieved = projectRetrieved;
+        this.groupAcademicKey = projectRetrieved.getGroupAcademicKey();
+        initializeMembers();
+        initializeLGACs();
+        initializeReceptionWorks();
+        initializeProject(projectRetrieved);
+        initializeLGACs(projectRetrieved);
+        initializeMembers(projectRetrieved);
+        initializeStudents(projectRetrieved);
+        initializeReceptionWorks(projectRetrieved);
+    }
+    
+    private void initializeProject(Project projectRetrieved){
+        tfTitle.setText(projectRetrieved.getTitle());
+        LocalDate startDate = LocalDate.parse(projectRetrieved.getStartDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        LocalDate finishDate = LocalDate.parse(projectRetrieved.getFinishDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        dpStartDate.setValue(startDate);
+        dpFinishDate.setValue(finishDate);
+        taDescription.setText(projectRetrieved.getDescription());
+    }
+    
+    private void initializeLGACs(Project projectRetrieved){
+        ProjectDAO projectDAO = new ProjectDAO();
+        try {
+            ArrayList<LGAC> lgacList = new ArrayList<LGAC>();
+            lgacList = projectDAO.getLGACs(projectRetrieved);
+            for(int i = 0; i< lgacList.size(); i++){
+                lgacsTableOld.add(lgacList.get(i));
+                lgacsTable.add(lgacList.get(i));
+            }
+        } catch (BusinessException ex) {
+            Logger.getLogger(ProjectShowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void initializeMembers(Project projectRetrieved){
+        ProjectDAO projectDAO = new ProjectDAO();
+        try {
+            ArrayList<Member> memberList = new ArrayList<Member>();
+            memberList = projectDAO.getColaborators(projectRetrieved);
+            for(int i = 0; i< memberList.size(); i++){
+                membersTableOld.add(memberList.get(i));
+                membersTable.add(memberList.get(i));
+            }
+        } catch (BusinessException ex) {
+            Logger.getLogger(ProjectShowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void initializeStudents(Project projecRetrieved){
+        ProjectDAO projectDAO = new ProjectDAO();
+        try {
+            ArrayList<Student> studentList = new ArrayList<Student>();
+            studentList = projectDAO.getStudents(projectRetrieved);
+            for(int i = 0; i< studentList.size(); i++){
+                studentsTableOld.add(studentList.get(i));
+                studentsTable.add(studentList.get(i));
+            }
+        } catch (BusinessException ex) {
+            Logger.getLogger(ProjectShowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void initializeReceptionWorks(Project projectRetrieved){
+        ProjectDAO projectDAO = new ProjectDAO();
+        try {
+            ArrayList<ReceptionWork> receptionWorkList = new ArrayList<ReceptionWork>();
+            receptionWorkList = projectDAO.getReceptionWorks(projectRetrieved);
+            for(int i = 0; i< receptionWorkList.size(); i++){
+                receptionWorksTableOld.add(receptionWorkList.get(i));
+                receptionWorksTable.add(receptionWorkList.get(i));
+            }
+        } catch (BusinessException ex) {
+            Logger.getLogger(ProjectShowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
 }
-
-
-

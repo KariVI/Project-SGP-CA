@@ -23,5 +23,9 @@ public interface IProjectDAO {
       public ArrayList <Student> getStudents(Project project) throws BusinessException;
       public ArrayList <LGAC> getLGACs(Project project) throws BusinessException;
       public ArrayList <ReceptionWork> getReceptionWorks(Project project) throws BusinessException;
+      public boolean deleteReceptionWorks(Project project) throws BusinessException;
+      public boolean deleteColaborators(Project project) throws BusinessException;
+      public boolean deleteStudents(Project project) throws BusinessException;
+      public boolean deleteLGACS(Project project) throws BusinessException;
       
 }

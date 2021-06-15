@@ -157,4 +157,32 @@ public class ProjectDaoTest {
         assertEquals(projectDAO.getStudents(project),project.getStudents());
     }
     
+    @Test
+    public void testDeleteColaborators() throws BusinessException {
+        Project project = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
+        ProjectDAO projectDAO = new ProjectDAO();
+        assertTrue(projectDAO.deleteColaborators(project));
+    }
+    
+    @Test
+    public void testDeleteLGACs() throws BusinessException {
+        Project project = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
+        ProjectDAO projectDAO = new ProjectDAO();
+        assertTrue(projectDAO.deleteLGACS(project));
+    }
+    
+    @Test
+    public void testDeleteStudents() throws BusinessException {
+        Project project = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
+        ProjectDAO projectDAO = new ProjectDAO();
+        assertTrue(projectDAO.deleteStudents(project));
+    }
+    
+    @Test
+    public void testDeleteRecepetionWorks() throws BusinessException {
+        Project project = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
+        ProjectDAO projectDAO = new ProjectDAO();
+        assertTrue(projectDAO.deleteReceptionWorks(project));
+    }
+    
 }

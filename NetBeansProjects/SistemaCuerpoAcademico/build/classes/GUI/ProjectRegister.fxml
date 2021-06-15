@@ -21,9 +21,9 @@
         <URL value="@projectregister.css" />
     </stylesheets>
    <children>
-      <ScrollPane layoutX="-9.0" layoutY="-10.0" prefHeight="503.0" prefWidth="796.0">
+      <ScrollPane layoutY="-10.0" prefHeight="507.0" prefWidth="787.0">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="807.0" prefWidth="794.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="907.0" prefWidth="794.0">
                <children>
                   <GridPane layoutX="79.0" layoutY="71.0" prefHeight="90.0" prefWidth="288.0">
                     <columnConstraints>
@@ -56,33 +56,37 @@
                       <TableColumn fx:id="tcLGAC" prefWidth="589.0" text="LGAC" />
                     </columns>
                   </TableView>
-                  <TableView fx:id="tvReceptionWork" layoutX="79.0" layoutY="318.0" prefHeight="90.0" prefWidth="590.0">
+                  <TableView fx:id="tvReceptionWork" layoutX="83.0" layoutY="345.0" prefHeight="90.0" prefWidth="590.0">
                      <columns>
                         <TableColumn fx:id="tcReceptionWork" prefWidth="589.0" text="Trabajo Recepcional" />
                      </columns>
                   </TableView>
-                  <TableView fx:id="tvMember" layoutX="81.0" layoutY="460.0" prefHeight="90.0" prefWidth="590.0">
+                  <TableView fx:id="tvMember" layoutX="81.0" layoutY="512.0" prefHeight="90.0" prefWidth="590.0">
                      <columns>
                         <TableColumn fx:id="tcMember" prefWidth="588.2505722045898" text="Participantes del CA" />
                      </columns>
                   </TableView>
-                  <TableView fx:id="tvStudent" layoutX="79.0" layoutY="604.0" prefHeight="90.0" prefWidth="590.0">
+                  <TableView fx:id="tvStudent" layoutX="81.0" layoutY="679.0" prefHeight="90.0" prefWidth="590.0">
                      <columns>
                         <TableColumn fx:id="tcStudentName" prefWidth="407.0" text="Nombre" />
                         <TableColumn fx:id="tcStudentEnrollment" prefWidth="182.0" text="Matrícula" />
                      </columns>
                   </TableView>
-                  <Button fx:id="btAddLGAC" layoutX="681.0" layoutY="268.0" mnemonicParsing="false" onAction="#addLgac" text="Agregar" />
-                  <Button fx:id="btAddRecepcionalWork" layoutX="677.0" layoutY="406.0" mnemonicParsing="false" onAction="#addReceptionWork" text="Agregar" />
-                  <Button fx:id="btAddStudent" layoutX="683.0" layoutY="688.0" mnemonicParsing="false" onAction="#addStudent" text="Agregar" />
-                  <Button fx:id="btAddMember" layoutX="690.0" layoutY="557.0" mnemonicParsing="false" onAction="#addMember" text="Agregar" />
-                  <ComboBox fx:id="cbLGAC" layoutX="74.0" layoutY="270.0" prefHeight="26.0" prefWidth="593.0" />
-                  <ComboBox fx:id="cbReceptionWork" layoutX="78.0" layoutY="410.0" prefHeight="26.0" prefWidth="590.0" />
-                  <ComboBox fx:id="cbMember" layoutX="77.0" layoutY="554.0" prefHeight="26.0" prefWidth="590.0" />
-                  <Button fx:id="save" layoutX="595.0" layoutY="742.0" mnemonicParsing="false" onAction="#actionSave" prefHeight="32.0" prefWidth="74.0" text="Guardar" />
-                  <Button fx:id="cancel" layoutX="678.0" layoutY="743.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="75.0" text="Cancelar" />
-                  <TextField fx:id="tfEnrollment" layoutX="76.0" layoutY="697.0" prefHeight="26.0" prefWidth="401.0" promptText="Nombre" />
-                  <TextField fx:id="tfName" layoutX="481.0" layoutY="697.0" prefHeight="26.0" prefWidth="187.0" promptText="Matrícula" />
+                  <Button fx:id="btAddLGAC" layoutX="606.0" layoutY="305.0" mnemonicParsing="false" onAction="#addLgac" text="Agregar" />
+                  <Button fx:id="btAddRecepcionalWork" layoutX="611.0" layoutY="471.0" mnemonicParsing="false" onAction="#addReceptionWork" text="Agregar" />
+                  <Button fx:id="btAddStudent" layoutX="608.0" layoutY="803.0" mnemonicParsing="false" onAction="#addStudent" text="Agregar" />
+                  <Button fx:id="btAddMember" layoutX="611.0" layoutY="641.0" mnemonicParsing="false" onAction="#addMember" text="Agregar" />
+                  <ComboBox fx:id="cbLGAC" layoutX="78.0" layoutY="270.0" prefHeight="26.0" prefWidth="593.0" />
+                  <ComboBox fx:id="cbReceptionWork" layoutX="82.0" layoutY="436.0" prefHeight="26.0" prefWidth="590.0" />
+                  <ComboBox fx:id="cbMember" layoutX="81.0" layoutY="604.0" prefHeight="26.0" prefWidth="590.0" />
+                  <Button fx:id="btSave" layoutX="595.0" layoutY="847.0" mnemonicParsing="false" onAction="#actionSave" prefHeight="32.0" prefWidth="74.0" text="Guardar" />
+                  <Button fx:id="btCancel" layoutX="678.0" layoutY="844.0" mnemonicParsing="false" onAction="#actionCancel" prefHeight="32.0" prefWidth="75.0" text="Cancelar" />
+                  <TextField fx:id="tfName" layoutX="80.0" layoutY="769.0" prefHeight="26.0" prefWidth="401.0" promptText="Nombre" />
+                  <TextField fx:id="tfEnrollment" layoutX="484.0" layoutY="771.0" prefHeight="26.0" prefWidth="187.0" promptText="Matrícula" />
+                  <Button fx:id="btDeleteLGAC" layoutX="688.0" layoutY="271.0" mnemonicParsing="false" onAction="#actionDeleteLGAC" text="X" />
+                  <Button fx:id="btDeleteReceptionWork" layoutX="688.0" layoutY="437.0" mnemonicParsing="false" onAction="#actionDeleteReceptionWork" text="X" />
+                  <Button fx:id="btDeleteMember" layoutX="688.0" layoutY="605.0" mnemonicParsing="false" onAction="#actionDeleteMember" text="X" />
+                  <Button fx:id="btDeleteStudent" layoutX="686.0" layoutY="771.0" mnemonicParsing="false" onAction="#actionDeleteStudent" text="X" />
                </children>
             </AnchorPane>
         </content>

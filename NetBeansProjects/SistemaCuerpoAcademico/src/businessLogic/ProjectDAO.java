@@ -387,4 +387,92 @@ public class ProjectDAO implements IProjectDAO {
 
         return receptionWorks;
     }
+    
+    @Override
+    public boolean deleteColaborators(Project project) throws BusinessException {
+        boolean deleteSucess = false;
+        int idProject = project.getIdProject();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("delete from DesarrollaProyecto where idProyecto = ? ");
+                 
+               preparedStatement.setInt(1, idProject);
+               preparedStatement.executeUpdate();           
+            
+            deleteSucess = true;
+            connectorDataBase.disconnect();         
+        }catch(SQLException sqlException) {
+            throw new BusinessException("DataBase connection failed ", sqlException);
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return deleteSucess;
+    }
+
+    @Override
+    public boolean deleteReceptionWorks(Project project) throws BusinessException {
+        boolean deleteSucess = false;
+        int idProject = project.getIdProject();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("Delete from ProyectoTrabajoRecepcional where idProyecto = ? ");
+                 
+               preparedStatement.setInt(1, idProject);
+               preparedStatement.executeUpdate();           
+            
+            deleteSucess = true;
+            connectorDataBase.disconnect();         
+        }catch(SQLException sqlException) {
+            throw new BusinessException("DataBase connection failed ", sqlException);
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return deleteSucess;
+    }
+
+    @Override
+    public boolean deleteStudents(Project project) throws BusinessException {
+       boolean deleteSucess = false;
+        int idProject = project.getIdProject();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("Delete from ParticipaProyecto where idProyecto = ? ");
+                 
+               preparedStatement.setInt(1, idProject);
+               preparedStatement.executeUpdate();           
+            
+            deleteSucess = true;
+            connectorDataBase.disconnect();         
+        }catch(SQLException sqlException) {
+            throw new BusinessException("DataBase connection failed ", sqlException);
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return deleteSucess;
+    }
+
+    @Override
+    public boolean deleteLGACS(Project project) throws BusinessException {
+                boolean deleteSucess = false;
+        int idProject = project.getIdProject();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("Delete from CultivaProyecto where idProyecto = ? ");
+                 
+               preparedStatement.setInt(1, idProject);
+               preparedStatement.executeUpdate();           
+            
+            deleteSucess = true;
+            connectorDataBase.disconnect();         
+        }catch(SQLException sqlException) {
+            throw new BusinessException("DataBase connection failed ", sqlException);
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return deleteSucess;
+    }
 }

@@ -155,17 +155,7 @@ public class TopicRegisterController implements Initializable {
     
    public void actionSave(){
       
-       meetingRegisterController.setTopics(topics);
-       // try {
-          //for(int i = 0; i < topics.size(); i++){
-             //topicDAO.save(topics.get(i));
-           //}   
-          // AlertMessage alertMessage = new AlertMessage();
-          // alertMessage.showAlertSuccesfulSave("Los temas fueron registrados con éxito");
-        // } catch (BusinessException ex) {
-            //   Logger.getLogger(TopicRegisterController.class.getName()).log(Level.SEVERE, null, ex);
-         //}
-       
+       meetingRegisterController.setTopics(topics);       
         Stage stage = (Stage)btSave.getScene().getWindow();
         stage.close();
     }

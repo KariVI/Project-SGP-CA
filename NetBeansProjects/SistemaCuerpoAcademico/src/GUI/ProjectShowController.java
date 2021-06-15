@@ -6,6 +6,9 @@ import domain.Member;
 import domain.Project;
 import domain.ReceptionWork;
 import domain.Student;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -14,7 +17,10 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -138,6 +144,26 @@ public class ProjectShowController implements Initializable {
     
     @FXML
     public void actionUpdate(){
-        
+        try {
+            URL url = new File("src/GUI/ProjectModify.fxml").toURI().toURL();
+            FXMLLoader loader = new FXMLLoader(url);
+            loader.setLocation(url);
+            try {
+                loader.load();
+            } catch (IOException ex) {
+                Logger.getLogger(ProjectListController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ProjectModifyController  projectModifyController = loader.getController();
+            projectModifyController.setProject(project);
+            Parent root = loader.getRoot();
+            Scene scene = new Scene(root);
+            Stage primaryStage= new Stage();
+            primaryStage.setScene(scene);
+            Stage stage = (Stage) btUpdate.getScene().getWindow();
+            stage.close();
+            primaryStage.show();
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(ProjectListController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
