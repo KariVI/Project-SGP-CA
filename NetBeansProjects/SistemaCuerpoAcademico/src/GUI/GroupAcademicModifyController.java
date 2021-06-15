@@ -35,8 +35,8 @@ import log.Log;
 
 public class GroupAcademicModifyController implements Initializable {
 
-     @FXML private TextField tfName;
-    @FXML private TextField tfKey;
+     @FXML private TextFieldLimited tfName;
+    @FXML private TextFieldLimited tfKey;
     @FXML private TextArea taObjetive;
     @FXML private TextArea taVision;
     @FXML private TextArea taMision; 
@@ -277,6 +277,8 @@ public class GroupAcademicModifyController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+      tfName.setMaxlength(100);
+      tfKey.setMaxlength(10);
       consolidateGrades= FXCollections.observableArrayList();
       consolidateGrades.add("En formación");
       consolidateGrades.add("En consolidación");

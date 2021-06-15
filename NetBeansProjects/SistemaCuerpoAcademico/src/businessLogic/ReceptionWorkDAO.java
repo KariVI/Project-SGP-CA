@@ -189,8 +189,10 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
                 Connection connectionDataBase = connectorDataBase.getConnection();
                 String insertColaborators = "INSERT INTO Dirige(idTrabajoRecepcional,cedula,rol) VALUES (?,?,?)";
                 int i=0;
+                PreparedStatement preparedStatement = connectionDataBase.prepareStatement(insertColaborators);
                 while(i< colaborators.size()){
-                    PreparedStatement preparedStatement = connectionDataBase.prepareStatement(insertColaborators);
+                    
+                    
                     preparedStatement.setInt(1, idReceptionWork);
                     preparedStatement.setString(2, colaborators.get(i).getProfessionalLicense());
                     preparedStatement.setString(3, colaborators.get(i).getRole());
@@ -240,7 +242,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
-            String query = "SELECT cedula FROM Dirige where idTrabajoRecepcional=?";
+            String query = "SELECT cedula,rol FROM Dirige where idTrabajoRecepcional=?";
 
                PreparedStatement preparedStatement = connectionDataBase.prepareStatement(query);
                preparedStatement.setInt(1, idPreliminarProject);
@@ -249,7 +251,9 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
                while(resultSet.next()){
                     int key= resultSet.getInt(1);
                     String professionalLicense= resultSet.getString("cedula");
+                    String role = resultSet.getString("rol");
                     Member member = memberDAO.getMemberByLicense(professionalLicense);
+                    member.setRole(role);
                     colaborators.add(member);
                     
                 }

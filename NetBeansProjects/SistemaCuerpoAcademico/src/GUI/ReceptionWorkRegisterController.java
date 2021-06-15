@@ -43,7 +43,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import log.BusinessException;
@@ -78,13 +77,17 @@ public class ReceptionWorkRegisterController implements Initializable {
     private ObservableList<Member> codirectors ;
     private ObservableList<Member> members ;
     private ObservableList<PreliminarProject> preliminarProjects;
-    private String[] codirectorsParts;
     private ReceptionWork receptionWork = new ReceptionWork();
     private String keyGroupAcademic;
     private Member member;
 
     public void setKeyGroupAcademic(String keyGroupAcademic) {
         this.keyGroupAcademic = keyGroupAcademic;
+        try {
+            getlgacs();
+        } catch (BusinessException ex) {
+            Log.logException(ex);
+        }
     }
 
     public void setMember(Member member) {
@@ -209,7 +212,7 @@ public class ReceptionWorkRegisterController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
+ 
             types=FXCollections.observableArrayList();
             states = FXCollections.observableArrayList();
             types.add("Práctico técnico");
@@ -252,10 +255,7 @@ public class ReceptionWorkRegisterController implements Initializable {
                     setSelectedCodirector();
                 }
             };
-                addlgacs();
-            } catch (BusinessException ex) {
-                Log.logException(ex);
-            }
+        
     }    
     
      private Member getSelectedCodirector(){
@@ -464,7 +464,7 @@ public class ReceptionWorkRegisterController implements Initializable {
           boolean value=false;
           if(tfTitle.getText().isEmpty() 
            || taDescription.getText().isEmpty()  || dpStartDate == null 
-            || dpEndDate==null  
+            || dpEndDate==null  || cbPreliminarProject.getSelectionModel().getSelectedItem() == null
            ){
               value=true;
           }
@@ -473,9 +473,13 @@ public class ReceptionWorkRegisterController implements Initializable {
      
     private boolean validateInformationField(){ 
          boolean value=true;
+         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String startDate = dpStartDate.getValue().format(formatter);
+        String endDate = dpEndDate.getValue().format(formatter);
         Validation validation=new Validation();
         if(validation.findInvalidField(tfTitle.getText())
-        || validation.findInvalidField(taDescription.getText())  ){   
+        || validation.findInvalidField(taDescription.getText()) || (!validation.validateDate(startDate))
+        || (!validation.validateDate(endDate)) ){   
             value=false;
         }  
         return value;
@@ -495,7 +499,7 @@ public class ReceptionWorkRegisterController implements Initializable {
     }
      
     
-    private void addlgacs() throws BusinessException{    
+    private void getlgacs() throws BusinessException{    
         
          GridPane gridPane= new GridPane();
          GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO ();
@@ -504,7 +508,7 @@ public class ReceptionWorkRegisterController implements Initializable {
             int i=0;
             gridPane.add(new Label ("Selecciona LGAC relacionadas: "),1,0);
             int indexGridPane=1;
-            ArrayList <LGAC> lgacs = groupAcademicDAO.getLGACs("JDOEIJ804");
+            ArrayList <LGAC> lgacs = groupAcademicDAO.getLGACs(keyGroupAcademic);
            while (i < lgacs.size()){  
                 CheckBox checkBox = new CheckBox(lgacs.get(i).getName());
                 gridPane.add(checkBox,1,indexGridPane);
@@ -523,7 +527,7 @@ public class ReceptionWorkRegisterController implements Initializable {
             int i=1;
             int indexLGACs =0;
             GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO ();
-            ArrayList <LGAC> lgacsAuxiliar = groupAcademicDAO.getLGACs("JDOEIJ804");
+            ArrayList <LGAC> lgacsAuxiliar = groupAcademicDAO.getLGACs(keyGroupAcademic);
            while (i ==lgacsAuxiliar.size() ){
                CheckBox checkBox = (CheckBox) getNodeFromGridPane( gridPane, 1, i);
                if(checkBox.isSelected()){   
@@ -532,14 +536,12 @@ public class ReceptionWorkRegisterController implements Initializable {
                }
                i++;
            }
+            ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
            receptionWork.setLGACs(lgacs);
-           addLGACs();
+           receptionWorkDAO.addedSucessfulLGACs(receptionWork);
+           
     }
     
-    private void addLGACs() throws BusinessException{
-        ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
-        receptionWorkDAO.addedSucessfulLGACs(receptionWork);
-    }
     
      private boolean searchRepeateReceptionWork()   { 
        boolean value=false; 

@@ -45,15 +45,15 @@ public class MeetingModifyController implements Initializable {
     private ObservableList<Member> members;
     private ObservableList<Prerequisite> prerequisites;
     private ObservableList<Prerequisite> oldPrerequisites;
-    @FXML private TextField tfSubject;
-    @FXML private TextField tfHour;
+    @FXML private TextFieldLimited tfSubject;
+    @FXML private TextFieldLimited tfHour;
     @FXML private Button btExit;
     @FXML private ComboBox cbLeader;
     @FXML private ComboBox cbSecretary;
     @FXML private DatePicker dpDate;
     @FXML private TableColumn tcDescription;
     @FXML private TableColumn tcMandated;
-    @FXML private TextField tfDescription;
+    @FXML private TextFieldLimited tfDescription;
     @FXML private ComboBox cbMember;
     private int indexPrerequisite;
     @FXML private TableView<Prerequisite> tvPrerequisites;
@@ -368,6 +368,9 @@ public class MeetingModifyController implements Initializable {
     }
     
     private void setSelectedPrerequisite(){
+        tfSubject.setMaxlength(200);
+       tfHour.setMaxlength(5);
+       tfDescription.setMaxlength(200);
         Prerequisite prerequisite = getSelectedPrerequisite();
         indexPrerequisite = prerequisites.indexOf(prerequisite);
         if(prerequisite != null){

@@ -413,9 +413,13 @@ public class PreliminarProjectModifyController implements Initializable {
     
     private boolean validateInformationField(){ 
          boolean value=true;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String startDate = dpStartDate.getValue().format(formatter);
+        String endDate = dpEndDate.getValue().format(formatter);
         Validation validation=new Validation();
         if(validation.findInvalidField(tfTitle.getText())
-        || validation.findInvalidField(taDescription.getText()) ){   
+        || validation.findInvalidField(taDescription.getText()) || (!validation.validateDate(startDate))
+        || (!validation.validateDate(endDate))){
             value=false;
         }  
         return value;

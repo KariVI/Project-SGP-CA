@@ -68,6 +68,8 @@ public class MissingGroupAcademicController implements Initializable {
     
     @FXML
     private void actionAddGroupAcademic(ActionEvent actionEvent){ 
+        Stage stage = (Stage) btAddGroupAcademic.getScene().getWindow();
+        stage.close();
         
         try{ 
             Stage primaryStage= new Stage();

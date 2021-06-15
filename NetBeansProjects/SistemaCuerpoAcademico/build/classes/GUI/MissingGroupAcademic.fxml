@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="245.0" prefWidth="608.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="GUI.MissingGroupAcademicFXMLController">
+<AnchorPane id="AnchorPane" prefHeight="245.0" prefWidth="608.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="GUI.MissingGroupAcademicController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3c3e40" height="43.0" stroke="BLACK" strokeType="INSIDE" width="608.0" />
       <Text layoutX="14.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Por favor  primero registra tu cuerpo académico ">

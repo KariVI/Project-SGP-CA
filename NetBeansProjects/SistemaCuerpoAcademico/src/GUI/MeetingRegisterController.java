@@ -45,15 +45,15 @@ public class MeetingRegisterController implements Initializable {
     private ObservableList<Member> members;
     private ObservableList<Prerequisite> prerequisites;
     private ObservableList<Topic> topics;
-    @FXML private TextField tfSubject;
-    @FXML private TextField tfHour;
+    @FXML private TextFieldLimited tfSubject;
+    @FXML private TextFieldLimited tfHour;
     @FXML private Button btExit;
     @FXML private ComboBox cbLeader;
     @FXML private ComboBox cbSecretary;
     @FXML private  DatePicker dpDate;
     @FXML private TableColumn tcDescription;
     @FXML private TableColumn tcMandated;
-    @FXML private TextField tfDescription;
+    @FXML private TextFieldLimited tfDescription;
     @FXML private ComboBox cbMember;
     private int indexPrerequisite;
     @FXML TableView<Prerequisite> tvPrerequisite;
@@ -315,7 +315,9 @@ public class MeetingRegisterController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       // tfHour.setMaxlength(5);
+       tfSubject.setMaxlength(200);
+       tfHour.setMaxlength(5);
+       tfDescription.setMaxlength(200);
        disableButtonSave();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         dpDate.setConverter(new LocalDateStringConverter(formatter, null));

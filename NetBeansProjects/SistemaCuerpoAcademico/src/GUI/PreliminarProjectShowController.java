@@ -75,7 +75,7 @@ public class PreliminarProjectShowController implements Initializable {
              colaborators=preliminarProjectDAO.getColaborators(preliminarProject.getKey());
              for(int i=0; i< colaborators.size(); i++){ 
                  if(colaborators.get(i).getRole().equals("Director")){  
-                     lbDirector.setText(colaborators.get(i).getName());
+                     lbDirector.setText("Director: "+ colaborators.get(i).getName());
                  }else{ 
                      codirectors= codirectors + colaborators.get(i).getName();
                      codirectors= codirectors + ",";
@@ -91,7 +91,6 @@ public class PreliminarProjectShowController implements Initializable {
         PreliminarProjectDAO preliminarProjectDAO =new PreliminarProjectDAO();
          preliminarProject.setStudents(preliminarProjectDAO.getStudents(preliminarProject.getKey()));
          ArrayList<Student> students= preliminarProject.getStudents();
-         int i=0;
         int numberStudent=0;
         int numberRows=2;
         GridPane gridPane= new GridPane();
@@ -100,6 +99,7 @@ public class PreliminarProjectShowController implements Initializable {
         if(students.size()> 0){
             Label label = new Label("Estudiantes");
             gridPane.add(label,1, 0 );
+            int i=1;
             while (i <= students.size()){ 
                     Label lbNameStudent = new Label("->"+ students.get(numberStudent).getName());
                     gridPane.add(lbNameStudent,1, i );

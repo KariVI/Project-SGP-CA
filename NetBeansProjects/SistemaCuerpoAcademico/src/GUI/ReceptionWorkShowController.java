@@ -199,7 +199,10 @@ public class ReceptionWorkShowController implements Initializable {
     
       private void getLGACS() throws BusinessException{
         ReceptionWorkDAO receptionWorkDAO =new ReceptionWorkDAO();
-         receptionWork.setLGACs(receptionWorkDAO.getLGACs(receptionWork.getKey()));
+        if(receptionWorkDAO.getLGACs(receptionWork.getKey() ) != null){
+            ArrayList<LGAC> lgacsReceptionWork= receptionWorkDAO.getLGACs(receptionWork.getKey() );
+            receptionWork.setLGACs(lgacsReceptionWork);          
+        }
          ArrayList<LGAC> lgacs= receptionWork.getLGACs();
          int i=0;
          int indexGridPane=1;

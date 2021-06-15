@@ -53,15 +53,15 @@ public class PreliminarProjectRegisterController implements Initializable {
     @FXML private Button btSave;
     @FXML private Button btExit;
     @FXML private Pane paneStudent;
-    @FXML DatePicker dpStartDate;
-    @FXML DatePicker dpEndDate;
-    @FXML ComboBox cbDirector;
-    @FXML ComboBox cbCodirectors;
-    @FXML TableColumn tcCodirector;
-    @FXML Button btAddCodirector;
-    @FXML Button btDelete;
-    @FXML TableView<Member> tvCodirectors;
-    @FXML ScrollPane spStudents;
+    @FXML private DatePicker dpStartDate;
+    @FXML private DatePicker dpEndDate;
+    @FXML private ComboBox cbDirector;
+    @FXML private ComboBox cbCodirectors;
+    @FXML private TableColumn tcCodirector;
+    @FXML private Button btAddCodirector;
+    @FXML private Button btDelete;
+    @FXML private TableView<Member> tvCodirectors;
+    @FXML private ScrollPane spStudents;
     private ListChangeListener<Member> tableCodirectorsListener;
     private int indexCodirectors;
     private String keyGroupAcademic;
@@ -341,9 +341,13 @@ public class PreliminarProjectRegisterController implements Initializable {
     
     private boolean validateInformationField(){ 
          boolean value=true;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String startDate = dpStartDate.getValue().format(formatter);
+        String endDate = dpEndDate.getValue().format(formatter);
         Validation validation=new Validation();
         if(validation.findInvalidField(tfTitle.getText())
-        || validation.findInvalidField(taDescription.getText())  ){   
+        || validation.findInvalidField(taDescription.getText()) || (!validation.validateDate(startDate))
+        || (!validation.validateDate(endDate))){   
             value=false;
         }  
         return value;
