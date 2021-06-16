@@ -87,9 +87,9 @@ public class PreliminarProjectListController implements Initializable {
             Parent root = loader.load();
             PreliminarProjectShowController preliminarProjectShowController = loader.getController();
             preliminarProjectShowController.setPreliminarProject(preliminarProject);
-            preliminarProjectShowController.initializePreliminarProject();
             preliminarProjectShowController.setKeyGroupAcademic(keyGroupAcademic);
             preliminarProjectShowController.setMember(member);
+            preliminarProjectShowController.initializePreliminarProject();
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
