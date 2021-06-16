@@ -208,6 +208,7 @@ public class MeetingShowController implements Initializable {
     public void setMember(Member member){
        this.member = member;
    }
+    
     @FXML
     private void actionMinute(){
         if(btMeetingStart.getText().equals("Ver minuta")){
@@ -216,6 +217,7 @@ public class MeetingShowController implements Initializable {
             registerMinute();
         }
     }
+    
     private void registerMinute(){  
        
          try{ 

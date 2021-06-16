@@ -85,19 +85,16 @@ public class PreliminarProjectModifyController implements Initializable {
     private void initializeNextRowPosition(){  
         int sizeRows=3;
         int sizeStudentsCurrently= preliminarProjectRecover.getStudents().size();
-        nextRowPosition=  nextRowPosition + ( sizeStudentsCurrently * sizeRows);
+        if(sizeStudentsCurrently>0){
+            nextRowPosition=  nextRowPosition + ( sizeStudentsCurrently * sizeRows);
+        }
     }
 
     @FXML 
-    private void actionAddStudent(ActionEvent actionEvent){ 
-        
-            gridPane.setHgap (5);
-            gridPane.setVgap (5);
-            int sizeRows=3;
-
-            nextRowPosition= nextRowPosition + sizeRows ;
-            System.out.print(nextRowPosition);
-                TextField tfEnrollmentStudent = new TextField();
+    private void actionAddStudent(ActionEvent actionEvent) throws BusinessException{ 
+         initializeNextRowPosition();
+            int sizeRows=3;                             
+               TextField tfEnrollmentStudent = new TextField();
                 tfEnrollmentStudent .setPromptText("Matricula: ");   
                 TextField tfNameStudent = new TextField();
                 tfNameStudent.setPrefWidth(200);
@@ -106,7 +103,7 @@ public class PreliminarProjectModifyController implements Initializable {
                 gridPane.add(label,1,nextRowPosition);
                 gridPane.add(tfEnrollmentStudent,1,(nextRowPosition + 1));
                 gridPane.add(tfNameStudent,1, (nextRowPosition + 2));
-            
+                nextRowPosition= nextRowPosition + sizeRows;
               spStudents.setContent(gridPane);
 
         }
@@ -286,7 +283,7 @@ public class PreliminarProjectModifyController implements Initializable {
        try {
            initializeColaborators();
            getStudents();
-           initializeNextRowPosition();
+          
            
        } catch (BusinessException ex) {
           if(ex.getMessage().equals("DataBase connection failed ")){
@@ -327,10 +324,11 @@ public class PreliminarProjectModifyController implements Initializable {
         ArrayList<Student> students = new ArrayList<Student>();
             int i=1;
             int sizeRows=3;
-           while (i < (sizeRows * studentsOld.size())){
+            int size= (studentsOld.size() * sizeRows) + nextRowPosition ;
+           while (i <  size){
                TextField enrollment = (TextField) getNodeFromGridPane( gridPane, 1, i);
                TextField name = (TextField) getNodeFromGridPane( gridPane, 1, (i + 1));
-               i=i+3;
+                i=i+3;
                if(validateFieldsStudent(enrollment,name)){         
                  String enrollmentStudent= enrollment.getText();
                  String nameStudent= name.getText(); 

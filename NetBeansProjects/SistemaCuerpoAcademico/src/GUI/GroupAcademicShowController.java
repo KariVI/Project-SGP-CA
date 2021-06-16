@@ -19,9 +19,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import log.BusinessException;
 import log.Log;
@@ -34,7 +34,7 @@ public class GroupAcademicShowController implements Initializable {
     @FXML private TextArea taObjetive;
     @FXML private TextArea taVision;
     @FXML private TextArea taMision;
-    @FXML private Pane lgacsPane;
+    @FXML private ScrollPane spLgacs;
     @FXML private Button btUpdate;
     @FXML private Button btReturn;
     private Member member;
@@ -135,7 +135,7 @@ public class GroupAcademicShowController implements Initializable {
                 i=i+3;
                 numberlgacs++;
         }
-        lgacsPane.getChildren().add(gridPane);
+        spLgacs.setContent(gridPane);
     }
     
     
