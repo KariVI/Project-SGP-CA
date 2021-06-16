@@ -93,6 +93,7 @@ public class MeetingRegisterController implements Initializable {
               loader.setLocation(url);
               loader.load();
               TopicRegisterController topicRegisterController =loader.getController(); 
+              topicRegisterController.setMember(member);
               topicRegisterController.initializeMeeting(idMeeting,this);          
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);

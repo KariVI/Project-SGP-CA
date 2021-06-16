@@ -47,7 +47,8 @@ public class ProjectListController implements Initializable {
             FXMLLoader loader = new FXMLLoader(url);
               loader.setLocation(url);
               loader.load();
-              ProjectShowController projectShowController =loader.getController();      
+              ProjectShowController projectShowController =loader.getController(); 
+              projectShowController.setMember(member);
               projectShowController.setProject(selectedProject);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);

@@ -7,6 +7,7 @@ package GUI;
 
 import businessLogic.TopicDAO;
 import domain.Meeting;
+import domain.Member;
 import domain.Topic;
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -42,7 +44,9 @@ public class TopicShowController implements Initializable {
     @FXML Button btDelete;
     @FXML Button btAdd;
     @FXML Button btUpdate;
-    private int idMeeting = 0;
+    @FXML Button btReturn; 
+    private Meeting meeting;
+    private Member member;
 
     
     @Override
@@ -55,17 +59,20 @@ public class TopicShowController implements Initializable {
         tvTopic.setItems(topics);
         
     }  
-    public void initializeMeeting(Meeting meeting){
-        idMeeting = meeting.getKey();
+    public void setMeeting(Meeting meeting){
+        this.meeting = meeting;
         initializeTopics();
+    }
+    
+    public void setMember(Member member){
+        this.member = member;
     }
     
     public void initializeTopics(){
         TopicDAO topicDAO = new TopicDAO();
         try {
             ArrayList<Topic> topicList = new ArrayList<Topic>();
-            System.out.println(idMeeting);
-            topicList = topicDAO.getAgendaTopics(idMeeting);
+            topicList = topicDAO.getAgendaTopics(meeting.getKey());
             for(int i = 0; i < topicList.size(); i++){
                 topics.add(topicList.get(i));
    
@@ -73,6 +80,32 @@ public class TopicShowController implements Initializable {
         } catch (BusinessException ex) {
             Log.logException(ex);
         }       
+    }  
+    
+    @FXML
+    private void actionReturn(ActionEvent actionEvent){   
+        Stage stage = (Stage) btReturn.getScene().getWindow();
+        stage.close();
+        openShowMeeting();
+    }
+    
+    private void openShowMeeting(){   
+        Stage primaryStage = new Stage();
+        try{
+              URL url = new File("src/GUI/MeetingShow.fxml").toURI().toURL();
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              MeetingShowController meetingShowController  = loader.getController();
+              meetingShowController.setMember(member);
+              meetingShowController.setMeeting(meeting);
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);
+              primaryStage.show();
+            }catch (IOException ex) {
+                Log.logException(ex);
+            }
     }
      
     public void actionUpdate(){
@@ -83,7 +116,8 @@ public class TopicShowController implements Initializable {
             loader.setLocation(url);
             loader.load();
             TopicModifyController topicModifyController = loader.getController();
-            topicModifyController.initializeMeeting(idMeeting);
+            topicModifyController.setMember(member);
+            topicModifyController.setMeeting(meeting);
             Parent root = loader.getRoot();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);

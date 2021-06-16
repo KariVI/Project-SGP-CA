@@ -10,6 +10,8 @@ import domain.Member;
 import domain.Project;
 import domain.ReceptionWork;
 import domain.Student;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -20,7 +22,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -71,11 +76,12 @@ public class ProjectModifyController implements Initializable {
     private ObservableList<ReceptionWork> receptionWorksTable;
     private ObservableList<ReceptionWork> receptionWorksTableOld;
     private String groupAcademicKey;
-    int indexMember;
-    int indexLGAC;
-    int indexReceptionWork;
-    int indexStudent;
-    Project projectRetrieved;
+    private int indexMember;
+    private int indexLGAC;
+    private int indexReceptionWork;
+    private int indexStudent;
+    private Project projectRetrieved;
+    private Member member;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -158,6 +164,7 @@ public class ProjectModifyController implements Initializable {
                  alertMessage.showAlertSuccesfulSave("Proyecto");
                  Stage stage = (Stage)btSave.getScene().getWindow();
                  stage.close();
+                 openViewProject(project);
              } catch (BusinessException ex) {
                   if(ex.getMessage().equals("DataBase connection failed ")){
                      alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
@@ -201,7 +208,27 @@ public class ProjectModifyController implements Initializable {
    public void actionCancel(){
        Stage stage = (Stage)btCancel.getScene().getWindow();
        stage.close();
+       openViewProject(projectRetrieved);
    }
+   
+       private void  openViewProject(Project project){   
+        Stage primaryStage = new Stage();
+        try{
+              URL url = new File("src/GUI/ProjectShow.fxml").toURI().toURL();
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              ProjectShowController projectShowController = loader.getController();
+              projectShowController.setMember(member);
+              projectShowController.setProject(project);
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);
+              primaryStage.show();
+            }catch (IOException ex) {
+                Log.logException(ex);
+            }
+    }
    
    private void saveStudents(){  
        for(int i = 0; i < studentsTable.size(); i++){
@@ -596,7 +623,9 @@ public class ProjectModifyController implements Initializable {
         initializeStudents(projectRetrieved);
         initializeReceptionWorks(projectRetrieved);
     }
-    
+    public void setMember(Member member){
+        this.member = member;
+    }
     private void initializeProject(Project projectRetrieved){
         tfTitle.setText(projectRetrieved.getTitle());
         LocalDate startDate = LocalDate.parse(projectRetrieved.getStartDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));

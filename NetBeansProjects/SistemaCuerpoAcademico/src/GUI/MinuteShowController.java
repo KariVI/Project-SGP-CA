@@ -100,6 +100,7 @@ public class MinuteShowController implements Initializable {
         }
        return value;
    }
+   
    public boolean verifyMemberApproved(){
        boolean value = false;
          try {

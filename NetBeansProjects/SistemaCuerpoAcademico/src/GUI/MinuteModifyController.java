@@ -64,7 +64,7 @@ public class MinuteModifyController implements Initializable {
     private Minute minute;
     private Meeting meeting;
     
-     public void setMember(Member member){
+    public void setMember(Member member){
         this.member = member;      
     }
      
@@ -93,6 +93,7 @@ public class MinuteModifyController implements Initializable {
             taNote.setText(minute.getNote());
             agreements = FXCollections.observableArrayList();
             initializeAgreements();
+            initializeMembers();
             tvAgreement.setItems(agreements);
 
         } catch (BusinessException ex) {
@@ -110,7 +111,7 @@ public class MinuteModifyController implements Initializable {
         agreementsOld = FXCollections.observableArrayList();
         tvAgreement.setItems(agreements);
         members = FXCollections.observableArrayList();
-        initializeMembers();
+       
         cbMember.setItems(members);
         cbMember.getSelectionModel().selectFirst();
 
@@ -167,7 +168,7 @@ public class MinuteModifyController implements Initializable {
         try {
             MemberDAO memberDAO = new MemberDAO();
             ArrayList <Member> memberList = new ArrayList<Member>();
-            memberList = memberDAO.getMembers("JDOEIJ804");
+            memberList = memberDAO.getMembers(member.getKeyGroupAcademic());
             for( int i = 0; i<memberList.size(); i++) {
                 members.add(memberList.get(i));
             }

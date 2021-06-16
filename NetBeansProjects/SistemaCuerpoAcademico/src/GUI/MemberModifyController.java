@@ -82,19 +82,21 @@ public class MemberModifyController implements Initializable {
        degreeYear = cbYears.getSelectionModel().getSelectedItem();
        universityName = tfUniversity.getText();
        state = ((RadioButton) tgState.getSelectedToggle()).getText();
-       Member newMember = new Member(professionalLicense, name, role, degree,nameDegree,universityName, degreeYear,state,"1491");
+       Member newMember = new Member(professionalLicense, name, role, degree,nameDegree,universityName, degreeYear,state,member.getKeyGroupAcademic());
        MemberDAO memberDAO = new MemberDAO();
         if(validateMember(newMember)){
              try { 
-               AlertMessage alertMessage = new AlertMessage();
-             memberDAO.update(newMember);
+              AlertMessage alertMessage = new AlertMessage();
+              memberDAO.update(newMember);
               alertMessage.showAlertSuccesfulSave("Los cambios fueron guardados con éxito");
+              Stage stage = (Stage) btSave.getScene().getWindow();
+              stage.close();
+              openShowMember(newMember);
              } catch (BusinessException ex) {
                 Log.logException(ex);
              }
        }
-       Stage stage = (Stage) btSave.getScene().getWindow();
-       stage.close();
+       
     }
     
     public void initializeMember(Member member){
@@ -116,22 +118,9 @@ public class MemberModifyController implements Initializable {
     
     @FXML
     public void actionReturn() {
-        try {
-            Stage primaryStage= new Stage();
-            URL url = new File("src/GUI/memberList.fxml").toURI().toURL();
-            FXMLLoader loader = new FXMLLoader(url);
-            loader.setLocation(url);
-            loader.load();
-            MemberListController memberListController = loader.getController();
-            Parent root = loader.getRoot();
-            Scene scene = new Scene(root);
-            primaryStage.setScene(scene);
-            Stage stage = (Stage) btReturn.getScene().getWindow();
-            stage.close();
-            primaryStage.show();
-        } catch (IOException ex) {
-            Log.logException(ex);
-        }
+        Stage stage = (Stage) btReturn.getScene().getWindow();
+       stage.close();
+       openShowMember(member);
     }
     
     
@@ -190,5 +179,23 @@ public class MemberModifyController implements Initializable {
             value = false;
         }
         return value;
+    }
+    
+          private void openShowMember(Member member){   
+        Stage primaryStage = new Stage();
+        try{
+              URL url = new File("src/GUI/MemberView.fxml").toURI().toURL();
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              MemberViewController memberViewController  = loader.getController();
+              memberViewController.initializeMember(member);
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);
+              primaryStage.show();
+            }catch (IOException ex) {
+                Log.logException(ex);
+            }
     }
 }

@@ -3,6 +3,8 @@ package GUI;
 
 import businessLogic.MemberDAO;
 import domain.Member;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,7 +12,10 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -31,7 +36,7 @@ public class MemberRegisterController implements Initializable {
     @FXML private TextField tfNameDegree;
     @FXML private TextField tfUniversity;
     @FXML private Button btClose;
-    private String groupAcademicKey;
+    private Member loginMember;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -64,7 +69,7 @@ public class MemberRegisterController implements Initializable {
        nameDegree = tfNameDegree.getText();
        degreeYear = cbYears.getSelectionModel().getSelectedItem();
        universityName = tfUniversity.getText();
-       Member newMember = new Member(professionalLicense, name, role, degree,nameDegree,universityName, degreeYear,groupAcademicKey);
+       Member newMember = new Member(professionalLicense, name, role, degree,nameDegree,universityName, degreeYear,loginMember.getKeyGroupAcademic());
        MemberDAO memberDAO = new MemberDAO();
        if(validateMember(newMember)){
              try { 
@@ -72,16 +77,36 @@ public class MemberRegisterController implements Initializable {
               AlertMessage alertMessage = new AlertMessage();
               alertMessage.showAlertSuccesfulSave("El miembro fue registrado con éxito");
               close();
+              openListMember();
              } catch (BusinessException ex) {
                 Log.logException(ex);
              }
        }
     }
     
+    private void openListMember(){   
+        Stage primaryStage = new Stage();
+        try{
+              URL url = new File("src/GUI/MemberList.fxml").toURI().toURL();
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              MemberListController memberListController  = loader.getController();
+              memberListController.setMember(loginMember);
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);
+              primaryStage.show();
+            }catch (IOException ex) {
+                Log.logException(ex);
+            }
+    }
+    
     @FXML
     public void close() {
         Stage stage = (Stage)btClose.getScene().getWindow();
         stage.close();
+        openListMember();
     }
     
    
@@ -111,8 +136,8 @@ public class MemberRegisterController implements Initializable {
         
         return value;
     }
-    public void setGroupAcademicKey(String groupAcademicKey){
-        this.groupAcademicKey = groupAcademicKey;
+    public void setMember(Member member){
+        this.loginMember = member;
     }
     
     public boolean isEmptyFields(Member member){
@@ -149,4 +174,5 @@ public class MemberRegisterController implements Initializable {
         }
         return value;
     }
+    
 }

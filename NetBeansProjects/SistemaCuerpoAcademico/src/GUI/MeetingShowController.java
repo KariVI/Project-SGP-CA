@@ -126,7 +126,8 @@ public class MeetingShowController implements Initializable {
               loader.setLocation(url);
               loader.load();
               TopicShowController topicShowController =loader.getController(); 
-              topicShowController.initializeMeeting(meeting);
+              topicShowController.setMember(member);
+              topicShowController.setMeeting(meeting);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);       
@@ -226,7 +227,8 @@ public class MeetingShowController implements Initializable {
               loader.setLocation(url);
               loader.load();
               MinuteRegisterController minuteRegisterController =loader.getController(); 
-              minuteRegisterController.initializeMeeting(meeting.getKey());          
+              minuteRegisterController.setMember(member);
+              minuteRegisterController.setMeeting(meeting.getKey());
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);

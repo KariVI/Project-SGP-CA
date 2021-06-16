@@ -50,6 +50,7 @@ public class MinuteRegisterController implements Initializable {
     private int idMinute = 1;
     private int idMeeting = 1;
     private int indexAgreement;
+    private Member member;
     private ListChangeListener<Agreement> tableAgreementListener;
     
     @Override
@@ -81,8 +82,11 @@ public class MinuteRegisterController implements Initializable {
         };        
     }
     
-    public void initializeMeeting(int idMeeting){
+    public void setMeeting(int idMeeting){
             this.idMeeting = idMeeting;
+    }
+    public void setMember(Member member){
+        this.member = member;
     }
     
     private Agreement getSelectedAgreement(){
@@ -118,7 +122,7 @@ public class MinuteRegisterController implements Initializable {
         try {
             MemberDAO memberDAO = new MemberDAO();
             ArrayList <Member> memberList = new ArrayList<Member>();
-            memberList = memberDAO.getMembers("JDOEIJ804");
+            memberList = memberDAO.getMembers(member.getKeyGroupAcademic());
             for( int i = 0; i<memberList.size(); i++) {
                 members.add(memberList.get(i));
             }

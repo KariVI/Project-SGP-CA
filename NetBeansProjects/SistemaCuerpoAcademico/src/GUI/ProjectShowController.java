@@ -50,6 +50,7 @@ public class ProjectShowController implements Initializable {
     private ObservableList<Student> students;
     private ObservableList<ReceptionWork> receptionWorks;
     private Project project;
+    private Member member;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -74,6 +75,10 @@ public class ProjectShowController implements Initializable {
         initializeMembers(project);
         initializeStudents(project);
         initializeReceptionWorks(project);
+    }
+    
+    public void setMember(Member member){
+        this.member = member;
     }
     
     private void initializeProject(Project project){
@@ -138,7 +143,26 @@ public class ProjectShowController implements Initializable {
     @FXML
     public void actionReturn(){
          Stage stage = (Stage) btReturn.getScene().getWindow();
-         stage.close();                 
+         stage.close();  
+         openViewProjectList();
+    }
+    
+   private void  openViewProjectList(){   
+        Stage primaryStage = new Stage();
+        try{
+              URL url = new File("src/GUI/ProjectList.fxml").toURI().toURL();
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              ProjectListController projectList = loader.getController();
+              projectList.setMember(member);
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);
+              primaryStage.show();
+            }catch (IOException ex) {
+                Log.logException(ex);
+            }
     }
     
     @FXML
@@ -154,6 +178,7 @@ public class ProjectShowController implements Initializable {
             }
             ProjectModifyController  projectModifyController = loader.getController();
             projectModifyController.setProject(project);
+            projectModifyController.setMember(member);
             Parent root = loader.getRoot();
             Scene scene = new Scene(root);
             Stage primaryStage= new Stage();

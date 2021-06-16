@@ -2,8 +2,11 @@ package GUI;
 
 import businessLogic.MemberDAO;
 import businessLogic.TopicDAO;
+import domain.Meeting;
 import domain.Member;
 import domain.Topic;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +16,10 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -43,7 +49,8 @@ public class TopicModifyController implements Initializable {
     @FXML private Button btSave;
     @FXML private Button btCancel;
     @FXML private Button btUpdate;
-    private int idMeeting = 0;
+    private Meeting meeting;
+    private Member member;
     private int indexTopic;
     private ListChangeListener<Topic> tableTopicListener;
     
@@ -76,16 +83,20 @@ public class TopicModifyController implements Initializable {
         };
     }
     
-    public void initializeMeeting(int idMeeting){
-        this.idMeeting = idMeeting;
+    public void setMeeting(Meeting meeting){
+        this.meeting = meeting;
         initializeTopics();
+    }
+    
+    public void setMember(Member member){
+        this.member = member;
     }
     
     public void initializeTopics(){
         TopicDAO topicDAO = new TopicDAO();
         try {
             ArrayList<Topic> topicList = new ArrayList<Topic>();
-            topicList = topicDAO.getAgendaTopics(idMeeting);
+            topicList = topicDAO.getAgendaTopics(meeting.getKey());
             for(int i = 0; i < topicList.size(); i++){
                 topics.add(topicList.get(i));
                 oldTopics.add(topicList.get(i));
@@ -105,7 +116,7 @@ public class TopicModifyController implements Initializable {
         finishTime = tfFinishTime.getText();
         startTime = tfFinishTime.getText();
         topicName = tfTopic.getText();
-        Topic topic = new Topic(topicName,startTime,finishTime,member.getProfessionalLicense(),idMeeting);
+        Topic topic = new Topic(topicName,startTime,finishTime,member.getProfessionalLicense(),meeting.getKey());
         if(validateTopic(topic)){
             topics.add(topic);
         }
@@ -159,7 +170,7 @@ public class TopicModifyController implements Initializable {
         try {
             MemberDAO memberDAO = new MemberDAO();
             ArrayList <Member> memberList = new ArrayList<Member>();
-            memberList = memberDAO.getMembers("JDOEIJ804");
+            memberList = memberDAO.getMembers(member.getKeyGroupAcademic());
             for( int i = 0; i<memberList.size(); i++) {
                 members.add(memberList.get(i));
             }
@@ -181,17 +192,20 @@ public class TopicModifyController implements Initializable {
            
            AlertMessage alertMessage = new AlertMessage();
            alertMessage.showAlertSuccesfulSave("Los temas fueron registrados con éxito");
+           
          } catch (BusinessException ex) {
              Log.logException(ex);
          }
-       
+        
         Stage stage = (Stage)btSave.getScene().getWindow();
         stage.close();
+        openTopicShow();
     }
    
    public void actionCancel(){
       Stage stage = (Stage)btCancel.getScene().getWindow();
       stage.close(); 
+      openTopicShow();
    }
    
    public void actionUpdate(){
@@ -200,12 +214,32 @@ public class TopicModifyController implements Initializable {
         finishTime = tfFinishTime.getText();
         startTime = tfFinishTime.getText();
         topicName = tfTopic.getText();
-        Topic topic = new Topic(topics.get(indexTopic).getIdTopic(),topicName,startTime,finishTime,member.getProfessionalLicense(),idMeeting);
+        Topic topic = new Topic(topics.get(indexTopic).getIdTopic(),topicName,startTime,finishTime,member.getProfessionalLicense(),meeting.getKey());
         if(validateTopic(topic)){    
             topics.set(indexTopic,topic);
         }
         cleanFields();
    }
+   
+       
+    private void openTopicShow(){   
+        Stage primaryStage = new Stage();
+        try{
+              URL url = new File("src/GUI/topicShow.fxml").toURI().toURL();
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              TopicShowController topicShowController  = loader.getController();
+              topicShowController.setMember(member);
+              topicShowController.setMeeting(meeting);
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);
+              primaryStage.show();
+            }catch (IOException ex) {
+                Log.logException(ex);
+            }
+    }
     
     public boolean validateTopic(Topic topic){
         boolean value = true;

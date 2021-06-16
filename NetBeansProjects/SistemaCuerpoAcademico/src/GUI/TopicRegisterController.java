@@ -31,16 +31,17 @@ public class TopicRegisterController implements Initializable {
     @FXML TextField tfTopic;
     @FXML TextField tfStartTime;
     @FXML TextField tfFinishTime;
-    @FXML TableColumn tcFinishTime;
-    @FXML TableColumn tcStartTime;
-    @FXML TableColumn tcMember;
+    @FXML TableColumn<Topic,String>  tcFinishTime;
+    @FXML TableColumn<Topic,String>  tcStartTime;
+    @FXML TableColumn<Topic,String>  tcMember;
     @FXML TableColumn<Topic,String> tcTopic;
     @FXML TableView<Topic> tvTopic;
     @FXML Button btDelete;
     @FXML Button btAdd;
     @FXML Button btSave;
     @FXML Button btCancel;
-    private int idMeeting = 0;
+    private int idMeeting;
+    private Member member;
     private int indexTopic;
     private MeetingRegisterController meetingRegisterController;
     private ListChangeListener<Topic> tableTopicListener;
@@ -78,6 +79,10 @@ public class TopicRegisterController implements Initializable {
         this.meetingRegisterController = meetingRegisterController;
     }
     
+    public void setMember(Member member){
+        this.member = member;
+    }
+    
     @FXML
     private void add(ActionEvent event){
         String finishTime = "";
@@ -87,7 +92,7 @@ public class TopicRegisterController implements Initializable {
         finishTime = tfFinishTime.getText();
         startTime = tfFinishTime.getText();
         topicName = tfTopic.getText();
-        Topic topic = new Topic(topicName,startTime,finishTime,member.getProfessionalLicense(),idMeeting);
+        Topic topic = new Topic(topicName,startTime,finishTime,member.getProfessionalLicense(), idMeeting);
         if(validateTopic(topic)){
             topics.add(topic);
         }
@@ -141,7 +146,7 @@ public class TopicRegisterController implements Initializable {
         try {
             MemberDAO memberDAO = new MemberDAO();
             ArrayList <Member> memberList = new ArrayList<Member>();
-            memberList = memberDAO.getMembers("JDOEIJ804");
+            memberList = memberDAO.getMembers(member.getKeyGroupAcademic());
             for( int i = 0; i<memberList.size(); i++) {
                 members.add(memberList.get(i));
             }
@@ -150,12 +155,11 @@ public class TopicRegisterController implements Initializable {
         }
     }
     
-   public void actionSave(){
-      
-       meetingRegisterController.setTopics(topics);       
+   public void actionSave(){ 
+        meetingRegisterController.setTopics(topics);       
         Stage stage = (Stage)btSave.getScene().getWindow();
         stage.close();
-    }
+   }
 
    
    public void actionCancel(){
@@ -225,5 +229,6 @@ public class TopicRegisterController implements Initializable {
         }
        return value;
     }
+    
     
 }

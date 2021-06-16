@@ -30,7 +30,7 @@ public class MemberListController implements  Initializable {
     @FXML private Button btRegisterMember;
     @FXML private ListView<Member> lvMembers = new ListView<Member>();
     private ObservableList <Member> members ;
-    private String groupAcademicKey;
+    private Member loginMember;
   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -67,7 +67,7 @@ public class MemberListController implements  Initializable {
         try {
             MemberDAO memberDAO = new MemberDAO();
             ArrayList <Member> memberList = new ArrayList<Member>();
-            memberList = memberDAO.getMembers(groupAcademicKey);
+            memberList = memberDAO.getMembers(loginMember.getKeyGroupAcademic());
             for( int i = 0; i<memberList.size(); i++) {
                     members.add(memberList.get(i));     
             }
@@ -80,10 +80,29 @@ public class MemberListController implements  Initializable {
     public void actionClose() {
         Stage stage = (Stage)btClose.getScene().getWindow();
         stage.close();
+        openViewMenu();
     }
     
-    public void setGroupAcademic(String groupAcademicKey){
-        this.groupAcademicKey = groupAcademicKey;
+    private void openViewMenu(){   
+        Stage primaryStage = new Stage();
+        try{
+              URL url = new File("src/GUI/Menu.fxml").toURI().toURL();
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              MenuController menu = loader.getController();
+              menu.initializeMenu(loginMember);
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);
+              primaryStage.show();
+            }catch (IOException ex) {
+                Log.logException(ex);
+            }
+    }
+    
+    public void setMember(Member member){
+        this.loginMember = member;
         initializeMembers();
     }
     
@@ -96,7 +115,7 @@ public class MemberListController implements  Initializable {
             loader.setLocation(url);
             loader.load();
             MemberRegisterController memberRegisterController = loader.getController();
-            memberRegisterController.setGroupAcademicKey(groupAcademicKey);
+            memberRegisterController.setMember(loginMember);
             Parent root = loader.getRoot();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
