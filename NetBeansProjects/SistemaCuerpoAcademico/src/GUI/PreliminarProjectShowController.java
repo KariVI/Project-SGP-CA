@@ -38,7 +38,17 @@ public class PreliminarProjectShowController implements Initializable {
     @FXML private Button btReturn;
     @FXML private Pane paneStudents;
     private String codirectors="";  
-    private PreliminarProject preliminarProject;  
+    private PreliminarProject preliminarProject;
+    private Member member;
+    private String keyGroupAcademic;
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public void setKeyGroupAcademic(String keyGroupAcademic) {
+        this.keyGroupAcademic = keyGroupAcademic;
+    }
   
      public void setPreliminarProject(PreliminarProject preliminarProject){   
         this.preliminarProject= preliminarProject;
@@ -65,7 +75,7 @@ public class PreliminarProjectShowController implements Initializable {
              colaborators=preliminarProjectDAO.getColaborators(preliminarProject.getKey());
              for(int i=0; i< colaborators.size(); i++){ 
                  if(colaborators.get(i).getRole().equals("Director")){  
-                     lbDirector.setText(colaborators.get(i).getName());
+                     lbDirector.setText("Director: "+ colaborators.get(i).getName());
                  }else{ 
                      codirectors= codirectors + colaborators.get(i).getName();
                      codirectors= codirectors + ",";
@@ -81,21 +91,23 @@ public class PreliminarProjectShowController implements Initializable {
         PreliminarProjectDAO preliminarProjectDAO =new PreliminarProjectDAO();
          preliminarProject.setStudents(preliminarProjectDAO.getStudents(preliminarProject.getKey()));
          ArrayList<Student> students= preliminarProject.getStudents();
-         int i=0;
         int numberStudent=0;
         int numberRows=2;
         GridPane gridPane= new GridPane();
         gridPane.setHgap (5);
         gridPane.setVgap (5);
-        while (i < ( students.size() * numberRows)){ 
-                Label lbEnrollmentStudent = new Label("Matricula: "+ students.get(numberStudent).getEnrollment());
-                Label lbNameStudent = new Label("Nombre: "+ students.get(numberStudent).getName());
-                gridPane.add(lbEnrollmentStudent,1,i);
-                gridPane.add(lbNameStudent,1, (i + 1));
-                i=i+2;
-                numberStudent++;
-           }
+        if(students.size()> 0){
+            Label label = new Label("Estudiantes");
+            gridPane.add(label,1, 0 );
+            int i=1;
+            while (i <= students.size()){ 
+                    Label lbNameStudent = new Label("->"+ students.get(numberStudent).getName());
+                    gridPane.add(lbNameStudent,1, i );
+                    i++;
+                    numberStudent++;
+            }
             paneStudents.getChildren().add(gridPane);
+        }
     }
   
     
@@ -116,6 +128,8 @@ public class PreliminarProjectShowController implements Initializable {
               PreliminarProjectModifyController preliminarProjectModifyController =loader.getController();      
                preliminarProjectModifyController.setPreliminarProject(preliminarProject);
                preliminarProjectModifyController.initializePreliminarProject();
+               preliminarProjectModifyController.setKeyGroupAcademic(keyGroupAcademic);
+               preliminarProjectModifyController.setMember(member);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);
@@ -132,10 +146,35 @@ public class PreliminarProjectShowController implements Initializable {
     private void actionReturn(ActionEvent actionEvent){   
         Stage stage = (Stage) btReturn.getScene().getWindow();
         stage.close();
+        openPreliminarProjectList();
     }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-    }    
+    }   
+    
+     private void openPreliminarProjectList(){   
+         try{ 
+            Stage primaryStage= new Stage();
+            URL url = new File("src/GUI/preliminarProjectList.fxml").toURI().toURL();
+           try{
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              PreliminarProjectListController preliminarProjectListController =loader.getController();   
+              preliminarProjectListController.setMember(member);
+              preliminarProjectListController.setKeyGroupAcademic(keyGroupAcademic);
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);       
+            } catch (IOException ex) {
+                    Log.logException(ex);
+            }
+            primaryStage.show();
+       } catch (MalformedURLException ex) {
+           Log.logException(ex);
+       }     
+    }
     
 }

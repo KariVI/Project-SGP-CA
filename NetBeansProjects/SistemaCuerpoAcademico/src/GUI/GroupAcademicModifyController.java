@@ -23,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -34,8 +35,8 @@ import log.Log;
 
 public class GroupAcademicModifyController implements Initializable {
 
-     @FXML private TextField tfName;
-    @FXML private TextField tfKey;
+     @FXML private TextFieldLimited tfName;
+    @FXML private TextFieldLimited tfKey;
     @FXML private TextArea taObjetive;
     @FXML private TextArea taVision;
     @FXML private TextArea taMision; 
@@ -44,7 +45,7 @@ public class GroupAcademicModifyController implements Initializable {
     @FXML private Button btSave;
     @FXML private Button btReturn;
     @FXML private Node groupAcademicPanel;
-    @FXML private Pane lgacPane;
+    @FXML private ScrollPane spLGACs;
     @FXML private ComboBox<String> cbConsolidateGrade;
      private ObservableList<String> consolidateGrades;
     private GroupAcademic groupAcademic= new GroupAcademic();
@@ -98,7 +99,7 @@ public class GroupAcademicModifyController implements Initializable {
                 i=i+3;
                 numberlgacs++;
            }
-            lgacPane.getChildren().add(gridPane);
+        spLGACs.setContent(gridPane);
     }
   
     @FXML
@@ -142,14 +143,8 @@ public class GroupAcademicModifyController implements Initializable {
               loader.load();
                 GroupAcademicShowController groupAcademicShowController =loader.getController();
                 GroupAcademicDAO groupAcademicDAO= new GroupAcademicDAO();
-                GroupAcademic groupAcademic;
-                if(!tfKey.getText().isEmpty()){
-                    groupAcademic= groupAcademicDAO.getGroupAcademicById(groupAcademicNew.getKey());
-                    System.out.println(groupAcademicNew.getConsolidationGrade());
-
-                }else{  
-                    groupAcademic= groupAcademicDAO.getGroupAcademicById(this.groupAcademic.getKey());
-                }
+                GroupAcademic groupAcademic;          
+                groupAcademic= groupAcademicDAO.getGroupAcademicById(groupAcademicNew.getKey());
                 groupAcademicShowController.setGroupAcademic(groupAcademic);
                 groupAcademicShowController.initializeGroupAcademic();
                 Parent root = loader.getRoot();
@@ -183,7 +178,7 @@ public class GroupAcademicModifyController implements Initializable {
     }
     
     private void recoverlgacs(){   
-        GridPane gridPane= (GridPane) lgacPane.getChildren().get(0);
+        GridPane gridPane= (GridPane) spLGACs.getContent();
             int i=1;
             int indexLGAC=0;
             ArrayList<LGAC> lgacs = groupAcademic.getLGACs();
@@ -282,6 +277,8 @@ public class GroupAcademicModifyController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+      tfName.setMaxlength(100);
+      tfKey.setMaxlength(10);
       consolidateGrades= FXCollections.observableArrayList();
       consolidateGrades.add("En formación");
       consolidateGrades.add("En consolidación");

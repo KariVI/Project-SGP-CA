@@ -40,10 +40,10 @@ public class Log {
 
 }
     
-    public static String getStackTrace(Exception e) {
+    public static String getStackTrace(Exception ex) {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
-        e.printStackTrace(printWriter);
+        ex.printStackTrace(printWriter);
         return stringWriter.toString();
     }
 }

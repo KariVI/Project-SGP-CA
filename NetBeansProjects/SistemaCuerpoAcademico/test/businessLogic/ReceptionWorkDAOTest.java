@@ -178,7 +178,7 @@ public class ReceptionWorkDAOTest {
         LGAC lgac = new LGAC("Tecnologías de software", "Se orienta al estudio de diversas propiedades, enfoques, métodos de modelado y herramientas que conforman cada una de las diversas tecnologías aplicables al desarrollo del software con vistas a su adaptación, mejora y sustitución en el medio nacional");
         receptionWork.addLGAC(lgac);
         ReceptionWorkDAO receptionWorkDAO= new ReceptionWorkDAO();
-        assertTrue(receptionWorkDAO.addLGACs(receptionWork));
+        assertTrue(receptionWorkDAO.addedSucessfulLGACs(receptionWork));
     }
     
     @Test

@@ -29,6 +29,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -36,6 +37,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import log.BusinessException;
@@ -44,30 +46,38 @@ import log.Log;
 
 public class PreliminarProjectRegisterController implements Initializable {
     private ObservableList<Member> members;
-    @FXML private TextField tfTitle;
+    @FXML private TextFieldLimited tfTitle;
     @FXML private TextArea taDescription;
-    @FXML private TextField tfNumberStudents;
+    @FXML private TextFieldLimited tfNumberStudents;
     @FXML private Button btOk;
     @FXML private Button btSave;
     @FXML private Button btExit;
     @FXML private Pane paneStudent;
-    @FXML DatePicker dpStartDate;
-    @FXML DatePicker dpEndDate;
-    @FXML ComboBox cbDirector;
-    @FXML ComboBox cbCodirectors;
-    @FXML TableColumn tcCodirector;
-    @FXML Button btAddCodirector;
-    @FXML Button btDelete;
-    @FXML TableView<Member> tvCodirectors;
+    @FXML private DatePicker dpStartDate;
+    @FXML private DatePicker dpEndDate;
+    @FXML private ComboBox cbDirector;
+    @FXML private ComboBox cbCodirectors;
+    @FXML private TableColumn tcCodirector;
+    @FXML private Button btAddCodirector;
+    @FXML private Button btDelete;
+    @FXML private TableView<Member> tvCodirectors;
+    @FXML private ScrollPane spStudents;
     private ListChangeListener<Member> tableCodirectorsListener;
     private int indexCodirectors;
     private String keyGroupAcademic;
     private PreliminarProject preliminarProject = new PreliminarProject();
-   private ObservableList<Member> codirectors ;
+    private ObservableList<Member> codirectors ;
+    private Member member;
 
+    public void setMember(Member member) {
+        this.member = member;
+    }
 
    public void setKeyGroupAcademic(String keyGroupAcademic){
        this.keyGroupAcademic= keyGroupAcademic;
+       initializeMembers();
+       cbDirector.getSelectionModel().selectFirst();
+       cbCodirectors.getSelectionModel().selectFirst();
    }
    
     @FXML 
@@ -93,7 +103,8 @@ public class PreliminarProjectRegisterController implements Initializable {
                 i=i+3;
            }  
         }
-        paneStudent.getChildren().add(gridPane);
+        
+        spStudents.setContent(gridPane);
     }
 
     @FXML
@@ -160,31 +171,10 @@ public class PreliminarProjectRegisterController implements Initializable {
     private void actionExit(ActionEvent actionEvent){   
         Stage stage = (Stage) btExit.getScene().getWindow();
         stage.close();
-        returnPreliminarProjectList();
+        openPreliminarProjectList();
         
     }
-    
-    private void returnPreliminarProjectList(){ 
-        try{ 
-            Stage primaryStage= new Stage();
-            URL url = new File("src/GUI/preliminarProjectList.fxml").toURI().toURL();
-           try{
-              FXMLLoader loader = new FXMLLoader(url);
-              loader.setLocation(url);
-              loader.load();
-              PreliminarProjectListController preliminarProjectListController =loader.getController();      
-              Parent root = loader.getRoot();
-              Scene scene = new Scene(root);
-              primaryStage.setScene(scene);       
-            } catch (IOException ex) {
-                    Log.logException(ex);
-            }
-            primaryStage.show();
-       } catch (MalformedURLException ex) {
-           Log.logException(ex);
-       } 
-    }
-    
+           
      @FXML 
     private void actionAddCodirector(ActionEvent actionEvent){    
         Member codirector = (Member) cbCodirectors.getSelectionModel().getSelectedItem();    
@@ -213,6 +203,7 @@ public class PreliminarProjectRegisterController implements Initializable {
             preliminarProject.addMember(director);
             
             for(int i=0; i < codirectors.size(); i++){   
+                codirectors.get(i).setRole("Codirector");
                 preliminarProject.addMember(codirectors.get(i));
             }
          preliminarProjectDAO.addedSucessfulColaborators(preliminarProject);
@@ -228,7 +219,7 @@ public class PreliminarProjectRegisterController implements Initializable {
     }
     
     private void recoverStudents() throws BusinessException{   
-        GridPane gridPane= (GridPane) paneStudent.getChildren().get(0);
+        GridPane gridPane= (GridPane) spStudents.getContent();
         ArrayList<Student> students = new ArrayList<Student>();
             int i=1;
             Integer lgacs=Integer.parseInt(tfNumberStudents.getText());  
@@ -353,9 +344,13 @@ public class PreliminarProjectRegisterController implements Initializable {
     
     private boolean validateInformationField(){ 
          boolean value=true;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String startDate = dpStartDate.getValue().format(formatter);
+        String endDate = dpEndDate.getValue().format(formatter);
         Validation validation=new Validation();
         if(validation.findInvalidField(tfTitle.getText())
-        || validation.findInvalidField(taDescription.getText())  ){   
+        || validation.findInvalidField(taDescription.getText()) || (!validation.validateDate(startDate))
+        || (!validation.validateDate(endDate))){   
             value=false;
         }  
         return value;
@@ -365,7 +360,7 @@ public class PreliminarProjectRegisterController implements Initializable {
         try {
             MemberDAO memberDAO = new MemberDAO();
             ArrayList <Member> memberList = new ArrayList<Member>();
-            memberList = memberDAO.getMembers("JDOEIJ804");
+            memberList = memberDAO.getMembers(keyGroupAcademic);
             for( int i = 0; i<memberList.size(); i++) {
                 members.add(memberList.get(i));
             }
@@ -375,17 +370,16 @@ public class PreliminarProjectRegisterController implements Initializable {
     }
     
     public void initialize(URL url, ResourceBundle rb) {
+        tfTitle.setMaxlength(200);
+        tfNumberStudents.setMaxlength(2);
         tcCodirector.setCellValueFactory(new PropertyValueFactory<Member,String>("name"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         dpStartDate.setConverter(new LocalDateStringConverter(formatter, null));
         dpEndDate.setConverter(new LocalDateStringConverter(formatter, null));
         members = FXCollections.observableArrayList();
         codirectors= FXCollections.observableArrayList();
-        initializeMembers();
-        cbDirector.setItems(members);
-        cbDirector.getSelectionModel().selectFirst();
+        cbDirector.setItems(members);       
         cbCodirectors.setItems(members);
-        cbCodirectors.getSelectionModel().selectFirst();
         tvCodirectors.setItems(codirectors);
         tvCodirectors.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -437,4 +431,27 @@ public class PreliminarProjectRegisterController implements Initializable {
        return value;
     }
     
+    
+    private void openPreliminarProjectList(){   
+         try{ 
+            Stage primaryStage= new Stage();
+            URL url = new File("src/GUI/preliminarProjectList.fxml").toURI().toURL();
+           try{
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              PreliminarProjectListController preliminarProjectListController =loader.getController();   
+              preliminarProjectListController.setMember(member);
+              preliminarProjectListController.setKeyGroupAcademic(keyGroupAcademic);
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);       
+            } catch (IOException ex) {
+                    Log.logException(ex);
+            }
+            primaryStage.show();
+       } catch (MalformedURLException ex) {
+           Log.logException(ex);
+       }     
+    }
 }

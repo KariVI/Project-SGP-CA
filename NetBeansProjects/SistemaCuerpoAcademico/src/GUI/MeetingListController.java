@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -34,8 +35,18 @@ public class MeetingListController implements Initializable {
     private ObservableList<Meeting> meetings ;
     private Member member;
     
-     @FXML 
-    public void actionAddMeeting(ActionEvent actionEvent){    
+    
+      private void  disableButtonRegister(){  
+        if(member.getRole().equals("Integrante")){
+            btAddMeeting.setOpacity(0);
+            btAddMeeting.setDisable(true);
+        }
+    }
+    
+    @FXML 
+    public void actionAddMeeting(ActionEvent actionEvent){  
+        Stage stage = (Stage) btAddMeeting.getScene().getWindow();
+        stage.close();
          try{ 
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/MeetingRegister.fxml").toURI().toURL();
@@ -43,7 +54,8 @@ public class MeetingListController implements Initializable {
               FXMLLoader loader = new FXMLLoader(url);
               loader.setLocation(url);
               loader.load();
-              MeetingRegisterController meetingRegisterController =loader.getController();  
+              MeetingRegisterController meetingRegisterController =loader.getController();
+              meetingRegisterController.setMember(member);
               meetingRegisterController.setKeyGroupAcademic(member.getKeyGroupAcademic());
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
@@ -60,45 +72,74 @@ public class MeetingListController implements Initializable {
     public void setMember(Member member){
         this.member = member;
         String keyGroupAcademic = member.getKeyGroupAcademic();
-         getMeetings(keyGroupAcademic);  
+        disableButtonRegister();
+        getMeetings(keyGroupAcademic);  
     }
     
     @FXML 
     private void actionReturn(ActionEvent actionEvent){   
         Stage stage = (Stage) btReturn.getScene().getWindow();
         stage.close();
+        openViewMenu();
+        
     }
+    
+    private void openViewMenu(){   
+        Stage primaryStage = new Stage();
+        try{
+              URL url = new File("src/GUI/Menu.fxml").toURI().toURL();
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              MenuController menu = loader.getController();
+              menu.initializeMenu(member);
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);
+              primaryStage.show();
+            }catch (IOException ex) {
+                Log.logException(ex);
+            }
+    }
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        meetings = FXCollections.observableArrayList();
-          
+      meetings = FXCollections.observableArrayList();         
       lvMeetings.setItems(meetings);
       lvMeetings.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Meeting>() {
           @Override
           public void changed(ObservableValue<? extends Meeting> observaleValue, Meeting oldValue, Meeting newValue) {
-             Meeting selectedMeeting = (Meeting) lvMeetings.getSelectionModel().getSelectedItem();
-            try {
-           FXMLLoader loader = new FXMLLoader(getClass().getResource("MeetingShow.fxml"));
-            Parent root = loader.load();
-            MeetingShowController meetingShowController = loader.getController();
-            meetingShowController.setMeeting(selectedMeeting);
-            meetingShowController.setMember(member);
-                 try {
-                     meetingShowController.initializeMeeting();
-                 } catch (BusinessException ex) {
-                    Log.logException(ex);
-                 }
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-        } catch (IOException ex) {
-            Log.logException(ex);
-        }
+             Meeting selectedMeeting = (Meeting) lvMeetings.getSelectionModel().getSelectedItem();   
+             Stage stage = (Stage) lvMeetings.getScene().getWindow();
+             stage.close();
+             openMeetingShow(selectedMeeting);
+                    
+                
           }
       }); 
     }    
+    
+    private void openMeetingShow(Meeting meeting){ 
+        try {
+                 FXMLLoader loader = new FXMLLoader(getClass().getResource("MeetingShow.fxml"));
+                 Parent root = loader.load();
+                 MeetingShowController meetingShowController = loader.getController();
+                 meetingShowController.setMeeting(meeting);
+                 meetingShowController.setMember(member);
+                      try {
+                          meetingShowController.initializeMeeting();
+                      } catch (BusinessException ex) {
+                         Log.logException(ex);
+                      }
+                 Scene scene = new Scene(root);
+                 Stage stage = new Stage();
+                 stage.setScene(scene);
+                 stage.showAndWait();
+             } catch (IOException ex) {
+                 Log.logException(ex);
+             }    
+    }
     
     
     private void getMeetings( String keyGroupAcademic) {   

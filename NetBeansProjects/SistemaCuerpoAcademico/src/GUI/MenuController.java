@@ -21,6 +21,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import log.BusinessException;
@@ -29,36 +30,47 @@ import log.Log;
 
 public class MenuController implements Initializable {
 
-    @FXML Button btRegister;
-    @FXML Button btConsult;
-    @FXML ListView lvOptions;
-    GroupAcademic groupAcademic;
+    @FXML private AnchorPane anchorPaneMenu;
+    @FXML private Button btConsult;
+    @FXML private ListView lvOptions;
+    @FXML private Button btExit;
+    private GroupAcademic groupAcademic;
     private ObservableList<String> options ;
     private Member member;
     
     
     
+  
+    
     @FXML
-    private void actionRegister(ActionEvent actionEvent){   
-        try{ 
-            Stage primaryStage= new Stage();
-            URL url = new File("src/GUI/groupAcademicRegister.fxml").toURI().toURL();
-           try{
-              FXMLLoader loader = new FXMLLoader(url);
-              loader.setLocation(url);
-              loader.load();
-              GroupAcademicRegisterController groupAcademicRegisterController =loader.getController();      
-              Parent root = loader.getRoot();
-              Scene scene = new Scene(root);
-              primaryStage.setScene(scene);       
+    private void actionExit(ActionEvent actionEvent){
+        Stage stage = (Stage) btExit.getScene().getWindow();
+        stage.close();
+        openLogin();
+    }
+    
+    private void  openLogin(){   
+        Stage primaryStage =  new Stage();
+        try{
+            
+            URL url = new File("src/GUI/Login.fxml").toURI().toURL();
+            try{
+                FXMLLoader loader = new FXMLLoader(url);
+                loader.setLocation(url);
+                loader.load();
+                LoginController login = loader.getController();
+                Parent root = loader.getRoot();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+                
             } catch (IOException ex) {
-                    Log.logException(ex);
+                Log.logException(ex);
             }
             primaryStage.show();
-       } catch (MalformedURLException ex) {
-           Log.logException(ex);
-       }
-    
+            
+        } catch (MalformedURLException ex) {
+                Log.logException(ex);
+        }
     }
     
     @FXML 
@@ -72,8 +84,9 @@ public class MenuController implements Initializable {
               loader.load();
                 GroupAcademicShowController groupAcademicShowController =loader.getController();
                 GroupAcademicDAO groupAcademicDAO= new GroupAcademicDAO();
-                 GroupAcademic groupAcademic= groupAcademicDAO.getGroupAcademicById("JDOEIJ804");
+                 GroupAcademic groupAcademic= groupAcademicDAO.getGroupAcademicById(member.getKeyGroupAcademic());
                 groupAcademicShowController.setGroupAcademic(groupAcademic);
+                groupAcademicShowController.setMember(member);
                 groupAcademicShowController.initializeGroupAcademic();
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
@@ -99,9 +112,7 @@ public class MenuController implements Initializable {
     public void initializeMenu(Member member){
         this.member = member;
         fillOptions();
-        /*if(member.getRole().equals("Responsable")){
-            fillOptions();
-        }*/
+        
     }
     
     @Override
@@ -109,13 +120,19 @@ public class MenuController implements Initializable {
         options = FXCollections.observableArrayList();     
       lvOptions.setItems(options);
       lvOptions.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+         
           public void changed(ObservableValue<? extends String> observaleValue, String oldValue, String newValue) {
              String selectedOption = (String) lvOptions.getSelectionModel().getSelectedItem();
-             showViewOption(selectedOption);
+               Stage stage = (Stage) lvOptions.getScene().getWindow();
+               stage.close();
+               showViewOption(selectedOption);
+
           }
       });
     
     }  
+    
+ 
     
     private void showViewOption(String option){  
         FXMLLoader loader;
@@ -128,7 +145,7 @@ public class MenuController implements Initializable {
                PreliminarProjectListController preliminarProjectListController = loader.getController();
                String keyGroupAcademic = member.getKeyGroupAcademic();
                preliminarProjectListController.setKeyGroupAcademic(keyGroupAcademic);
-               
+               preliminarProjectListController.setMember(member);
                Scene scene = new Scene(root);
                Stage stage = new Stage();
                stage.setScene(scene);
@@ -172,12 +189,13 @@ public class MenuController implements Initializable {
             break;
             
             case "Trabajos recepcionales":; 
-                try {
+               try {
                loader = new FXMLLoader(getClass().getResource("ReceptionWorkList.fxml"));
                root = loader.load();
                ReceptionWorkListController receptionWorkListController = loader.getController();
                 String keyGroupAcademic = member.getKeyGroupAcademic();
                receptionWorkListController.setKeyGroupAcademic(keyGroupAcademic);
+               receptionWorkListController.setMember(member);
                Scene scene = new Scene(root);
                Stage stage = new Stage();
                stage.setScene(scene);

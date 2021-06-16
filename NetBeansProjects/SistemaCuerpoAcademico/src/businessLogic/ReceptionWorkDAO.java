@@ -155,7 +155,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
                ResultSet resultSet;
                resultSet = preparedStatement.executeQuery();
                while(resultSet.next()){
-                   int key= resultSet.getInt(1);
+                    int key= resultSet.getInt(1);
                     String title = resultSet.getString("titulo");
                     String description = resultSet.getString("descripcion");
                     String type = resultSet.getString("tipo");
@@ -189,8 +189,10 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
                 Connection connectionDataBase = connectorDataBase.getConnection();
                 String insertColaborators = "INSERT INTO Dirige(idTrabajoRecepcional,cedula,rol) VALUES (?,?,?)";
                 int i=0;
+                PreparedStatement preparedStatement = connectionDataBase.prepareStatement(insertColaborators);
                 while(i< colaborators.size()){
-                    PreparedStatement preparedStatement = connectionDataBase.prepareStatement(insertColaborators);
+                    
+                    
                     preparedStatement.setInt(1, idReceptionWork);
                     preparedStatement.setString(2, colaborators.get(i).getProfessionalLicense());
                     preparedStatement.setString(3, colaborators.get(i).getRole());
@@ -240,7 +242,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
-            String query = "SELECT cedula FROM Dirige where idTrabajoRecepcional=?";
+            String query = "SELECT cedula,rol FROM Dirige where idTrabajoRecepcional=?";
 
                PreparedStatement preparedStatement = connectionDataBase.prepareStatement(query);
                preparedStatement.setInt(1, idPreliminarProject);
@@ -249,7 +251,9 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
                while(resultSet.next()){
                     int key= resultSet.getInt(1);
                     String professionalLicense= resultSet.getString("cedula");
+                    String role = resultSet.getString("rol");
                     Member member = memberDAO.getMemberByLicense(professionalLicense);
+                    member.setRole(role);
                     colaborators.add(member);
                     
                 }
@@ -349,7 +353,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
 
     }
 
-    public boolean addLGACs(ReceptionWork receptionWork) throws BusinessException {
+    public boolean addedSucessfulLGACs(ReceptionWork receptionWork) throws BusinessException {
         boolean addLGACSucces = false;
         int idReceptionWork = receptionWork.getKey();
         ArrayList<LGAC> lgacs = receptionWork.getLGACs();
@@ -399,6 +403,36 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
 
         return lgacs;
     }
+
+    @Override
+    public boolean deletedSucessfulLGACs(ReceptionWork receptionWork) throws BusinessException {
+        boolean deleteSucess=false;
+        int idReceptionWork=receptionWork.getKey();
+        ArrayList<LGAC> lgacs= receptionWork.getLGACs();
+        try{
+            Connector connectorDataBase=new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            String delete = "delete from CultivaTrabajoRecepcional where nombreLGAC=? and idTrabajoRecepcional=?";
+     
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement(delete);
+            int i=0;
+            while(i< lgacs.size()){
+               preparedStatement.setString(1, lgacs.get(i).getName());
+               preparedStatement.setInt(2, idReceptionWork);
+               preparedStatement.executeUpdate();
+               i++;
+            }
+            deleteSucess=true;
+            connectorDataBase.disconnect();         
+        }catch(SQLException sqlException) {
+            throw new BusinessException("DataBase connection failed ", sqlException);
+        } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return deleteSucess; 
+    }
+
+   
     
    
 }

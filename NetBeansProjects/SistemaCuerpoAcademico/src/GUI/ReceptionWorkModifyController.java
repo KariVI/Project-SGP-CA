@@ -36,6 +36,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -56,8 +57,8 @@ public class ReceptionWorkModifyController implements Initializable {
     @FXML private TextArea taCodirectors;
     @FXML private Button btSave;
     @FXML private Button btExit;
-    @FXML private Pane paneStudent;
-    @FXML private Pane lgacsPane;
+    @FXML private ScrollPane spStudents;
+    @FXML private ScrollPane spLgacs;
     @FXML private ComboBox cbType;
     @FXML private ComboBox cbPreliminarProject;
     @FXML private ComboBox cbState;
@@ -78,25 +79,35 @@ public class ReceptionWorkModifyController implements Initializable {
     private ListChangeListener<Member> tableCodirectorsListener;
     private int indexCodirectors;
     private ReceptionWork receptionWorkRecover;
-    private ReceptionWork receptionWorkNew;
+    private ReceptionWork receptionWorkNew= new ReceptionWork();    
+    private Member member;
+    private String keyGroupAcademic;
 
-    
-    
-    
-    
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public void setKeyGroupAcademic(String keyGroupAcademic) {
+        this.keyGroupAcademic = keyGroupAcademic;
+        initializeMembers();
+        cbDirector.getSelectionModel().selectFirst();
+       cbCodirectors.getSelectionModel().selectFirst();
+    }
+
      public void setReceptionWork(ReceptionWork receptionWork){
         this.receptionWorkRecover= receptionWork;
     }
     
     public void initializeReceptionWork(){
-       tfTitle.setText("Título: "+ receptionWorkRecover.getTitle());
+       tfTitle.setText(receptionWorkRecover.getTitle());
        LocalDate localStartDate = LocalDate.parse(receptionWorkRecover.getDateStart(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
        LocalDate localEndDate = LocalDate.parse(receptionWorkRecover.getDateEnd(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
        dpStartDate.setValue(localStartDate);
        dpEndDate.setValue(localEndDate);
        cbType.setValue(receptionWorkRecover.getType());
        cbState.setValue(receptionWorkRecover.getActualState());
-       taDescription.setText("Descripción: " + receptionWorkRecover.getDescription());
+       cbPreliminarProject.setValue(receptionWorkRecover.getPreliminarProject());
+       taDescription.setText( receptionWorkRecover.getDescription());
            try {
                initializeColaborators();
                getStudents();
@@ -105,6 +116,17 @@ public class ReceptionWorkModifyController implements Initializable {
                Log.logException(ex);
            }
        
+    }
+    
+    public boolean validateColaborators(){  
+        boolean value = true;
+        Member director = (Member) cbDirector.getSelectionModel().getSelectedItem();
+        if(repeatedCodirector(director)){
+                 value=false; 
+                AlertMessage alertMessage = new AlertMessage();
+                alertMessage.showAlertValidateFailed("El director y el codirector no pueden ser el mismo");  
+            }
+        return value;
     }
     
     @FXML
@@ -142,15 +164,17 @@ public class ReceptionWorkModifyController implements Initializable {
       private void updateReceptionWork (){   
         ReceptionWorkDAO receptionWorkDAO =  new ReceptionWorkDAO();
         try{  
-            deleteColaborators();
-            deleteStudents();
-           if(receptionWorkDAO.updatedSucessful(receptionWorkRecover.getKey(), receptionWorkNew)){  
-               receptionWorkNew.setKey(receptionWorkDAO.getId(receptionWorkNew));
-               saveColaborators();
-               recoverStudents();
-               AlertMessage alertMessage = new AlertMessage();
-               alertMessage.showUpdateMessage();
-           }
+          if(deleteColaborators() && deleteStudents() && receptionWorkDAO.deletedSucessfulLGACs(receptionWorkRecover)){
+                if(receptionWorkDAO.updatedSucessful(receptionWorkRecover.getKey(), receptionWorkNew)){  
+                if(validateColaborators()){  
+                    saveColaborators();
+                    recoverStudents();
+                    recoverLgacs();
+                    AlertMessage alertMessage = new AlertMessage();
+                    alertMessage.showUpdateMessage();
+                }
+               }
+          }
         } catch (BusinessException ex){ 
             if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage = new AlertMessage();
@@ -174,7 +198,7 @@ public class ReceptionWorkModifyController implements Initializable {
     private void actionAddCodirector(ActionEvent actionEvent){    
         Member codirector = (Member) cbCodirectors.getSelectionModel().getSelectedItem();    
         if(!repeatedCodirector(codirector)){
-           codirectors.add(codirector);
+           codirectorsNew.add(codirector);
         }else{  
             AlertMessage alertMessage = new AlertMessage();
             alertMessage.showAlertValidateFailed("Codirector repetido");
@@ -183,7 +207,7 @@ public class ReceptionWorkModifyController implements Initializable {
     
     @FXML
     private void actionDelete(ActionEvent event){
-        codirectors.remove(indexCodirectors);
+        codirectorsNew.remove(indexCodirectors);
     }
     
     private boolean validateDates(){
@@ -199,16 +223,7 @@ public class ReceptionWorkModifyController implements Initializable {
         return value;
     }
     
-    public boolean validateColaborators(){  
-        boolean value = true;
-        Member director = (Member) cbDirector.getSelectionModel().getSelectedItem();
-        if(repeatedCodirector(director)){
-                 value=false; 
-                AlertMessage alertMessage = new AlertMessage();
-                alertMessage.showAlertValidateFailed("El director y el codirector no pueden ser el mismo");  
-            }
-        return value;
-    }
+
    
      private boolean validateFieldEmpty(){ 
           boolean value=false;
@@ -223,9 +238,14 @@ public class ReceptionWorkModifyController implements Initializable {
      
     private boolean validateInformationField(){ 
          boolean value=true;
+         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String startDate = dpStartDate.getValue().format(formatter);
+        String endDate = dpEndDate.getValue().format(formatter);
         Validation validation=new Validation();
+        
         if(validation.findInvalidField(tfTitle.getText())
-        || validation.findInvalidField(taDescription.getText())  ){   
+        || validation.findInvalidField(taDescription.getText()) || (!validation.validateDate(startDate))
+        || (!validation.validateDate(endDate)) ){   
             value=false;
         }  
         return value;
@@ -243,8 +263,10 @@ public class ReceptionWorkModifyController implements Initializable {
                 ReceptionWorkShowController receptionWorkShowController =loader.getController();
                 ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
                 ReceptionWork receptionWorkAuxiliar = receptionWorkDAO.getReceptionWorkById(receptionWorkRecover.getKey());
-                receptionWorkShowController.setReceptionWork(receptionWorkAuxiliar);
-                receptionWorkShowController.initializeReceptionWork();
+                receptionWorkShowController.setReceptionWork(receptionWorkAuxiliar);               
+                receptionWorkShowController.setKeyGroupAcademic(keyGroupAcademic);
+                receptionWorkShowController.setMember(member);
+                 receptionWorkShowController.initializeReceptionWork();
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);
@@ -279,32 +301,50 @@ public class ReceptionWorkModifyController implements Initializable {
                     i=i+2;
                     numberStudent++;
             }
-            paneStudent.getChildren().add(gridPane);
+            spStudents.setContent(gridPane);
         }
     }
     
-    
-      private void getLGACS() throws BusinessException{
+ 
+    private void getLGACS() throws BusinessException{    
         ReceptionWorkDAO receptionWorkDAO =new ReceptionWorkDAO();
-         receptionWorkRecover.setLGACs(receptionWorkDAO.getLGACs(receptionWorkRecover.getKey()));
-         ArrayList<LGAC> lgacs= receptionWorkRecover.getLGACs();
-         int i=0;
-         int indexGridPane=1;
+        ArrayList<LGAC> lgacsReceptionWork=null; 
+        if(receptionWorkDAO.getLGACs(receptionWorkRecover.getKey())!= null){  
+            lgacsReceptionWork= receptionWorkDAO.getLGACs(receptionWorkRecover.getKey());
+            receptionWorkRecover.setLGACs(lgacsReceptionWork); 
+        }         
         GridPane gridPane= new GridPane();
-        gridPane.setHgap (2);
-        gridPane.setVgap (2);
-        gridPane.add(new Label("LGACs relacionadas: "),1,0);
-
-        if(lgacs.size()> 0){
-            while (i <lgacs.size()){ 
-                    CheckBox checkBoxLGAC = new CheckBox(lgacs.get(i).getName());
-                    gridPane.add(checkBoxLGAC,1,indexGridPane);
-                    i++;
-                    indexGridPane++;
-                    
+        GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO ();
+        gridPane.setHgap(2);
+        gridPane.setVgap(2);
+            int i=0;
+            gridPane.add(new Label ("Selecciona LGAC relacionadas: "),1,0);
+            int indexGridPane=1;
+            ArrayList <LGAC> lgacs = groupAcademicDAO.getLGACs(keyGroupAcademic);
+           while (i < lgacs.size()){  
+                CheckBox checkBox = new CheckBox(lgacs.get(i).getName());                
+                if(lgacsReceptionWork!= null && searchLgacs(lgacs.get(i), lgacsReceptionWork)){      
+                    checkBox.setSelected(true);
+                }
+                gridPane.add(checkBox,1,indexGridPane);
+                i++;
+                indexGridPane++;
+           }  
+            spLgacs.setContent(gridPane);
+        
+    }
+      
+    private boolean searchLgacs(LGAC lgac, ArrayList<LGAC> lgacs){  
+        boolean value= false;
+        int i=0;
+        while(i< lgacs.size() && (value==false)){   
+            if(lgacs.get(i).equals(lgacs)){ 
+                value=true;
             }
-            lgacsPane.getChildren().add(gridPane);
+            i++;
         }
+        
+        return value;
     }
       
       
@@ -320,7 +360,7 @@ public class ReceptionWorkModifyController implements Initializable {
         ArrayList<Student> students = receptionWorkDAO.getStudents(receptionWorkRecover.getKey());
         receptionWorkRecover.setStudents(students);
     
-        return receptionWorkDAO.deletedSucessfulColaborators(receptionWorkRecover);
+        return receptionWorkDAO.deletedSucessfulStudents(receptionWorkRecover);
     }
     
      private boolean saveColaborators(){    
@@ -331,11 +371,15 @@ public class ReceptionWorkModifyController implements Initializable {
         try {
             Member director=(Member) cbDirector.getSelectionModel().getSelectedItem();
             director.setRole("Director");
-            receptionWorkNew.addMember(director);
-            for(int i=0; i < codirectors.size(); i++){   
-               receptionWorkNew.addMember(codirectors.get(i));
+            members.add(director);
+            
+            for(int i=0; i < codirectorsNew.size(); i++){   
+                codirectorsNew.get(i).setRole("Codirector");
+                 members.add(codirectorsNew.get(i));
             }
+            receptionWorkNew.setMembers(members);
             receptionWorkDAO.addedSucessfulColaborators(receptionWorkNew);
+            
         } catch (BusinessException ex) {
             if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage = new AlertMessage();
@@ -357,7 +401,6 @@ public class ReceptionWorkModifyController implements Initializable {
       
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         try {
             types=FXCollections.observableArrayList();
             states = FXCollections.observableArrayList();
             types.add("Práctico técnico");
@@ -382,11 +425,9 @@ public class ReceptionWorkModifyController implements Initializable {
             members = FXCollections.observableArrayList();
             codirectors= FXCollections.observableArrayList();
             codirectorsNew= FXCollections.observableArrayList();
-            initializeMembers();
             cbDirector.setItems(members);
-            cbDirector.getSelectionModel().selectFirst();
+            
             cbCodirectors.setItems(members);
-            cbCodirectors.getSelectionModel().selectFirst();
             tvCodirectors.setItems(codirectorsNew);
             tvCodirectors.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
                 if (newSelection != null) {
@@ -401,10 +442,7 @@ public class ReceptionWorkModifyController implements Initializable {
                     setSelectedCodirector();
                 }
             };
-                addlgacs();
-            } catch (BusinessException ex) {
-                Log.logException(ex);
-            }
+           
     }    
     
      private Member getSelectedCodirector(){
@@ -444,7 +482,7 @@ public class ReceptionWorkModifyController implements Initializable {
         try {
             MemberDAO memberDAO = new MemberDAO();
             ArrayList <Member> memberList = new ArrayList<Member>();
-            memberList = memberDAO.getMembers("JDOEIJ804");
+            memberList = memberDAO.getMembers(keyGroupAcademic);
             for( int i = 0; i<memberList.size(); i++) {
                 members.add(memberList.get(i));
             }
@@ -453,24 +491,7 @@ public class ReceptionWorkModifyController implements Initializable {
         }
     }
     
-    private void addlgacs() throws BusinessException{    
-        
-         GridPane gridPane= new GridPane();
-         GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO ();
-            gridPane.setHgap (2);
-            gridPane.setVgap (2);
-            int i=0;
-            gridPane.add(new Label ("Selecciona LGAC relacionadas: "),1,0);
-            int indexGridPane=1;
-            ArrayList <LGAC> lgacs = groupAcademicDAO.getLGACs("JDOEIJ804");
-           while (i < lgacs.size()){  
-                CheckBox checkBox = new CheckBox(lgacs.get(i).getName());
-                gridPane.add(checkBox,1,indexGridPane);
-                i++;
-                indexGridPane++;
-           }  
-    }
-    
+   
     
      private void initializeColaborators() throws BusinessException{  
         ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
@@ -490,26 +511,54 @@ public class ReceptionWorkModifyController implements Initializable {
         
     }
     
-    private void recoverStudents() throws BusinessException{   
-        GridPane gridPane= (GridPane) paneStudent.getChildren().get(0);
-        ArrayList<Student> students = new ArrayList<Student>();
+        private void recoverLgacs() throws BusinessException{    
+        GridPane gridPane= (GridPane) spLgacs.getContent();
+        ArrayList<LGAC> lgacs = new ArrayList<LGAC>();
+        LGACDAO lgacDAO = new LGACDAO();
             int i=1;
-            
-            int sizeRows=3;
-           while (i < (sizeRows * students.size())){
-               TextField enrollment = (TextField) getNodeFromGridPane( gridPane, 1, i);
-               TextField name = (TextField) getNodeFromGridPane( gridPane, 1, (i + 1));
-               i=i+3;
-               if(validateFieldsStudent(enrollment,name)){         
-                 String enrollmentStudent= enrollment.getText();
-                 String nameStudent= name.getText(); 
-                 Student student = new Student(enrollmentStudent,nameStudent);
-                 students.add(student);
-                 saveStudent(student);
+            int indexLGACs =0;
+            GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO ();
+            ArrayList <LGAC> lgacsAuxiliar = groupAcademicDAO.getLGACs(keyGroupAcademic);
+           while (i ==lgacsAuxiliar.size() ){
+               CheckBox checkBox = (CheckBox) getNodeFromGridPane( gridPane, 1, i);
+               if(checkBox.isSelected()){   
+                 LGAC lgac= lgacDAO.getLgacByName(checkBox.getText());
+                 lgacs.add(lgac);
                }
+               i++;
            }
-           receptionWorkNew.setStudents(students);
-           addStudentsInReceptionWork();
+           receptionWorkNew.setLGACs(lgacs);
+           addLGACs();
+    }
+    
+    private void addLGACs() throws BusinessException{
+        ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
+        receptionWorkDAO.addedSucessfulLGACs(receptionWorkNew);
+    }
+    
+    private void recoverStudents() throws BusinessException{   
+        ArrayList<Student> studentsOld = receptionWorkRecover.getStudents();
+        if(studentsOld.size()>0){
+        GridPane gridPane= (GridPane) spStudents.getContent();
+        ArrayList<Student> students = new ArrayList<Student>();
+        
+                    int i=1;
+                    int sizeRows=3;
+                   while (i < (sizeRows * studentsOld.size())){
+                       TextField enrollment = (TextField) getNodeFromGridPane( gridPane, 1, i);
+                       TextField name = (TextField) getNodeFromGridPane( gridPane, 1, (i + 1));
+                       i=i+3;
+                       if(validateFieldsStudent(enrollment,name)){         
+                         String enrollmentStudent= enrollment.getText();
+                         String nameStudent= name.getText(); 
+                         Student student = new Student(enrollmentStudent,nameStudent);
+                         students.add(student);
+                         saveStudent(student);
+                       }
+                   }
+                   receptionWorkNew.setStudents(students);
+                   addStudentsInReceptionWork();
+        }
     }
     
     private boolean validateFieldsStudent(TextField enrollment, TextField name){

@@ -184,6 +184,7 @@ public class MemberDAO implements IMemberDAO{
     }
 
     @Override
+
     public ArrayList<Member> getMembers(String groupAcademicKey) throws BusinessException {
         ArrayList<Member> memberList = new ArrayList<Member>();
         try{
@@ -221,4 +222,5 @@ public class MemberDAO implements IMemberDAO{
                    
         return memberList; 
     }
+
 }
