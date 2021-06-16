@@ -5,12 +5,12 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -19,7 +19,7 @@
         <URL value="@receptionworkregister.css" />
     </stylesheets>
     <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#242525" height="31.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="771.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#242525" height="31.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="779.0" />
       <Label layoutX="19.0" layoutY="101.0" text="Título " />
       <Label layoutX="11.0" layoutY="135.0" text="Fecha de inicio:" />
       <Label layoutX="16.0" layoutY="165.0" text="Fecha de fin: " />
@@ -37,12 +37,10 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Pane fx:id="paneStudent" layoutX="448.0" layoutY="188.0" prefHeight="409.0" prefWidth="304.0" />
       <DatePicker fx:id="dpStartDate" layoutX="236.0" layoutY="131.0" prefHeight="25.0" prefWidth="166.0" />
       <DatePicker fx:id="dpEndDate" layoutX="236.0" layoutY="161.0" prefHeight="25.0" prefWidth="166.0" />
       <Label layoutX="12.0" layoutY="195.0" text="Tipo:" />
       <ComboBox fx:id="cbType" layoutX="190.0" layoutY="191.0" prefHeight="25.0" prefWidth="218.0" />
-      <Pane fx:id="lgacsPane" accessibleRole="CHECK_BOX" cache="true" layoutX="10.0" layoutY="253.0" prefHeight="99.0" prefWidth="418.0" />
       <ComboBox fx:id="cbPreliminarProject" layoutX="475.0" layoutY="119.0" prefHeight="25.0" prefWidth="277.0" />
       <Label layoutX="462.0" layoutY="93.0" text="Anteproyecto:" />
       <ComboBox fx:id="cbState" layoutX="190.0" layoutY="228.0" prefHeight="24.0" prefWidth="218.0" />
@@ -56,6 +54,8 @@
       <Button fx:id="btDelete" layoutX="412.0" layoutY="604.0" mnemonicParsing="false" onAction="#actionDelete" text="X" />
       <ComboBox fx:id="cbCodirectors" layoutX="89.0" layoutY="629.0" prefHeight="25.0" prefWidth="243.0" />
       <Button fx:id="btAddCodirector" layoutX="332.0" layoutY="630.0" mnemonicParsing="false" onAction="#actionAddCodirector" prefHeight="7.0" prefWidth="70.0" text="Añadir" />
+      <ScrollPane fx:id="spStudent" layoutX="439.0" layoutY="203.0" prefHeight="391.0" prefWidth="326.0" />
+      <ScrollPane fx:id="spLgacs" layoutX="11.0" layoutY="259.0" prefHeight="88.0" prefWidth="401.0" />
    </children>
     
     

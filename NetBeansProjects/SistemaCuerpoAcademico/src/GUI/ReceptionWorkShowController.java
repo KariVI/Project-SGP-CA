@@ -53,9 +53,17 @@ public class ReceptionWorkShowController implements Initializable {
     private String codirectors="";  
     private PreliminarProject preliminarProject;
     private ReceptionWork receptionWork;
-      private ObservableList<PreliminarProject> preliminarProjectsUnassigned;
+    private ObservableList<PreliminarProject> preliminarProjectsUnassigned;
+    private String keyGroupAcademic;
+    private Member member;
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
     
-    
+     public void setKeyGroupAcademic(String keyGroupAcademic) {
+        this.keyGroupAcademic = keyGroupAcademic;
+    }
 
     public void setPreliminarProjectsUnassigned(ObservableList<PreliminarProject> preliminarProjectsUnassigned) {
           for( int i = 0; i<preliminarProjectsUnassigned.size(); i++) {
@@ -73,6 +81,8 @@ public class ReceptionWorkShowController implements Initializable {
     
     @FXML
     private void actionUpdate(ActionEvent actionEvent){ 
+        Stage stage = (Stage) btUpdate.getScene().getWindow();
+        stage.close();
         try{ 
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/ReceptionWorkModify.fxml").toURI().toURL();
@@ -82,8 +92,10 @@ public class ReceptionWorkShowController implements Initializable {
               loader.load();
               ReceptionWorkModifyController receptionWorkController =loader.getController(); 
               receptionWorkController.setReceptionWork(receptionWork);
-              receptionWorkController.initializeReceptionWork();
               receptionWorkController.setPreliminarProjects(preliminarProjectsUnassigned);
+              receptionWorkController.setKeyGroupAcademic(keyGroupAcademic);
+              receptionWorkController.setMember(member);
+              receptionWorkController.initializeReceptionWork();
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);       
@@ -106,7 +118,8 @@ public class ReceptionWorkShowController implements Initializable {
               loader.setLocation(url);
               loader.load();
                 ReceptionWorkListController receptionWorkListController =loader.getController();
- 
+                receptionWorkListController.setKeyGroupAcademic(keyGroupAcademic);
+                receptionWorkListController.setMember(member);
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);
@@ -165,19 +178,18 @@ public class ReceptionWorkShowController implements Initializable {
         ReceptionWorkDAO receptionWorkDAO =new ReceptionWorkDAO();
          receptionWork.setStudents(receptionWorkDAO.getStudents(receptionWork.getKey()));
          ArrayList<Student> students= receptionWork.getStudents();
-         int i=0;
+         int i=1;
         int numberStudent=0;
-        int numberRows=2;
         GridPane gridPane= new GridPane();
         gridPane.setHgap (5);
         gridPane.setVgap (5);
         if(students.size()> 0){
-            while (i < ( students.size() * numberRows)){ 
-                    Label lbEnrollmentStudent = new Label("Matricula: "+ students.get(numberStudent).getEnrollment());
-                    Label lbNameStudent = new Label("Nombre: "+ students.get(numberStudent).getName());
-                    gridPane.add(lbEnrollmentStudent,1,i);
-                    gridPane.add(lbNameStudent,1, (i + 1));
-                    i=i+2;
+            Label label = new Label("Estudiantes");
+            gridPane.add(label,1, 0 );
+            while (i <= students.size()){ 
+                    Label lbNameStudent = new Label("->"+ students.get(numberStudent).getName());
+                    gridPane.add(lbNameStudent,1, i );
+                    i++;
                     numberStudent++;
             }
             studentPane.getChildren().add(gridPane);
@@ -187,7 +199,10 @@ public class ReceptionWorkShowController implements Initializable {
     
       private void getLGACS() throws BusinessException{
         ReceptionWorkDAO receptionWorkDAO =new ReceptionWorkDAO();
-         receptionWork.setLGACs(receptionWorkDAO.getLGACs(receptionWork.getKey()));
+        if(receptionWorkDAO.getLGACs(receptionWork.getKey() ) != null){
+            ArrayList<LGAC> lgacsReceptionWork= receptionWorkDAO.getLGACs(receptionWork.getKey() );
+            receptionWork.setLGACs(lgacsReceptionWork);          
+        }
          ArrayList<LGAC> lgacs= receptionWork.getLGACs();
          int i=0;
          int indexGridPane=1;
@@ -198,7 +213,7 @@ public class ReceptionWorkShowController implements Initializable {
 
         if(lgacs.size()> 0){
             while (i <lgacs.size()){ 
-                    Label lbLGAC = new Label(lgacs.get(i).getName());
+                    Label lbLGAC = new Label("->"+lgacs.get(i).getName());
                     gridPane.add(lbLGAC,1,indexGridPane);
                     i++;
                     indexGridPane++;

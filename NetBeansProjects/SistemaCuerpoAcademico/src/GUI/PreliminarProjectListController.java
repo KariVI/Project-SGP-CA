@@ -2,6 +2,7 @@
 package GUI;
 
 import businessLogic.PreliminarProjectDAO;
+import domain.Member;
 import domain.PreliminarProject;
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +34,11 @@ public class PreliminarProjectListController implements Initializable {
     @FXML private Button btReturn;
     private ObservableList<PreliminarProject> preliminarProjects ;
     private String keyGroupAcademic;
+    private Member member;
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
     
     
     public void setKeyGroupAcademic(String keyGroupAcademic) {
@@ -40,6 +46,23 @@ public class PreliminarProjectListController implements Initializable {
         getPreliminarProjects();
     }
 
+    private void openViewMenu(){   
+        Stage primaryStage = new Stage();
+        try{
+              URL url = new File("src/GUI/Menu.fxml").toURI().toURL();
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              MenuController menu = loader.getController();
+              menu.initializeMenu(member);
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);
+              primaryStage.show();
+            }catch (IOException ex) {
+                Log.logException(ex);
+            }
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -50,12 +73,23 @@ public class PreliminarProjectListController implements Initializable {
           @Override
           public void changed(ObservableValue<? extends PreliminarProject> observaleValue, PreliminarProject oldValue, PreliminarProject newValue) {
              PreliminarProject selectedPreliminarProject = (PreliminarProject) lvPreliminarProjects.getSelectionModel().getSelectedItem();
-            try {
+             Stage stage = (Stage) lvPreliminarProjects.getScene().getWindow();
+             stage.close();
+             openPreliminarProjectShow(selectedPreliminarProject);
+          }
+      });
+    
+    }    
+    
+        private void openPreliminarProjectShow(PreliminarProject preliminarProject){ 
+         try {
            FXMLLoader loader = new FXMLLoader(getClass().getResource("PreliminarProjectShow.fxml"));
             Parent root = loader.load();
             PreliminarProjectShowController preliminarProjectShowController = loader.getController();
-            preliminarProjectShowController.setPreliminarProject(selectedPreliminarProject);
+            preliminarProjectShowController.setPreliminarProject(preliminarProject);
             preliminarProjectShowController.initializePreliminarProject();
+            preliminarProjectShowController.setKeyGroupAcademic(keyGroupAcademic);
+            preliminarProjectShowController.setMember(member);
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
@@ -63,11 +97,8 @@ public class PreliminarProjectListController implements Initializable {
             stage.showAndWait();
         } catch (IOException ex) {
             Log.logException(ex);
-        }
-          }
-      });
-    
-    }    
+        } 
+    }
     
     private void getPreliminarProjects() {   
         PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
@@ -85,7 +116,9 @@ public class PreliminarProjectListController implements Initializable {
     
     @FXML 
     public void actionAddPreliminarProject(ActionEvent actionEvent){    
-         try{ 
+        Stage stage = (Stage) btAddPreliminarProject.getScene().getWindow();
+        stage.close(); 
+        try{ 
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/PreliminarProjectRegister.fxml").toURI().toURL();
            try{
@@ -94,6 +127,7 @@ public class PreliminarProjectListController implements Initializable {
               loader.load();
               PreliminarProjectRegisterController preliminarProjectRegisterController =loader.getController();      
               preliminarProjectRegisterController.setKeyGroupAcademic(keyGroupAcademic);
+              preliminarProjectRegisterController.setMember(member);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);       
@@ -110,6 +144,7 @@ public class PreliminarProjectListController implements Initializable {
     private void actionReturn(ActionEvent actionEvent){   
         Stage stage = (Stage) btReturn.getScene().getWindow();
         stage.close();
+        openViewMenu();
     }
     
 }

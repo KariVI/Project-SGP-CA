@@ -3,27 +3,34 @@ package GUI;
 
 import businessLogic.GroupAcademicDAO;
 import businessLogic.LGACDAO;
+import businessLogic.MemberDAO;
 import domain.GroupAcademic;
 import domain.LGAC;
+import domain.Member;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import log.BusinessException;
 import log.Log;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 
@@ -40,13 +47,15 @@ public class GroupAcademicRegisterController implements Initializable  {
     @FXML private Button btCancel;
     @FXML private Node groupAcademicPanel;
     @FXML private AnchorPane anchorPaneGroupRegister;
-    @FXML private Pane anchorPanelgac;
+    @FXML private ScrollPane spLgac;
     @FXML private ComboBox<String> cbConsolidateGrade;
      private ObservableList<String> consolidateGrades;
+     private Member member;
 
-     
-  
-    
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
     @FXML
     private void actionSave (ActionEvent actionEvent) throws BusinessException{    
         String name = tfName.getText();
@@ -71,17 +80,42 @@ public class GroupAcademicRegisterController implements Initializable  {
     private void actionCancel(ActionEvent actionEvent){   
         Stage stage = (Stage) btCancel.getScene().getWindow();
         stage.close();
+        openLogin();
          
     }
  
+    private void  openLogin(){   
+        Stage primaryStage =  new Stage();
+        try{
+            
+            URL url = new File("src/GUI/Login.fxml").toURI().toURL();
+            try{
+                FXMLLoader loader = new FXMLLoader(url);
+                loader.setLocation(url);
+                loader.load();
+                LoginController login = loader.getController();
+                Parent root = loader.getRoot();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+                
+            } catch (IOException ex) {
+                Log.logException(ex);
+            }
+            primaryStage.show();
+            
+        } catch (MalformedURLException ex) {
+                Log.logException(ex);
+        }
+    }
     
     public void saveGroupAcademic (GroupAcademic groupAcademic){    
         GroupAcademicDAO groupAcademicDAO =new GroupAcademicDAO();
         AlertMessage alertMessage =new AlertMessage();
-        try {
+        try {           
             if(groupAcademicDAO.savedSucessful(groupAcademic)){
                 recoverlgacs(groupAcademic);
                 alertMessage.showAlertSuccesfulSave("Cuerpo Academico");
+                updateMember(groupAcademic.getKey());
             }
         } catch (BusinessException ex) {
             if(ex.getMessage().equals("DataBase connection failed ")){
@@ -90,6 +124,16 @@ public class GroupAcademicRegisterController implements Initializable  {
                 Log.logException(ex);
             }
         }                
+    }
+    
+    private void updateMember(String keyGroupAcademic){    
+        member.setKeyGroupAcademic(keyGroupAcademic);
+        MemberDAO memberDAO = new MemberDAO();
+        try {
+            memberDAO.update(member);
+        } catch (BusinessException ex) {
+            Log.logException(ex);
+        }
     }
     
    @FXML 
@@ -121,7 +165,7 @@ public class GroupAcademicRegisterController implements Initializable  {
            }
             
         }
-        anchorPanelgac.getChildren().add(gridPane);
+        spLgac.setContent(gridPane);
     }
     
     
@@ -142,7 +186,7 @@ public class GroupAcademicRegisterController implements Initializable  {
     
     
     private void recoverlgacs(GroupAcademic groupAcademic){   
-        GridPane gridPane= (GridPane) anchorPanelgac.getChildren().get(0);
+        GridPane gridPane= (GridPane) spLgac.getContent();
             int i=1;
             Integer lgacs=Integer.parseInt(tflgacsNumber.getText());  
             int sizeRows=3;
@@ -169,7 +213,7 @@ public class GroupAcademicRegisterController implements Initializable  {
                 lgacDAO.savedSucessful(lgac);
                 groupAcademicDAO.addedLGACSucessful(groupAcademic, lgac);
             }else { 
-                alertMessage.showAlertValidateFailed("La LGCA ya se encuentra registrada");
+                alertMessage.showAlertValidateFailed("La LGAC ya se encuentra registrada");
             }
         } catch (BusinessException ex) {
             if(ex.getMessage().equals("DataBase connection failed ")){
@@ -248,6 +292,7 @@ public class GroupAcademicRegisterController implements Initializable  {
         try {   
             LGACDAO lgacDAO = new LGACDAO();
             lgacDAO.getLgacByName(name);
+
             value=true;
         }catch (BusinessException ex){ 
             Log.logException(ex);
@@ -256,11 +301,10 @@ public class GroupAcademicRegisterController implements Initializable  {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-     tfName.setMaxlength(100);
-     tfKey.setMaxlength(10);
-     tflgacsNumber.setMaxlength(1);
-
+    public void initialize(URL location, ResourceBundle resources) {          
+    tfName.setMaxlength(100);
+    tfKey.setMaxlength(10);
+    tflgacsNumber.setMaxlength(2);
      consolidateGrades= FXCollections.observableArrayList();
      consolidateGrades.add("En formación");
      consolidateGrades.add("En consolidación");

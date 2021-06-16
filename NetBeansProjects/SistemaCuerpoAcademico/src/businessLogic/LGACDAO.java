@@ -53,7 +53,9 @@ public class LGACDAO implements ILGACDAO {
                 String nameLgac= resultSet.getString("nombre");
                 String description=resultSet.getString("descripcion");
                 lgacAuxiliar=new LGAC(nameLgac, description);
-            }
+            }else{
+                throw new BusinessException("LGAC not found");
+            } 
             
         } catch (ClassNotFoundException ex) {
             Log.logException(ex);

@@ -5,14 +5,13 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import GUI.TextFieldLimited?>
-
 
 <AnchorPane id="AnchorPane" fx:id="anchorPaneGroupRegister" prefHeight="500.0" prefWidth="662.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GroupAcademicRegisterController">
     <stylesheets>
@@ -40,7 +39,7 @@
       <TextFieldLimited id="tfLgacsNumber" fx:id="tflgacsNumber" layoutX="536.0" layoutY="61.0" prefHeight="25.0" prefWidth="55.0" />
       <Button fx:id="btOk" layoutX="590.0" layoutY="61.0" mnemonicParsing="false" onAction="#addlgacs" text="Ok" />
       <Rectangle fx:id="groupAcademicPanel" arcHeight="5.0" arcWidth="5.0" fill="#0c0d0d" height="30.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="662.0" />
-      <Pane fx:id="anchorPanelgac" layoutX="371.0" layoutY="101.0" prefHeight="340.0" prefWidth="278.0" />
       <ComboBox fx:id="cbConsolidateGrade" layoutX="173.0" layoutY="130.0" prefHeight="25.0" prefWidth="185.0" />
+      <ScrollPane fx:id="spLgac" layoutX="368.0" layoutY="93.0" prefHeight="351.0" prefWidth="281.0" />
    </children>
 </AnchorPane>
