@@ -50,6 +50,7 @@
          </children>
       </HBox>
       <Button fx:id="btDelete" layoutX="393.0" layoutY="453.0" mnemonicParsing="false" onAction="#actionDelete" text="X" />
-      <ScrollPane fx:id="spStudents" layoutX="417.0" layoutY="76.0" prefHeight="427.0" prefWidth="288.0" />
+      <ScrollPane fx:id="spStudents" layoutX="417.0" layoutY="76.0" prefHeight="393.0" prefWidth="288.0" />
+      <Button fx:id="btAddStudent" layoutX="595.0" layoutY="481.0" mnemonicParsing="false" onAction="#actionAddStudent" text="Añadir estudiante" />
    </children>
 </AnchorPane>

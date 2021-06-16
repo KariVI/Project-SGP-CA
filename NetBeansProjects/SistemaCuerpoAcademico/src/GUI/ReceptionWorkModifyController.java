@@ -82,9 +82,40 @@ public class ReceptionWorkModifyController implements Initializable {
     private ReceptionWork receptionWorkNew= new ReceptionWork();    
     private Member member;
     private String keyGroupAcademic;
+    private GridPane gridPane= new GridPane();
+    int nextRowPosition=0;
 
     public void setMember(Member member) {
         this.member = member;
+    }
+    
+     private void initializeNextRowPosition(){  
+        int sizeRows=3;
+        int sizeStudentsCurrently= receptionWorkRecover.getStudents().size();
+        nextRowPosition=  nextRowPosition + ( sizeStudentsCurrently * sizeRows);
+    }
+     
+     @FXML 
+    private void actionAddStudent(ActionEvent actionEvent){ 
+        
+            gridPane.setHgap (5);
+            gridPane.setVgap (5);
+            int sizeRows=3;
+
+            nextRowPosition= nextRowPosition + sizeRows ;
+           
+                TextField tfEnrollmentStudent = new TextField();
+                tfEnrollmentStudent .setPromptText("Matricula: ");   
+                TextField tfNameStudent = new TextField();
+                tfNameStudent.setPrefWidth(200);
+                tfNameStudent.setPromptText("Nombre: ");
+                Label label = new Label("Estudiante");
+                gridPane.add(label,1,nextRowPosition);
+                gridPane.add(tfEnrollmentStudent,1,(nextRowPosition + 1));
+                gridPane.add(tfNameStudent,1, (nextRowPosition + 2));
+            
+              spStudents.setContent(gridPane);
+
     }
 
     public void setKeyGroupAcademic(String keyGroupAcademic) {
@@ -111,6 +142,7 @@ public class ReceptionWorkModifyController implements Initializable {
            try {
                initializeColaborators();
                getStudents();
+               initializeNextRowPosition();
                getLGACS();
            } catch (BusinessException ex) {
                Log.logException(ex);
@@ -289,7 +321,7 @@ public class ReceptionWorkModifyController implements Initializable {
          int i=0;
         int numberStudent=0;
         int numberRows=2;
-        GridPane gridPane= new GridPane();
+       
         gridPane.setHgap (5);
         gridPane.setVgap (5);
         if(students.size()> 0){

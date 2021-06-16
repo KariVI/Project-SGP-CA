@@ -50,6 +50,8 @@ public class GroupAcademicModifyController implements Initializable {
      private ObservableList<String> consolidateGrades;
     private GroupAcademic groupAcademic= new GroupAcademic();
     private GroupAcademic groupAcademicNew=new GroupAcademic();
+    private GridPane gridPane = new GridPane();
+    int nextRowPosition=0;
   
    
    public void setGroupAcademic(GroupAcademic groupAcademic){
@@ -83,7 +85,6 @@ public class GroupAcademicModifyController implements Initializable {
          int i=0;
         int numberlgacs=0;
         int numberRows=3;
-        GridPane gridPane= new GridPane();
         gridPane.setHgap (5);
         gridPane.setVgap (5);
         while (i < ( lgacs.size() * numberRows)){  
@@ -101,7 +102,39 @@ public class GroupAcademicModifyController implements Initializable {
            }
         spLGACs.setContent(gridPane);
     }
+     
+    private void initializeNextRowPosition() throws BusinessException{  
+        int sizeRows=3;
+        GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO();
+        int sizeLGACsCurrently= groupAcademicDAO.getLGACs(groupAcademic.getKey()).size();
+        nextRowPosition=  nextRowPosition + ( sizeLGACsCurrently * sizeRows);
+    }
   
+      @FXML 
+    private void actionAddLGAC(ActionEvent actionEvent){ 
+        
+            gridPane.setHgap (5);
+            gridPane.setVgap (5);
+            int sizeRows=3;
+
+            nextRowPosition= nextRowPosition + sizeRows ;
+            System.out.print(nextRowPosition);
+               TextField tfNamelgac = new TextField();
+                tfNamelgac .setPromptText("Nombre: ");   
+                tfNamelgac.setPrefWidth(200);
+                TextArea taDescriptionlgac = new TextArea();
+                taDescriptionlgac.setPrefHeight(80); 
+                taDescriptionlgac.setPrefWidth(170);
+                taDescriptionlgac.setPromptText("Descripción");
+                String lgacName= "LGAC "+( (nextRowPosition/sizeRows) +1) ;
+                Label label = new Label(lgacName);
+                gridPane.add(label,1,nextRowPosition);
+                gridPane.add(tfNamelgac,1,(nextRowPosition + 1));
+                gridPane.add(taDescriptionlgac,1, (nextRowPosition + 2));
+            
+              spLGACs.setContent(gridPane);
+
+    }
     @FXML
     private void actionSave (ActionEvent actionEvent){    
         String name = tfName.getText();
