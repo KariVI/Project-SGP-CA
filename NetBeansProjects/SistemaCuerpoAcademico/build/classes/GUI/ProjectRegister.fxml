@@ -21,7 +21,7 @@
         <URL value="@projectregister.css" />
     </stylesheets>
    <children>
-      <ScrollPane layoutY="-10.0" prefHeight="507.0" prefWidth="787.0">
+      <ScrollPane layoutY="-10.0" prefHeight="525.0" prefWidth="787.0">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="907.0" prefWidth="794.0">
                <children>

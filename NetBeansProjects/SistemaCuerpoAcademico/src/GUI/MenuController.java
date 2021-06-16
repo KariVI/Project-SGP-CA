@@ -212,7 +212,7 @@ public class MenuController implements Initializable {
                root = loader.load();
                ProjectListController projectListController = loader.getController();
                String keyGroupAcademic = member.getKeyGroupAcademic();
-               projectListController.setGroupAcademicKey(keyGroupAcademic);
+               projectListController.setMember(member);
                Scene scene = new Scene(root);
                Stage stage = new Stage();
                stage.setScene(scene);

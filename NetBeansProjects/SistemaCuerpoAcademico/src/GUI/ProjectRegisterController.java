@@ -10,6 +10,8 @@ import domain.Member;
 import domain.Project;
 import domain.ReceptionWork;
 import domain.Student;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -19,7 +21,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -66,21 +71,11 @@ public class ProjectRegisterController implements Initializable {
     private ObservableList<Student> studentsTable;
     private ObservableList<ReceptionWork> receptionWorks;
     private ObservableList<ReceptionWork> receptionWorksTable;
-    private String groupAcademicKey;
-    int indexMember;
-    int indexLGAC;
-    int indexReceptionWork;
-    int indexStudent;
-    @FXML
-    private AnchorPane scrollBar;
-    @FXML
-    private Button btDeleteLGAC;
-    @FXML
-    private Button btDeleteReceptionWork;
-    @FXML
-    private Button btDeleteMember;
-    @FXML
-    private Button btDeleteStudent;
+    private Member member;
+    private int indexMember;
+    private int indexLGAC;
+    private int indexReceptionWork;
+    private int indexStudent;
  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -145,7 +140,7 @@ public class ProjectRegisterController implements Initializable {
          description = taDescription.getText();
          startDate = dpStartDate.getValue().format(formatter);
          finishDate = dpFinishDate.getValue().format(formatter);
-         Project project = new Project(title,description,startDate,finishDate,groupAcademicKey);         
+         Project project = new Project(title,description,startDate,finishDate,member.getKeyGroupAcademic());         
          project = setProject(project);
          if(validateProject(project)){   
  
@@ -161,6 +156,7 @@ public class ProjectRegisterController implements Initializable {
                  alertMessage.showAlertSuccesfulSave("Proyecto");
                   Stage stage = (Stage)btSave.getScene().getWindow();
                   stage.close();
+                  openViewProjectList();
              } catch (BusinessException ex) {
                   if(ex.getMessage().equals("DataBase connection failed ")){
                      alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
@@ -511,8 +507,8 @@ public class ProjectRegisterController implements Initializable {
         return value;
     }
 
-    public void setGroupAcademic(String groupAcademicKey){
-        this.groupAcademicKey = groupAcademicKey;    
+    public void setMember(Member member){
+        this.member = member;    
         initializeMembers();
         initializeLGACs();
         initializeReceptionWorks();
@@ -534,7 +530,7 @@ public class ProjectRegisterController implements Initializable {
         MemberDAO memberDAO = new MemberDAO();
         try {
             ArrayList<Member> memberList = new ArrayList<Member>();
-            memberList = memberDAO.getMembers(groupAcademicKey);
+            memberList = memberDAO.getMembers(member.getKeyGroupAcademic());
             for(int i = 0; i< memberList.size(); i++){
                      members.add(memberList.get(i));                
             }
@@ -548,7 +544,7 @@ public class ProjectRegisterController implements Initializable {
         GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO();
         try {
             ArrayList<LGAC> lgacList = new ArrayList<LGAC>();
-            lgacList = groupAcademicDAO.getLGACs(groupAcademicKey);
+            lgacList = groupAcademicDAO.getLGACs(member.getKeyGroupAcademic());
             for(int i = 0; i< lgacList.size(); i++){
                      lgacs.add(lgacList.get(i));   
             }
@@ -562,7 +558,7 @@ public class ProjectRegisterController implements Initializable {
         ReceptionWorkDAO  receptionWorkDAO  = new  ReceptionWorkDAO ();
         try {
             ArrayList<ReceptionWork> receptionWorkList = new ArrayList<ReceptionWork>();
-            receptionWorkList  = receptionWorkDAO.getReceptionWorks(groupAcademicKey);
+            receptionWorkList  = receptionWorkDAO.getReceptionWorks(member.getKeyGroupAcademic());
             for(int i = 0; i< receptionWorkList .size(); i++){
                      receptionWorks.add(receptionWorkList.get(i));   
             }
@@ -570,6 +566,32 @@ public class ProjectRegisterController implements Initializable {
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
+    }
+    
+    @FXML
+    private void actionCancel(ActionEvent actionEvent){   
+        Stage stage = (Stage) btCancel.getScene().getWindow();
+        stage.close();
+        openViewProjectList();
+        
+    }
+    
+    private void  openViewProjectList(){   
+        Stage primaryStage = new Stage();
+        try{
+              URL url = new File("src/GUI/ProjectList.fxml").toURI().toURL();
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              ProjectListController projectList = loader.getController();
+              projectList.setMember(member);
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);
+              primaryStage.show();
+            }catch (IOException ex) {
+                Log.logException(ex);
+            }
     }
     
     

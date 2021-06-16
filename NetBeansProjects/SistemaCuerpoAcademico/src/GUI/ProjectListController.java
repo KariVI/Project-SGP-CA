@@ -1,6 +1,7 @@
 package GUI;
 
 import businessLogic.ProjectDAO;
+import domain.Member;
 import domain.Project;
 import java.io.File;
 import java.io.IOException;
@@ -27,10 +28,10 @@ import log.Log;
 public class ProjectListController implements Initializable {
 
     @FXML private ListView<Project> lvProjects = new ListView<Project>();
-    @FXML private Button btClose;
+    @FXML private Button btReturn;
     @FXML private Button btRegisterProject;
     private ObservableList <Project> projects ;
-    private String groupAcademicKey;
+    Member member;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -61,8 +62,8 @@ public class ProjectListController implements Initializable {
       });
     }
     
-    public void setGroupAcademicKey(String groupAcademicKey){
-        this.groupAcademicKey = groupAcademicKey;
+    public void setMember(Member member){
+        this.member = member;
         initializeProjects();
     }
     
@@ -72,7 +73,7 @@ public class ProjectListController implements Initializable {
             ArrayList <Project> projectList = new ArrayList<Project>();
             projectList = projectDAO.getProjects();
             for( int i = 0; i<projectList.size(); i++) {
-                if(projectList.get(i).getGroupAcademicKey().equals(groupAcademicKey)){
+                if(projectList.get(i).getGroupAcademicKey().equals(member.getKeyGroupAcademic())){
                     projects.add(projectList.get(i));
                 }         
             }
@@ -81,9 +82,6 @@ public class ProjectListController implements Initializable {
         }
     }
     
-    @FXML
-    private void actionClose(ActionEvent event) {
-    }
 
     @FXML
     private void actionRegister(ActionEvent event) {
@@ -97,7 +95,7 @@ public class ProjectListController implements Initializable {
                 Log.logException(ex);
             }
             ProjectRegisterController  projectRegisterController = loader.getController();
-            projectRegisterController.setGroupAcademic(groupAcademicKey);
+            projectRegisterController.setMember(member);
             Parent root = loader.getRoot();
             Scene scene = new Scene(root);
             Stage primaryStage= new Stage();
@@ -108,6 +106,32 @@ public class ProjectListController implements Initializable {
         } catch (MalformedURLException ex) {
             Log.logException(ex);
         }
+    }
+    
+    @FXML
+    private void actionReturn(ActionEvent actionEvent){   
+        Stage stage = (Stage) btReturn.getScene().getWindow();
+        stage.close();
+        openViewMenu();
+        
+    }
+    
+    private void openViewMenu(){   
+        Stage primaryStage = new Stage();
+        try{
+              URL url = new File("src/GUI/Menu.fxml").toURI().toURL();
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              MenuController menu = loader.getController();
+              menu.initializeMenu(member);
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);
+              primaryStage.show();
+            }catch (IOException ex) {
+                Log.logException(ex);
+            }
     }
     
 }
