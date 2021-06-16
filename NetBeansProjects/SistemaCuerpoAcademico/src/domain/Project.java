@@ -80,44 +80,44 @@ public class Project {
         this.finishDate = finishDate;
     }
     
-    public void setStudent(Student student){
-        students.add(student);
-    }
-    
     public ArrayList<Student> getStudents(){
         return students;
     }
     
-    public void setMember(Member member){
-        members.add(member);
+    public void setStudent(Student student){
+        students.add(student);
     }
     
     public ArrayList<Member> getMembers(){
         return members;
-    }
-    
-    public void setLGAC(LGAC lgac){
-        lgacs.add(lgac);
+    }  
+
+    public void setMember(Member member){
+        members.add(member);
     }
     
     public ArrayList<LGAC> getLGACs(){
         return lgacs;
     }
     
-    public void setReceptionWork(ReceptionWork receptionWork){
-        receptionWorks.add(receptionWork);
+    public void setLGAC(LGAC lgac){
+        lgacs.add(lgac);
     }
     
     public ArrayList<ReceptionWork> getReceptionWorks(){
         return receptionWorks;
     }
     
-    public void setGroupAcademciKey(String groupAcademicKey){
-        this.groupAcademicKey = groupAcademicKey;
-    }
+    public void setReceptionWork(ReceptionWork receptionWork){
+        receptionWorks.add(receptionWork);
+    }  
     
     public String getGroupAcademicKey(){
         return groupAcademicKey;
+    } 
+    
+    public void setGroupAcademciKey(String groupAcademicKey){
+        this.groupAcademicKey = groupAcademicKey;
     }
     
     @Override
@@ -150,4 +150,5 @@ public class Project {
     public String toString(){
         return title;
     }
+    
 }

@@ -35,6 +35,7 @@ public class Agreement {
     public void setIdAgreement(int idAgreement){
         this.idAgreement = idAgreement;
     }
+    
     public String getPeriod(){
         return period;
     }

@@ -12,8 +12,12 @@ public class Member {
     private String universityName;
     private String keyGroupAcademic;
     private String state;
+    
+    public Member() {
 
-  public Member(String professionalLicense, String name, String role, String degree, String nameDegree, String universityName, int degreeYear,String state, String keyGroupAcademic) {
+     }
+    
+    public Member(String professionalLicense, String name, String role, String degree, String nameDegree, String universityName, int degreeYear,String state, String keyGroupAcademic) {
         this.professionalLicense = professionalLicense;
         this.name = name;
         this.role = role;
@@ -35,9 +39,7 @@ public class Member {
         this.degreeYear = degreeYear;
         this.keyGroupAcademic = keyGroupAcademic;
     }
-    public Member() {
-
-    }
+    
     public Member(String professionalLicense, String name, String role, String degree, String nameDegree, String universityName, int degreeYear) {
         this.professionalLicense = professionalLicense;
         this.name = name;
@@ -54,7 +56,8 @@ public class Member {
         this.role="";
 
     }
-        public Member(String professionalLicense, String name, String role) {
+    
+    public Member(String professionalLicense, String name, String role) {
         this.professionalLicense = professionalLicense;
         this.name = name;
         this.role=role;
@@ -89,94 +92,82 @@ public class Member {
         return hash;
 
        
-     }
-     
-    public void setName(String name) {
-        this.name = name;
-    } 
-      
+    }
     
     public String getName() {
         return name;
-    }
-
+    }  
+    
+    public void setName(String name) {
+        this.name = name;
+    } 
+    
+    public String getRole() {
+        return role;
+    }      
+    
     public void setRole(String role) {
         this.role = role;
     }
     
-    public String getRole() {
-        return role;
-    }
-
-    
+    public String getDegree(){
+        return  degree;
+    }   
+  
     public void setDegree(String degree){
         this.degree = degree;
     }
     
-    public String getDegree(){
-        return  degree;
-    }
-    
-    public void setNameDegree(String nameDegree){
-        this.nameDegree = nameDegree;
-
-    }
-
-    
-    public void setProfessionalLicense(String professionalLicense) {
-        this.professionalLicense = professionalLicense;
-    }
- 
-    
-
     public String getNameDegree(){
         return nameDegree;
     }
     
-    public void setUniversityName(String universityName){
-        this.universityName = universityName;
+    public void setNameDegree(String nameDegree){
+        this.nameDegree = nameDegree;
     }
-
-    
-    public String getUniversityName(){
-        return universityName;
-    }
-
-
-
+  
     public String getProfessionalLicense() {
         return professionalLicense;
     }
-
-
-
     
-    public void setState(String state){
-        this.state = state;
+    public void setProfessionalLicense(String professionalLicense) {
+        this.professionalLicense = professionalLicense;
+    }
+     
+    public String getUniversityName(){
+        return universityName;
+    }   
+    
+    public void setUniversityName(String universityName){
+        this.universityName = universityName;
     }
     
     public String getState(){
         return state;
     }
     
-    public void setKeyGroupAcademic(String keyGroupAcademic){
-        this.keyGroupAcademic = keyGroupAcademic;
+    public void setState(String state){
+        this.state = state;
     }
     
     public String getKeyGroupAcademic(){
         return keyGroupAcademic;
-    }
-    
-    public void setDegreeYear(int degreeYear){
-        this.degreeYear = degreeYear;
+    }   
+
+    public void setKeyGroupAcademic(String keyGroupAcademic){
+        this.keyGroupAcademic = keyGroupAcademic;
     }
     
     public int getDegreeYear(){
         return degreeYear;
+    }   
+
+    public void setDegreeYear(int degreeYear){
+        this.degreeYear = degreeYear;
     }
     
-   @Override
-   public String toString(){
+    @Override
+    public String toString(){
       return professionalLicense+"\t"+name;
     }  
 }

@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package domain;
 
-/**
- *
- * @author Mariana
- */
 public class MinuteComment {
     private String comment;
     private String state;
@@ -45,36 +36,37 @@ public class MinuteComment {
         }
       return value;
     }
-    public void setComment(String comment){
-        this.comment = comment;
-    }
     
     public String getComment(){
         return comment;
     }
     
-    public void setState(String state){
-        this.state = state;
+    public void setComment(String comment){
+        this.comment = comment;
     }
     
     public String getState(){
         return state;
-    }
-    
-    public void setProfessionalLicense(String professionalLicense){
-        this.professionalLicense = professionalLicense;
+    }    
+
+    public void setState(String state){
+        this.state = state;
     }
     
     public String getProfessionalLicense(){
         return professionalLicense;
     }
     
-    public void setIdMinute(int idMinute){
-        this.idMinute = idMinute;
+    public void setProfessionalLicense(String professionalLicense){
+        this.professionalLicense = professionalLicense;
     }
     
     public int getIdMinute(){
         return idMinute;
+    }   
+
+    public void setIdMinute(int idMinute){
+        this.idMinute = idMinute;
     }
     
 }

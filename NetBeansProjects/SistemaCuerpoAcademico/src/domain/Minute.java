@@ -70,6 +70,7 @@ public class Minute {
     public void setState(String state){
         this.state = state;
     }
+    
     public String getDue() {
         return due;
     }
@@ -85,4 +86,5 @@ public class Minute {
     public void setIdMeeting(int idMeeting){
         this.idMeeting = idMeeting;
     }
+    
 }
