@@ -66,6 +66,10 @@ public class MeetingModifyController implements Initializable {
 
     public void setMember(Member member) {
         this.member = member;
+        initializeMembers(); 
+        cbMember.getSelectionModel().selectFirst();
+        cbLeader.getSelectionModel().selectFirst();
+        cbSecretary.getSelectionModel().selectFirst();
     }
          
     @FXML 
@@ -192,13 +196,9 @@ public class MeetingModifyController implements Initializable {
         dpDate.setValue(localDate);
         initializePrerequisites();
         tvPrerequisites.setItems(prerequisites);
-        initializeMembers();
         cbMember.setItems(members);
-        cbMember.getSelectionModel().selectFirst();
         cbLeader.setItems(members);
-        cbLeader.getSelectionModel().selectFirst();
         cbSecretary.setItems(members);  
-        cbSecretary.getSelectionModel().selectFirst();
         recoverAssistants();
     }
     

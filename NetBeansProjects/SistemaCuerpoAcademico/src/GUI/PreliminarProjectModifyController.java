@@ -74,6 +74,9 @@ public class PreliminarProjectModifyController implements Initializable {
 
     public void setKeyGroupAcademic(String keyGroupAcademic) {
         this.keyGroupAcademic = keyGroupAcademic;
+        initializeMembers();
+        cbDirector.getSelectionModel().selectFirst();
+       cbCodirectors.getSelectionModel().selectFirst();
     }
     
 
@@ -472,7 +475,6 @@ public class PreliminarProjectModifyController implements Initializable {
         members = FXCollections.observableArrayList();
         codirectors= FXCollections.observableArrayList();
         codirectorsNew= FXCollections.observableArrayList();
-        initializeMembers();
         cbDirector.setItems(members);
         cbDirector.getSelectionModel().selectFirst();
         cbCodirectors.setItems(members);

@@ -76,6 +76,10 @@ public class MeetingRegisterController implements Initializable {
 
     public void setKeyGroupAcademic(String keyGroupAcademic) {
         this.keyGroupAcademic = keyGroupAcademic;
+        initializeMembers();
+        cbMember.getSelectionModel().selectFirst();
+        cbLeader.getSelectionModel().selectFirst();
+        cbSecretary.getSelectionModel().selectFirst();
     }
 
     
@@ -332,11 +336,8 @@ public class MeetingRegisterController implements Initializable {
         tvPrerequisite.setItems(prerequisites);
         initializeMembers();
         cbMember.setItems(members);
-        cbMember.getSelectionModel().selectFirst();
         cbLeader.setItems(members);
-        cbLeader.getSelectionModel().selectFirst();
         cbSecretary.setItems(members);
-        cbSecretary.getSelectionModel().selectFirst();
         
         tvPrerequisite.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {

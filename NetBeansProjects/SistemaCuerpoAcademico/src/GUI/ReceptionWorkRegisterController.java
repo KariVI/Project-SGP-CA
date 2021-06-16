@@ -83,6 +83,9 @@ public class ReceptionWorkRegisterController implements Initializable {
 
     public void setKeyGroupAcademic(String keyGroupAcademic) {
         this.keyGroupAcademic = keyGroupAcademic;
+        initializeMembers();
+        cbDirector.getSelectionModel().selectFirst();
+       cbCodirectors.getSelectionModel().selectFirst();
         try {
             getlgacs();
         } catch (BusinessException ex) {
@@ -236,11 +239,8 @@ public class ReceptionWorkRegisterController implements Initializable {
             dpEndDate.setConverter(new LocalDateStringConverter(formatter, null));
             members = FXCollections.observableArrayList();
             codirectors= FXCollections.observableArrayList();
-            initializeMembers();
             cbDirector.setItems(members);
-            cbDirector.getSelectionModel().selectFirst();
             cbCodirectors.setItems(members);
-            cbCodirectors.getSelectionModel().selectFirst();
             tvCodirectors.setItems(codirectors);
             tvCodirectors.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
                 if (newSelection != null) {

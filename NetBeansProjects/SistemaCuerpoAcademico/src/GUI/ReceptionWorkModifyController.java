@@ -89,11 +89,11 @@ public class ReceptionWorkModifyController implements Initializable {
 
     public void setKeyGroupAcademic(String keyGroupAcademic) {
         this.keyGroupAcademic = keyGroupAcademic;
+        initializeMembers();
+        cbDirector.getSelectionModel().selectFirst();
+       cbCodirectors.getSelectionModel().selectFirst();
     }
-    
-    
-    
-    
+
      public void setReceptionWork(ReceptionWork receptionWork){
         this.receptionWorkRecover= receptionWork;
     }
@@ -425,11 +425,9 @@ public class ReceptionWorkModifyController implements Initializable {
             members = FXCollections.observableArrayList();
             codirectors= FXCollections.observableArrayList();
             codirectorsNew= FXCollections.observableArrayList();
-            initializeMembers();
             cbDirector.setItems(members);
-            cbDirector.getSelectionModel().selectFirst();
+            
             cbCodirectors.setItems(members);
-            cbCodirectors.getSelectionModel().selectFirst();
             tvCodirectors.setItems(codirectorsNew);
             tvCodirectors.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
                 if (newSelection != null) {
