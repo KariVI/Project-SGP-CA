@@ -39,15 +39,16 @@ public class MinuteCheckCommentController implements Initializable {
     
     public void setMinute(Minute minute){
         this.minute = minute;
+        setMembers();
     }
     
-    @FXML
-    private void setMembers(ActionEvent actionEvent){
+    private void setMembers(){
         try {
             GridPane gridPane= new GridPane();
             MinuteDAO minuteDAO = new MinuteDAO();
             ArrayList<Member> memberListApprove = minuteDAO.getMembersApprove(minute);
             for(int i = 0; i < memberListApprove.size(); i++){
+                System.out.println(memberListApprove.get(i).getName());
                 Label label = new Label(memberListApprove.get(i).getName());
                 gridPane.add(label,1,i);
             }

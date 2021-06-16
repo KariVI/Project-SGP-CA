@@ -239,7 +239,7 @@ public class MinuteShowController implements Initializable {
     public void actionMinuteCheckComment(){
          try {
             Stage primaryStage= new Stage();
-            URL url = new File("src/GUI/MinuteCkeckComment.fxml").toURI().toURL();
+            URL url = new File("src/GUI/MinuteCheckComment.fxml").toURI().toURL();
             FXMLLoader loader = new FXMLLoader(url);
             loader.setLocation(url);
             loader.load();
