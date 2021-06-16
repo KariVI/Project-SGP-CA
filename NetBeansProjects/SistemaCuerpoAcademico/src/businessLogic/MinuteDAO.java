@@ -272,4 +272,46 @@ public class MinuteDAO implements IMinuteDAO {
         return minute;
     }
 
+    @Override
+    public boolean deleteMinuteComment(MinuteComment minuteComment) throws BusinessException {
+        boolean deleteSucess = false;
+        Connector connectorDataBase=new Connector();
+        try {
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("Delete from ValidarMinuta where idMinuta = ? and cedula = ?");
+                preparedStatement.setInt(1, minuteComment.getIdMinute());
+                preparedStatement.setString(2, minuteComment.getProfessionalLicense());
+            
+            preparedStatement.executeUpdate();
+            deleteSucess=true;  
+            connectorDataBase.disconnect();
+        }catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        } catch (SQLException sqlException) {
+           throw new BusinessException("DataBase connection failed ", sqlException);
+        }
+      
+        return deleteSucess;
+    }
+
+    @Override
+    public boolean deleteMinutesComments(int idMinute) throws BusinessException {
+       boolean deleteSucess = false;
+        Connector connectorDataBase=new Connector();
+        try {
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("Delete from ValidarMinuta where idMinuta = ? ");
+            preparedStatement.setInt(1, idMinute);          
+            preparedStatement.executeUpdate();
+            deleteSucess = true;  
+            connectorDataBase.disconnect();
+        }catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        } catch (SQLException sqlException) {
+           throw new BusinessException("DataBase connection failed ", sqlException);
+        }
+      
+        return deleteSucess;
+    }
+
 }

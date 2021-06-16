@@ -28,6 +28,11 @@ public class MinuteComment {
         this.idMinute = idMinute;
     }
     
+    public MinuteComment( String professionalLicense, int idMinute){
+        this.professionalLicense = professionalLicense;
+        this.idMinute = idMinute;
+    }
+    
     public boolean equals(Object object){
         boolean value = false;
             if (object instanceof MinuteComment) {
