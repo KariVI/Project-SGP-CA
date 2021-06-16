@@ -5,13 +5,13 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -30,7 +30,6 @@
       <Button fx:id="btSave" layoutX="543.0" layoutY="531.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar" />
       <Button fx:id="btExit" layoutX="632.0" layoutY="531.0" mnemonicParsing="false" onAction="#actionExit" prefHeight="25.0" prefWidth="59.0" text="Salir" />
       <Label layoutX="19.0" layoutY="306.0" text="Director:" />
-      <Pane fx:id="paneStudent" layoutX="421.0" layoutY="99.0" prefHeight="405.0" prefWidth="270.0" />
       <DatePicker fx:id="dpStartDate" layoutX="193.0" layoutY="131.0" prefHeight="25.0" prefWidth="166.0" />
       <DatePicker fx:id="dpEndDate" layoutX="193.0" layoutY="161.0" prefHeight="25.0" prefWidth="166.0" />
       <Text layoutX="19.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modificar Anteproyecto">
@@ -51,5 +50,6 @@
          </children>
       </HBox>
       <Button fx:id="btDelete" layoutX="393.0" layoutY="453.0" mnemonicParsing="false" onAction="#actionDelete" text="X" />
+      <ScrollPane fx:id="spStudents" layoutX="417.0" layoutY="76.0" prefHeight="427.0" prefWidth="288.0" />
    </children>
 </AnchorPane>

@@ -19,12 +19,13 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import log.BusinessException;
+import log.Log;
 
 
 public class LoginController implements Initializable {
-    @FXML PasswordField pfPassword;
-    @FXML TextField tfUser;
-    @FXML Button btLogin;
+    @FXML private PasswordField pfPassword;
+    @FXML private TextField tfUser;
+    @FXML private Button btLogin;
     private LoginCredential credentialRetrieved = null;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -44,10 +45,51 @@ public class LoginController implements Initializable {
             Member member = null;
             try {
                member = memberDAO.getMemberByLicense(credentialRetrieved.getProfessionalLicense());
+                if(member.getKeyGroupAcademic()!=null){
+                    openMenu(member);
+                }else{  
+                    if(member.getRole().equals("Responsable")){ 
+                        openMissingGroupAcademic(member);
+                    }else{  
+                        AlertMessage alertMessage = new AlertMessage();
+                        alertMessage.showAlertValidateFailed("Lo lamento todavía no hay un cuerpo académico registrado");                       
+                    }
+                }
             } catch (BusinessException ex) {
-               Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                Log.logException(ex);
             }
-            Stage primaryStage= new Stage();
+           
+       }else{
+           AlertMessage alertMessage = new AlertMessage();
+           alertMessage.showAlertValidateFailed("Credenciales incorrectas");
+       }
+    }
+    
+    
+    
+    private void openMissingGroupAcademic(Member member){    
+         Stage primaryStage= new Stage();
+            try{
+              URL url = new File("src/GUI/MissingGroupAcademic.fxml").toURI().toURL();
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              MissingGroupAcademicController missingGroupAcademicController = loader.getController();
+              missingGroupAcademicController.setMember(member);
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);
+              Stage stage = (Stage) btLogin.getScene().getWindow();
+              stage.close();
+              primaryStage.show();
+            }catch (IOException ex) {
+             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+    
+    
+    private void openMenu(Member member){    
+         Stage primaryStage= new Stage();
             try{
               URL url = new File("src/GUI/Menu.fxml").toURI().toURL();
               FXMLLoader loader = new FXMLLoader(url);
@@ -64,10 +106,6 @@ public class LoginController implements Initializable {
             }catch (IOException ex) {
              Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
-       }else{
-           AlertMessage alertMessage = new AlertMessage();
-           alertMessage.showAlertValidateFailed("Credenciales incorrectas");
-       }
     }
     
      public boolean verificarCredenciales(LoginCredential credential){

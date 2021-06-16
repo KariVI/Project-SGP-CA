@@ -18,8 +18,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -47,15 +45,15 @@ public class MeetingRegisterController implements Initializable {
     private ObservableList<Member> members;
     private ObservableList<Prerequisite> prerequisites;
     private ObservableList<Topic> topics;
-    @FXML private TextField tfSubject;
-    @FXML private TextField tfHour;
+    @FXML private TextFieldLimited tfSubject;
+    @FXML private TextFieldLimited tfHour;
     @FXML private Button btExit;
     @FXML private ComboBox cbLeader;
     @FXML private ComboBox cbSecretary;
     @FXML private  DatePicker dpDate;
     @FXML private TableColumn tcDescription;
     @FXML private TableColumn tcMandated;
-    @FXML private TextField tfDescription;
+    @FXML private TextFieldLimited tfDescription;
     @FXML private ComboBox cbMember;
     private int indexPrerequisite;
     @FXML TableView<Prerequisite> tvPrerequisite;
@@ -66,6 +64,11 @@ public class MeetingRegisterController implements Initializable {
     @FXML private Button btDelete;
     private int idMeeting;
     private String keyGroupAcademic;
+    private Member member;
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
 
     public String getKeyGroupAcademic() {
         return keyGroupAcademic;
@@ -73,6 +76,10 @@ public class MeetingRegisterController implements Initializable {
 
     public void setKeyGroupAcademic(String keyGroupAcademic) {
         this.keyGroupAcademic = keyGroupAcademic;
+        initializeMembers();
+        cbMember.getSelectionModel().selectFirst();
+        cbLeader.getSelectionModel().selectFirst();
+        cbSecretary.getSelectionModel().selectFirst();
     }
 
     
@@ -102,6 +109,8 @@ public class MeetingRegisterController implements Initializable {
     
     public void setTopics(ObservableList<Topic> topics){
        this.topics = topics;
+       btSave.setDisable(false);
+       btAddTopic.setDisable(true);
     }
     
     @FXML 
@@ -112,7 +121,6 @@ public class MeetingRegisterController implements Initializable {
         if(!validateFieldEmpty() && validateInformationField() && validateDate()){
             String date= dpDate.getValue().format(formatter);
             Meeting meeting = new Meeting(subject,date,hour,keyGroupAcademic);
-            System.out.println(hour);
             if(!searchRepeateMeeting(meeting)){  
                 save(meeting);
             }else{  
@@ -138,7 +146,8 @@ public class MeetingRegisterController implements Initializable {
               FXMLLoader loader = new FXMLLoader(url);
               loader.setLocation(url);
               loader.load();
-              MeetingListController meetingListController =loader.getController();      
+              MeetingListController meetingListController =loader.getController();   
+              meetingListController.setMember(member);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);       
@@ -150,6 +159,13 @@ public class MeetingRegisterController implements Initializable {
            Log.logException(ex);
        } 
     
+    }
+    
+    private void disableButtonSave(){   
+        if(topics==null){   
+            btSave.setDisable(true);
+        
+        }
     }
     
     @FXML
@@ -175,18 +191,34 @@ public class MeetingRegisterController implements Initializable {
     private void save(Meeting meeting){ 
         MeetingDAO meetingDAO = new MeetingDAO ();
         try {
-            if(meetingDAO.savedSucessful(meeting)){
-                idMeeting= meetingDAO.getId(meeting);
-                savePrerequisite();
-                saveTopics();
-                meeting.setKey(idMeeting);
-                saveAssistants( meeting);
-                AlertMessage alertMessage = new AlertMessage();
-                alertMessage.showAlertSuccesfulSave("Reunión");
+            if( validateAssistants()){
+                if(meetingDAO.savedSucessful(meeting)){
+                    idMeeting= meetingDAO.getId(meeting);
+                    savePrerequisite();
+                    saveTopics();
+                    meeting.setKey(idMeeting);
+                    saveAssistants( meeting);
+                    AlertMessage alertMessage = new AlertMessage();
+                    alertMessage.showAlertSuccesfulSave("Reunión");
+                 }
             }
         } catch (BusinessException ex) {
             exceptionShow(ex);
         }
+    }
+    
+    private boolean validateAssistants(){  
+        boolean value = true;
+        Member leader= (Member) cbLeader.getSelectionModel().getSelectedItem();
+        Member secretary = (Member) cbSecretary.getSelectionModel().getSelectedItem();
+        if(leader.equals(secretary)){
+            value = false;
+        }else{  
+            AlertMessage alertMessage = new AlertMessage();
+            alertMessage.showAlertValidateFailed("El lider y secretario no pueden ser el mismo");
+        }
+        
+        return value;
     }
     
     private void savePrerequisite() throws BusinessException{ 
@@ -203,8 +235,8 @@ public class MeetingRegisterController implements Initializable {
              topicDAO.save(topics.get(i));           
            }   
         } catch (BusinessException ex) {
-               Logger.getLogger(TopicRegisterController.class.getName()).log(Level.SEVERE, null, ex);
-         }    
+            Log.logException(ex);
+        }    
     }
     
     private void saveAssistants(Meeting meeting) throws BusinessException{  
@@ -216,9 +248,13 @@ public class MeetingRegisterController implements Initializable {
         ArrayList<Member> assistants= new ArrayList<Member> ();
         assistants.add(leader);
         assistants.add(secretary);
+        String professionalLicenseSecretary= secretary.getProfessionalLicense();
+        String professionalLicenseLeader= leader.getProfessionalLicense();
         for(int i=0; i< members.size(); i++){
             Member memberAuxiliar = (Member) members.get(i);
-            if((! memberAuxiliar.equals(leader)) && (! memberAuxiliar.equals(secretary))){
+            String professionalLicense= memberAuxiliar.getProfessionalLicense();
+            if((! professionalLicense.equals(professionalLicenseLeader))
+            && (! professionalLicense.equals(professionalLicenseSecretary))){
                 memberAuxiliar.setRole("Asistente");
                 assistants.add(memberAuxiliar);
             }
@@ -276,7 +312,7 @@ public class MeetingRegisterController implements Initializable {
         try {
             MemberDAO memberDAO = new MemberDAO();
             ArrayList <Member> memberList = new ArrayList<Member>();
-            memberList = memberDAO.getMembers();
+            memberList = memberDAO.getMembers(keyGroupAcademic);
             for( int i = 0; i<memberList.size(); i++) {
                 members.add(memberList.get(i));
             }
@@ -287,7 +323,10 @@ public class MeetingRegisterController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       // tfHour.setMaxlength(5);
+       tfSubject.setMaxlength(200);
+       tfHour.setMaxlength(5);
+       tfDescription.setMaxlength(200);
+       disableButtonSave();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         dpDate.setConverter(new LocalDateStringConverter(formatter, null));
         tcDescription.setCellValueFactory(new PropertyValueFactory<Prerequisite,String>("description"));
@@ -297,11 +336,8 @@ public class MeetingRegisterController implements Initializable {
         tvPrerequisite.setItems(prerequisites);
         initializeMembers();
         cbMember.setItems(members);
-        cbMember.getSelectionModel().selectFirst();
         cbLeader.setItems(members);
-        cbLeader.getSelectionModel().selectFirst();
         cbSecretary.setItems(members);
-        cbSecretary.getSelectionModel().selectFirst();
         
         tvPrerequisite.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {

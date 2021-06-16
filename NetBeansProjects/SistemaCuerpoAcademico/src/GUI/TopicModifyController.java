@@ -30,20 +30,20 @@ public class TopicModifyController implements Initializable {
     private ObservableList<Member> members;
     private ObservableList<Topic> topics;
     private ObservableList<Topic> oldTopics;
-    @FXML ComboBox<Member> cbMember;
-    @FXML TextField tfTopic;
-    @FXML TextField tfStartTime;
-    @FXML TextField tfFinishTime;
-    @FXML TableColumn tcFinishTime;
-    @FXML TableColumn tcStartTime;
-    @FXML TableColumn tcMember;
-    @FXML TableColumn<Topic,String> tcTopic;
-    @FXML TableView<Topic> tvTopic;
-    @FXML Button btDelete;
-    @FXML Button btAdd;
-    @FXML Button btSave;
-    @FXML Button btCancel;
-    @FXML Button btUpdate;
+    @FXML private ComboBox<Member> cbMember;
+    @FXML private TextField tfTopic;
+    @FXML private TextField tfStartTime;
+    @FXML private TextField tfFinishTime;
+    @FXML private TableColumn tcFinishTime;
+    @FXML private TableColumn tcStartTime;
+    @FXML private TableColumn tcMember;
+    @FXML private TableColumn<Topic,String> tcTopic;
+    @FXML private TableView<Topic> tvTopic;
+    @FXML private Button btDelete;
+    @FXML private Button btAdd;
+    @FXML private Button btSave;
+    @FXML private Button btCancel;
+    @FXML private Button btUpdate;
     private int idMeeting = 0;
     private int indexTopic;
     private ListChangeListener<Topic> tableTopicListener;
@@ -160,7 +160,7 @@ public class TopicModifyController implements Initializable {
         try {
             MemberDAO memberDAO = new MemberDAO();
             ArrayList <Member> memberList = new ArrayList<Member>();
-            memberList = memberDAO.getMembers();
+            memberList = memberDAO.getMembers("");
             for( int i = 0; i<memberList.size(); i++) {
                 members.add(memberList.get(i));
             }

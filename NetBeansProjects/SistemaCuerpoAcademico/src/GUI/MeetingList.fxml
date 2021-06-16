@@ -5,16 +5,22 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MeetingListController">
+<AnchorPane id="AnchorPane" prefHeight="440.0" prefWidth="618.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MeetingListController">
     <stylesheets>
-        <URL value="@meetinglist.css"/>
+        <URL value="@meetinglist.css" />
     </stylesheets>
     <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1d1e1e" height="36.0" layoutY="-2.0" stroke="BLACK" strokeType="INSIDE" width="615.0" />
-      <ListView fx:id="lvMeetings" layoutX="26.0" layoutY="89.0" prefHeight="249.0" prefWidth="558.0" />
-      <Button fx:id="btAddMeeting" layoutX="467.0" layoutY="51.0" mnemonicParsing="false" onAction="#actionAddMeeting" text="Agregar Reunión" />
-      <Button fx:id="btReturn" layoutX="521.0" layoutY="351.0" mnemonicParsing="false" onAction="#actionReturn" text="Regresar" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1d1e1e" height="36.0" layoutY="-2.0" stroke="BLACK" strokeType="INSIDE" width="618.0" />
+      <ListView fx:id="lvMeetings" layoutX="26.0" layoutY="108.0" prefHeight="272.0" prefWidth="557.0" />
+      <Button fx:id="btAddMeeting" layoutX="478.0" layoutY="51.0" mnemonicParsing="false" onAction="#actionAddMeeting" text="Agregar Reunión" />
+      <Button fx:id="btReturn" layoutX="521.0" layoutY="401.0" mnemonicParsing="false" onAction="#actionReturn" text="Regresar" />
+      <Text layoutX="26.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reuniones">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

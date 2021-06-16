@@ -74,7 +74,7 @@ public class MemberListController implements  Initializable {
         try {
             MemberDAO memberDAO = new MemberDAO();
             ArrayList <Member> memberList = new ArrayList<Member>();
-            memberList = memberDAO.getMembers();
+            memberList = memberDAO.getMembers("");
             for( int i = 0; i<memberList.size(); i++) {
                 members.add(memberList.get(i));
             }

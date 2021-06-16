@@ -10,5 +10,5 @@ public interface IMemberDAO {
     public boolean update( Member newMember) throws BusinessException;
     public boolean desactivateMember( Member newMember) throws BusinessException;
     public boolean activateMember( Member newMember) throws BusinessException;
-    public ArrayList<Member> getMembers() throws BusinessException;
+    public ArrayList<Member> getMembers(String groupAcademicKey) throws BusinessException ;
 }
