@@ -81,10 +81,6 @@ nota varchar(500), estado varchar(30) NOT NULL,
 pendiente varchar(500), idReunion int NOT NULL,
 primary key(idMinuta), foreign key(idReunion) references reunion(idReunion)ON DELETE CASCADE);
 
-CREATE TABLE IF NOT EXISTS Minuta(idMinuta int NOT NULL AUTO_INCREMENT ,
-nota varchar(500), estado varchar(30) NOT NULL,
-pendiente varchar(500), idReunion int NOT NULL,
-primary key(idMinuta), foreign key(idReunion) references reunion(idReunion)ON DELETE CASCADE);
 
 CREATE TABLE IF NOT EXISTS Acuerdo(idAcuerdo int NOT NULL AUTO_INCREMENT,
 periodo varchar(30) NOT NULL, descripcion varchar(200) NOT NULL,
