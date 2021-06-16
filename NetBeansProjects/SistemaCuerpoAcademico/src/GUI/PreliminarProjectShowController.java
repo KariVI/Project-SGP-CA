@@ -101,7 +101,7 @@ public class PreliminarProjectShowController implements Initializable {
             gridPane.add(label,1, 0 );
             int i=1;
             while (i <= students.size()){ 
-                    Label lbNameStudent = new Label("->"+ students.get(numberStudent).getName());
+                    Label lbNameStudent = new Label("-"+ students.get(numberStudent).getName());
                     gridPane.add(lbNameStudent,1, i );
                     i++;
                     numberStudent++;

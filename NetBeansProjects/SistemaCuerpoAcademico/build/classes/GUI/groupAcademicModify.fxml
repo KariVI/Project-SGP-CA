@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-<?import GUI.TextFieldLimited?>
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="663.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GroupAcademicModifyController">
     <stylesheets>
@@ -31,12 +30,13 @@
       <Label layoutX="37.0" layoutY="387.0" text="Misión:" />
       <Button fx:id="btSave" layoutX="480.0" layoutY="450.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar" />
       <Button fx:id="btReturn" layoutX="557.0" layoutY="450.0" mnemonicParsing="false" onAction="#actionReturn" text="Regresar" />
-      <TextFieldLimited fx:id="tfName" layoutX="160.0" layoutY="95.0" prefHeight="25.0" prefWidth="185.0" />
-      <TextFieldLimited fx:id="tfKey" editable="false" layoutX="160.0" layoutY="134.0" prefHeight="25.0" prefWidth="185.0" />
+      <TextField fx:id="tfName" layoutX="160.0" layoutY="95.0" prefHeight="25.0" prefWidth="185.0" />
+      <TextField fx:id="tfKey" editable="false" layoutX="160.0" layoutY="134.0" prefHeight="25.0" prefWidth="185.0" />
       <TextArea fx:id="taObjetive" layoutX="160.0" layoutY="210.0" prefHeight="75.0" prefWidth="185.0" wrapText="true" />
       <TextArea fx:id="taVision" layoutX="160.0" layoutY="300.0" prefHeight="75.0" prefWidth="185.0" wrapText="true" />
       <TextArea fx:id="taMision" layoutX="163.0" layoutY="387.0" prefHeight="84.0" prefWidth="185.0" wrapText="true" />
       <ComboBox fx:id="cbConsolidateGrade" layoutX="160.0" layoutY="170.0" prefHeight="25.0" prefWidth="185.0" />
-      <ScrollPane fx:id="spLGACs" layoutX="357.0" layoutY="95.0" prefHeight="336.0" prefWidth="279.0" />
+      <ScrollPane fx:id="spLGACs" layoutX="357.0" layoutY="95.0" prefHeight="314.0" prefWidth="279.0" />
+      <Button fx:id="btAddLGAC" layoutX="557.0" layoutY="417.0" mnemonicParsing="false" onAction="#actionAddLGAC" text="Añadir LGAC" />
    </children>
 </AnchorPane>

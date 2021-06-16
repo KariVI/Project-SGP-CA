@@ -52,7 +52,8 @@
       <Button fx:id="btAddCodirector1" layoutX="332.0" layoutY="630.0" mnemonicParsing="false" onAction="#actionAddCodirector" prefHeight="7.0" prefWidth="70.0" text="Añadir" />
       <Label layoutX="11.0" layoutY="232.0" text="Estado:" />
       <ScrollPane fx:id="spLgacs" layoutX="12.0" layoutY="261.0" prefHeight="82.0" prefWidth="397.0" />
-      <ScrollPane fx:id="spStudents" layoutX="452.0" layoutY="152.0" prefHeight="435.0" prefWidth="304.0" />
+      <ScrollPane fx:id="spStudents" layoutX="452.0" layoutY="152.0" prefHeight="413.0" prefWidth="304.0" />
+      <Button fx:id="btAddStudent" layoutX="626.0" layoutY="579.0" mnemonicParsing="false" onAction="#actionAddStudent" prefHeight="25.0" prefWidth="127.0" text="Añadir estudiante" />
    </children>
     
 </AnchorPane>

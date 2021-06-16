@@ -187,7 +187,7 @@ public class ReceptionWorkShowController implements Initializable {
             Label label = new Label("Estudiantes");
             gridPane.add(label,1, 0 );
             while (i <= students.size()){ 
-                    Label lbNameStudent = new Label("->"+ students.get(numberStudent).getName());
+                    Label lbNameStudent = new Label("-"+ students.get(numberStudent).getName());
                     gridPane.add(lbNameStudent,1, i );
                     i++;
                     numberStudent++;
@@ -213,7 +213,7 @@ public class ReceptionWorkShowController implements Initializable {
 
         if(lgacs.size()> 0){
             while (i <lgacs.size()){ 
-                    Label lbLGAC = new Label("->"+lgacs.get(i).getName());
+                    Label lbLGAC = new Label("-"+lgacs.get(i).getName());
                     gridPane.add(lbLGAC,1,indexGridPane);
                     i++;
                     indexGridPane++;
