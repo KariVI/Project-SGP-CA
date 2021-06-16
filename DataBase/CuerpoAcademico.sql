@@ -84,7 +84,8 @@ primary key(idMinuta), foreign key(idReunion) references reunion(idReunion)ON DE
 
 CREATE TABLE IF NOT EXISTS Acuerdo(idAcuerdo int NOT NULL AUTO_INCREMENT,
 periodo varchar(30) NOT NULL, descripcion varchar(200) NOT NULL,
-idMinuta int NOT NULL, primary key(idAcuerdo),
+idMinuta int NOT NULL, primary key(idAcuerdo),cedula varchar(19) not null,
+foreign key (cedula) references Member(cedula),
 foreign key (idMinuta) references Minuta(idMinuta)ON DELETE CASCADE);
 
 

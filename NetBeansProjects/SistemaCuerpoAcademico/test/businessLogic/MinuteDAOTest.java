@@ -123,4 +123,11 @@ public class MinuteDAOTest {
         int idMinuteResut = minuteDAO.getIdMinute(minute);
         assertEquals(idMinuteResut,idMinuteExpected);
     }
+    
+    @Test
+    public void testDeleteComment() throws BusinessException{
+        MinuteComment minuteComment = new MinuteComment("8325134",1);
+        MinuteDAO minuteDAO = new MinuteDAO();
+        assertTrue(minuteDAO.deleteMinuteComment(minuteComment));   
+    }
 }
