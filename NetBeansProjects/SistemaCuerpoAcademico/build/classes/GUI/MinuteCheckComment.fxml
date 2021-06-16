@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="433.0" prefWidth="650.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16" fx:controller="GUI.MinuteCheckCommentController">
+<AnchorPane id="AnchorPane" prefHeight="497.0" prefWidth="707.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MinuteCheckCommentController">
     <stylesheets>
         <URL value="@minutecheckcomment.css" />
     </stylesheets>
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="133.0" layoutX="-9.0" layoutY="-91.0" stroke="BLACK" strokeType="INSIDE" width="663.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="133.0" layoutX="-9.0" layoutY="-91.0" stroke="BLACK" strokeType="INSIDE" width="716.0" />
       <Label layoutX="24.0" layoutY="51.0" text="Comentarios de minuta">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <ScrollPane layoutX="414.0" layoutY="70.0" prefHeight="298.0" prefWidth="221.0">
-        <content>
-          <AnchorPane fx:id="paneMembers" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-        </content>
-      </ScrollPane>
+      <ScrollPane fx:id="spMembersDispprove" layoutX="467.0" layoutY="268.0" prefHeight="133.0" prefWidth="221.0" />
+      <ScrollPane fx:id="spMembersApprove" layoutX="463.0" layoutY="75.0" prefHeight="133.0" prefWidth="221.0" />
+      <Label layoutX="463.0" layoutY="51.0" text="Minuta aprobada" />
+      <Label layoutX="464.0" layoutY="241.0" text="Minuta desaprobada" />
+      <ScrollPane fx:id="spMinuteComments" layoutX="9.0" layoutY="103.0" prefHeight="356.0" prefWidth="434.0" />
+      <Button fx:id="btReturn" layoutX="502.0" layoutY="460.0" mnemonicParsing="false" onAction="#actionReturn" text="Regresar" />
+      <Button fx:id="btUpdate" layoutX="578.0" layoutY="458.0" mnemonicParsing="false" onAction="#actionUpdate" text="Modificar" />
    </children>
 </AnchorPane>

@@ -56,6 +56,7 @@ public class MinuteShowController implements Initializable {
     @FXML Button btShowComments;
     private int idMinute = 0;
     private int idMeeting = 0;
+    private Meeting meeting;
     private int indexAgreement;
     private Minute minute;
     private ListChangeListener<Agreement> tableAgreementListener;
@@ -65,6 +66,7 @@ public class MinuteShowController implements Initializable {
   
     
     public void initializeMinute(Meeting meeting){  
+        this.meeting = meeting;
         idMeeting = meeting.getKey();        
         try {
             MinuteDAO minuteDAO = new MinuteDAO();
@@ -160,25 +162,47 @@ public class MinuteShowController implements Initializable {
     
     @FXML
     public void actionReturn(){
-        if(!rbApproveMinute.isDisabled()){
+        checkRadioButtons();
+        Stage stage = (Stage) btReturn.getScene().getWindow();
+        stage.close();
+        openMeetingShow();
+    }
+   
+   private void checkRadioButtons(){
+       if(!rbApproveMinute.isDisabled()){
         String approveMinute = ((RadioButton) tgApproveMinute.getSelectedToggle()).getText();
-        System.out.println(approveMinute);
         if(approveMinute != null && approveMinute.equals("Estoy de acuerdo")){
             try {
                 MinuteDAO minuteDAO = new MinuteDAO();
                 minuteDAO.approveMinute(idMinute, member.getProfessionalLicense());
                 AlertMessage alertMessage= new AlertMessage();
-                alertMessage.showAlertSuccesfulSave("Validacion");
-            
+                alertMessage.showAlertSuccesfulSave("Validacion");    
             } catch (BusinessException ex) {
                 Log.logException(ex);
             }
-        } 
+         } 
+       }
+   }
+   private void openMeetingShow(){ 
+        try {
+                 FXMLLoader loader = new FXMLLoader(getClass().getResource("MeetingShow.fxml"));
+                 Parent root = loader.load();
+                 MeetingShowController meetingShowController = loader.getController();
+                 meetingShowController.setMeeting(meeting);
+                 meetingShowController.setMember(member);
+                      try {
+                          meetingShowController.initializeMeeting();
+                      } catch (BusinessException ex) {
+                         Log.logException(ex);
+                      }
+                 Scene scene = new Scene(root);
+                 Stage stage = new Stage();
+                 stage.setScene(scene);
+                 stage.showAndWait();
+             } catch (IOException ex) {
+                 Log.logException(ex);
+             }    
     }
-        Stage stage = (Stage) btReturn.getScene().getWindow();
-        stage.close();    
-    }
-    
     public void setMember(Member member){
         this.member = member;      
     }
@@ -244,11 +268,13 @@ public class MinuteShowController implements Initializable {
             loader.setLocation(url);
             loader.load();
             MinuteCheckCommentController minuteCheckCommentController = loader.getController();
+            minuteCheckCommentController.setMeeting(meeting);
+            minuteCheckCommentController.setMember(member);
             minuteCheckCommentController.setMinute(minute);
             Parent root = loader.getRoot();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
-            Stage stage = (Stage) btReturn.getScene().getWindow();
+            Stage stage = (Stage) btShowComments.getScene().getWindow();
             primaryStage.show();
             stage.close();
         }catch (IOException ex) {
@@ -260,8 +286,7 @@ public class MinuteShowController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         tcMember.setCellValueFactory(new PropertyValueFactory<Member,String>("professionalLicense"));
         tcAgreement.setCellValueFactory(new PropertyValueFactory<Agreement,String>("description"));
-        tcPeriod.setCellValueFactory(new PropertyValueFactory<Agreement,String>("period"));
-  
+        tcPeriod.setCellValueFactory(new PropertyValueFactory<Agreement,String>("period")); 
     }
     
 }
