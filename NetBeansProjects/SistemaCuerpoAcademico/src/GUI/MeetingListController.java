@@ -125,8 +125,8 @@ public class MeetingListController implements Initializable {
                  FXMLLoader loader = new FXMLLoader(getClass().getResource("MeetingShow.fxml"));
                  Parent root = loader.load();
                  MeetingShowController meetingShowController = loader.getController();
-                 meetingShowController.setMeeting(meeting);
                  meetingShowController.setMember(member);
+                 meetingShowController.setMeeting(meeting); 
                       try {
                           meetingShowController.initializeMeeting();
                       } catch (BusinessException ex) {

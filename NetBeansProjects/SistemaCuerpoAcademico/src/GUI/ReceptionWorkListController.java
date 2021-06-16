@@ -75,6 +75,7 @@ public class ReceptionWorkListController implements Initializable {
                  Parent root = loader.load();
                  ReceptionWorkShowController receptionWorkShowController = loader.getController();
                  receptionWorkShowController.setReceptionWork(receptionWork);
+                 receptionWorkShowController.setMember(member);
                  receptionWorkShowController.setKeyGroupAcademic(keyGroupAcademic);   
                  receptionWorkShowController.setPreliminarProjectsUnassigned(preliminarProjectsUnassigned);
                  receptionWorkShowController.initializeReceptionWork(); 
