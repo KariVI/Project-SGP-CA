@@ -221,9 +221,30 @@ public class MinuteShowController implements Initializable {
             FXMLLoader loader = new FXMLLoader(url);
             loader.setLocation(url);
             loader.load();
-            MinuteCommentController minuteCommentController =loader.getController();
+            MinuteCommentController minuteCommentController = loader.getController();
             minuteCommentController.setMember(member);
             minuteCommentController.setMinute(minute);
+            Parent root = loader.getRoot();
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            Stage stage = (Stage) btReturn.getScene().getWindow();
+            primaryStage.show();
+            stage.close();
+        }catch (IOException ex) {
+            Log.logException(ex);
+        }
+    }
+    
+    @FXML
+    public void actionMinuteCheckComment(){
+         try {
+            Stage primaryStage= new Stage();
+            URL url = new File("src/GUI/MinuteCkeckComment.fxml").toURI().toURL();
+            FXMLLoader loader = new FXMLLoader(url);
+            loader.setLocation(url);
+            loader.load();
+            MinuteCheckCommentController minuteCheckCommentController = loader.getController();
+            minuteCheckCommentController.setMinute(minute);
             Parent root = loader.getRoot();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);

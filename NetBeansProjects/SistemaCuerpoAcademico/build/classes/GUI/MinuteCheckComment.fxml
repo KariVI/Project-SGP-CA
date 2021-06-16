@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="433.0" prefWidth="650.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16" fx:controller="GUI.MinuteCheckCommentController">
+    <stylesheets>
+        <URL value="@minutecheckcomment.css" />
+    </stylesheets>
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="133.0" layoutX="-9.0" layoutY="-91.0" stroke="BLACK" strokeType="INSIDE" width="663.0" />
+      <Label layoutX="24.0" layoutY="51.0" text="Comentarios de minuta">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <ScrollPane layoutX="414.0" layoutY="70.0" prefHeight="298.0" prefWidth="221.0">
+        <content>
+          <AnchorPane fx:id="paneMembers" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+        </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>
