@@ -76,7 +76,7 @@ public class MemberRegisterController implements Initializable {
              try { 
               memberDAO.savedSucessfulMember(newMember);
               AlertMessage alertMessage = new AlertMessage();
-              alertMessage.showAlertSuccesfulSave("El miembro fue registrado con éxito");
+              alertMessage.showAlertSuccesfulSave("El miembro");
               close();
               openListMember();
              } catch (BusinessException ex) {
