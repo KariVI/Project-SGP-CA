@@ -219,9 +219,6 @@ public class MeetingRegisterController implements Initializable {
         boolean value = true;
         Member leader= (Member) cbLeader.getSelectionModel().getSelectedItem();
         Member secretary = (Member) cbSecretary.getSelectionModel().getSelectedItem();
-        System.out.print(leader);
-        System.out.print(secretary);
-
         if(leader.getProfessionalLicense().equals(secretary.getProfessionalLicense())){
             value = false;
             AlertMessage alertMessage = new AlertMessage();
@@ -337,6 +334,7 @@ public class MeetingRegisterController implements Initializable {
        tfHour.setMaxlength(5);
        tfDescription.setMaxlength(200);
        disableButtonSave();
+       tfHour.setPromptText("HH:MM");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         dpDate.setConverter(new LocalDateStringConverter(formatter, null));
         tcDescription.setCellValueFactory(new PropertyValueFactory<Prerequisite,String>("description"));

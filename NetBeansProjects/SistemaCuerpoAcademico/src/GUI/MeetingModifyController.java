@@ -386,6 +386,8 @@ public class MeetingModifyController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+       tfHour.setPromptText("HH:MM");
+       tfHour.setMaxlength(5);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         dpDate.setConverter(new LocalDateStringConverter(formatter, null));
         tcDescription.setCellValueFactory(new PropertyValueFactory<Prerequisite,String>("description"));
