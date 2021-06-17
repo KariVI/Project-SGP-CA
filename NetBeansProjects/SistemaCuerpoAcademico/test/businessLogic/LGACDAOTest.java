@@ -16,7 +16,7 @@ public class LGACDAOTest {
     public void testSave() throws BusinessException {
         System.out.println("savedSucessful");
         LGAC lgac;
-         lgac=new LGAC("Gestión, modelado y desarrollo de software",  "Se orienta al estudio de los diversos métodos y enfoques para la gestión, modelado y desarrollo de software, de manera que se obtenga software de calidad. Gestión de las diversas etapas del proceso de desarrollo, incluyendo hasta la medición del proceso y artefactos. Modelado de los diversos artefactos en las distintas etapas del proceso de desarrollo.");
+         lgac=new LGAC("Modelación estadística","Modelación estadística enfocada a las tecnologías");
         LGACDAO lgacDAO = new LGACDAO();
         boolean result = lgacDAO.savedSucessful(lgac);
        

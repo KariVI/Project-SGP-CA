@@ -113,7 +113,9 @@ public class GroupAcademicRegisterController implements Initializable  {
         AlertMessage alertMessage =new AlertMessage();
         try {           
             if(groupAcademicDAO.savedSucessful(groupAcademic)){
-                recoverlgacs(groupAcademic);
+                if(tflgacsNumber.getText() != ""){   
+                    recoverlgacs(groupAcademic);
+                }
                 alertMessage.showAlertSuccesfulSave("Cuerpo Academico");
                 updateMember(groupAcademic.getKey());
             }
