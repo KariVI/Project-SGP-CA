@@ -332,26 +332,29 @@ public class PreliminarProjectModifyController implements Initializable {
     
     private void recoverStudents() throws BusinessException{   
         GridPane gridPane= (GridPane) spStudents.getContent();
-        ArrayList<Student> studentsOld = preliminarProjectRecover.getStudents();
-        ArrayList<Student> students = new ArrayList<Student>();
-            int i=1;
-            int sizeRows=3;
-            int size= calculateSize(studentsOld.size());
-           while (i <  size){
-               TextField enrollment = (TextField) getNodeFromGridPane( gridPane, 1, i);
-               TextField name = (TextField) getNodeFromGridPane( gridPane, 1, (i + 1));
-                i=i+3;
-               if(validateFieldsStudent(enrollment,name)){         
-                 String enrollmentStudent= enrollment.getText();
-                 String nameStudent= name.getText(); 
-                 Student student = new Student(enrollmentStudent,nameStudent);
-                 students.add(student);
-                 saveStudent(student);
+        if(nextRowPosition>0){   
+            ArrayList<Student> studentsOld = preliminarProjectRecover.getStudents();
+            ArrayList<Student> students = new ArrayList<Student>();
+                int i=1;
+                int sizeRows=3;
+                int size= calculateSize(studentsOld.size());
+               while (i <  size){
+                   TextField enrollment = (TextField) getNodeFromGridPane( gridPane, 1, i);
+                   TextField name = (TextField) getNodeFromGridPane( gridPane, 1, (i + 1));
+                    i=i+3;
+                   if(validateFieldsStudent(enrollment,name)){         
+                     String enrollmentStudent= enrollment.getText();
+                     String nameStudent= name.getText(); 
+                     Student student = new Student(enrollmentStudent,nameStudent);
+                     students.add(student);
+                     saveStudent(student);
+                   }
                }
-           }
-           preliminarProjectNew.setStudents(students);
-           addStudentsInPreliminarProject();
+               preliminarProjectNew.setStudents(students);
+               addStudentsInPreliminarProject();
+        }
     }
+        
     
     private boolean validateFieldsStudent(TextField enrollment, TextField name){
         boolean value=true;
