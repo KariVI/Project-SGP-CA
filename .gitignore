@@ -20,3 +20,8 @@ NetBeansProjects/SistemaCuerpoAcademico/bitacora.log
 *.class
 *.log
 *.class
+*.log
+*.class
+*.properties
+*.lck
+*.xml

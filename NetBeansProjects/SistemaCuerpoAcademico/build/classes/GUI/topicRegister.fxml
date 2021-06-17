@@ -24,8 +24,8 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#080808" height="200.0" layoutX="-16.0" layoutY="-162.0" stroke="BLACK" strokeType="INSIDE" width="616.0" />
       <HBox layoutX="24.0" layoutY="272.0" prefHeight="29.0" prefWidth="450.0">
          <children>
-            <TextField fx:id="tfStartTime" prefHeight="26.0" prefWidth="77.0" />
-            <TextField fx:id="tfFinishTime" prefHeight="26.0" prefWidth="84.0" />
+            <TextField fx:id="tfStartTime" prefHeight="26.0" prefWidth="77.0" promptText="HH:MM" />
+            <TextField fx:id="tfFinishTime" prefHeight="26.0" prefWidth="84.0" promptText="HH:MM" />
             <TextField fx:id="tfTopic" prefHeight="26.0" prefWidth="148.0" />
             <ComboBox fx:id="cbMember" prefWidth="150.0" />
          </children>

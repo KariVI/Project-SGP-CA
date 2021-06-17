@@ -1,14 +1,6 @@
-
 package GUI;
 
-import dataaccess.Connector;
-import java.io.UnsupportedEncodingException;
-import java.sql.Blob;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.scene.control.DatePicker;
@@ -37,6 +29,13 @@ public class Validation {
         return value;  
     }
     
+    public boolean validateCorrectHours(String startHour, String finishHour){
+        boolean value = true;
+        if(startHour.compareTo(finishHour) >= 0){
+            value = false;
+        }
+        return value;
+    }
     public boolean findInvalidKeyAlphanumeric(String key){    
         boolean value=false;
         Pattern pattern = Pattern.compile("[.!#$%&'*+/=?^_`{|}~-]");

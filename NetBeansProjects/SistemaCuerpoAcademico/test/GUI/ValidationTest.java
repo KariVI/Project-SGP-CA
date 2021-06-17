@@ -65,4 +65,11 @@ public class ValidationTest {
         assertFalse(result);
     }
     
+    @Test
+     public void testValidateCorrectHour(){
+         String startHour = "09:20";
+         String finishHour = "22:21";
+         Validation validation= new Validation();
+         assertTrue(validation.validateCorrectHours(startHour, finishHour));
+     }
 }

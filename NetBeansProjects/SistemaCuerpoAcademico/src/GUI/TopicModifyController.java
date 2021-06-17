@@ -113,7 +113,7 @@ public class TopicModifyController implements Initializable {
         String topicName = "";
         Member member = cbMember.getSelectionModel().getSelectedItem();
         finishTime = tfFinishTime.getText();
-        startTime = tfFinishTime.getText();
+        startTime = tfStartTime.getText();
         topicName = tfTopic.getText();
         Topic topic = new Topic(topicName,startTime,finishTime,member.getProfessionalLicense(),meeting.getKey());
         if(validateTopic(topic)){
@@ -191,7 +191,7 @@ public class TopicModifyController implements Initializable {
            }
            
            AlertMessage alertMessage = new AlertMessage();
-           alertMessage.showAlertSuccesfulSave("Los temas fueron registrados con éxito");
+           alertMessage.showAlertSuccesfulSave("La agenda");
            
          } catch (BusinessException ex) {
              Log.logException(ex);
@@ -258,7 +258,7 @@ public class TopicModifyController implements Initializable {
         
         if(!validateHours(topic)){
             value = false;
-            alertMessage.showAlertValidateFailed("Ingresa la hora en formato HH:MM ");
+            alertMessage.showAlertValidateFailed("Hora inválida");
         }
         
         if(repeatedTopic(topic)){
@@ -288,7 +288,7 @@ public class TopicModifyController implements Initializable {
     public boolean validateHours(Topic topic){
         boolean value = false;
         Validation validation = new Validation();
-        if(validation.validateHour(topic.getFinishTime())){
+        if(validation.validateHour(topic.getFinishTime())&&validation.validateCorrectHours(topic.getStartTime(),topic.getFinishTime())){
             value = true;
         }
         return value;

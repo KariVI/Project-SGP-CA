@@ -88,7 +88,7 @@ public class TopicRegisterController implements Initializable {
         String topicName = "";
         Member member = cbMember.getSelectionModel().getSelectedItem();
         finishTime = tfFinishTime.getText();
-        startTime = tfFinishTime.getText();
+        startTime = tfStartTime.getText();
         topicName = tfTopic.getText();
         Topic topic = new Topic(topicName,startTime,finishTime,member.getProfessionalLicense(), idMeeting);
         if(validateTopic(topic)){
@@ -181,7 +181,7 @@ public class TopicRegisterController implements Initializable {
         
         if(!validateHours(topic)){
             value = false;
-            alertMessage.showAlertValidateFailed("Ingresa la hora en formato HH:MM ");
+            alertMessage.showAlertValidateFailed("Fecha inválida");
         }
         
         if(repeatedTopic(topic)){
@@ -211,7 +211,7 @@ public class TopicRegisterController implements Initializable {
     public boolean validateHours(Topic topic){
         boolean value = false;
         Validation validation = new Validation();
-        if(validation.validateHour(topic.getFinishTime())){
+        if(validation.validateHour(topic.getFinishTime())&&validation.validateCorrectHours(topic.getStartTime(), topic.getFinishTime())){
             value = true;
         }
         return value;
