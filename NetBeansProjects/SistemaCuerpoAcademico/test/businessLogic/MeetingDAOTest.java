@@ -28,7 +28,7 @@ public class MeetingDAOTest {
         MeetingDAO meetingDAO= new MeetingDAO();
         Meeting meetingAuxiliar;
         boolean value=true;
-        meetingAuxiliar = new Meeting("Lanzamiento FEIBook" ,"11/11/2020","12:30","JDOEIJ804");
+        meetingAuxiliar = new Meeting("Lanzamiento Gastrocafe" ,"11/11/2020","12:30","JDOEIJ804");
         int idExpected=8;
         try{
             int idMeeting= meetingDAO.getId(meetingAuxiliar);
@@ -116,7 +116,7 @@ public class MeetingDAOTest {
       MeetingDAO meetingDAO= new MeetingDAO();
       Meeting meeting= new Meeting(2, "Organizar agenda de actividades del seminario" ,"15/09/2021","15:30","Concluida");  
       String professionalLicenseExpected= "8325134";
-      meeting.setAssistants(meetingDAO.getAssistants(1));
+      meeting.setAssistants(meetingDAO.getAssistants(2));
       String professionalLicenseResult=meeting.getAssistants().get(0).getProfessionalLicense();
       assertEquals(professionalLicenseExpected, professionalLicenseResult);
     }

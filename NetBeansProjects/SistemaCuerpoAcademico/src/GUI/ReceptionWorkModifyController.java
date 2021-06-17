@@ -92,28 +92,27 @@ public class ReceptionWorkModifyController implements Initializable {
      private void initializeNextRowPosition(){  
         int sizeRows=3;
         int sizeStudentsCurrently= receptionWorkRecover.getStudents().size();
-        nextRowPosition=  nextRowPosition + ( sizeStudentsCurrently * sizeRows);
+        if(sizeStudentsCurrently>0){
+            nextRowPosition=  nextRowPosition + ( sizeStudentsCurrently * sizeRows);
+        }
     }
      
      @FXML 
     private void actionAddStudent(ActionEvent actionEvent){ 
-        
+            initializeNextRowPosition();
             gridPane.setHgap (5);
             gridPane.setVgap (5);
             int sizeRows=3;
-
+            TextField tfEnrollmentStudent = new TextField();
+            tfEnrollmentStudent .setPromptText("Matricula: ");   
+            TextField tfNameStudent = new TextField();
+            tfNameStudent.setPrefWidth(200);
+            tfNameStudent.setPromptText("Nombre: ");
+            Label label = new Label("Estudiante");
+            gridPane.add(label,1,nextRowPosition);
+            gridPane.add(tfEnrollmentStudent,1,(nextRowPosition + 1));
+            gridPane.add(tfNameStudent,1, (nextRowPosition + 2));
             nextRowPosition= nextRowPosition + sizeRows ;
-           
-                TextField tfEnrollmentStudent = new TextField();
-                tfEnrollmentStudent .setPromptText("Matricula: ");   
-                TextField tfNameStudent = new TextField();
-                tfNameStudent.setPrefWidth(200);
-                tfNameStudent.setPromptText("Nombre: ");
-                Label label = new Label("Estudiante");
-                gridPane.add(label,1,nextRowPosition);
-                gridPane.add(tfEnrollmentStudent,1,(nextRowPosition + 1));
-                gridPane.add(tfNameStudent,1, (nextRowPosition + 2));
-            
               spStudents.setContent(gridPane);
 
     }
@@ -142,7 +141,6 @@ public class ReceptionWorkModifyController implements Initializable {
            try {
                initializeColaborators();
                getStudents();
-               initializeNextRowPosition();
                getLGACS();
            } catch (BusinessException ex) {
                Log.logException(ex);
@@ -370,7 +368,7 @@ public class ReceptionWorkModifyController implements Initializable {
         boolean value= false;
         int i=0;
         while(i< lgacs.size() && (value==false)){   
-            if(lgacs.get(i).equals(lgacs)){ 
+            if(lgacs.get(i).equals(lgac)){ 
                 value=true;
             }
             i++;
@@ -572,26 +570,27 @@ public class ReceptionWorkModifyController implements Initializable {
         ArrayList<Student> studentsOld = receptionWorkRecover.getStudents();
         if(studentsOld.size()>0){
         GridPane gridPane= (GridPane) spStudents.getContent();
-        ArrayList<Student> students = new ArrayList<Student>();
-        
-                    int i=1;
-                    int sizeRows=3;
-                   while (i < (sizeRows * studentsOld.size())){
-                       TextField enrollment = (TextField) getNodeFromGridPane( gridPane, 1, i);
-                       TextField name = (TextField) getNodeFromGridPane( gridPane, 1, (i + 1));
-                       i=i+3;
-                       if(validateFieldsStudent(enrollment,name)){         
-                         String enrollmentStudent= enrollment.getText();
-                         String nameStudent= name.getText(); 
-                         Student student = new Student(enrollmentStudent,nameStudent);
-                         students.add(student);
-                         saveStudent(student);
-                       }
-                   }
-                   receptionWorkNew.setStudents(students);
-                   addStudentsInReceptionWork();
+        ArrayList<Student> students = new ArrayList<Student>();       
+        int i=1;
+        int sizeRows=3;
+        int size= (studentsOld.size() * sizeRows) + nextRowPosition ;
+         while (i <  size){
+            TextField enrollment = (TextField) getNodeFromGridPane( gridPane, 1, i);
+            TextField name = (TextField) getNodeFromGridPane( gridPane, 1, (i + 1));
+            i=i+3;
+           if(validateFieldsStudent(enrollment,name)){         
+                String enrollmentStudent= enrollment.getText();
+                String nameStudent= name.getText(); 
+                Student student = new Student(enrollmentStudent,nameStudent);
+                students.add(student);
+                saveStudent(student);
+            }
+        }
+        receptionWorkNew.setStudents(students);
+        addStudentsInReceptionWork();
         }
     }
+    
     
     private boolean validateFieldsStudent(TextField enrollment, TextField name){
         boolean value=true;

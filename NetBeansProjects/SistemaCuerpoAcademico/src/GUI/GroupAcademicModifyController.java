@@ -27,7 +27,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import log.BusinessException;
 import log.Log;
@@ -81,13 +80,13 @@ public class GroupAcademicModifyController implements Initializable {
      private void getlgacs() throws BusinessException{
         GroupAcademicDAO groupAcademicDAO =new GroupAcademicDAO();
         groupAcademic.setLGACs(groupAcademicDAO.getLGACs(groupAcademic.getKey()));
-         ArrayList<LGAC> lgacs= groupAcademic.getLGACs();
+         ArrayList<LGAC> lgacs= groupAcademicDAO.getLGACs(groupAcademic.getKey());
          int i=0;
         int numberlgacs=0;
         int numberRows=3;
         gridPane.setHgap (5);
         gridPane.setVgap (5);
-        while (i < ( lgacs.size() * numberRows)){  
+        while (i < (numberRows * lgacs.size()  )){  
                 TextField tfNamelgac = new TextField(lgacs.get(numberlgacs).getName());
                 TextArea taDescriptionlgac = new TextArea(lgacs.get(numberlgacs).getDescription());
                 String lgacName= "LGAC "+ (numberlgacs + 1);
@@ -103,22 +102,26 @@ public class GroupAcademicModifyController implements Initializable {
         spLGACs.setContent(gridPane);
     }
      
-    private void initializeNextRowPosition() throws BusinessException{  
+    private void initializeNextRowPosition() {  
         int sizeRows=3;
         GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO();
-        int sizeLGACsCurrently= groupAcademicDAO.getLGACs(groupAcademic.getKey()).size();
-        nextRowPosition=  nextRowPosition + ( sizeLGACsCurrently * sizeRows);
+        int sizeLGACsCurrently=0;
+         try {
+             sizeLGACsCurrently = groupAcademicDAO.getLGACs(groupAcademic.getKey()).size();
+         } catch (BusinessException ex) {
+             Log.logException(ex);
+        }
+       if(sizeLGACsCurrently>0){     
+          
+            nextRowPosition=  nextRowPosition + ( sizeLGACsCurrently * sizeRows);
+       }
     }
   
       @FXML 
     private void actionAddLGAC(ActionEvent actionEvent){ 
-        
-            gridPane.setHgap (5);
-            gridPane.setVgap (5);
+            initializeNextRowPosition();
             int sizeRows=3;
-
-            nextRowPosition= nextRowPosition + sizeRows ;
-            System.out.print(nextRowPosition);
+            
                TextField tfNamelgac = new TextField();
                 tfNamelgac .setPromptText("Nombre: ");   
                 tfNamelgac.setPrefWidth(200);
@@ -131,7 +134,7 @@ public class GroupAcademicModifyController implements Initializable {
                 gridPane.add(label,1,nextRowPosition);
                 gridPane.add(tfNamelgac,1,(nextRowPosition + 1));
                 gridPane.add(taDescriptionlgac,1, (nextRowPosition + 2));
-            
+             nextRowPosition= nextRowPosition + sizeRows ;
               spLGACs.setContent(gridPane);
 
     }
@@ -210,26 +213,83 @@ public class GroupAcademicModifyController implements Initializable {
         }                
     }
     
-    private void recoverlgacs(){   
+    private void recoverlgacs() throws BusinessException{   
         GridPane gridPane= (GridPane) spLGACs.getContent();
             int i=1;
             int indexLGAC=0;
-            ArrayList<LGAC> lgacs = groupAcademic.getLGACs();
+            GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO();
+            ArrayList<LGAC> lgacsOld = groupAcademicDAO.getLGACs(groupAcademic.getKey());
             
             int sizeRows=3;
-           while (i < (sizeRows * lgacs.size())){
+           
+           while (i < (lgacsOld.size() * sizeRows)){
                TextField namelgac = (TextField) getNodeFromGridPane( gridPane, 1, i);
                TextArea descriptionlgac = (TextArea) getNodeFromGridPane( gridPane, 1, (i + 1));
                if(validateFieldslgacs(namelgac,descriptionlgac)){         
                  String name= namelgac.getText();
                  String description= descriptionlgac.getText(); 
                  LGAC lgac = new LGAC(name, description);
-                 String nameLast = lgacs.get(indexLGAC).getName();
+                 String nameLast = lgacsOld.get(indexLGAC).getName();
                  updatelgacs(nameLast,  lgac);
                }
                i=i+3;
-               indexLGAC++;
+               indexLGAC++;              
            }
+           
+          addNewLGACs(i);
+           
+           
+    }
+    
+    private void addNewLGACs(int indexCurrently){
+         
+        while(indexCurrently<nextRowPosition){    
+                TextField namelgac = (TextField) getNodeFromGridPane( gridPane, 1, indexCurrently);
+               TextArea descriptionlgac = (TextArea) getNodeFromGridPane( gridPane, 1, (indexCurrently + 1));
+               if(validateFieldslgacs(namelgac,descriptionlgac)){         
+                 String name= namelgac.getText();
+                 String description= descriptionlgac.getText(); 
+                 LGAC lgac = new LGAC(name, description);
+                 savelgacs(groupAcademic,lgac);
+           }
+           indexCurrently= indexCurrently+3;    
+        }
+    
+    }
+    
+     private void savelgacs(GroupAcademic groupAcademic,LGAC lgac){   
+        GroupAcademicDAO groupAcademicDAO= new GroupAcademicDAO();
+        LGACDAO lgacDAO =new LGACDAO();
+        AlertMessage alertMessage =new AlertMessage();
+        
+        try {
+            if(!searchRepeatedLGAC(lgac.getName())){
+                lgacDAO.savedSucessful(lgac);
+                groupAcademicDAO.addedLGACSucessful(groupAcademic, lgac);
+            }else { 
+                alertMessage.showAlertValidateFailed("La LGAC ya se encuentra registrada");
+            }
+        } catch (BusinessException ex) {
+            if(ex.getMessage().equals("DataBase connection failed ")){
+                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
+            }else{  
+                Log.logException(ex);
+            }
+        }
+    }
+     
+    
+     public boolean searchRepeatedLGAC(String name)   { 
+       boolean value=false; 
+        try {   
+            LGACDAO lgacDAO = new LGACDAO();
+            lgacDAO.getLgacByName(name);
+
+            value=true;
+        }catch (BusinessException ex){ 
+            Log.logException(ex);
+        }
+        return value;
     }
     
     private Node getNodeFromGridPane(GridPane gridPane, int column, int row) {
