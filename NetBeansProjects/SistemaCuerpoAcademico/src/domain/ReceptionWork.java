@@ -87,7 +87,7 @@ public class ReceptionWork {
     }
     
     public String getDescription(){
-        return title;
+        return description;
     }
     
     public void setDescription(String description){ 
