@@ -19,7 +19,7 @@ public class AgreementDAOTest {
         int idMinute = 1;
         String professionalLicense = "4065161";
         Agreement agreementAuxiliar = new Agreement("Septiembre 2020","Realizar reunión para evaliación", idMinute,professionalLicense);
-        assertTrue(agreementDAO.saveAgreement(agreementAuxiliar));
+        assertTrue(agreementDAO.savedSucessfulAgreement(agreementAuxiliar));
     }
     
     @Test
@@ -41,7 +41,7 @@ public class AgreementDAOTest {
         String professionalLicense = "4065161";
         Agreement newAgreement = new Agreement("Septiembre 2021","Realizar reunión para evaliación",1,idMinute,professionalLicense);
         AgreementDAO agreementDAO = new AgreementDAO();
-        assertTrue(agreementDAO.update(newAgreement));
+        assertTrue(agreementDAO.updatedSucessful(newAgreement));
     }
     
     @Test 
@@ -51,6 +51,6 @@ public class AgreementDAOTest {
         String professionalLicense = "4065161";
         Agreement agreement = new Agreement("Septiembre 2021","Realizar reunión para evaliación",1,idMinute,professionalLicense);
         AgreementDAO agreementDAO = new AgreementDAO();
-        assertTrue(agreementDAO.delete(agreement));
+        assertTrue(agreementDAO.deletedSucessful(agreement));
     }
 }

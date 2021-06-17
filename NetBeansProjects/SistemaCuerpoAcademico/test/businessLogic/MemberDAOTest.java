@@ -22,7 +22,7 @@ public class MemberDAOTest {
         System.out.println("saveMember");
         Member member = new Member("4065161", "Maria de los Angeles Arenas Valdes","Colaborador","Maestria","Maestria en ciencias de la computacion","Fundacion Arturo Rosenbulth",1999,"1491");
         MemberDAO memberDAO = new MemberDAO();
-        assertTrue(memberDAO.saveMember(member));
+        assertTrue(memberDAO.savedSucessfulMember(member));
     }
 
  
@@ -65,7 +65,7 @@ public class MemberDAOTest {
         System.out.println("update");
         Member newMember = new Member("4065161", "Maria de los Angeles Arenas Valdes","Colaborador","Maestria","Maestria en ciencias de la computacion","Fundacion Arturo Rosenbulth",1999,"inactivo","1491");
         MemberDAO memberDAO = new MemberDAO();
-        assertTrue(memberDAO.update(newMember));
+        assertTrue(memberDAO.updatedSucessful(newMember));
     }
     
     @Test

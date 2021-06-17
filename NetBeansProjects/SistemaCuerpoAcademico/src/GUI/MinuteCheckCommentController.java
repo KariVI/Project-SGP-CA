@@ -168,7 +168,7 @@ public class MinuteCheckCommentController implements Initializable {
         for(int i = 0; i < members.size(); i++){
             try {
                 MinuteComment minuteComment = new MinuteComment(members.get(i).getProfessionalLicense(),minute.getIdMinute());
-                minuteDAO.deleteMinuteComment(minuteComment);
+                minuteDAO.deletedSucessfulMinuteComment(minuteComment);
                 value = true;
             } catch (BusinessException ex) {
                 Log.logException(ex);

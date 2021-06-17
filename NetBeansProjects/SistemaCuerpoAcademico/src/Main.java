@@ -31,7 +31,7 @@ public class Main {
            System.out.println("K");
            ProjectDAO projectDAO= new ProjectDAO();
            //projectDAO.addStudents(project);
-           projectDAO.deleteStudents(project);
+           projectDAO.deletedSucessfulStudents(project);
            //projectDAO.addStudents(project);
        } catch (BusinessException ex) {
            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);

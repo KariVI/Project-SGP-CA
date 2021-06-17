@@ -22,7 +22,7 @@ public class ProjectDaoTest {
         "El objetivo de este proyecto es desarrollar colaboración entre la Ingeniería de Software y la Inteligencia Artificial, para contribuir al desarrollo de ambas disciplinas, mediante la aplicación de técnicas de Inteligencia Artificial que aporten soluciones a problemas de procesos y del producto de software, así como la aplicación de estrategias, métodos y procesos que soporten a la investigación, desarrollo, y experimentación en el ámbito de la inteligencia Artificial.\n" +
          "\n" +
          "Este proyecto se encuentra alineado con las actividades que se han venido realizando en la Facultad de Estadística e Informática de la Universidad Veracruzana, particularmente en el Cuerpo Académico (CA) “Ingeniería de Tecnología de Software”, reconocido por PRODEP en nivel de “En consolidación”. También se ha colaborado junto con el Instituto de Investigación en Inteligencia Artificial de la Universidad Veracruzana.","04/05/2021","05/11/2021","JDOEIJ804");
-        assertTrue(projectDAO.save(projectAuxiliar));
+        assertTrue(projectDAO.savedSucessful(projectAuxiliar));
     }
   
     @Test
@@ -47,7 +47,7 @@ public class ProjectDaoTest {
         System.out.println("update");
         Project newProject = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
         ProjectDAO projectDAO = new ProjectDAO();
-        assertTrue(projectDAO.update(newProject));
+        assertTrue(projectDAO.updatedSucessful(newProject));
     }
     
     @Test
@@ -161,28 +161,28 @@ public class ProjectDaoTest {
     public void testDeleteColaborators() throws BusinessException {
         Project project = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
         ProjectDAO projectDAO = new ProjectDAO();
-        assertTrue(projectDAO.deleteColaborators(project));
+        assertTrue(projectDAO.deletedSucessfulColaborators(project));
     }
     
     @Test
     public void testDeleteLGACs() throws BusinessException {
         Project project = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
         ProjectDAO projectDAO = new ProjectDAO();
-        assertTrue(projectDAO.deleteLGACS(project));
+        assertTrue(projectDAO.deletedSucessfulLGACS(project));
     }
     
     @Test
     public void testDeleteStudents() throws BusinessException {
         Project project = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
         ProjectDAO projectDAO = new ProjectDAO();
-        assertTrue(projectDAO.deleteStudents(project));
+        assertTrue(projectDAO.deletedSucessfulStudents(project));
     }
     
     @Test
     public void testDeleteRecepetionWorks() throws BusinessException {
         Project project = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
         ProjectDAO projectDAO = new ProjectDAO();
-        assertTrue(projectDAO.deleteReceptionWorks(project));
+        assertTrue(projectDAO.deletedSucessfulReceptionWorks(project));
     }
     
 }

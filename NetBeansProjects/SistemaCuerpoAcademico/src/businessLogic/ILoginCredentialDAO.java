@@ -14,5 +14,5 @@ import log.BusinessException;
  */
 public interface ILoginCredentialDAO{
       public LoginCredential searchLoginCredential(LoginCredential credential) throws BusinessException ;
-      public boolean register(LoginCredential credential) throws BusinessException;
+      public boolean registerSuccesful(LoginCredential credential) throws BusinessException;
 }

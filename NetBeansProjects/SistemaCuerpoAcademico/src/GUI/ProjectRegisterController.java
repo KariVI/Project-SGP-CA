@@ -147,7 +147,7 @@ public class ProjectRegisterController implements Initializable {
              try {
                  saveStudents();
                  ProjectDAO projectDAO = new ProjectDAO();
-                 projectDAO.save(project);
+                 projectDAO.savedSucessful(project);
                  project.setIdProject(projectDAO.searchId(project));
                  projectDAO.addStudents(project);
                  projectDAO.addLGAC(project);

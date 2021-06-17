@@ -130,7 +130,7 @@ public class GroupAcademicRegisterController implements Initializable  {
         member.setKeyGroupAcademic(keyGroupAcademic);
         MemberDAO memberDAO = new MemberDAO();
         try {
-            memberDAO.update(member);
+            memberDAO.updatedSucessful(member);
         } catch (BusinessException ex) {
             Log.logException(ex);
         }

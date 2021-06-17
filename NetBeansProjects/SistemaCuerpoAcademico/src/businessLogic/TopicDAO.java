@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class TopicDAO implements ITopic {
 
     @Override
-    public boolean save(Topic agendaTopic)throws BusinessException {
+    public boolean savedSucessful(Topic agendaTopic)throws BusinessException {
         boolean saveSuccess = false;
         try{
             Connector connectorDataBase = new Connector();
@@ -44,7 +44,7 @@ public class TopicDAO implements ITopic {
 
     @Override
     public ArrayList<Topic> getAgendaTopics(int idMeeting) throws BusinessException {
-        ArrayList<Topic> agendaList = new ArrayList<>();
+        ArrayList<Topic> agendaList = new ArrayList<Topic>();
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
@@ -78,7 +78,7 @@ public class TopicDAO implements ITopic {
     }
        
     @Override
-    public boolean update( Topic newTopic) throws BusinessException {
+    public boolean updatedSucessful( Topic newTopic) throws BusinessException {
         boolean updateSucess = false;
         Connector connectorDataBase=new Connector();
         try {
@@ -97,14 +97,14 @@ public class TopicDAO implements ITopic {
         }catch (ClassNotFoundException ex) {
             Log.logException(ex);
         } catch (SQLException sqlException) {
-           throw new BusinessException("DataBase connection failed ", sqlException);
+            throw new BusinessException("DataBase connection failed ", sqlException);
         }
         
         return updateSucess;
     }
     
     @Override
-    public boolean delete(Topic topic) throws BusinessException{
+    public boolean deletedSucessful(Topic topic) throws BusinessException{
         boolean deleteSucess=false;
         try{
             Connector connectorDataBase=new Connector();

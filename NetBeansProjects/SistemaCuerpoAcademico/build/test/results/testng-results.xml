@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="SistemaCuerpoAcademico" duration-ms="1272" started-at="2021-06-16T23:52:49Z" finished-at="2021-06-16T23:52:50Z">
+    <groups>
+    </groups>
+    <test name="businessLogic.LoginCredentialDAOTest" duration-ms="1272" started-at="2021-06-16T23:52:49Z" finished-at="2021-06-16T23:52:50Z">
+      <class name="businessLogic.LoginCredentialDAOTest">
+        <test-method status="PASS" signature="testSearchLoginCredential()[pri:0, instance:testSearchLoginCredential(businessLogic.LoginCredentialDAOTest)]" name="testSearchLoginCredential" duration-ms="1072" started-at="2021-06-16T18:52:49Z" finished-at="2021-06-16T18:52:50Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSearchLoginCredential -->
+      </class> <!-- businessLogic.LoginCredentialDAOTest -->
+    </test> <!-- businessLogic.LoginCredentialDAOTest -->
+  </suite> <!-- SistemaCuerpoAcademico -->
+</testng-results>

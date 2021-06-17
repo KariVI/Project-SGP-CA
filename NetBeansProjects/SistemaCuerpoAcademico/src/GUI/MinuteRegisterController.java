@@ -168,12 +168,12 @@ public class MinuteRegisterController implements Initializable {
            int idMinute = 0;
            try {
                MinuteDAO minuteDAO = new MinuteDAO();
-               minuteDAO.saveMinute(minute);
+               minuteDAO.savedSucessfulMinute(minute);
                idMinute = minuteDAO.getIdMinute(minute);
                AgreementDAO agreementDAO = new AgreementDAO();
                for(int i = 0; i < agreements.size(); i++){
                    agreements.get(i).setIdMinute(idMinute);
-                   agreementDAO.saveAgreement(agreements.get(i));
+                   agreementDAO.savedSucessfulAgreement(agreements.get(i));
                }
                AlertMessage alertMessage = new AlertMessage();
                alertMessage.showAlertSuccesfulSave("La minuta");

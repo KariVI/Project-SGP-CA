@@ -182,11 +182,11 @@ public class ProjectModifyController implements Initializable {
    public void deleteProjectInfo(Project project){
         try {
             ProjectDAO projectDAO = new ProjectDAO();
-            projectDAO.update(project);
-            projectDAO.deleteStudents(project);
-            projectDAO.deleteLGACS(project);
-            projectDAO.deleteColaborators(project);
-            projectDAO.deleteReceptionWorks(project);            
+            projectDAO.updatedSucessful(project);
+            projectDAO.deletedSucessfulStudents(project);
+            projectDAO.deletedSucessfulLGACS(project);
+            projectDAO.deletedSucessfulColaborators(project);
+            projectDAO.deletedSucessfulReceptionWorks(project);            
         } catch (BusinessException ex) {
             Log.logException(ex);
         }

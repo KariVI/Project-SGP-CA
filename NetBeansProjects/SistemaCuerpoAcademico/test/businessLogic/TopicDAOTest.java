@@ -13,7 +13,7 @@ public class TopicDAOTest {
         System.out.println("save");
         Topic topic = new Topic("Tema gastrocafe","11:00","12:00","4065161",1);
         TopicDAO topicDAO = new TopicDAO();
-        assertTrue(topicDAO.save(topic));
+        assertTrue(topicDAO.savedSucessful(topic));
     }
     
     @Test
@@ -33,7 +33,7 @@ public class TopicDAOTest {
         System.out.println("update");
         Topic newTopic = new Topic("Tema gastrocafe","12:00","13:00","4065161",1);
         TopicDAO topicDAO = new TopicDAO();
-        assertTrue(topicDAO.update( newTopic));
+        assertTrue(topicDAO.updatedSucessful( newTopic));
     }
 
     @Test 
@@ -41,7 +41,7 @@ public class TopicDAOTest {
         System.out.println("delete");
         Topic topic = new Topic(1,"Tema gastrocafe","12:00","13:00","4065161",1);
         TopicDAO topicDAO = new TopicDAO();
-        assertTrue(topicDAO.delete(topic));
+        assertTrue(topicDAO.deletedSucessful(topic));
     }
     
 }

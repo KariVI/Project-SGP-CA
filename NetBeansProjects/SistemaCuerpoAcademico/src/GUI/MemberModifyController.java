@@ -87,7 +87,7 @@ public class MemberModifyController implements Initializable {
         if(validateMember(newMember)){
              try { 
               AlertMessage alertMessage = new AlertMessage();
-              memberDAO.update(newMember);
+              memberDAO.updatedSucessful(newMember);
               alertMessage.showAlertSuccesfulSave("Los cambios fueron guardados con éxito");
               Stage stage = (Stage) btSave.getScene().getWindow();
               stage.close();

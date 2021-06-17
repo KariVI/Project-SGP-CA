@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import log.BusinessException;
 
 public interface IAgreement {
-    public boolean saveAgreement(Agreement agreement)throws BusinessException;
+    public boolean savedSucessfulAgreement(Agreement agreement)throws BusinessException;
      public ArrayList<Agreement>  getAgreements()throws BusinessException;
      public ArrayList<Agreement>  getAgreementsMinute(int idMinute) throws BusinessException;
-     public boolean update(Agreement newAgreement) throws BusinessException;
-     public boolean delete(Agreement agreement) throws BusinessException;
+     public boolean updatedSucessful(Agreement newAgreement) throws BusinessException;
+     public boolean deletedSucessful(Agreement agreement) throws BusinessException;
 }

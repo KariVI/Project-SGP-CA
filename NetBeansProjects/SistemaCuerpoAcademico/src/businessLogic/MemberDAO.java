@@ -12,10 +12,9 @@ import log.Log;
 public class MemberDAO implements IMemberDAO{
 
     @Override
-    public boolean saveMember(Member member) throws BusinessException{
+    public boolean savedSucessfulMember(Member member) throws BusinessException{
         boolean saveSuccess = false;
-        try {
-            
+        try {  
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
             String insertMember = "INSERT INTO Miembro(cedula, nombre, rol, grado, nombreGrado, universidad, anio, estado, clave) VALUES (?,?,?,?,?,?,?,?,?)";
@@ -30,10 +29,8 @@ public class MemberDAO implements IMemberDAO{
             preparedStatement.setString(8, "Activo");
             preparedStatement.setString(9, member.getKeyGroupAcademic());
             preparedStatement.executeUpdate();
-            connectorDataBase.disconnect();
-            
-            saveSuccess = true;
-            
+            connectorDataBase.disconnect();         
+            saveSuccess = true; 
         } catch (SQLException sqlException){
             throw new BusinessException("DataBase connection failed ", sqlException);
         } catch (ClassNotFoundException ex) {
@@ -46,16 +43,13 @@ public class MemberDAO implements IMemberDAO{
     @Override
     public String searchProfessionalLicenseByName(String memberName) throws BusinessException{
         String professionalLicenseAuxiliar = "";
-        
         try{
             Connector connectorDataBase=new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
             ResultSet resultSet;
             String selectLicenseMember = "SELECT cedula from  Miembro where nombre=? ";
-     
             PreparedStatement preparedStatement = connectionDataBase.prepareStatement(selectLicenseMember);
-            preparedStatement.setString(1, memberName);          
-            
+            preparedStatement.setString(1, memberName);                     
             resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
                 professionalLicenseAuxiliar = resultSet.getString("cedula");
@@ -81,11 +75,9 @@ public class MemberDAO implements IMemberDAO{
             Connection connectionDataBase = connectorDataBase.getConnection();
             ResultSet resultSet;
             String selectLicenseMember = "SELECT * from Miembro where cedula = ?";
-     
             PreparedStatement preparedStatement = connectionDataBase.prepareStatement(selectLicenseMember);
             preparedStatement.setString(1, professionalLicenseMember);        
-            resultSet=preparedStatement.executeQuery();
-           
+            resultSet=preparedStatement.executeQuery();  
             if(resultSet.next()){
                 String professionalLicense = resultSet.getString("cedula");
                 String name = resultSet.getString("nombre");
@@ -95,25 +87,26 @@ public class MemberDAO implements IMemberDAO{
                 String nameUniversity = resultSet.getString("universidad");
                 int year = resultSet.getInt("anio");
                 String state = resultSet.getString("estado");
-                String key = resultSet.getString("clave");
-                
+                String key = resultSet.getString("clave");                
                 memberAuxiliar = new Member(professionalLicense, name, role, degree, nameDegree, nameUniversity, year,state,key);
-                 }else{
-                    throw new BusinessException("Member not found");
-                 }  
-                connectorDataBase.disconnect();
+            }else{
+                throw new BusinessException("Member not found");
+            }  
+            
+            connectorDataBase.disconnect();
                 
         }catch(SQLException sqlException) {
             throw new BusinessException("DataBase connection failed ", sqlException);
         } catch (ClassNotFoundException ex) {
             Log.logException(ex);
         }
+        
         return memberAuxiliar;
     }
     
 
 
-    public boolean update(Member newMember) throws BusinessException {
+    public boolean updatedSucessful(Member newMember) throws BusinessException {
         boolean updateSucess = false;
         Connector connectorDataBase=new Connector();
         try {
@@ -127,8 +120,7 @@ public class MemberDAO implements IMemberDAO{
             preparedStatement.setInt(6, newMember.getDegreeYear());
             preparedStatement.setString(7, newMember.getState());
             preparedStatement.setString(8, newMember.getKeyGroupAcademic());
-            preparedStatement.setString(9, newMember.getProfessionalLicense());
-            
+            preparedStatement.setString(9, newMember.getProfessionalLicense());    
             preparedStatement.executeUpdate();
             updateSucess=true;  
             connectorDataBase.disconnect();
@@ -190,14 +182,12 @@ public class MemberDAO implements IMemberDAO{
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
-            try{
-                            
+            try{             
                 PreparedStatement getMemberStatment;
                 getMemberStatment = connectionDataBase.prepareStatement("SELECT * FROM Miembro where clave = ?");
                 getMemberStatment.setString(1, groupAcademicKey);
                 ResultSet memberResultSet;                    
-                memberResultSet = getMemberStatment.executeQuery();
-                            
+                memberResultSet = getMemberStatment.executeQuery();                  
                 while(memberResultSet.next()){
                     String name = memberResultSet.getString("nombre");
                     String role = memberResultSet.getString("rol");
@@ -216,6 +206,7 @@ public class MemberDAO implements IMemberDAO{
             }catch(SQLException sqlException) {
                 throw new BusinessException("Parameter index ", sqlException);
             }
+            
         }catch(ClassNotFoundException ex) {
             Log.logException(ex);
         }

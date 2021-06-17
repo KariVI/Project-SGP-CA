@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import log.BusinessException;
 
 public interface ITopic {
-      public boolean save(Topic agendaTopic) throws BusinessException;
+      public boolean savedSucessful(Topic agendaTopic) throws BusinessException;
       public ArrayList<Topic>  getAgendaTopics(int idReunion) throws BusinessException;
-      public boolean update(Topic newTopic) throws BusinessException;
-      public boolean delete(Topic topic) throws BusinessException;
+      public boolean updatedSucessful(Topic newTopic) throws BusinessException;
+      public boolean deletedSucessful(Topic topic) throws BusinessException;
 }

@@ -183,11 +183,11 @@ public class TopicModifyController implements Initializable {
        TopicDAO topicDAO = new TopicDAO();
         try {
           for(int i = 0; i < oldTopics.size(); i++){
-               topicDAO.delete(oldTopics.get(i));
+               topicDAO.deletedSucessful(oldTopics.get(i));
            }  
           
            for(int i = 0; i < topics.size(); i++){
-               topicDAO.save(topics.get(i));
+               topicDAO.savedSucessful(topics.get(i));
            }
            
            AlertMessage alertMessage = new AlertMessage();

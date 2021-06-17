@@ -73,7 +73,7 @@ public class MemberRegisterController implements Initializable {
        MemberDAO memberDAO = new MemberDAO();
        if(validateMember(newMember)){
              try { 
-              memberDAO.saveMember(newMember);
+              memberDAO.savedSucessfulMember(newMember);
               AlertMessage alertMessage = new AlertMessage();
               alertMessage.showAlertSuccesfulSave("El miembro fue registrado con éxito");
               close();

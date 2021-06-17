@@ -51,7 +51,7 @@ public class LoginCredentialDAOTest {
         System.out.println("register");
         LoginCredential credential = new LoginCredential("JuanPer","12345","8325134");
         LoginCredentialDAO loginCredentialDAO = new LoginCredentialDAO();
-        assertTrue(loginCredentialDAO.register(credential));
+        assertTrue(loginCredentialDAO.registerSuccesful(credential));
     }
  
 

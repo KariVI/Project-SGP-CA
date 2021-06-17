@@ -25,7 +25,7 @@ public class MinuteDAOTest {
         System.out.println("saveMinute");
         Minute minute = new Minute("Los acuerdos registrados son pendiente","Estado","Falta gastrocafe",1);
         MinuteDAO minuteDAO = new MinuteDAO();
-        assertTrue(minuteDAO.saveMinute(minute)); 
+        assertTrue(minuteDAO.savedSucessfulMinute(minute)); 
     }
 
     @Test
@@ -89,7 +89,7 @@ public class MinuteDAOTest {
         System.out.println("update");
         Minute newMinute = new Minute(1,"Los acuerdos registrados son pendiente","Completado","Falta gastrocafe",1);
         MinuteDAO minuteDAO = new MinuteDAO();
-        assertTrue(minuteDAO.update(newMinute));
+        assertTrue(minuteDAO.updatedSucessful(newMinute));
     }
     
     @Test
@@ -128,6 +128,6 @@ public class MinuteDAOTest {
     public void testDeleteComment() throws BusinessException{
         MinuteComment minuteComment = new MinuteComment("8325134",1);
         MinuteDAO minuteDAO = new MinuteDAO();
-        assertTrue(minuteDAO.deleteMinuteComment(minuteComment));   
+        assertTrue(minuteDAO.deletedSucessfulMinuteComment(minuteComment));   
     }
 }

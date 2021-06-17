@@ -93,7 +93,7 @@ public class MinuteShowController implements Initializable {
             if(ListMemberAssistants.size() == ListMemberApprove.size()){
                 value = true;
                 minute.setState("Aprobada");
-                minuteDAO.update(minute);
+                minuteDAO.updatedSucessful(minute);
             }
         } catch (BusinessException ex) {
             Log.logException(ex);

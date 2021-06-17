@@ -233,7 +233,7 @@ public class MeetingRegisterController implements Initializable {
         try {
           for(int i = 0; i < topics.size(); i++){
               topics.get(i).setIdMeeting(idMeeting);
-             topicDAO.save(topics.get(i));           
+             topicDAO.savedSucessful(topics.get(i));           
            }   
         } catch (BusinessException ex) {
             Log.logException(ex);

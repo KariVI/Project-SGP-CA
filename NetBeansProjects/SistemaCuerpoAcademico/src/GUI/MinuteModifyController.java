@@ -215,7 +215,7 @@ public class MinuteModifyController implements Initializable {
            try {
                MinuteDAO minuteDAO = new MinuteDAO();
                newMinute.setIdMinute(idMinute);
-               minuteDAO.update(newMinute);
+               minuteDAO.updatedSucessful(newMinute);
                addAgreements();
                AlertMessage alertMessage = new AlertMessage();
                alertMessage.showAlertSuccesfulSave("La minuta");
@@ -231,7 +231,7 @@ public class MinuteModifyController implements Initializable {
     public void deleteComments(){
         try {
             MinuteDAO minuteDAO = new MinuteDAO();
-            minuteDAO.deleteMinutesComments(idMinute);
+            minuteDAO.deletedSucessfulMinutesComments(idMinute);
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
@@ -240,13 +240,13 @@ public class MinuteModifyController implements Initializable {
          try {
           AgreementDAO agreementDAO = new AgreementDAO();
           for(int i = 0; i < agreementsOld.size(); i++){
-              agreementDAO.delete(agreementsOld.get(i));
+              agreementDAO.deletedSucessful(agreementsOld.get(i));
           }
     
            for(int i = 0; i < agreements.size(); i++){ 
                   agreements.get(i).setIdMinute(idMinute);
                   System.out.println(idMinute);
-                  agreementDAO.saveAgreement(agreements.get(i));
+                  agreementDAO.savedSucessfulAgreement(agreements.get(i));
               
            }
           } catch (BusinessException ex) {
