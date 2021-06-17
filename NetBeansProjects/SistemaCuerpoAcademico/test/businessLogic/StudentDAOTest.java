@@ -37,7 +37,7 @@ public class StudentDAOTest {
         String enrollment = "S19014024";
         StudentDAO studentDAO = new StudentDAO();
         boolean value=true;
-        Student expResult = new Student("S19014023", "Karina Valdes Iglesias");
+        Student expResult = new Student("S19014024", "Laura Rodriguez Lopez");
         try{    
             Student result = studentDAO.getByEnrollment(enrollment);
         }catch(BusinessException ex){
