@@ -12,5 +12,5 @@ public interface IGroupAcademicDAO {
     public boolean addedLGACSucessful(GroupAcademic groupAcademic, LGAC lgac) throws BusinessException;
     public boolean updatedSucessful(String lastKey,GroupAcademic groupAcademic) throws BusinessException;
     public ArrayList<LGAC> getLGACs(String keyGroupAcademic) throws BusinessException;
-   
+    public boolean deletedLGACSuccesful(String keyGroupAcademic, LGAC lgac) throws BusinessException;
 }

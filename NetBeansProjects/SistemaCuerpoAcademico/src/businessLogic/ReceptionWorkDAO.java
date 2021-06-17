@@ -119,14 +119,13 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
             Connector connectorDataBase=new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
             ResultSet resultSet;
-            String selectId = "SELECT idTrabajoRecepcional from  TrabajoRecepcional where titulo=? and descripcion=? and tipo=? and fechaInicio=? and fechaFin=?;";
+            String selectId = "SELECT idTrabajoRecepcional from  TrabajoRecepcional where titulo=?  and tipo=? and fechaInicio=? and fechaFin=?;";
      
             PreparedStatement preparedStatement = connectionDataBase.prepareStatement(selectId);
             preparedStatement.setString(1, receptionWork.getTitle());
-            preparedStatement.setString(2, receptionWork.getDescription());
-            preparedStatement.setString(3, receptionWork.getType());
-            preparedStatement.setString(4, receptionWork.getDateStart());
-            preparedStatement.setString(5, receptionWork.getDateEnd());      
+            preparedStatement.setString(2, receptionWork.getType());
+            preparedStatement.setString(3, receptionWork.getDateStart());
+            preparedStatement.setString(4, receptionWork.getDateEnd());      
             resultSet=preparedStatement.executeQuery();
            
             if(resultSet.next()){

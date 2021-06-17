@@ -28,7 +28,7 @@ public class ReceptionWorkDAOTest {
         PreliminarProject preliminarProject = new PreliminarProject ("Revisión de la Literatura acerca de Varamiento de Mamíferos Marinos",
         "La Secretaría de Medio Ambiente y Recursos Naturales, a través de la Subsecretaría de Fomento y Normatividad Ambiental en coordinación con las áreas del sector ambiental y con la Secretaría de Marina (SEMAR)",
         "13/01/2021", "13/07/2021","JDOEIJ804");
-        preliminarProject.setKey(6);
+        preliminarProject.setKey(1);
         receptionWork.setPreliminarProject(preliminarProject);
         ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
         boolean result = receptionWorkDAO .savedSucessful(receptionWork);
@@ -40,14 +40,14 @@ public class ReceptionWorkDAOTest {
     @Test
     public void testUpdate() throws BusinessException {
         System.out.println("updatedSucessful");
-        int id = 2;
+        int id = 1;
         ReceptionWork receptionWork = new ReceptionWork("Análisis comparativo de métodos de evaluación de arquitecturas de software guiado por ESSENCE 1.2",
         "Práctico técnico","Resultados de la investigación y aplicación de ESSENCE 1.2 en distintas arquitecturas de software enfocadas a proyectos guiados",
         "14/06/2020","01/02/2021", "Concluido","JDOEIJ804");
         PreliminarProject preliminarProject = new PreliminarProject ("Evaluación del modelo de calidad de seguridad para arquitecturas de software",
         "Una arquitectura de software define no sólo la estructura o estructuras de un sistema de software, sino las características de calidad del propio sistema. Una característica o atributo de calidad altamente crítico en nuestros días es la seguridad. Esta característica, por supuesto que también es importante considerar en el desarrollo de la plataforma de comunicación y educación", 
         "13/11/2019", "13/07/2020","JDOEIJ804");
-        preliminarProject.setKey(7);
+        preliminarProject.setKey(4);
         receptionWork.setPreliminarProject(preliminarProject);
         ReceptionWorkDAO instance = new ReceptionWorkDAO();
         boolean result = instance.updatedSucessful(id, receptionWork);
@@ -56,7 +56,7 @@ public class ReceptionWorkDAOTest {
     
     @Test
     public void testGetReceptionWorkById() throws BusinessException{
-        int id=2;
+        int id=1;
         ReceptionWork receptionWork = new ReceptionWork("Análisis comparativo de métodos de evaluación de arquitecturas de software guiado por ESSENCE 1.2",
         "Práctico técnico","Resultados de la investigación y aplicación de ESSENCE 1.2 en distintas arquitecturas de software enfocadas a proyectos guiados",
         "14/06/2020","01/02/2021", "Concluido","JDOEIJ804");
@@ -78,11 +78,12 @@ public class ReceptionWorkDAOTest {
     }
     @Test
     public void testGetId() throws BusinessException{
-        int id=2;
-        ReceptionWork receptionWork = new ReceptionWork("Análisis comparativo de métodos de evaluación de arquitecturas de software guiado por ESSENCE 1.2",
-        "Práctico técnico","Resultados de la investigación y aplicación de ESSENCE 1.2 en distintas arquitecturas de software enfocadas a proyectos guiados",
-        "14/06/2020","01/02/2021", "Concluido","JDOEIJ804");
-        receptionWork.setKey(id);
+        int id=3;
+       
+          ReceptionWork receptionWork = new ReceptionWork("Prácticas automatizadas sobre la elicitación de requisitos",
+        "Tesis","Propuesta de uso de aprendizaje máquina en elicitación de requisitos y fases posteriores",
+        "18/02/2019", "14/05/2020", "Concluido","JDOEIJ804");
+        
         ReceptionWorkDAO instance = new ReceptionWorkDAO();  
         int  result=instance.getId(receptionWork);
         assertEquals(id,result);
@@ -154,7 +155,7 @@ public class ReceptionWorkDAOTest {
     public void testGetStudents () throws BusinessException{
         String enrollmentExpected="S19014023";
         ReceptionWorkDAO receptionWorkDAO= new ReceptionWorkDAO();
-        ArrayList<Student> students= receptionWorkDAO.getStudents(4);
+        ArrayList<Student> students= receptionWorkDAO.getStudents(3);
         String enrollmentResult= students.get(0).getEnrollment();
         assertEquals(enrollmentExpected,enrollmentResult);
     }
@@ -163,7 +164,7 @@ public class ReceptionWorkDAOTest {
     public void testDeleteStudents () throws BusinessException{
        ReceptionWork receptionWork = new ReceptionWork ("Los microservicios enfocados en la ingeniería de software", "Tesis",
         "Los microservicios enfocados en la ingeniería de software y sus distintas aplicaciones", "14/11/2019", "14/05/2021", "Concluido","JDOEIJ804");
-        receptionWork.setKey(6);
+        receptionWork.setKey(4);
         Student student= new Student("S19014013", "Mariana Yazmin Vargas Segura");
         receptionWork.addStudent(student);
         ReceptionWorkDAO receptionWorkDAO= new ReceptionWorkDAO();
@@ -191,4 +192,15 @@ public class ReceptionWorkDAOTest {
         ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO ();
         assertEquals(receptionWorkDAO.getLGACs(idReceptionWork),receptionWork.getLGACs());
     }
+    
+    public void testDeleteLGAC () throws BusinessException{
+       ReceptionWork receptionWork = new ReceptionWork ("Los microservicios enfocados en la ingeniería de software", "Tesis",
+        "Los microservicios enfocados en la ingeniería de software y sus distintas aplicaciones", "14/11/2019", "14/05/2021", "Concluido","JDOEIJ804");
+        receptionWork.setKey(4);
+        LGAC lgac = new LGAC("Tecnologías de software", "Se orienta al estudio de diversas propiedades, enfoques, métodos de modelado y herramientas que conforman cada una de las diversas tecnologías aplicables al desarrollo del software con vistas a su adaptación, mejora y sustitución en el medio nacional");
+        receptionWork.addLGAC(lgac);
+        ReceptionWorkDAO receptionWorkDAO= new ReceptionWorkDAO();
+        assertTrue(receptionWorkDAO.deletedSucessfulLGACs(receptionWork));
+    }
+    
 }

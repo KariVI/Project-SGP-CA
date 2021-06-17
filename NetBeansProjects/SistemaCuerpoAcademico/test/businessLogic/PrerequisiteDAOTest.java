@@ -43,7 +43,7 @@ public class PrerequisiteDAOTest {
         Prerequisite prerequisite = new Prerequisite ("Presentacion de anteproyectos");
         Member assistant= new Member("7938268", "Maria Karen Cortes Verdin", "Responsable");
         prerequisite.setMandated(assistant);
-        int idReunion = 1;
+        int idReunion = 2;
         PrerequisiteDAO prerequisiteDAO = new PrerequisiteDAO();
         assertTrue(prerequisiteDAO.savedSucessfulPrerequisites(prerequisite,idReunion) );
         
@@ -64,7 +64,7 @@ public class PrerequisiteDAOTest {
     @Test
     public void testDelete() throws BusinessException{
         System.out.println("delete");
-        int idPrerequisite=13;
+        int idPrerequisite=4;
         PrerequisiteDAO prerequisiteDAO = new PrerequisiteDAO();
         assertTrue(prerequisiteDAO.deletedSucessful(idPrerequisite));
     }
@@ -75,7 +75,7 @@ public class PrerequisiteDAOTest {
       PrerequisiteDAO prerequisiteDAO = new PrerequisiteDAO();
       ArrayList<Prerequisite> prerequisites;
       prerequisites= prerequisiteDAO.getPrerequisites(1);
-      int sizeExpected=4;
+      int sizeExpected=3;
       assertEquals(prerequisites.size(), sizeExpected);
       
     }
