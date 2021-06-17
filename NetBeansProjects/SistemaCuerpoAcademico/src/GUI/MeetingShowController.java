@@ -228,7 +228,7 @@ public class MeetingShowController implements Initializable {
               loader.load();
               MinuteRegisterController minuteRegisterController =loader.getController(); 
               minuteRegisterController.setMember(member);
-              minuteRegisterController.setMeeting(meeting.getKey());
+              minuteRegisterController.setMeeting(meeting);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);

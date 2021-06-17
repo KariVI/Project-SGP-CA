@@ -5,7 +5,7 @@
     <classes>
       <class name="businessLogic.LoginCredentialDAOTest">
         <methods>
-          <include name="testRegister"/>
+          <include name="testSearchLoginCredential"/>
         </methods>
       </class> <!-- businessLogic.LoginCredentialDAOTest -->
     </classes>

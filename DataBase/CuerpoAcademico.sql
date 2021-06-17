@@ -85,7 +85,7 @@ primary key(idMinuta), foreign key(idReunion) references reunion(idReunion)ON DE
 CREATE TABLE IF NOT EXISTS Acuerdo(idAcuerdo int NOT NULL AUTO_INCREMENT,
 periodo varchar(30) NOT NULL, descripcion varchar(200) NOT NULL,
 idMinuta int NOT NULL, primary key(idAcuerdo),cedula varchar(19) not null,
-foreign key (cedula) references Member(cedula),
+foreign key (cedula) references Miembro(cedula),
 foreign key (idMinuta) references Minuta(idMinuta)ON DELETE CASCADE);
 
 
@@ -136,6 +136,7 @@ CREATE TABLE IF NOT EXISTS ValidarMinuta (
   FOREIGN KEY (idMinuta) REFERENCES Minuta(idMinuta),
   FOREIGN KEY (cedula) REFERENCES Miembro(cedula)
 );
+
 CREATE TABLE IF NOT EXISTS ParticipaProyecto(
   idProyecto int NOT NULL,
   matricula varchar(10) NOT NULL,
@@ -144,6 +145,7 @@ CREATE TABLE IF NOT EXISTS ParticipaProyecto(
   FOREIGN KEY (idProyecto) REFERENCES Proyecto(idProyecto),
   FOREIGN KEY (matricula) REFERENCES Estudiante(matricula)
 );
+
 CREATE TABLE IF NOT EXISTS DesarrollaProyecto (
   idProyecto int NOT NULL,
   cedula varchar(10) NOT NULL,

@@ -42,9 +42,10 @@ public class MinuteModifyController implements Initializable {
     private ObservableList<Member> members;
     private ObservableList<Agreement> agreements;
      private ObservableList<Agreement> agreementsOld;
+     private ObservableList<String> periods;
     @FXML ComboBox<Member> cbMember;
     @FXML TextField tfAgreement;
-    @FXML TextField tfPeriod;
+    @FXML ComboBox<String> cbPeriod;
     @FXML TableColumn <Member,String>tcMember;
     @FXML TableColumn <Agreement,String> tcAgreement;
     @FXML TableColumn <Agreement,String>tcPeriod;
@@ -111,9 +112,13 @@ public class MinuteModifyController implements Initializable {
         agreementsOld = FXCollections.observableArrayList();
         tvAgreement.setItems(agreements);
         members = FXCollections.observableArrayList();
-       
+        periods = FXCollections.observableArrayList();
+        periods.add("Feb-Jun");
+        periods.add("Ago-Ene");
+        cbPeriod.setItems(periods);
+        cbPeriod.getSelectionModel().selectFirst();
         cbMember.setItems(members);
-        cbMember.getSelectionModel().selectFirst();
+        
 
         tvAgreement.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -155,7 +160,7 @@ public class MinuteModifyController implements Initializable {
                 MemberDAO memberDAO = new MemberDAO();
                 Member member = memberDAO.getMemberByLicense(agreement.getProfessionalLicense());
                 tfAgreement.setText(agreement.getDescription());
-                tfPeriod.setText(agreement.getPeriod());
+                cbPeriod.getSelectionModel().select(agreement.getPeriod());
                 cbMember.getSelectionModel().select(member);
                 
             } catch (BusinessException ex) {
@@ -172,6 +177,7 @@ public class MinuteModifyController implements Initializable {
             for( int i = 0; i<memberList.size(); i++) {
                 members.add(memberList.get(i));
             }
+            cbMember.getSelectionModel().selectFirst();
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
@@ -182,7 +188,7 @@ public class MinuteModifyController implements Initializable {
         String period = ""; 
         String agreementDescription = "";
         Member member = cbMember.getSelectionModel().getSelectedItem();
-        period = tfPeriod.getText();
+        period = cbPeriod.getSelectionModel().getSelectedItem();
         agreementDescription = tfAgreement.getText();
         Agreement agreement = new Agreement(period,agreementDescription,member.getProfessionalLicense());
         if(validateAgreement(agreement)){
@@ -200,7 +206,6 @@ public class MinuteModifyController implements Initializable {
     @FXML
     private void cleanFields(){
         tfAgreement.setText("");
-        tfPeriod.setText("");
     }
     
     @FXML

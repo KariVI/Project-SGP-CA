@@ -8,6 +8,7 @@ import domain.Agreement;
 import domain.Meeting;
 import domain.Member;
 import domain.Minute;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,10 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -34,13 +38,13 @@ public class MinuteRegisterController implements Initializable {
 
     private ObservableList<Member> members;
     private ObservableList<Agreement> agreements;
+    private ObservableList<String> periods;
     @FXML ComboBox<Member> cbMember;
-    @FXML TextField tfAgreement;
-    @FXML TextField tfPeriod;
+    @FXML ComboBox<String> cbPeriod;
+    @FXML TextField tfAgreement;  
     @FXML TableColumn <Member,String>tcMember;
     @FXML TableColumn <Agreement,String> tcAgreement;
     @FXML TableColumn <Agreement,String>tcPeriod;
-    @FXML TableColumn tcNumber;
     @FXML TextArea taDue;
     @FXML TextArea taNote;
     @FXML TableView<Agreement> tvAgreement;
@@ -48,7 +52,7 @@ public class MinuteRegisterController implements Initializable {
     @FXML Button btAdd;
     @FXML Button btFinish;
     private int idMinute = 1;
-    private int idMeeting = 1;
+    private Meeting meeting;
     private int indexAgreement;
     private Member member;
     private ListChangeListener<Agreement> tableAgreementListener;
@@ -57,15 +61,17 @@ public class MinuteRegisterController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         tcAgreement.setCellValueFactory(new PropertyValueFactory("description"));
         tcPeriod.setCellValueFactory(new PropertyValueFactory("period"));
-        tcNumber.setCellValueFactory(new PropertyValueFactory("finishTime"));
         tcMember.setCellValueFactory(new PropertyValueFactory("professionalLicense"));
         agreements = FXCollections.observableArrayList();
         tvAgreement.setItems(agreements);
-        members = FXCollections.observableArrayList();
-        initializeMembers();
+        members = FXCollections.observableArrayList(); 
         cbMember.setItems(members);
         cbMember.getSelectionModel().selectFirst();
-
+        periods = FXCollections.observableArrayList();
+        periods.add("Feb-Jun");
+        periods.add("Ago-Ene");
+        cbPeriod.setItems(periods);
+        cbPeriod.getSelectionModel().selectFirst();
         tvAgreement.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                  setSelectedAgreement();
@@ -82,11 +88,12 @@ public class MinuteRegisterController implements Initializable {
         };        
     }
     
-    public void setMeeting(int idMeeting){
-            this.idMeeting = idMeeting;
+    public void setMeeting(Meeting meeting){
+            this.meeting = meeting;
     }
     public void setMember(Member member){
         this.member = member;
+        initializeMembers();
     }
     
     private Agreement getSelectedAgreement(){
@@ -109,7 +116,7 @@ public class MinuteRegisterController implements Initializable {
                 MemberDAO memberDAO = new MemberDAO();
                 Member member = memberDAO.getMemberByLicense(agreement.getProfessionalLicense());
                 tfAgreement.setText(agreement.getDescription());
-                tfPeriod.setText(agreement.getPeriod());
+                cbPeriod.getSelectionModel().select(agreement.getPeriod());
                 cbMember.getSelectionModel().select(member);
                 
             } catch (BusinessException ex) {
@@ -136,7 +143,7 @@ public class MinuteRegisterController implements Initializable {
         String period = ""; 
         String agreementDescription = "";
         Member member = cbMember.getSelectionModel().getSelectedItem();
-        period = tfPeriod.getText();
+        period = cbPeriod.getSelectionModel().getSelectedItem();
         agreementDescription = tfAgreement.getText();
         Agreement agreement = new Agreement(period,agreementDescription,member.getProfessionalLicense());
         if(validateAgreement(agreement)){
@@ -154,7 +161,6 @@ public class MinuteRegisterController implements Initializable {
     @FXML
     private void cleanFields(){
         tfAgreement.setText("");
-        tfPeriod.setText("");
     }
     
     public void actionFinish(){
@@ -163,7 +169,7 @@ public class MinuteRegisterController implements Initializable {
        String initialState = "pendiente";
        note = taNote.getText();
        due = taDue.getText();
-       Minute minute = new Minute(note,initialState,due,idMeeting);
+       Minute minute = new Minute(note,initialState,due,meeting.getKey());
        if(validateMinute(minute)){
            int idMinute = 0;
            try {
@@ -180,6 +186,7 @@ public class MinuteRegisterController implements Initializable {
                changeStateMeeting();
                Stage stage = (Stage)btFinish.getScene().getWindow();
                stage.close();
+               openMeetingShow();
            } catch (BusinessException ex) {
                 Log.logException(ex);
            }          
@@ -189,9 +196,10 @@ public class MinuteRegisterController implements Initializable {
     public void changeStateMeeting(){
         try {
             MeetingDAO meetingDAO = new MeetingDAO();
-            Meeting meeting = meetingDAO.getMeetingById(idMeeting);
+            Meeting newMeeting = meetingDAO.getMeetingById(meeting.getKey());
             meeting.setState("Concluida");
-            meetingDAO.changedStateSucessful(meeting);
+            newMeeting.setState("Concluida");
+            meetingDAO.changedStateSucessful(newMeeting);
             
         } catch (BusinessException ex) {
             Log.logException(ex);
@@ -287,4 +295,26 @@ public class MinuteRegisterController implements Initializable {
         }
         return value;
     }
+    
+    private void openMeetingShow(){ 
+        try {
+                 FXMLLoader loader = new FXMLLoader(getClass().getResource("MeetingShow.fxml"));
+                 Parent root = loader.load();
+                 MeetingShowController meetingShowController = loader.getController();
+                 meetingShowController.setMeeting(meeting);
+                 meetingShowController.setMember(member);
+                      try {
+                          meetingShowController.initializeMeeting();
+                      } catch (BusinessException ex) {
+                         Log.logException(ex);
+                      }
+                 Scene scene = new Scene(root);
+                 Stage stage = new Stage();
+                 stage.setScene(scene);
+                 stage.showAndWait();
+             } catch (IOException ex) {
+                 Log.logException(ex);
+             }    
+    }
+    
 }

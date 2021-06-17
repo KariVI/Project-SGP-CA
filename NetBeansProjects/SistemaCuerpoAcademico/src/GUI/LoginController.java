@@ -110,7 +110,8 @@ public class LoginController implements Initializable {
         boolean value = true;
         try {
             LoginCredentialDAO credentialDAO = new LoginCredentialDAO();
-            credentialRetrieved = credentialDAO.searchLoginCredential(credential);        
+            credentialRetrieved = credentialDAO.searchLoginCredential(credential);    
+            System.out.println(credentialRetrieved.getPassword());
             if(!credentialRetrieved.getPassword().equals(credential.getPassword())
                     ||!credentialRetrieved.getUser().equals(credentialRetrieved.getUser())){
                 value = false;      

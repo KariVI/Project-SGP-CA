@@ -55,7 +55,7 @@ public class LoginCredentialDAO implements ILoginCredentialDAO {
                 if(resultSet.next()){
                 String user = resultSet.getString("usuario");
                 String professionalLicense = resultSet.getString("cedula");
-                String password = resultSet.getString("(AES_DECRYPT(unhex(contrasenia),'key'))");
+                String password = resultSet.getString("(AES_DECRYPT(unhex(contrasenia),'Key'))");
                 retrievedCredential = new LoginCredential(user,password,professionalLicense);
                 }else{
                     throw new BusinessException("credential not found");
