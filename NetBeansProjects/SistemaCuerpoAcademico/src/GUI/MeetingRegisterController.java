@@ -386,10 +386,12 @@ public class MeetingRegisterController implements Initializable {
     }
     
     private boolean validateInformationField(){ 
+         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+          String date= dpDate.getValue().format(formatter);
          boolean value=true;
         Validation validation=new Validation();
         if(!(validation.validateHour(tfHour.getText()))
-        || validation.findInvalidField(tfSubject.getText())){   
+        || validation.findInvalidField(tfSubject.getText()) ||(! validation.validateDate(date))){   
             value=false;
         }  
         return value;
