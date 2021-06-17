@@ -53,6 +53,8 @@ public class MemberRegisterController implements Initializable {
             years.add(i);
      }
      cbYears.setItems(years);
+     cbRoles.getSelectionModel().selectFirst();
+     cbDegrees.getSelectionModel().selectFirst();
      cbYears.getSelectionModel().selectFirst();
 
     }    
