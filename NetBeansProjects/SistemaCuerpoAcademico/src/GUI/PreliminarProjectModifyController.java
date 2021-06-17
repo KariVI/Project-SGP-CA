@@ -329,6 +329,7 @@ public class PreliminarProjectModifyController implements Initializable {
         
         return size;
     }
+    
     private void recoverStudents() throws BusinessException{   
         GridPane gridPane= (GridPane) spStudents.getContent();
         ArrayList<Student> studentsOld = preliminarProjectRecover.getStudents();
@@ -337,7 +338,6 @@ public class PreliminarProjectModifyController implements Initializable {
             int sizeRows=3;
             int size= calculateSize(studentsOld.size());
            while (i <  size){
-               System.out.print(i);
                TextField enrollment = (TextField) getNodeFromGridPane( gridPane, 1, i);
                TextField name = (TextField) getNodeFromGridPane( gridPane, 1, (i + 1));
                 i=i+3;
