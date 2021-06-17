@@ -368,7 +368,7 @@ public class ReceptionWorkModifyController implements Initializable {
         boolean value= false;
         int i=0;
         while(i< lgacs.size() && (value==false)){   
-            if(lgacs.get(i).equals(lgacs)){ 
+            if(lgacs.get(i).equals(lgac)){ 
                 value=true;
             }
             i++;

@@ -38,9 +38,14 @@ public class LGACDAOTest {
         System.out.println("getLgacByName");
         String name = "Tecnología Computacional en la Educación ";
         LGACDAO lgacDAO = new LGACDAO();
+        boolean value= true;
         LGAC expected=new LGAC("Tecnología Computacional en la Educación ", "Tendiente  a  lograr  un  enfoque  transdisciplinar  se  analizan  y  evalúan  fenómenos  complejos  que  mediante  una  variedad  de  técnicas  educativas,  sociales,  emotivas,  cognitivas,  y  computacionales  permitan  plantear  soluciones,  prototipos,  metodologías y servicios para el avance de la ciencia y la sociedad.");
-        LGAC result = lgacDAO.getLgacByName(name);
-        assertFalse(expected.equals(result));
+        try{    
+            LGAC result = lgacDAO.getLgacByName(name);
+        }catch(BusinessException ex){   
+            value= false;
+        }
+        assertFalse(value);
        
     }
    @Test
