@@ -16,6 +16,7 @@ INSERT INTO LGAC(nombre,descripcion) VALUES ("Tecnologías de software", "Se ori
 INSERT INTO LGAC(nombre,descripcion) VALUES ("Metodología de la investigación y la estadística", " Se orienta al estudio de los procesos de aplicación de la metodología estadística, considerando los diferentes enfoques, dependiendo de la disciplina de donde proviene el problema");
 INSERT INTO LGAC(nombre,descripcion) VALUES ("Encuestas y estudios de opinión", "  Estudia el diseño de muestreos y sondeos, así como el proceso del levantamiento de encuestas, el análisis estadístico de los datos y la elaboración de reportes.");
 INSERT INTO LGAC(nombre,descripcion) VALUES("Aplicaciones de las técnicas estadísticas","Aplicación de técnicas");
+INSERT INTO LGAC(nombre,descripcion) VALUES("Gestión, modelado y desarrollo de software",  "Se orienta al estudio de los diversos métodos y enfoques para la gestión, modelado y desarrollo de software, de manera que se obtenga software de calidad. Gestión de las diversas etapas del proceso de desarrollo, incluyendo hasta la medición del proceso y artefactos. Modelado de los diversos artefactos en las distintas etapas del proceso de desarrollo.");
 
 INSERT INTO CuerpoLGAC (claveCuerpoAcademico,nombreLGAC) VALUES ("JDOEIJ804", "Tecnologías de software");
 INSERT INTO CuerpoLGAC (claveCuerpoAcademico,nombreLGAC) VALUES ("UVERCA12","Metodología de la investigación y la estadística");

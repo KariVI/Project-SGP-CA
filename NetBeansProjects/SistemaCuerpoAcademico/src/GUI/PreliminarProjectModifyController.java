@@ -104,7 +104,7 @@ public class PreliminarProjectModifyController implements Initializable {
                 gridPane.add(tfEnrollmentStudent,1,(nextRowPosition + 1));
                 gridPane.add(tfNameStudent,1, (nextRowPosition + 2));
                 nextRowPosition= nextRowPosition + sizeRows;
-              spStudents.setContent(gridPane);
+                spStudents.setContent(gridPane);
 
         }
         
@@ -318,28 +318,43 @@ public class PreliminarProjectModifyController implements Initializable {
             spStudents.setContent(gridPane);
     }
     
+    private int calculateSize(int sizeStudents){    
+        int sizeRowsGridPane=3;
+        int size=0;
+        if(nextRowPosition>0){ 
+            size=nextRowPosition;
+        }else{  
+            size= sizeStudents;
+        }
+        
+        return size;
+    }
+    
     private void recoverStudents() throws BusinessException{   
         GridPane gridPane= (GridPane) spStudents.getContent();
-        ArrayList<Student> studentsOld = preliminarProjectRecover.getStudents();
-        ArrayList<Student> students = new ArrayList<Student>();
-            int i=1;
-            int sizeRows=3;
-            int size= (studentsOld.size() * sizeRows) + nextRowPosition ;
-           while (i <  size){
-               TextField enrollment = (TextField) getNodeFromGridPane( gridPane, 1, i);
-               TextField name = (TextField) getNodeFromGridPane( gridPane, 1, (i + 1));
-                i=i+3;
-               if(validateFieldsStudent(enrollment,name)){         
-                 String enrollmentStudent= enrollment.getText();
-                 String nameStudent= name.getText(); 
-                 Student student = new Student(enrollmentStudent,nameStudent);
-                 students.add(student);
-                 saveStudent(student);
+        if(nextRowPosition>0){   
+            ArrayList<Student> studentsOld = preliminarProjectRecover.getStudents();
+            ArrayList<Student> students = new ArrayList<Student>();
+                int i=1;
+                int sizeRows=3;
+                int size= calculateSize(studentsOld.size());
+               while (i <  size){
+                   TextField enrollment = (TextField) getNodeFromGridPane( gridPane, 1, i);
+                   TextField name = (TextField) getNodeFromGridPane( gridPane, 1, (i + 1));
+                    i=i+3;
+                   if(validateFieldsStudent(enrollment,name)){         
+                     String enrollmentStudent= enrollment.getText();
+                     String nameStudent= name.getText(); 
+                     Student student = new Student(enrollmentStudent,nameStudent);
+                     students.add(student);
+                     saveStudent(student);
+                   }
                }
-           }
-           preliminarProjectNew.setStudents(students);
-           addStudentsInPreliminarProject();
+               preliminarProjectNew.setStudents(students);
+               addStudentsInPreliminarProject();
+        }
     }
+        
     
     private boolean validateFieldsStudent(TextField enrollment, TextField name){
         boolean value=true;

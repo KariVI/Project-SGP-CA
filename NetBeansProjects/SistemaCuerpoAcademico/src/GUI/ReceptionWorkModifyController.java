@@ -259,7 +259,7 @@ public class ReceptionWorkModifyController implements Initializable {
           boolean value=false;
           if(tfTitle.getText().isEmpty() 
            || taDescription.getText().isEmpty()  || dpStartDate == null 
-            || dpEndDate==null  
+            || dpEndDate==null  || cbPreliminarProject.getSelectionModel().getSelectedItem()==null
            ){
               value=true;
           }
@@ -566,14 +566,26 @@ public class ReceptionWorkModifyController implements Initializable {
         receptionWorkDAO.addedSucessfulLGACs(receptionWorkNew);
     }
     
+       private int calculateSize(int sizeStudents){    
+        int sizeRowsGridPane=3;
+        int size=0;
+        if(nextRowPosition>0){ 
+            size=nextRowPosition;
+        }else{  
+            size= sizeStudents;
+        }
+        
+        return size;
+    }
+    
     private void recoverStudents() throws BusinessException{   
         ArrayList<Student> studentsOld = receptionWorkRecover.getStudents();
-        if(studentsOld.size()>0){
+        if(nextRowPosition>0){
         GridPane gridPane= (GridPane) spStudents.getContent();
         ArrayList<Student> students = new ArrayList<Student>();       
         int i=1;
         int sizeRows=3;
-        int size= (studentsOld.size() * sizeRows) + nextRowPosition ;
+        int size= calculateSize(studentsOld.size());
          while (i <  size){
             TextField enrollment = (TextField) getNodeFromGridPane( gridPane, 1, i);
             TextField name = (TextField) getNodeFromGridPane( gridPane, 1, (i + 1));

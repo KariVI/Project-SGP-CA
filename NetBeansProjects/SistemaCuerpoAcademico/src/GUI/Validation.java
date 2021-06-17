@@ -18,7 +18,7 @@ import javafx.scene.control.DatePicker;
 public class Validation {
     public boolean findInvalidField(String field){ 
         boolean value=false;
-        Pattern pattern = Pattern.compile("[!#$%&'*+/=?^_`{|}~-]");
+        Pattern pattern = Pattern.compile("[!#$%'*+/=?^_`{|}~]");
         Matcher mather = pattern.matcher(field);
         if(mather.find()){  
             value=true;

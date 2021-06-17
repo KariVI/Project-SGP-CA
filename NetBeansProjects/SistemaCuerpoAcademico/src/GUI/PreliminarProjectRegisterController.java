@@ -139,7 +139,9 @@ public class PreliminarProjectRegisterController implements Initializable {
            if(preliminarProjectDAO.savedSucessful(preliminarProject)){  
                preliminarProject.setKey(preliminarProjectDAO.getId(preliminarProject));
                saveColaborators();
-               recoverStudents();
+                if((! tfNumberStudents.getText().isEmpty())){   
+                    recoverStudents();
+                }
                AlertMessage alertMessage = new AlertMessage();
                alertMessage.showAlertSuccesfulSave("Anteproyecto");
                
