@@ -203,6 +203,9 @@ public class GroupAcademicModifyController implements Initializable {
             if(groupAcademicDAO.updatedSucessful(groupAcademic.getKey(),groupAcademicNew)){
                 recoverlgacs();
                 alertMessage.showUpdateMessage();
+                Stage stage = (Stage) btSave.getScene().getWindow();
+                stage.close();
+                openShowWindow();
             }
         } catch (BusinessException ex) {
            if(ex.getMessage().equals("DataBase connection failed ")){

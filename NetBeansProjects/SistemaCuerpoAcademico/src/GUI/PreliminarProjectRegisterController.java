@@ -144,9 +144,9 @@ public class PreliminarProjectRegisterController implements Initializable {
                 }
                AlertMessage alertMessage = new AlertMessage();
                alertMessage.showAlertSuccesfulSave("Anteproyecto");
-               
-
-               
+               Stage stage = (Stage) btSave.getScene().getWindow();
+               stage.close();
+               openPreliminarProjectList();
            }
         } catch (BusinessException ex){ 
             if(ex.getMessage().equals("DataBase connection failed ")){

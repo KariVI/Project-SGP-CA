@@ -174,7 +174,11 @@ public class ReceptionWorkRegisterController implements Initializable {
     private void actionExit(ActionEvent actionEvent){
         Stage stage = (Stage) btExit.getScene().getWindow();
         stage.close();
-        try{ 
+       openReceptionWorkList();
+    }
+    
+    private void openReceptionWorkList(){   
+         try{ 
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/receptionWorkList.fxml").toURI().toURL();
            try{
@@ -194,7 +198,6 @@ public class ReceptionWorkRegisterController implements Initializable {
        } catch (MalformedURLException ex) {
            Log.logException(ex);
        } 
-    
     }
     
      @FXML 
@@ -292,6 +295,9 @@ public class ReceptionWorkRegisterController implements Initializable {
                     recoverLgacs();
                     AlertMessage alertMessage = new AlertMessage();
                     alertMessage.showAlertSuccesfulSave("Trabajo recepcional");
+                    Stage stage = (Stage) btSave.getScene().getWindow();
+                    stage.close();
+                    openReceptionWorkList();
                 }
            }else{    
           AlertMessage alertMessage = new AlertMessage();

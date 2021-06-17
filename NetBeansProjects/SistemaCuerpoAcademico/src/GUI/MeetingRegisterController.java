@@ -140,6 +140,11 @@ public class MeetingRegisterController implements Initializable {
     private void actionExit(ActionEvent actionEvent){   
         Stage stage = (Stage) btExit.getScene().getWindow();
         stage.close();
+        openMeetingList();
+    
+    }
+    
+    private void openMeetingList(){ 
          try{ 
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/meetingList.fxml").toURI().toURL();
@@ -159,7 +164,6 @@ public class MeetingRegisterController implements Initializable {
        } catch (MalformedURLException ex) {
            Log.logException(ex);
        } 
-    
     }
     
     private void disableButtonSave(){   
@@ -201,6 +205,9 @@ public class MeetingRegisterController implements Initializable {
                     saveAssistants( meeting);
                     AlertMessage alertMessage = new AlertMessage();
                     alertMessage.showAlertSuccesfulSave("Reunión");
+                    Stage stage = (Stage) btSave.getScene().getWindow();
+                    stage.close();
+                    openMeetingList();
                  }
             }
         } catch (BusinessException ex) {
@@ -212,7 +219,7 @@ public class MeetingRegisterController implements Initializable {
         boolean value = true;
         Member leader= (Member) cbLeader.getSelectionModel().getSelectedItem();
         Member secretary = (Member) cbSecretary.getSelectionModel().getSelectedItem();
-        if(leader.equals(secretary)){
+        if(leader.getProfessionalLicense().equals(secretary.getProfessionalLicense())){
             value = false;
         }else{  
             AlertMessage alertMessage = new AlertMessage();

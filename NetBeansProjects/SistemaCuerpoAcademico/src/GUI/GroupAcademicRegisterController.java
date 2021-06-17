@@ -118,6 +118,9 @@ public class GroupAcademicRegisterController implements Initializable  {
                 }
                 alertMessage.showAlertSuccesfulSave("Cuerpo Academico");
                 updateMember(groupAcademic.getKey());
+                Stage stage = (Stage) btSave.getScene().getWindow();
+                stage.close();
+                openLogin();
             }
         } catch (BusinessException ex) {
             if(ex.getMessage().equals("DataBase connection failed ")){

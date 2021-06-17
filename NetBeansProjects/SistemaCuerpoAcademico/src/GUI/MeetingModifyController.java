@@ -210,7 +210,10 @@ public class MeetingModifyController implements Initializable {
                 if( meetingDAO.updatedSucessful(newMeeting)){   
                    savePrerequisite(); 
                    saveAssistants();               
-                   alertMessage.showUpdateMessage();          
+                   alertMessage.showUpdateMessage();   
+                    Stage stage = (Stage) btSave.getScene().getWindow();
+                    stage.close();
+                    openWindow();
                 }
             }
             } catch (BusinessException ex) {

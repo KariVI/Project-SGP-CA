@@ -146,6 +146,9 @@ public class PreliminarProjectModifyController implements Initializable {
                recoverStudents();
                AlertMessage alertMessage = new AlertMessage();
                alertMessage.showUpdateMessage();
+               Stage stage = (Stage) btSave.getScene().getWindow();
+                stage.close();
+                openShowView();
            }
         } catch (BusinessException ex){ 
             if(ex.getMessage().equals("DataBase connection failed ")){
