@@ -55,9 +55,7 @@ public class TopicRegisterController implements Initializable {
         topics = FXCollections.observableArrayList();
         tvTopic.setItems(topics);
         members = FXCollections.observableArrayList();
-        initializeMembers();
         cbMember.setItems(members);
-        cbMember.getSelectionModel().selectFirst();
 
         tvTopic.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -81,6 +79,7 @@ public class TopicRegisterController implements Initializable {
     
     public void setMember(Member member){
         this.member = member;
+        initializeMembers();
     }
     
     @FXML
@@ -150,6 +149,7 @@ public class TopicRegisterController implements Initializable {
             for( int i = 0; i<memberList.size(); i++) {
                 members.add(memberList.get(i));
             }
+           cbMember.getSelectionModel().selectFirst();
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
