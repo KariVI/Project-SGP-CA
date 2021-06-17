@@ -56,7 +56,6 @@ public class TopicRegisterController implements Initializable {
         tvTopic.setItems(topics);
         members = FXCollections.observableArrayList();
         cbMember.setItems(members);
-
         tvTopic.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                  setSelectedTopic();

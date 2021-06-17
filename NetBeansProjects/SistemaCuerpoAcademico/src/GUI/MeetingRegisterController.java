@@ -111,7 +111,7 @@ public class MeetingRegisterController implements Initializable {
     public void setTopics(ObservableList<Topic> topics){
        this.topics = topics;
        btSave.setDisable(false);
-      // btAddTopic.setDisable(true);
+       btAddTopic.setDisable(true);
     }
     
     @FXML 
