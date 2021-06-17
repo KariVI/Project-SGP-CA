@@ -169,13 +169,14 @@ public class ReceptionWorkModifyController implements Initializable {
         PreliminarProject preliminarProject = (PreliminarProject) cbPreliminarProject.getSelectionModel().getSelectedItem();        
         String startDate;
         String endDate;
-        if((!validateFieldEmpty()) && validateInformationField() ){
+        if(((!validateFieldEmpty())) && validateInformationField() ){
             if( validateDates()){ 
                 startDate = dpStartDate.getValue().format(formatter);
                 endDate = dpEndDate.getValue().format(formatter);
                 receptionWorkNew.setKey(receptionWorkRecover.getKey());
                 receptionWorkNew.setTitle(title);
                 receptionWorkNew.setDescription(description);
+
                 receptionWorkNew.setDateStart(startDate);
                 receptionWorkNew.setDateEnd(endDate);
                 receptionWorkNew.setType(type);
@@ -202,6 +203,9 @@ public class ReceptionWorkModifyController implements Initializable {
                     recoverLgacs();
                     AlertMessage alertMessage = new AlertMessage();
                     alertMessage.showUpdateMessage();
+                    Stage stage = (Stage) btSave.getScene().getWindow();
+                    stage.close();
+                    openShowView();
                 }
                }
           }

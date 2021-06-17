@@ -123,7 +123,9 @@ public class PreliminarProjectModifyController implements Initializable {
                 int key = preliminarProjectRecover.getKey();
                 preliminarProjectNew.setKey(key);
                 preliminarProjectNew.setTitle(title);
+                System.out.println(description);
                 preliminarProjectNew.setDescription(description);
+                System.out.println(preliminarProjectNew.getDescription());
                 preliminarProjectNew.setDateStart(startDate);
                 preliminarProjectNew.setDateEnd(endDate);
                 preliminarProjectNew.setKeyGroupAcademic(preliminarProjectRecover.getKeyGroupAcademic());
