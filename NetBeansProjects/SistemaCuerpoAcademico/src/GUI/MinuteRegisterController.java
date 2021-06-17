@@ -66,7 +66,6 @@ public class MinuteRegisterController implements Initializable {
         tvAgreement.setItems(agreements);
         members = FXCollections.observableArrayList(); 
         cbMember.setItems(members);
-        cbMember.getSelectionModel().selectFirst();
         periods = FXCollections.observableArrayList();
         periods.add("Feb-Jun");
         periods.add("Ago-Ene");
@@ -133,6 +132,7 @@ public class MinuteRegisterController implements Initializable {
             for( int i = 0; i<memberList.size(); i++) {
                 members.add(memberList.get(i));
             }
+            cbMember.getSelectionModel().selectFirst();
         } catch (BusinessException ex) {
             Log.logException(ex);
         }

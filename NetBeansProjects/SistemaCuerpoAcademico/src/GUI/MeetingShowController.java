@@ -71,8 +71,6 @@ public class MeetingShowController implements Initializable {
         Stage stage = (Stage) btReturn.getScene().getWindow();
         stage.close();
         openMeetingList();
-         
-    
     }
     
     private void openMeetingList(){ 

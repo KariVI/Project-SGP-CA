@@ -130,8 +130,8 @@ references LGAC(nombre));
 CREATE TABLE IF NOT EXISTS ValidarMinuta (
   idMinuta int NOT NULL,
   cedula varchar(10) NOT NULL,
-  estado varchar(30),
-  comentario varchar(500),
+  estado varchar(30) default null,
+  comentario varchar(500) default null,
   PRIMARY KEY (IdMinuta,cedula),
   FOREIGN KEY (idMinuta) REFERENCES Minuta(idMinuta),
   FOREIGN KEY (cedula) REFERENCES Miembro(cedula)

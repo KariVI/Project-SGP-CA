@@ -18,3 +18,5 @@ NetBeansProjects/SistemaCuerpoAcademico/nbproject/private/private.xml
 *.class
 NetBeansProjects/SistemaCuerpoAcademico/bitacora.log
 *.class
+*.log
+*.class

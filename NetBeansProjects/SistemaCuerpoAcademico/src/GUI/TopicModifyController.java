@@ -64,10 +64,8 @@ public class TopicModifyController implements Initializable {
         oldTopics = FXCollections.observableArrayList();
         tvTopic.setItems(topics);
        
-        members = FXCollections.observableArrayList();
-        initializeMembers();
+        members = FXCollections.observableArrayList();       
         cbMember.setItems(members);
-        cbMember.getSelectionModel().selectFirst();
         tvTopic.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                  setSelectedTopic();
@@ -90,6 +88,7 @@ public class TopicModifyController implements Initializable {
     
     public void setMember(Member member){
         this.member = member;
+        initializeMembers();
     }
     
     public void initializeTopics(){
@@ -174,6 +173,7 @@ public class TopicModifyController implements Initializable {
             for( int i = 0; i<memberList.size(); i++) {
                 members.add(memberList.get(i));
             }
+            cbMember.getSelectionModel().selectFirst();
         } catch (BusinessException ex) {
           Log.logException(ex);
         }
@@ -209,7 +209,9 @@ public class TopicModifyController implements Initializable {
    }
    
    public void actionUpdate(){
-        String finishTime = "", startTime = "", topicName = "";
+        String finishTime = "";
+        String startTime = "";
+        String topicName = "";
         Member member = cbMember.getSelectionModel().getSelectedItem();
         finishTime = tfFinishTime.getText();
         startTime = tfFinishTime.getText();

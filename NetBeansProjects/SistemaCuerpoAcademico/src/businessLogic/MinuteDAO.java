@@ -254,7 +254,6 @@ public class MinuteDAO implements IMinuteDAO {
         }catch(ClassNotFoundException ex) {
             Log.logException(ex);
         }
-        
         return minute;
     }
 

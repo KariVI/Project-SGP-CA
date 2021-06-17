@@ -82,7 +82,20 @@ public class MinuteShowController implements Initializable {
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
+        
     }
+    
+   public void verifyApprove(){
+        if(verifyMemberApproved()||verifyMinuteStateApprove()){
+            disableRadioButtons();
+        }
+     
+        if(verifyMinuteStateApprove()){
+           disableBtShowComments();
+        }
+     
+   }    
+    
    public boolean verifyMinuteStateApprove(){
        boolean value = false;
        MinuteDAO minuteDAO = new MinuteDAO();
@@ -107,8 +120,7 @@ public class MinuteShowController implements Initializable {
             MinuteDAO minuteDAO = new MinuteDAO();
             ArrayList<MinuteComment> ListMemberDisapprove = minuteDAO.getMinutesComments(idMinute);
             ArrayList<Member> ListMemberApprove = minuteDAO.getMembersApprove(minute);
-            int i = 0;
-           
+            int i = 0;   
             while(i<ListMemberApprove.size()){
                 if(ListMemberApprove.get(i).getProfessionalLicense().equals(member.getProfessionalLicense())){
                     value = true;
@@ -116,6 +128,7 @@ public class MinuteShowController implements Initializable {
                 }
                 i++;
             }
+            
             i = 0;
            while(i<ListMemberDisapprove.size()){
                 if(ListMemberDisapprove.get(i).getProfessionalLicense().equals(member.getProfessionalLicense())){
@@ -125,20 +138,14 @@ public class MinuteShowController implements Initializable {
                 }
                 i++;
             }
+           
         } catch (BusinessException ex) {
             Log.logException(ex);
         } 
          return value;
    }
    
-   public void verifyApprove(){
-     if(verifyMemberApproved()||verifyMinuteStateApprove()){
-         disableRadioButtons();
-     }
-     if(verifyMinuteStateApprove()){
-         disableBtShowComments();
-     }
-   }
+
    
     public void disableRadioButtons(){
         rbApproveMinute.setOpacity(0);
@@ -184,40 +191,44 @@ public class MinuteShowController implements Initializable {
          } 
        }
    }
+   
    private void openMeetingShow(){ 
         try {
-                 FXMLLoader loader = new FXMLLoader(getClass().getResource("MeetingShow.fxml"));
-                 Parent root = loader.load();
-                 MeetingShowController meetingShowController = loader.getController();
-                 meetingShowController.setMeeting(meeting);
-                 meetingShowController.setMember(member);
-                      try {
-                          meetingShowController.initializeMeeting();
-                      } catch (BusinessException ex) {
-                         Log.logException(ex);
-                      }
-                 Scene scene = new Scene(root);
-                 Stage stage = new Stage();
-                 stage.setScene(scene);
-                 stage.showAndWait();
-             } catch (IOException ex) {
-                 Log.logException(ex);
-             }    
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("MeetingShow.fxml"));
+            Parent root = loader.load();
+            MeetingShowController meetingShowController = loader.getController();
+            meetingShowController.setMeeting(meeting);
+            meetingShowController.setMember(member);
+            try {
+                meetingShowController.initializeMeeting();
+            } catch (BusinessException ex) {
+                Log.logException(ex);
+            }
+            
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException ex) {
+            Log.logException(ex);
+        } 
+        
     }
+   
     public void setMember(Member member){
         this.member = member;      
     }
     
     public void verifyMember(){
- 
         if(!verifyRole()){
             disableBtShowComments();         
         }
+        
     }
     
     public boolean verifyRole(){
         MeetingDAO meetingDAO = new MeetingDAO();
-         boolean value = false;    
+        boolean value = false;    
         try {
             ArrayList<Member> listAssistants = meetingDAO.getAssistants(idMeeting);
             int i = 0;
@@ -228,6 +239,7 @@ public class MinuteShowController implements Initializable {
                 }
                 i++;
             }
+            
         } catch (BusinessException ex) {
             Log.logException(ex);
         } 
@@ -283,7 +295,7 @@ public class MinuteShowController implements Initializable {
         }
     }
 
-     @Override
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
         tcMember.setCellValueFactory(new PropertyValueFactory<Member,String>("professionalLicense"));
         tcAgreement.setCellValueFactory(new PropertyValueFactory<Agreement,String>("description"));

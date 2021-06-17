@@ -52,11 +52,7 @@ public class ProjectModifyController implements Initializable {
     @FXML private TableColumn<Member, String> tcMember;
     @FXML private TableView<Student> tvStudent;
     @FXML private TableColumn<Student, String> tcStudentName;
-     @FXML private TableColumn<Student, String> tcStudentEnrollment;
-    @FXML private Button btAddLGAC;
-    @FXML private Button btAddRecepcionalWork;
-    @FXML private Button btAddStudent;
-    @FXML private Button btAddMember;
+    @FXML private TableColumn<Student, String> tcStudentEnrollment;
     @FXML private Button btSave;
     @FXML private Button btCancel;
     @FXML private TextField tfName;

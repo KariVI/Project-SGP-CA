@@ -17,17 +17,16 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#050505" height="98.0" layoutY="-55.0" stroke="BLACK" strokeType="INSIDE" width="632.0" />
       <TableView fx:id="tvAgreement" layoutX="38.0" layoutY="84.0" prefHeight="129.0" prefWidth="508.0">
         <columns>
-          <TableColumn fx:id="tcNumber" prefWidth="51.0" text="No." />
           <TableColumn fx:id="tcAgreement" prefWidth="237.0" text="Acuerdo" />
-            <TableColumn fx:id="tcMember" prefWidth="107.0" text="Encargado" />
-            <TableColumn fx:id="tcPeriod" prefWidth="112.0" text="Periodo" />
+            <TableColumn fx:id="tcMember" prefWidth="147.0" text="Encargado" />
+            <TableColumn fx:id="tcPeriod" prefWidth="123.0" text="Periodo" />
         </columns>
       </TableView>
-      <HBox layoutX="88.0" layoutY="219.0" prefHeight="26.0" prefWidth="458.0">
+      <HBox layoutX="38.0" layoutY="219.0" prefHeight="26.0" prefWidth="508.0">
          <children>
-            <TextField fx:id="tfAgreement" prefHeight="26.0" prefWidth="264.0" />
-            <ComboBox fx:id="cbMember" prefHeight="26.0" prefWidth="134.0" />
-            <TextField fx:id="tfPeriod" prefHeight="26.0" prefWidth="125.0" />
+            <TextField fx:id="tfAgreement" prefHeight="20.0" prefWidth="241.0" />
+            <ComboBox fx:id="cbMember" prefHeight="26.0" prefWidth="148.0" />
+            <ComboBox fx:id="cbPeriod" prefHeight="26.0" prefWidth="136.0" />
          </children>
       </HBox>
       <Button fx:id="btDelete" layoutX="550.0" layoutY="219.0" mnemonicParsing="false" onAction="#delete" text="X" />

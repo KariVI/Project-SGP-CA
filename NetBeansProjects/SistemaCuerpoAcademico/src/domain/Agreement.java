@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class Agreement {
     private String period;
     private String description;
@@ -66,6 +68,29 @@ public class Agreement {
     
     public void setProfessionalLicense(String professionalLicense){
         this.professionalLicense = professionalLicense;
+    }
+    
+    @Override
+    public boolean equals(Object object){
+        boolean value = false;
+            if (object instanceof Agreement) {
+            Agreement agreementCompare = (Agreement) object;
+            if( (this.period.equals(agreementCompare.getPeriod()))&& ( this.getDescription().equals(agreementCompare.getDescription())) &&
+             ( this.professionalLicense.equals(agreementCompare.getProfessionalLicense()))) {
+                value=true;
+            }
+            
+        }
+        return value;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.period);
+        hash = 97 * hash + this.idMinute;
+        hash = 97 * hash + Objects.hashCode(this.professionalLicense);
+        return hash;
     }
 
 }

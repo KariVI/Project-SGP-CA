@@ -28,9 +28,10 @@ public class ProjectDaoTest {
     @Test
     public void testSearchId() throws BusinessException{ 
       ProjectDAO projectDAO= new ProjectDAO();
+      int idProjecExpected = 3;
       Project projectAuxiliar = new Project("Inteligencia artificial" ,"Descripcion","04/05/2021","05/11/2021","JDOEIJ804");
       int idProject = projectDAO.searchId(projectAuxiliar);
-      assertEquals("Test id Project", 1, idProject);
+      assertEquals("Test id Project", idProjecExpected, idProject);
     }
     
     @Test(expected = BusinessException.class)
@@ -45,7 +46,7 @@ public class ProjectDaoTest {
     @Test 
     public void testUpdate() throws BusinessException {
         System.out.println("update");
-        Project newProject = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
+        Project newProject = new Project(3,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
         ProjectDAO projectDAO = new ProjectDAO();
         assertTrue(projectDAO.updatedSucessful(newProject));
     }
@@ -55,25 +56,29 @@ public class ProjectDaoTest {
         ProjectDAO projectDAO = new ProjectDAO();
         ArrayList<Project> result = projectDAO.getProjects();
         ArrayList<Project> resultExpected = new ArrayList<Project>();
-         Project project = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
-         Project project1 = new Project(2," Hacia un Modelo de Campus Accesible: Facultad de Estadística e Informática" ,"Actualmente la democratización de la educación representa un reto para cualquier Institución de Educación Superior, al mismo tiempo que el término “Institución Incluyente” cobra mayor sentido como\n" +
-        "parte de esta democratización. ","04/05/2021","05/11/2021","JDOEIJ804");
-        resultExpected.add(project);
+         Project project3 = new Project(3,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
+         Project project2 = new Project(2,"Bioinformática en la Universidad Veracruzana: Proyecto FEI-IIB" ,"Nuestro país cuenta con una amplia biodiversidad distribuida por todo el territorio nacional encontrándose entre los 17 países que, por la riqueza de especies y su endemismo se reconocen como megadiversos. Particularmente el Estado de Veracruz presenta diferentes ecosistemas en los que se localizan diferentes especies entre los que se encuentran 208 especies diferentes de mamíferos (192 continentales y 16 marinas) por mencionar solo un ejemplo. Dicha biodiversidad ha permitido la subsistencia y evolución a diferentes pueblos que han habitado el territorio nacional y siguen siendo una de las bases de nuestra economía al traducirse en pesca, caza, prácticas agrícolas, así como productos de investigaciones aplicadas.","04/05/2015","05/11/2021","JDOEIJ804");
+         Project project1 = new Project(1,"Hacia un Modelo de Campus Accesible: Facultad de Estadística e Informática" ,"Actualmente la democratización de la educación representa un reto para cualquier Institución de Educación Superior, al mismo tiempo que el término “Institución Incluyente” cobra mayor sentido como\n" +
+        "parte de esta democratización.","04/05/2021","05/11/2021","JDOEIJ804");
         resultExpected.add(project1);
+        resultExpected.add(project2);
+        resultExpected.add(project3);
         assertEquals(result,resultExpected);
     }  
     
     @Test
     public void testGetProjectById() throws BusinessException{
         ProjectDAO projectDAO= new ProjectDAO();
-        Project projectExpected = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
-        Project projectActual = projectDAO.getProjectById(1);
+        int idProject = 1;
+        Project projectExpected = new Project(1,"Hacia un Modelo de Campus Accesible: Facultad de Estadística e Informática" ,"Actualmente la democratización de la educación representa un reto para cualquier Institución de Educación Superior, al mismo tiempo que el término “Institución Incluyente” cobra mayor sentido como\n" +
+        "parte de esta democratización.","04/05/2021","05/11/2021","JDOEIJ804");
+        Project projectActual = projectDAO.getProjectById(idProject);
         assertTrue(projectExpected.equals(projectActual));
     }
     
     @Test
     public void testAddStudents() throws BusinessException {
-        Project project = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
+        Project project = new Project(3,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
         Student student1 = new Student("S19014013", "Mariana Yazmin Vargas Segura");
         Student student2 = new Student("S19014023", "Karina Valdes Iglesias");
         project.setStudent(student1);
@@ -84,7 +89,7 @@ public class ProjectDaoTest {
     
     @Test
     public void testAddColaborators() throws BusinessException {
-        Project project = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
+        Project project = new Project(2,"Bioinformática en la Universidad Veracruzana: Proyecto FEI-IIB" ,"Nuestro país cuenta con una amplia biodiversidad distribuida por todo el territorio nacional encontrándose entre los 17 países que, por la riqueza de especies y su endemismo se reconocen como megadiversos. Particularmente el Estado de Veracruz presenta diferentes ecosistemas en los que se localizan diferentes especies entre los que se encuentran 208 especies diferentes de mamíferos (192 continentales y 16 marinas) por mencionar solo un ejemplo. Dicha biodiversidad ha permitido la subsistencia y evolución a diferentes pueblos que han habitado el territorio nacional y siguen siendo una de las bases de nuestra economía al traducirse en pesca, caza, prácticas agrícolas, así como productos de investigaciones aplicadas.","04/05/2015","05/11/2021","JDOEIJ804");
         Member member = new Member("4065161", "Maria de los Angeles Arenas Valdes","Colaborador","Maestria","Maestria en ciencias de la computacion","Fundacion Arturo Rosenbulth",1999,"JDOEIJ804");
         project.setMember(member);
         ProjectDAO projectDAO= new ProjectDAO();
@@ -93,7 +98,7 @@ public class ProjectDaoTest {
     
     @Test
     public void testAddLGAC() throws BusinessException {
-        Project project = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
+        Project project = new Project(2,"Bioinformática en la Universidad Veracruzana: Proyecto FEI-IIB" ,"Nuestro país cuenta con una amplia biodiversidad distribuida por todo el territorio nacional encontrándose entre los 17 países que, por la riqueza de especies y su endemismo se reconocen como megadiversos. Particularmente el Estado de Veracruz presenta diferentes ecosistemas en los que se localizan diferentes especies entre los que se encuentran 208 especies diferentes de mamíferos (192 continentales y 16 marinas) por mencionar solo un ejemplo. Dicha biodiversidad ha permitido la subsistencia y evolución a diferentes pueblos que han habitado el territorio nacional y siguen siendo una de las bases de nuestra economía al traducirse en pesca, caza, prácticas agrícolas, así como productos de investigaciones aplicadas.","04/05/2015","05/11/2021","JDOEIJ804");
         LGAC lgac = new LGAC("Tecnologías de software", "Se orienta al estudio de diversas propiedades, enfoques, métodos de modelado y herramientas que conforman cada una de las diversas tecnologías aplicables al desarrollo del software con vistas a su adaptación, mejora y sustitución en el medio nacional");
         project.setLGAC(lgac);
         ProjectDAO projectDAO= new ProjectDAO();
@@ -102,10 +107,10 @@ public class ProjectDaoTest {
     
     @Test
     public void testAddReceptionWork() throws BusinessException {
-        Project project = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
-        ReceptionWork receptionWork = new ReceptionWork("VaraAppX: Aplicación móvil para registro de datos detallados sobre varamientos de mamíferos marinos",
-        "Práctico técnico","Aplicación enfocada al registro de datos sobre varamientos mamiferos",
-        "20/12/2019","20/08/2020", "Concluido","JDOEIJ804");
+        Project project = new Project(3,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
+        ReceptionWork receptionWork = new ReceptionWork("Análisis comparativo de métodos de evaluación de arquitecturas de software guiado por ESSENCE 1.2",
+        "Práctico técnico","Resultados de la investigación y aplicación de ESSENCE 1.2 en distintas arquitecturas de software enfocadas a proyectos guiados",
+        "14/06/2020","01/02/2021", "Concluido", "JDOEIJ804");
         receptionWork.setKey(1);
         project.setReceptionWork(receptionWork);
         ProjectDAO projectDAO= new ProjectDAO();
@@ -114,11 +119,11 @@ public class ProjectDaoTest {
     
     @Test
     public void testGetReceptionWork() throws BusinessException {
-        Project project = new Project(2," Hacia un Modelo de Campus Accesible: Facultad de Estadística e Informática" ,"Actualmente la democratización de la educación representa un reto para cualquier Institución de Educación Superior, al mismo tiempo que el término “Institución Incluyente” cobra mayor sentido como\n" +
+        Project project = new Project(1," Hacia un Modelo de Campus Accesible: Facultad de Estadística e Informática" ,"Actualmente la democratización de la educación representa un reto para cualquier Institución de Educación Superior, al mismo tiempo que el término “Institución Incluyente” cobra mayor sentido como\n" +
         "parte de esta democratización. ","04/05/2021","05/11/2021","JDOEIJ804");
-        ReceptionWork receptionWork = new ReceptionWork("VaraAppX: Aplicación móvil para registro de datos detallados sobre varamientos de mamíferos marinos",
-        "Práctico técnico","Aplicación enfocada al registro de datos sobre varamientos mamiferos",
-        "20/12/2019","20/08/2020", "Concluido","JDOEIJ804");
+        ReceptionWork receptionWork = new ReceptionWork("Análisis comparativo de métodos de evaluación de arquitecturas de software guiado por ESSENCE 1.2",
+        "Práctico técnico","Resultados de la investigación y aplicación de ESSENCE 1.2 en distintas arquitecturas de software enfocadas a proyectos guiados",
+        "14/06/2020","01/02/2021", "Concluido", "JDOEIJ804");
         receptionWork.setKey(1);
         project.setReceptionWork(receptionWork);
         ProjectDAO projectDAO= new ProjectDAO();
@@ -127,7 +132,7 @@ public class ProjectDaoTest {
     
     @Test
     public void testGetLGAC() throws BusinessException {
-        Project project = new Project(2," Hacia un Modelo de Campus Accesible: Facultad de Estadística e Informática" ,"Actualmente la democratización de la educación representa un reto para cualquier Institución de Educación Superior, al mismo tiempo que el término “Institución Incluyente” cobra mayor sentido como\n" +
+        Project project = new Project(1," Hacia un Modelo de Campus Accesible: Facultad de Estadística e Informática" ,"Actualmente la democratización de la educación representa un reto para cualquier Institución de Educación Superior, al mismo tiempo que el término “Institución Incluyente” cobra mayor sentido como\n" +
         "parte de esta democratización. ","04/05/2021","05/11/2021","JDOEIJ804");
         LGAC lgac = new LGAC("Tecnologías de software", "Se orienta al estudio de diversas propiedades, enfoques, métodos de modelado y herramientas que conforman cada una de las diversas tecnologías aplicables al desarrollo del software con vistas a su adaptación, mejora y sustitución en el medio nacional");
         project.setLGAC(lgac);
@@ -136,10 +141,10 @@ public class ProjectDaoTest {
     }
     
     @Test
-        public void testGetColaborators() throws BusinessException {
-        Project project = new Project(2," Hacia un Modelo de Campus Accesible: Facultad de Estadística e Informática" ,"Actualmente la democratización de la educación representa un reto para cualquier Institución de Educación Superior, al mismo tiempo que el término “Institución Incluyente” cobra mayor sentido como\n" +
+    public void testGetColaborators() throws BusinessException {
+        Project project = new Project(1," Hacia un Modelo de Campus Accesible: Facultad de Estadística e Informática" ,"Actualmente la democratización de la educación representa un reto para cualquier Institución de Educación Superior, al mismo tiempo que el término “Institución Incluyente” cobra mayor sentido como\n" +
         "parte de esta democratización. ","04/05/2021","05/11/2021","JDOEIJ804");
-        Member member = new Member("4065161", "Maria de los Angeles Arenas Valdes","Colaborador","Maestria","Maestria en ciencias de la computacion","Fundacion Arturo Rosenbulth",1999,"1491");
+        Member member = new Member("4065161", "Maria de los Angeles Arenas Valdes","Colaborador","Maestria","Maestria en ciencias de la computacion","Fundacion Arturo Rosenbulth",1999,"JDOEIJ804");
         project.setMember(member);
         ProjectDAO projectDAO= new ProjectDAO();
         assertEquals(projectDAO.getColaborators(project).get(0), project.getMembers().get(0));
@@ -147,7 +152,7 @@ public class ProjectDaoTest {
         
     @Test
     public void testGetStudents() throws BusinessException {
-        Project project = new Project(2," Hacia un Modelo de Campus Accesible: Facultad de Estadística e Informática" ,"Actualmente la democratización de la educación representa un reto para cualquier Institución de Educación Superior, al mismo tiempo que el término “Institución Incluyente” cobra mayor sentido como\n" +
+        Project project = new Project(1," Hacia un Modelo de Campus Accesible: Facultad de Estadística e Informática" ,"Actualmente la democratización de la educación representa un reto para cualquier Institución de Educación Superior, al mismo tiempo que el término “Institución Incluyente” cobra mayor sentido como\n" +
         "parte de esta democratización. ","04/05/2021","05/11/2021","JDOEIJ804");
         Student student1 = new Student("S19014013", "Mariana Yazmin Vargas Segura");
         Student student2 = new Student("S19014023", "Karina Valdes Iglesias");
@@ -159,28 +164,28 @@ public class ProjectDaoTest {
     
     @Test
     public void testDeleteColaborators() throws BusinessException {
-        Project project = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
+        Project project = new Project(2,"Bioinformática en la Universidad Veracruzana: Proyecto FEI-IIB" ,"Nuestro país cuenta con una amplia biodiversidad distribuida por todo el territorio nacional encontrándose entre los 17 países que, por la riqueza de especies y su endemismo se reconocen como megadiversos. Particularmente el Estado de Veracruz presenta diferentes ecosistemas en los que se localizan diferentes especies entre los que se encuentran 208 especies diferentes de mamíferos (192 continentales y 16 marinas) por mencionar solo un ejemplo. Dicha biodiversidad ha permitido la subsistencia y evolución a diferentes pueblos que han habitado el territorio nacional y siguen siendo una de las bases de nuestra economía al traducirse en pesca, caza, prácticas agrícolas, así como productos de investigaciones aplicadas.","04/05/2015","05/11/2021","JDOEIJ804");
         ProjectDAO projectDAO = new ProjectDAO();
         assertTrue(projectDAO.deletedSucessfulColaborators(project));
     }
     
     @Test
     public void testDeleteLGACs() throws BusinessException {
-        Project project = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
+        Project project = new Project(2,"Bioinformática en la Universidad Veracruzana: Proyecto FEI-IIB" ,"Nuestro país cuenta con una amplia biodiversidad distribuida por todo el territorio nacional encontrándose entre los 17 países que, por la riqueza de especies y su endemismo se reconocen como megadiversos. Particularmente el Estado de Veracruz presenta diferentes ecosistemas en los que se localizan diferentes especies entre los que se encuentran 208 especies diferentes de mamíferos (192 continentales y 16 marinas) por mencionar solo un ejemplo. Dicha biodiversidad ha permitido la subsistencia y evolución a diferentes pueblos que han habitado el territorio nacional y siguen siendo una de las bases de nuestra economía al traducirse en pesca, caza, prácticas agrícolas, así como productos de investigaciones aplicadas.","04/05/2015","05/11/2021","JDOEIJ804");
         ProjectDAO projectDAO = new ProjectDAO();
         assertTrue(projectDAO.deletedSucessfulLGACS(project));
     }
     
     @Test
     public void testDeleteStudents() throws BusinessException {
-        Project project = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
+        Project project = new Project(3,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
         ProjectDAO projectDAO = new ProjectDAO();
         assertTrue(projectDAO.deletedSucessfulStudents(project));
     }
     
     @Test
     public void testDeleteRecepetionWorks() throws BusinessException {
-        Project project = new Project(1,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
+        Project project = new Project(3,"Inteligencia artificial" ,"El proyecto es sobre...","04/05/2021","05/11/2021","JDOEIJ804");
         ProjectDAO projectDAO = new ProjectDAO();
         assertTrue(projectDAO.deletedSucessfulReceptionWorks(project));
     }

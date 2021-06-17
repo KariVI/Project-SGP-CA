@@ -3,7 +3,6 @@ package GUI;
 import businessLogic.MemberDAO;
 import businessLogic.MinuteDAO;
 import businessLogic.AgreementDAO;
-import businessLogic.MeetingDAO;
 import domain.Agreement;
 import domain.Meeting;
 import domain.Member;
@@ -14,8 +13,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -49,7 +46,6 @@ public class MinuteModifyController implements Initializable {
     @FXML TableColumn <Member,String>tcMember;
     @FXML TableColumn <Agreement,String> tcAgreement;
     @FXML TableColumn <Agreement,String>tcPeriod;
-    @FXML TableColumn tcNumber;
     @FXML TextArea taDue;
     @FXML TextArea taNote;
     @FXML TableView<Agreement> tvAgreement;
@@ -106,7 +102,6 @@ public class MinuteModifyController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         tcAgreement.setCellValueFactory(new PropertyValueFactory("description"));
         tcPeriod.setCellValueFactory(new PropertyValueFactory("period"));
-        tcNumber.setCellValueFactory(new PropertyValueFactory("finishTime"));
         tcMember.setCellValueFactory(new PropertyValueFactory("professionalLicense"));
         agreements = FXCollections.observableArrayList();
         agreementsOld = FXCollections.observableArrayList();
@@ -250,7 +245,6 @@ public class MinuteModifyController implements Initializable {
     
            for(int i = 0; i < agreements.size(); i++){ 
                   agreements.get(i).setIdMinute(idMinute);
-                  System.out.println(idMinute);
                   agreementDAO.savedSucessfulAgreement(agreements.get(i));
               
            }

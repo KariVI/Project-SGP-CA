@@ -50,7 +50,6 @@ public class MemberModifyController implements Initializable {
      roles = FXCollections.observableArrayList();
      roles.add("Integrante");
      roles.add("Colaborador");
-     roles.add("Responsable");
      cbRoles.setItems(roles);
      degrees = FXCollections.observableArrayList();
      degrees.add("Maestria");

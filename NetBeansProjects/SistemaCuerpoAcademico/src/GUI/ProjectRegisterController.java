@@ -33,7 +33,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import log.BusinessException;
 import log.Log;
@@ -52,7 +51,7 @@ public class ProjectRegisterController implements Initializable {
     @FXML private TableColumn<Member, String> tcMember;
     @FXML private TableView<Student> tvStudent;
     @FXML private TableColumn<Student, String> tcStudentName;
-     @FXML private TableColumn<Student, String> tcStudentEnrollment;
+    @FXML private TableColumn<Student, String> tcStudentEnrollment;
     @FXML private Button btAddLGAC;
     @FXML private Button btAddRecepcionalWork;
     @FXML private Button btAddStudent;
@@ -127,7 +126,6 @@ public class ProjectRegisterController implements Initializable {
     
    @FXML 
    public void actionSave(){
-       
        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
        String title = "";
        String description = "";
@@ -593,8 +591,7 @@ public class ProjectRegisterController implements Initializable {
                 Log.logException(ex);
             }
     }
-    
-    
+       
 }
 
 

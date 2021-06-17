@@ -126,8 +126,7 @@ public class Project {
             if (object instanceof Project) {
             Project projectCompare = (Project) object;
             if( (this.idProject == projectCompare.getIdProject())&& ( this.title.equals(projectCompare.getTitle())) &&
-             ( this.startDate.equals(projectCompare.getStartDate()) )  && (this.finishDate.equals(projectCompare.getFinishDate()) )&&
-             (this.description.equals(projectCompare.getDescription()) ) ) {
+             ( this.startDate.equals(projectCompare.getStartDate()) )  && (this.finishDate.equals(projectCompare.getFinishDate()) )){
                 value=true;
             }
 

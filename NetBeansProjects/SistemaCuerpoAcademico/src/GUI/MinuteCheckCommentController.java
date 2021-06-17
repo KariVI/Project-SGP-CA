@@ -66,7 +66,6 @@ public class MinuteCheckCommentController implements Initializable {
             gridPane.setVgap(7);      
             for(int i = 0; i < memberListApprove.size(); i++){
                 Label lbMember = new Label(memberListApprove.get(i).getName());
-                System.out.println("a"+memberListApprove.get(i).getName());
                 gridPane.add(lbMember, 1, i);
             } 
             
@@ -89,7 +88,6 @@ public class MinuteCheckCommentController implements Initializable {
                 MemberDAO memberDAO = new MemberDAO();
                 Member member = memberDAO.getMemberByLicense(memberListDisapprove.get(i).getProfessionalLicense());
                 Label lbMember = new Label(member.getName());
-                System.out.println(member.getName());
                 gridPane.add(lbMember, 1, i);
             }
             

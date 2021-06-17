@@ -1,13 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Failed suite [SistemaCuerpoAcademico]">
-  <test name="businessLogic.LoginCredentialDAOTest(failed)" junit="true">
+  <test name="businessLogic.GroupAcademicDAOTest(failed)" junit="true">
     <classes>
-      <class name="businessLogic.LoginCredentialDAOTest">
+      <class name="businessLogic.GroupAcademicDAOTest">
         <methods>
-          <include name="testSearchLoginCredential"/>
+          <include name="testAddLGAC"/>
         </methods>
-      </class> <!-- businessLogic.LoginCredentialDAOTest -->
+      </class> <!-- businessLogic.GroupAcademicDAOTest -->
     </classes>
-  </test> <!-- businessLogic.LoginCredentialDAOTest(failed) -->
+  </test> <!-- businessLogic.GroupAcademicDAOTest(failed) -->
+  <test name="businessLogic.MeetingDAOTest(failed)" junit="true">
+    <classes>
+      <class name="businessLogic.MeetingDAOTest">
+        <methods>
+          <include name="testGetAssistants"/>
+        </methods>
+      </class> <!-- businessLogic.MeetingDAOTest -->
+    </classes>
+  </test> <!-- businessLogic.MeetingDAOTest(failed) -->
+  <test name="businessLogic.PrerequisiteDAOTest(failed)" junit="true">
+    <classes>
+      <class name="businessLogic.PrerequisiteDAOTest">
+        <methods>
+          <include name="testsearchId"/>
+        </methods>
+      </class> <!-- businessLogic.PrerequisiteDAOTest -->
+    </classes>
+  </test> <!-- businessLogic.PrerequisiteDAOTest(failed) -->
 </suite> <!-- Failed suite [SistemaCuerpoAcademico] -->

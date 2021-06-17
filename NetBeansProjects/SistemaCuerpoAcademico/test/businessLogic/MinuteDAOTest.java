@@ -1,29 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package businessLogic;
 
 import domain.Member;
 import domain.Minute;
 import domain.MinuteComment;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import log.BusinessException;
-/**
- *
- * @author Mariana
- */
+
 public class MinuteDAOTest {
 
     @Test
     public void testSaveMinute() throws BusinessException {
         System.out.println("saveMinute");
-        Minute minute = new Minute("Los acuerdos registrados son pendiente","Estado","Falta gastrocafe",1);
+        Minute minute = new Minute("Los acuerdos registrados son pendientes","Registrada","Revisar el punto 1.3",3);
         MinuteDAO minuteDAO = new MinuteDAO();
         assertTrue(minuteDAO.savedSucessfulMinute(minute)); 
     }
@@ -32,14 +22,9 @@ public class MinuteDAOTest {
     public void testApproveMinute() throws BusinessException {
         System.out.println("approveMinute");
         int idMinute = 1;
-        String professionalLicense = "4065161";
+        String professionalLicense = "8325134";
         MinuteDAO minuteDAO = new MinuteDAO();
-        try{
-            minuteDAO.approveMinute(idMinute, professionalLicense);
-        }
-        catch (IllegalStateException ex) {
-            Logger.getLogger(ProjectDaoTest.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+        minuteDAO.approveMinute(idMinute, professionalLicense);
     }
 
 
@@ -47,16 +32,10 @@ public class MinuteDAOTest {
     public void testDisapproveMinute() throws BusinessException{
         System.out.println("disapproveMinute");
         int idMinute = 1;
-        String professionalLicense = "8325134";
-        String comments = "No se encuentran algunos acuerdos;";
-        MinuteComment minuteComment = new MinuteComment("No se encuentran algunos acuerdos;",professionalLicense,idMinute);
+        String professionalLicense = "7938268";
+        MinuteComment minuteComment = new MinuteComment("No se encuentran algunos acuerdos.",professionalLicense,idMinute);
         MinuteDAO minuteDAO = new MinuteDAO();
-        try{
-            minuteDAO.disapproveMinute(minuteComment);
-        }
-        catch (IllegalStateException ex) {
-            Logger.getLogger(ProjectDaoTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        minuteDAO.disapproveMinute(minuteComment);
     }
     
     @Test
@@ -65,21 +44,23 @@ public class MinuteDAOTest {
         MinuteDAO instanceMinute = new MinuteDAO();
         ArrayList<Minute> result = instanceMinute.getMinutes();
         ArrayList<Minute> resultExpected = new ArrayList<Minute>();
-        int idMinute = 1;
-        int idMeeting = 1;
-        Minute minute = new Minute(idMinute,"Los acuerdos registrados son pendiente","Completado","Falta gastrocafe",idMeeting);
-        resultExpected.add(minute);
+        Minute minute1 = new Minute(3,"Los acuerdos registrados son pendientes","Registrada","Revisar el punto 1.3",3);
+        Minute minute2 = new Minute(2,"La segunda version de FEIBook estará disponible hasta el 11 de septiembre","Registrada","Sin pendientes",4);
+        Minute minute3 = new Minute(1,"El seminario se realizara el dia 13 de agosto del 2022","Registrada","Asignar horario a ponentes",2);
+        resultExpected.add(minute3);
+        resultExpected.add(minute2);
+        resultExpected.add(minute1);
         assertEquals(result,resultExpected);
     }  
     
     @Test
-    public void testGetMinutesComments() throws BusinessException {
+    public void testGetMinuteComments() throws BusinessException {
         System.out.println("getMinutesComments");
         MinuteDAO instance = new MinuteDAO();
-        int idMinute = 1;
+        int idMinute = 2;
         ArrayList<MinuteComment> result = instance.getMinutesComments(idMinute);
         ArrayList<MinuteComment> resultExpected = new ArrayList<MinuteComment>();
-        MinuteComment minuteComment = new MinuteComment("No se encuentran algunos acuerdos;","Pendiente","8325134",idMinute);
+        MinuteComment minuteComment = new MinuteComment("Falto el pendiente de agendar la siguiente reunión","Pendiente","8325134",idMinute); 
         resultExpected.add(minuteComment);
         assertEquals(result,resultExpected);
     }
@@ -87,18 +68,18 @@ public class MinuteDAOTest {
     @Test 
     public void testUpdate() throws BusinessException {
         System.out.println("update");
-        Minute newMinute = new Minute(1,"Los acuerdos registrados son pendiente","Completado","Falta gastrocafe",1);
+        Minute minute = new Minute(1,"El seminario se realizara el dia 13 de agosto del 2022","Registrada","Asignar horario a ponentes",2);
         MinuteDAO minuteDAO = new MinuteDAO();
-        assertTrue(minuteDAO.updatedSucessful(newMinute));
+        assertTrue(minuteDAO.updatedSucessful(minute));
     }
     
     @Test
     public void testGetMembersApprove() throws BusinessException {
         System.out.println("approveMinute");
-         Minute minute = new Minute(1,"Los acuerdos registrados son pendiente","Estado","Falta gastrocafe",1);
-         ArrayList<Member> memberList = new ArrayList<Member>();
-         Member member = new Member("4065161", "Maria de los Angeles Arenas Valdes","Colaborador","Maestria","Maestria en ciencias de la computacion","Fundacion Arturo Rosenbulth",1999,"1491");
-         memberList.add(member);
+        Minute minute = new Minute(2,"La segunda version de FEIBook estará disponible hasta el 11 de septiembre","Registrada","Sin pendientes",4);
+        ArrayList<Member> memberList = new ArrayList<Member>();
+        Member member =  new Member("7938268", "Maria Karen Cortes Verdin", "Responsable", "Doctorado", "Ciencias de la Computación", "Centro de Investigación en Matemáticas A.C", 2005, "Activo","JDOEIJ804");
+        memberList.add(member);
         MinuteDAO minuteDAO = new MinuteDAO();
         assertEquals(minuteDAO.getMembersApprove(minute),memberList);
     }
@@ -106,8 +87,8 @@ public class MinuteDAOTest {
     @Test
     public void getIdMinute() throws BusinessException {
         System.out.println("get id minute");
-        Minute minute = new Minute("Los acuerdos registrados son pendiente","Completado","Falta gastrocafe",1);
-        int idMinuteExpected = 1;
+        Minute minute = new Minute("Los acuerdos registrados son pendientes","Registrada","Revisar el punto 1.3",3);
+        int idMinuteExpected = 3;
         MinuteDAO minuteDAO = new MinuteDAO();
         int idMinuteResut = minuteDAO.getIdMinute(minute);
         assertEquals(idMinuteResut,idMinuteExpected);   
@@ -116,8 +97,7 @@ public class MinuteDAOTest {
     
     @Test (expected = BusinessException.class)
     public void getIdMinuteNotFound() throws BusinessException {
-        System.out.println("get id minute");
-        Minute minute = new Minute("Los acuerdos registrados son pendiente","Estado","Falta gastrocafe",1);
+        Minute minute = new Minute(2,"Los acuerdos registrados son pendientes","Registrada","Revisar el punto 1.3",3);
         int idMinuteExpected = 1;
         MinuteDAO minuteDAO = new MinuteDAO();
         int idMinuteResut = minuteDAO.getIdMinute(minute);
@@ -125,9 +105,26 @@ public class MinuteDAOTest {
     }
     
     @Test
+    public void testDeleteComments() throws BusinessException{
+        int idMinute = 1;
+        MinuteDAO minuteDAO = new MinuteDAO();
+        assertTrue(minuteDAO.deletedSucessfulMinutesComments(idMinute));   
+    }
+    
+    @Test
     public void testDeleteComment() throws BusinessException{
-        MinuteComment minuteComment = new MinuteComment("8325134",1);
+        int idMinute = 1;
+        String professionalLicense = "7938268";
+        MinuteComment minuteComment = new MinuteComment("No se encuentran algunos acuerdos.",professionalLicense,idMinute);
         MinuteDAO minuteDAO = new MinuteDAO();
         assertTrue(minuteDAO.deletedSucessfulMinuteComment(minuteComment));   
+    }
+    
+    @Test
+    public void testGetMinute() throws BusinessException{
+        Minute minuteExpected = new Minute(2,"La segunda version de FEIBook estará disponible hasta el 11 de septiembre","Registrada","Sin pendientes",4);
+        int idMeeting = 4;
+        MinuteDAO minuteDAO = new MinuteDAO();
+        assertEquals(minuteDAO.getMinute(idMeeting),minuteExpected);
     }
 }

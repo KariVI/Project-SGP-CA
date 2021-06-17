@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import businessLogic.TopicDAO;
@@ -25,7 +20,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import log.BusinessException;
@@ -33,9 +27,6 @@ import log.Log;
 
 public class TopicShowController implements Initializable {
     private ObservableList<Topic> topics;
-    TextField tfTopic;
-    TextField tfStartTime;
-    TextField tfFinishTime;
     @FXML TableColumn<Topic,String>  tcFinishTime;
     @FXML TableColumn<Topic,String>  tcStartTime;
     @FXML TableColumn<Topic,String> tcMember;
@@ -45,6 +36,7 @@ public class TopicShowController implements Initializable {
     @FXML Button btAdd;
     @FXML Button btUpdate;
     @FXML Button btReturn; 
+    
     private Meeting meeting;
     private Member member;
 
@@ -56,9 +48,9 @@ public class TopicShowController implements Initializable {
         tcFinishTime.setCellValueFactory(new PropertyValueFactory<Topic,String>("finishTime"));
         tcMember.setCellValueFactory(new PropertyValueFactory<Topic,String>("professionalLicense"));
         topics = FXCollections.observableArrayList();      
-        tvTopic.setItems(topics);
-        
+        tvTopic.setItems(topics);        
     }  
+    
     public void setMeeting(Meeting meeting){
         this.meeting = meeting;
         initializeTopics();
@@ -68,15 +60,15 @@ public class TopicShowController implements Initializable {
         this.member = member;
     }
     
-    public void initializeTopics(){
+    private void initializeTopics(){
         TopicDAO topicDAO = new TopicDAO();
         try {
             ArrayList<Topic> topicList = new ArrayList<Topic>();
             topicList = topicDAO.getAgendaTopics(meeting.getKey());
             for(int i = 0; i < topicList.size(); i++){
-                topics.add(topicList.get(i));
-   
+                topics.add(topicList.get(i));   
             }
+            
         } catch (BusinessException ex) {
             Log.logException(ex);
         }       
@@ -107,8 +99,9 @@ public class TopicShowController implements Initializable {
                 Log.logException(ex);
             }
     }
-     
-    public void actionUpdate(){
+    
+    @FXML
+    private void actionUpdate(){
           try {
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/topicModify.fxml").toURI().toURL();
@@ -128,4 +121,5 @@ public class TopicShowController implements Initializable {
             Log.logException(ex);
         }
     }
+    
 }

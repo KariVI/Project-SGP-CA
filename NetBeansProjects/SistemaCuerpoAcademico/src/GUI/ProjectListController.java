@@ -42,9 +42,9 @@ public class ProjectListController implements Initializable {
           public void changed(ObservableValue<? extends Project> observaleValue, Project oldValue, Project newValue) {
              Project selectedProject = lvProjects.getSelectionModel().getSelectedItem();
             try {
-            Stage primaryStage= new Stage();
-            URL url = new File("src/GUI/ProjectShow.fxml").toURI().toURL();
-            FXMLLoader loader = new FXMLLoader(url);
+              Stage primaryStage= new Stage();
+              URL url = new File("src/GUI/ProjectShow.fxml").toURI().toURL();
+              FXMLLoader loader = new FXMLLoader(url);
               loader.setLocation(url);
               loader.load();
               ProjectShowController projectShowController =loader.getController(); 
@@ -56,9 +56,10 @@ public class ProjectListController implements Initializable {
               Stage stage = (Stage) lvProjects.getScene().getWindow();
               stage.close();
               primaryStage.show();
-        } catch (IOException ex) {
-            Log.logException(ex);
-        }
+            } catch (IOException ex) {
+              Log.logException(ex);
+            }
+            
           }
       });
     }
@@ -76,11 +77,14 @@ public class ProjectListController implements Initializable {
             for( int i = 0; i<projectList.size(); i++) {
                 if(projectList.get(i).getGroupAcademicKey().equals(member.getKeyGroupAcademic())){
                     projects.add(projectList.get(i));
-                }         
+                } 
+                
             }
+            
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
+       
     }
     
 
@@ -95,6 +99,7 @@ public class ProjectListController implements Initializable {
             } catch (IOException ex) {
                 Log.logException(ex);
             }
+            
             ProjectRegisterController  projectRegisterController = loader.getController();
             projectRegisterController.setMember(member);
             Parent root = loader.getRoot();
@@ -107,14 +112,14 @@ public class ProjectListController implements Initializable {
         } catch (MalformedURLException ex) {
             Log.logException(ex);
         }
+        
     }
     
     @FXML
     private void actionReturn(ActionEvent actionEvent){   
         Stage stage = (Stage) btReturn.getScene().getWindow();
         stage.close();
-        openViewMenu();
-        
+        openViewMenu();   
     }
     
     private void openViewMenu(){   

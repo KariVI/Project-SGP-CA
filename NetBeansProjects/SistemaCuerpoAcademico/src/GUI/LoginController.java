@@ -111,7 +111,6 @@ public class LoginController implements Initializable {
         try {
             LoginCredentialDAO credentialDAO = new LoginCredentialDAO();
             credentialRetrieved = credentialDAO.searchLoginCredential(credential);    
-            System.out.println(credentialRetrieved.getPassword());
             if(!credentialRetrieved.getPassword().equals(credential.getPassword())
                     ||!credentialRetrieved.getUser().equals(credentialRetrieved.getUser())){
                 value = false;      

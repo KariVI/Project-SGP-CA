@@ -51,23 +51,9 @@ public class MemberViewController implements Initializable {
     
     @FXML
     public void actionReturn(){
-        try {
-            Stage primaryStage= new Stage();
-            URL url = new File("src/GUI/memberList.fxml").toURI().toURL();
-            FXMLLoader loader = new FXMLLoader(url);
-            loader.setLocation(url);
-            loader.load();
-            MemberListController memberListController =loader.getController();
-            Parent root = loader.getRoot();
-            Scene scene = new Scene(root);
-            primaryStage.setScene(scene);
-            Stage stage = (Stage) btReturn.getScene().getWindow();
-            stage.close();
-            primaryStage.show();
-            openListMember();
-        } catch (IOException ex) {
-            Log.logException(ex);
-        }
+        Stage stage = (Stage) btReturn.getScene().getWindow();
+        stage.close();
+        openListMember();
     }
  
     public void actionUpdate(){

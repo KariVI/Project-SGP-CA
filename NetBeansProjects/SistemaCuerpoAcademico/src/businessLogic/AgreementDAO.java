@@ -38,39 +38,6 @@ public class AgreementDAO implements IAgreement{
         
         return saveSuccess;
     }
-
-    @Override
-    public ArrayList<Agreement> getAgreements() throws BusinessException {
-        ArrayList<Agreement> agreementList = new ArrayList<>();
-        try{
-            Connector connectorDataBase = new Connector();
-            Connection connectionDataBase = connectorDataBase.getConnection();
-            try{
-                PreparedStatement preparedStatement;
-                preparedStatement = connectionDataBase.prepareStatement("SELECT * FROM Acuerdo");
-                ResultSet agreementResultSet;
-                agreementResultSet = preparedStatement.executeQuery();
-                while(agreementResultSet.next()){
-                    int idAcuerdo = agreementResultSet.getInt("idAcuerdo");
-                    String period = agreementResultSet.getString("periodo");
-                    String description = agreementResultSet.getString("descripcion");
-                    int idMinute = agreementResultSet.getInt("idMinuta");
-                    String professionalLicense = agreementResultSet.getString("cedula");
-                    Agreement agreementData = new Agreement( period, description,idAcuerdo,idMinute, professionalLicense);
-                    agreementList.add(agreementData);
-                }
-                              
-                connectorDataBase.disconnect();
-            }catch(SQLException sqlException) {
-                throw new BusinessException("Parameter index ", sqlException);
-            }
-            
-        }catch(ClassNotFoundException ex) {
-            Log.logException(ex);
-        }
-        
-        return agreementList;  
-    }
     
     @Override
     public ArrayList<Agreement> getAgreementsMinute(int idMinute) throws BusinessException {

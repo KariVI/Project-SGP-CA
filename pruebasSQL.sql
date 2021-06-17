@@ -1,7 +1,5 @@
 use cuerpoAcademico;
 
-
-
 INSERT INTO Miembro(cedula, nombre, rol, grado, nombreGrado, universidad, anio, estado) VALUES("7953781","José Rafael Rojano Cáceres","Responsable","Doctorado", "Doctorado en Ciencias Computacionales", "UNAM", "2001", "Activo");
 
 INSERT INTO CuerpoAcademico(clave,nombre, objetivo, mision , vision , gradoConsolidacion) VALUES("JDOEIJ804", "Ingenieria y Tecnologias de Software", "Desarrollar métodos, técnicas y herramientas para el desarrollo de software con un enfoque sistemático, disciplinado y cuantificable y apegado a estándares de calidad"
@@ -81,12 +79,32 @@ INSERT INTO Credenciales(cedula,usuario,contrasenia) VALUES("7953781","JoseRoj",
 INSERT INTO Reunion(asunto,hora, fecha, estado,clave_CA) VALUES ("Revisión de avances en proyectos actuales" ,"11:30","04/08/2021","Registrada", "JDOEIJ804");
 INSERT INTO Reunion(asunto,hora, fecha, estado,clave_CA) VALUES( "Organizar agenda de actividades del seminario" ,"15:30","15/09/2021","Concluida","JDOEIJ804");
 INSERT INTO Reunion(asunto,hora, fecha, estado,clave_CA) VALUES("Actualizar plan de trabajo de la LIS","13:00","11/08/2021", "Concluida","JDOEIJ804");
-INSERT INTO Reunion(asunto,hora, fecha, estado,clave_CA) VALUES("Lanzamiento FEIBook" ,"12:30","11/11/2021","Registrada","JDOEIJ804");
+INSERT INTO Reunion(asunto,hora, fecha, estado,clave_CA) VALUES("Lanzamiento FEIBook" ,"12:30","11/11/2021","Concluida","JDOEIJ804");
+
+INSERT INTO Tema(tema,horaInicio,idReunion,horaFin,cedula) VALUES("Agenda","11:00",2,"14:00","8325134");
+
+INSERT INTO Minuta(nota, estado, pendiente, idReunion) VALUES ("El seminario se realizara el dia 13 de agosto del 2022","Registrada","Asignar horario a ponentes",2);
+INSERT INTO Minuta(nota, estado, pendiente, idReunion) VALUES ("La segunda version de FEIBook estará disponible hasta el 11 de septiembre","Registrada","Sin pendientes",4);
+
+INSERT INTO Acuerdo(periodo, descripcion,idMinuta,cedula) values ("Ene-Jul", "Seminario con tematica de IA", 1,"7938268");
 
 INSERT INTO ParticipaReunion(idReunion, cedula, rol) VALUES (2,"8325134","Secretario");
+INSERT INTO ParticipaReunion(idReunion, cedula, rol) VALUES (2,"7938268","Asistente");
+INSERT INTO ParticipaReunion(idReunion, cedula, rol) VALUES (4,"8325134","Asistente");
 INSERT INTO ParticipaReunion(idReunion,cedula,rol) VALUES(4,"7938268","Lider");
+
+INSERT INTO ValidarMinuta(idMinuta, cedula, estado, comentario) VALUES (2,8325134,"Pendiente","Falto el pendiente de agendar la siguiente reunión");
+INSERT INTO ValidarMinuta(idMinuta, cedula) VALUES (2,7938268);
 
 INSERT INTO Prerequisito(idReunion, descripcion, cedula) values (1, "Verificar situacion de FEIBook", "8325134");
 INSERT INTO Prerequisito(idReunion, descripcion, cedula) values (1, "Evaluar el plan de trabajo", "8325134");
 INSERT INTO Prerequisito(idReunion, descripcion, cedula) values (1, "Evaluar el GastroCafe", "7938268");
 INSERT INTO Prerequisito(idReunion, descripcion, cedula) values (2, "Plan de mitigacion de riesgos", "7938268");
+
+INSERT INTO Proyecto(titulo,descripcion,fechaInicio,fechaFin,clave) VALUES("Hacia un Modelo de Campus Accesible: Facultad de Estadística e Informática" ,"Actualmente la democratización de la educación representa un reto para cualquier Institución de Educación Superior, al mismo tiempo que el término “Institución Incluyente” cobra mayor sentido como\n parte de esta democratización.","04/05/2021","05/11/2021","JDOEIJ804");
+INSERT INTO Proyecto(titulo,descripcion,fechaInicio,fechaFin,clave) VALUES("Bioinformática en la Universidad Veracruzana: Proyecto FEI-IIB" ,"Nuestro país cuenta con una amplia biodiversidad distribuida por todo el territorio nacional encontrándose entre los 17 países que, por la riqueza de especies y su endemismo se reconocen como megadiversos. Particularmente el Estado de Veracruz presenta diferentes ecosistemas en los que se localizan diferentes especies entre los que se encuentran 208 especies diferentes de mamíferos (192 continentales y 16 marinas) por mencionar solo un ejemplo. Dicha biodiversidad ha permitido la subsistencia y evolución a diferentes pueblos que han habitado el territorio nacional y siguen siendo una de las bases de nuestra economía al traducirse en pesca, caza, prácticas agrícolas, así como productos de investigaciones aplicadas.","04/05/2015","05/11/2021","JDOEIJ804");
+INSERT INTO ProyectoTrabajoRecepcional(idProyecto,idTrabajoRecepcional) VALUES(1,1);
+INSERT INTO CultivaProyecto(idProyecto,nombreLGAC) VALUES(1,"Tecnologías de software");
+INSERT INTO DesarrollaProyecto(idProyecto,Cedula) VALUES(1,"4065161");
+INSERT INTO ParticipaProyecto(idProyecto,Matricula) VALUES(1,"S19014013");
+INSERT INTO ParticipaProyecto(idProyecto,Matricula) VALUES(1,"S19014023");

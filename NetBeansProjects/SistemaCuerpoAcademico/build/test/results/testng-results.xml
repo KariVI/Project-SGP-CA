@@ -1,17 +1,626 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" total="1" passed="1">
+<testng-results skipped="0" failed="3" total="105" passed="102">
   <reporter-output>
   </reporter-output>
-  <suite name="SistemaCuerpoAcademico" duration-ms="1436" started-at="2021-06-17T03:01:03Z" finished-at="2021-06-17T03:01:04Z">
+  <suite name="SistemaCuerpoAcademico" duration-ms="10039" started-at="2021-06-17T09:02:31Z" finished-at="2021-06-17T09:02:41Z">
     <groups>
     </groups>
-    <test name="businessLogic.LoginCredentialDAOTest" duration-ms="1436" started-at="2021-06-17T03:01:03Z" finished-at="2021-06-17T03:01:04Z">
+    <test name="businessLogic.AgreementDAOTest" duration-ms="3065" started-at="2021-06-17T09:02:31Z" finished-at="2021-06-17T09:02:34Z">
+      <class name="businessLogic.AgreementDAOTest">
+        <test-method status="PASS" signature="testSaveAgreement()[pri:0, instance:testSaveAgreement(businessLogic.AgreementDAOTest)]" name="testSaveAgreement" duration-ms="2285" started-at="2021-06-17T04:02:31Z" finished-at="2021-06-17T04:02:33Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSaveAgreement -->
+        <test-method status="PASS" signature="testDelete()[pri:0, instance:testDelete(businessLogic.AgreementDAOTest)]" name="testDelete" duration-ms="154" started-at="2021-06-17T04:02:33Z" finished-at="2021-06-17T04:02:33Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDelete -->
+        <test-method status="PASS" signature="testUpdate()[pri:0, instance:testUpdate(businessLogic.AgreementDAOTest)]" name="testUpdate" duration-ms="99" started-at="2021-06-17T04:02:33Z" finished-at="2021-06-17T04:02:34Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testUpdate -->
+        <test-method status="PASS" signature="testGetAgreementsMinute()[pri:0, instance:testGetAgreementsMinute(businessLogic.AgreementDAOTest)]" name="testGetAgreementsMinute" duration-ms="111" started-at="2021-06-17T04:02:34Z" finished-at="2021-06-17T04:02:34Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetAgreementsMinute -->
+      </class> <!-- businessLogic.AgreementDAOTest -->
+    </test> <!-- businessLogic.AgreementDAOTest -->
+    <test name="businessLogic.GroupAcademicDAOTest" duration-ms="1070" started-at="2021-06-17T09:02:34Z" finished-at="2021-06-17T09:02:35Z">
+      <class name="businessLogic.GroupAcademicDAOTest">
+        <test-method status="PASS" signature="testDeletedLGCASucessful()[pri:0, instance:testDeletedLGCASucessful(businessLogic.GroupAcademicDAOTest)]" name="testDeletedLGCASucessful" duration-ms="144" started-at="2021-06-17T04:02:34Z" finished-at="2021-06-17T04:02:34Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDeletedLGCASucessful -->
+        <test-method status="PASS" signature="testGetlgacs()[pri:0, instance:testGetlgacs(businessLogic.GroupAcademicDAOTest)]" name="testGetlgacs" duration-ms="224" started-at="2021-06-17T04:02:34Z" finished-at="2021-06-17T04:02:34Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetlgacs -->
+        <test-method status="FAIL" signature="testAddLGAC()[pri:0, instance:testAddLGAC(businessLogic.GroupAcademicDAOTest)]" name="testAddLGAC" duration-ms="294" started-at="2021-06-17T04:02:34Z" finished-at="2021-06-17T04:02:35Z">
+          <exception class="log.BusinessException">
+            <message>
+              <![CDATA[DataBase connection failed ]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[log.BusinessException: DataBase connection failed 
+	at businessLogic.GroupAcademicDAO.addedLGACSucessful(GroupAcademicDAO.java:97)
+	at businessLogic.GroupAcademicDAOTest.testAddLGAC(GroupAcademicDAOTest.java:62)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.testng.junit.JUnit4TestRunner.start(JUnit4TestRunner.java:81)
+	at org.testng.junit.JUnit4TestRunner.run(JUnit4TestRunner.java:69)
+	at org.testng.TestRunner$1.run(TestRunner.java:682)
+	at org.testng.TestRunner.runWorkers(TestRunner.java:1005)
+	at org.testng.TestRunner.privateRunJUnit(TestRunner.java:713)
+	at org.testng.TestRunner.run(TestRunner.java:614)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1149)
+	at org.testng.TestNG.run(TestNG.java:1057)
+	at org.testng.TestNG.privateMain(TestNG.java:1364)
+	at org.testng.TestNG.main(TestNG.java:1333)
+]]>
+            </full-stacktrace>
+          </exception> <!-- log.BusinessException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAddLGAC -->
+        <test-method status="PASS" signature="testGetGroupAcademicById()[pri:0, instance:testGetGroupAcademicById(businessLogic.GroupAcademicDAOTest)]" name="testGetGroupAcademicById" duration-ms="66" started-at="2021-06-17T04:02:35Z" finished-at="2021-06-17T04:02:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetGroupAcademicById -->
+        <test-method status="PASS" signature="testSave()[pri:0, instance:testSave(businessLogic.GroupAcademicDAOTest)]" name="testSave" duration-ms="117" started-at="2021-06-17T04:02:35Z" finished-at="2021-06-17T04:02:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSave -->
+        <test-method status="PASS" signature="testGetGroupAcademicByIdNotFound()[pri:0, instance:testGetGroupAcademicByIdNotFound(businessLogic.GroupAcademicDAOTest)]" name="testGetGroupAcademicByIdNotFound" duration-ms="62" started-at="2021-06-17T04:02:35Z" finished-at="2021-06-17T04:02:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetGroupAcademicByIdNotFound -->
+        <test-method status="PASS" signature="testUpdate()[pri:0, instance:testUpdate(businessLogic.GroupAcademicDAOTest)]" name="testUpdate" duration-ms="140" started-at="2021-06-17T04:02:35Z" finished-at="2021-06-17T04:02:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testUpdate -->
+      </class> <!-- businessLogic.GroupAcademicDAOTest -->
+    </test> <!-- businessLogic.GroupAcademicDAOTest -->
+    <test name="businessLogic.LGACDAOTest" duration-ms="322" started-at="2021-06-17T09:02:35Z" finished-at="2021-06-17T09:02:35Z">
+      <class name="businessLogic.LGACDAOTest">
+        <test-method status="PASS" signature="testSave()[pri:0, instance:testSave(businessLogic.LGACDAOTest)]" name="testSave" duration-ms="137" started-at="2021-06-17T04:02:35Z" finished-at="2021-06-17T04:02:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSave -->
+        <test-method status="PASS" signature="testGetLgacByNameFailed()[pri:0, instance:testGetLgacByNameFailed(businessLogic.LGACDAOTest)]" name="testGetLgacByNameFailed" duration-ms="22" started-at="2021-06-17T04:02:35Z" finished-at="2021-06-17T04:02:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetLgacByNameFailed -->
+        <test-method status="PASS" signature="testGetLgacByName()[pri:0, instance:testGetLgacByName(businessLogic.LGACDAOTest)]" name="testGetLgacByName" duration-ms="45" started-at="2021-06-17T04:02:35Z" finished-at="2021-06-17T04:02:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetLgacByName -->
+        <test-method status="PASS" signature="testUpdate()[pri:0, instance:testUpdate(businessLogic.LGACDAOTest)]" name="testUpdate" duration-ms="107" started-at="2021-06-17T04:02:35Z" finished-at="2021-06-17T04:02:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testUpdate -->
+      </class> <!-- businessLogic.LGACDAOTest -->
+    </test> <!-- businessLogic.LGACDAOTest -->
+    <test name="businessLogic.LoginCredentialDAOTest" duration-ms="145" started-at="2021-06-17T09:02:35Z" finished-at="2021-06-17T09:02:36Z">
       <class name="businessLogic.LoginCredentialDAOTest">
-        <test-method status="PASS" signature="testSearchLoginCredential()[pri:0, instance:testSearchLoginCredential(businessLogic.LoginCredentialDAOTest)]" name="testSearchLoginCredential" duration-ms="1234" started-at="2021-06-16T22:01:03Z" finished-at="2021-06-16T22:01:04Z">
+        <test-method status="PASS" signature="testRegister()[pri:0, instance:testRegister(businessLogic.LoginCredentialDAOTest)]" name="testRegister" duration-ms="48" started-at="2021-06-17T04:02:35Z" finished-at="2021-06-17T04:02:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testRegister -->
+        <test-method status="PASS" signature="testSearchLoginCredential()[pri:0, instance:testSearchLoginCredential(businessLogic.LoginCredentialDAOTest)]" name="testSearchLoginCredential" duration-ms="96" started-at="2021-06-17T04:02:35Z" finished-at="2021-06-17T04:02:36Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testSearchLoginCredential -->
       </class> <!-- businessLogic.LoginCredentialDAOTest -->
     </test> <!-- businessLogic.LoginCredentialDAOTest -->
+    <test name="businessLogic.MeetingDAOTest" duration-ms="735" started-at="2021-06-17T09:02:36Z" finished-at="2021-06-17T09:02:36Z">
+      <class name="businessLogic.MeetingDAOTest">
+        <test-method status="PASS" signature="testGetMeetingByIdNotFound()[pri:0, instance:testGetMeetingByIdNotFound(businessLogic.MeetingDAOTest)]" name="testGetMeetingByIdNotFound" duration-ms="64" started-at="2021-06-17T04:02:36Z" finished-at="2021-06-17T04:02:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetMeetingByIdNotFound -->
+        <test-method status="FAIL" signature="testGetAssistants()[pri:0, instance:testGetAssistants(businessLogic.MeetingDAOTest)]" name="testGetAssistants" duration-ms="202" started-at="2021-06-17T04:02:36Z" finished-at="2021-06-17T04:02:36Z">
+          <exception class="org.junit.ComparisonFailure">
+            <message>
+              <![CDATA[expected:<[8325134]> but was:<[7938268]>]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.junit.ComparisonFailure: expected:<[8325134]> but was:<[7938268]>
+	at org.junit.Assert.assertEquals(Assert.java:115)
+	at org.junit.Assert.assertEquals(Assert.java:144)
+	at businessLogic.MeetingDAOTest.testGetAssistants(MeetingDAOTest.java:121)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.testng.junit.JUnit4TestRunner.start(JUnit4TestRunner.java:81)
+	at org.testng.junit.JUnit4TestRunner.run(JUnit4TestRunner.java:69)
+	at org.testng.TestRunner$1.run(TestRunner.java:682)
+	at org.testng.TestRunner.runWorkers(TestRunner.java:1005)
+	at org.testng.TestRunner.privateRunJUnit(TestRunner.java:713)
+	at org.testng.TestRunner.run(TestRunner.java:614)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1149)
+	at org.testng.TestNG.run(TestNG.java:1057)
+	at org.testng.TestNG.privateMain(TestNG.java:1364)
+	at org.testng.TestNG.main(TestNG.java:1333)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.junit.ComparisonFailure -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetAssistants -->
+        <test-method status="PASS" signature="testGetId()[pri:0, instance:testGetId(businessLogic.MeetingDAOTest)]" name="testGetId" duration-ms="75" started-at="2021-06-17T04:02:36Z" finished-at="2021-06-17T04:02:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetId -->
+        <test-method status="PASS" signature="testDeleteAssistants()[pri:0, instance:testDeleteAssistants(businessLogic.MeetingDAOTest)]" name="testDeleteAssistants" duration-ms="56" started-at="2021-06-17T04:02:36Z" finished-at="2021-06-17T04:02:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDeleteAssistants -->
+        <test-method status="PASS" signature="testSave()[pri:0, instance:testSave(businessLogic.MeetingDAOTest)]" name="testSave" duration-ms="65" started-at="2021-06-17T04:02:36Z" finished-at="2021-06-17T04:02:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSave -->
+        <test-method status="PASS" signature="testAddAssistants()[pri:0, instance:testAddAssistants(businessLogic.MeetingDAOTest)]" name="testAddAssistants" duration-ms="24" started-at="2021-06-17T04:02:36Z" finished-at="2021-06-17T04:02:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAddAssistants -->
+        <test-method status="PASS" signature="testGetIdNotFound()[pri:0, instance:testGetIdNotFound(businessLogic.MeetingDAOTest)]" name="testGetIdNotFound" duration-ms="22" started-at="2021-06-17T04:02:36Z" finished-at="2021-06-17T04:02:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetIdNotFound -->
+        <test-method status="PASS" signature="testGetMeetings()[pri:0, instance:testGetMeetings(businessLogic.MeetingDAOTest)]" name="testGetMeetings" duration-ms="72" started-at="2021-06-17T04:02:36Z" finished-at="2021-06-17T04:02:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetMeetings -->
+        <test-method status="PASS" signature="testGetMeetingById()[pri:0, instance:testGetMeetingById(businessLogic.MeetingDAOTest)]" name="testGetMeetingById" duration-ms="26" started-at="2021-06-17T04:02:36Z" finished-at="2021-06-17T04:02:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetMeetingById -->
+        <test-method status="PASS" signature="testUpdate()[pri:0, instance:testUpdate(businessLogic.MeetingDAOTest)]" name="testUpdate" duration-ms="62" started-at="2021-06-17T04:02:36Z" finished-at="2021-06-17T04:02:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testUpdate -->
+        <test-method status="PASS" signature="testChangeState()[pri:0, instance:testChangeState(businessLogic.MeetingDAOTest)]" name="testChangeState" duration-ms="49" started-at="2021-06-17T04:02:36Z" finished-at="2021-06-17T04:02:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testChangeState -->
+      </class> <!-- businessLogic.MeetingDAOTest -->
+    </test> <!-- businessLogic.MeetingDAOTest -->
+    <test name="businessLogic.MemberDAOTest" duration-ms="363" started-at="2021-06-17T09:02:36Z" finished-at="2021-06-17T09:02:37Z">
+      <class name="businessLogic.MemberDAOTest">
+        <test-method status="PASS" signature="getMemberByLicenseNotFound()[pri:0, instance:getMemberByLicenseNotFound(businessLogic.MemberDAOTest)]" name="getMemberByLicenseNotFound" duration-ms="43" started-at="2021-06-17T04:02:36Z" finished-at="2021-06-17T04:02:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getMemberByLicenseNotFound -->
+        <test-method status="PASS" signature="testDesactivateMember()[pri:0, instance:testDesactivateMember(businessLogic.MemberDAOTest)]" name="testDesactivateMember" duration-ms="79" started-at="2021-06-17T04:02:36Z" finished-at="2021-06-17T04:02:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDesactivateMember -->
+        <test-method status="PASS" signature="testSaveMember()[pri:0, instance:testSaveMember(businessLogic.MemberDAOTest)]" name="testSaveMember" duration-ms="21" started-at="2021-06-17T04:02:36Z" finished-at="2021-06-17T04:02:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSaveMember -->
+        <test-method status="PASS" signature="getMemberByLicense()[pri:0, instance:getMemberByLicense(businessLogic.MemberDAOTest)]" name="getMemberByLicense" duration-ms="24" started-at="2021-06-17T04:02:36Z" finished-at="2021-06-17T04:02:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getMemberByLicense -->
+        <test-method status="PASS" signature="testGetMembers()[pri:0, instance:testGetMembers(businessLogic.MemberDAOTest)]" name="testGetMembers" duration-ms="95" started-at="2021-06-17T04:02:36Z" finished-at="2021-06-17T04:02:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetMembers -->
+        <test-method status="PASS" signature="testActivateMember()[pri:0, instance:testActivateMember(businessLogic.MemberDAOTest)]" name="testActivateMember" duration-ms="51" started-at="2021-06-17T04:02:37Z" finished-at="2021-06-17T04:02:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testActivateMember -->
+        <test-method status="PASS" signature="testSearchProfessionalLicense()[pri:0, instance:testSearchProfessionalLicense(businessLogic.MemberDAOTest)]" name="testSearchProfessionalLicense" duration-ms="19" started-at="2021-06-17T04:02:37Z" finished-at="2021-06-17T04:02:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSearchProfessionalLicense -->
+        <test-method status="PASS" signature="testUpdate()[pri:0, instance:testUpdate(businessLogic.MemberDAOTest)]" name="testUpdate" duration-ms="25" started-at="2021-06-17T04:02:37Z" finished-at="2021-06-17T04:02:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testUpdate -->
+      </class> <!-- businessLogic.MemberDAOTest -->
+    </test> <!-- businessLogic.MemberDAOTest -->
+    <test name="businessLogic.MinuteDAOTest" duration-ms="515" started-at="2021-06-17T09:02:37Z" finished-at="2021-06-17T09:02:37Z">
+      <class name="businessLogic.MinuteDAOTest">
+        <test-method status="PASS" signature="testDeleteComment()[pri:0, instance:testDeleteComment(businessLogic.MinuteDAOTest)]" name="testDeleteComment" duration-ms="22" started-at="2021-06-17T04:02:37Z" finished-at="2021-06-17T04:02:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDeleteComment -->
+        <test-method status="PASS" signature="testApproveMinute()[pri:0, instance:testApproveMinute(businessLogic.MinuteDAOTest)]" name="testApproveMinute" duration-ms="51" started-at="2021-06-17T04:02:37Z" finished-at="2021-06-17T04:02:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testApproveMinute -->
+        <test-method status="PASS" signature="testGetMinuteComments()[pri:0, instance:testGetMinuteComments(businessLogic.MinuteDAOTest)]" name="testGetMinuteComments" duration-ms="38" started-at="2021-06-17T04:02:37Z" finished-at="2021-06-17T04:02:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetMinuteComments -->
+        <test-method status="PASS" signature="getIdMinuteNotFound()[pri:0, instance:getIdMinuteNotFound(businessLogic.MinuteDAOTest)]" name="getIdMinuteNotFound" duration-ms="46" started-at="2021-06-17T04:02:37Z" finished-at="2021-06-17T04:02:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getIdMinuteNotFound -->
+        <test-method status="PASS" signature="testSaveMinute()[pri:0, instance:testSaveMinute(businessLogic.MinuteDAOTest)]" name="testSaveMinute" duration-ms="23" started-at="2021-06-17T04:02:37Z" finished-at="2021-06-17T04:02:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSaveMinute -->
+        <test-method status="PASS" signature="testDeleteComments()[pri:0, instance:testDeleteComments(businessLogic.MinuteDAOTest)]" name="testDeleteComments" duration-ms="35" started-at="2021-06-17T04:02:37Z" finished-at="2021-06-17T04:02:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDeleteComments -->
+        <test-method status="PASS" signature="testGetMembersApprove()[pri:0, instance:testGetMembersApprove(businessLogic.MinuteDAOTest)]" name="testGetMembersApprove" duration-ms="124" started-at="2021-06-17T04:02:37Z" finished-at="2021-06-17T04:02:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetMembersApprove -->
+        <test-method status="PASS" signature="getIdMinute()[pri:0, instance:getIdMinute(businessLogic.MinuteDAOTest)]" name="getIdMinute" duration-ms="24" started-at="2021-06-17T04:02:37Z" finished-at="2021-06-17T04:02:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getIdMinute -->
+        <test-method status="PASS" signature="testGetMinute()[pri:0, instance:testGetMinute(businessLogic.MinuteDAOTest)]" name="testGetMinute" duration-ms="28" started-at="2021-06-17T04:02:37Z" finished-at="2021-06-17T04:02:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetMinute -->
+        <test-method status="PASS" signature="testGetMinutes()[pri:0, instance:testGetMinutes(businessLogic.MinuteDAOTest)]" name="testGetMinutes" duration-ms="67" started-at="2021-06-17T04:02:37Z" finished-at="2021-06-17T04:02:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetMinutes -->
+        <test-method status="PASS" signature="testUpdate()[pri:0, instance:testUpdate(businessLogic.MinuteDAOTest)]" name="testUpdate" duration-ms="20" started-at="2021-06-17T04:02:37Z" finished-at="2021-06-17T04:02:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testUpdate -->
+        <test-method status="PASS" signature="testDisapproveMinute()[pri:0, instance:testDisapproveMinute(businessLogic.MinuteDAOTest)]" name="testDisapproveMinute" duration-ms="26" started-at="2021-06-17T04:02:37Z" finished-at="2021-06-17T04:02:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDisapproveMinute -->
+      </class> <!-- businessLogic.MinuteDAOTest -->
+    </test> <!-- businessLogic.MinuteDAOTest -->
+    <test name="businessLogic.PreliminarProjectDAOTest" duration-ms="829" started-at="2021-06-17T09:02:37Z" finished-at="2021-06-17T09:02:38Z">
+      <class name="businessLogic.PreliminarProjectDAOTest">
+        <test-method status="PASS" signature="testDeleteColaborators()[pri:0, instance:testDeleteColaborators(businessLogic.PreliminarProjectDAOTest)]" name="testDeleteColaborators" duration-ms="154" started-at="2021-06-17T04:02:37Z" finished-at="2021-06-17T04:02:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDeleteColaborators -->
+        <test-method status="PASS" signature="testGetColaborators()[pri:0, instance:testGetColaborators(businessLogic.PreliminarProjectDAOTest)]" name="testGetColaborators" duration-ms="101" started-at="2021-06-17T04:02:37Z" finished-at="2021-06-17T04:02:37Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetColaborators -->
+        <test-method status="PASS" signature="testGetPreliminarProjects()[pri:0, instance:testGetPreliminarProjects(businessLogic.PreliminarProjectDAOTest)]" name="testGetPreliminarProjects" duration-ms="71" started-at="2021-06-17T04:02:37Z" finished-at="2021-06-17T04:02:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetPreliminarProjects -->
+        <test-method status="PASS" signature="testDeleteStudents()[pri:0, instance:testDeleteStudents(businessLogic.PreliminarProjectDAOTest)]" name="testDeleteStudents" duration-ms="31" started-at="2021-06-17T04:02:38Z" finished-at="2021-06-17T04:02:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDeleteStudents -->
+        <test-method status="PASS" signature="testGetId()[pri:0, instance:testGetId(businessLogic.PreliminarProjectDAOTest)]" name="testGetId" duration-ms="77" started-at="2021-06-17T04:02:38Z" finished-at="2021-06-17T04:02:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetId -->
+        <test-method status="PASS" signature="testSave()[pri:0, instance:testSave(businessLogic.PreliminarProjectDAOTest)]" name="testSave" duration-ms="84" started-at="2021-06-17T04:02:38Z" finished-at="2021-06-17T04:02:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSave -->
+        <test-method status="PASS" signature="testGetStudents()[pri:0, instance:testGetStudents(businessLogic.PreliminarProjectDAOTest)]" name="testGetStudents" duration-ms="72" started-at="2021-06-17T04:02:38Z" finished-at="2021-06-17T04:02:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetStudents -->
+        <test-method status="PASS" signature="testAddStudents()[pri:0, instance:testAddStudents(businessLogic.PreliminarProjectDAOTest)]" name="testAddStudents" duration-ms="66" started-at="2021-06-17T04:02:38Z" finished-at="2021-06-17T04:02:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAddStudents -->
+        <test-method status="PASS" signature="testGetIdFailed()[pri:0, instance:testGetIdFailed(businessLogic.PreliminarProjectDAOTest)]" name="testGetIdFailed" duration-ms="19" started-at="2021-06-17T04:02:38Z" finished-at="2021-06-17T04:02:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetIdFailed -->
+        <test-method status="PASS" signature="testAddColaborator()[pri:0, instance:testAddColaborator(businessLogic.PreliminarProjectDAOTest)]" name="testAddColaborator" duration-ms="29" started-at="2021-06-17T04:02:38Z" finished-at="2021-06-17T04:02:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAddColaborator -->
+        <test-method status="PASS" signature="testGetPreliminarProject()[pri:0, instance:testGetPreliminarProject(businessLogic.PreliminarProjectDAOTest)]" name="testGetPreliminarProject" duration-ms="87" started-at="2021-06-17T04:02:38Z" finished-at="2021-06-17T04:02:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetPreliminarProject -->
+        <test-method status="PASS" signature="testUpdate()[pri:0, instance:testUpdate(businessLogic.PreliminarProjectDAOTest)]" name="testUpdate" duration-ms="24" started-at="2021-06-17T04:02:38Z" finished-at="2021-06-17T04:02:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testUpdate -->
+      </class> <!-- businessLogic.PreliminarProjectDAOTest -->
+    </test> <!-- businessLogic.PreliminarProjectDAOTest -->
+    <test name="businessLogic.PrerequisiteDAOTest" duration-ms="378" started-at="2021-06-17T09:02:38Z" finished-at="2021-06-17T09:02:38Z">
+      <class name="businessLogic.PrerequisiteDAOTest">
+        <test-method status="PASS" signature="testsearchNotFoundId()[pri:0, instance:testsearchNotFoundId(businessLogic.PrerequisiteDAOTest)]" name="testsearchNotFoundId" duration-ms="33" started-at="2021-06-17T04:02:38Z" finished-at="2021-06-17T04:02:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testsearchNotFoundId -->
+        <test-method status="PASS" signature="testGetPrerequisites()[pri:0, instance:testGetPrerequisites(businessLogic.PrerequisiteDAOTest)]" name="testGetPrerequisites" duration-ms="190" started-at="2021-06-17T04:02:38Z" finished-at="2021-06-17T04:02:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetPrerequisites -->
+        <test-method status="PASS" signature="testUpdatePrerequisites()[pri:0, instance:testUpdatePrerequisites(businessLogic.PrerequisiteDAOTest)]" name="testUpdatePrerequisites" duration-ms="23" started-at="2021-06-17T04:02:38Z" finished-at="2021-06-17T04:02:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testUpdatePrerequisites -->
+        <test-method status="PASS" signature="testDelete()[pri:0, instance:testDelete(businessLogic.PrerequisiteDAOTest)]" name="testDelete" duration-ms="25" started-at="2021-06-17T04:02:38Z" finished-at="2021-06-17T04:02:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDelete -->
+        <test-method status="FAIL" signature="testsearchId()[pri:0, instance:testsearchId(businessLogic.PrerequisiteDAOTest)]" name="testsearchId" duration-ms="30" started-at="2021-06-17T04:02:38Z" finished-at="2021-06-17T04:02:38Z">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[expected:<2> but was:<1>]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: expected:<2> but was:<1>
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.failNotEquals(Assert.java:834)
+	at org.junit.Assert.assertEquals(Assert.java:645)
+	at org.junit.Assert.assertEquals(Assert.java:631)
+	at businessLogic.PrerequisiteDAOTest.testsearchId(PrerequisiteDAOTest.java:27)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+	at org.testng.junit.JUnit4TestRunner.start(JUnit4TestRunner.java:81)
+	at org.testng.junit.JUnit4TestRunner.run(JUnit4TestRunner.java:69)
+	at org.testng.TestRunner$1.run(TestRunner.java:682)
+	at org.testng.TestRunner.runWorkers(TestRunner.java:1005)
+	at org.testng.TestRunner.privateRunJUnit(TestRunner.java:713)
+	at org.testng.TestRunner.run(TestRunner.java:614)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1149)
+	at org.testng.TestNG.run(TestNG.java:1057)
+	at org.testng.TestNG.privateMain(TestNG.java:1364)
+	at org.testng.TestNG.main(TestNG.java:1333)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testsearchId -->
+        <test-method status="PASS" signature="testSavePrerequisites()[pri:0, instance:testSavePrerequisites(businessLogic.PrerequisiteDAOTest)]" name="testSavePrerequisites" duration-ms="71" started-at="2021-06-17T04:02:38Z" finished-at="2021-06-17T04:02:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSavePrerequisites -->
+      </class> <!-- businessLogic.PrerequisiteDAOTest -->
+    </test> <!-- businessLogic.PrerequisiteDAOTest -->
+    <test name="businessLogic.ProjectDaoTest" duration-ms="851" started-at="2021-06-17T09:02:38Z" finished-at="2021-06-17T09:02:39Z">
+      <class name="businessLogic.ProjectDaoTest">
+        <test-method status="PASS" signature="testDeleteColaborators()[pri:0, instance:testDeleteColaborators(businessLogic.ProjectDaoTest)]" name="testDeleteColaborators" duration-ms="24" started-at="2021-06-17T04:02:38Z" finished-at="2021-06-17T04:02:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDeleteColaborators -->
+        <test-method status="PASS" signature="testDeleteLGACs()[pri:0, instance:testDeleteLGACs(businessLogic.ProjectDaoTest)]" name="testDeleteLGACs" duration-ms="24" started-at="2021-06-17T04:02:38Z" finished-at="2021-06-17T04:02:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDeleteLGACs -->
+        <test-method status="PASS" signature="testGetColaborators()[pri:0, instance:testGetColaborators(businessLogic.ProjectDaoTest)]" name="testGetColaborators" duration-ms="111" started-at="2021-06-17T04:02:38Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetColaborators -->
+        <test-method status="PASS" signature="testAddLGAC()[pri:0, instance:testAddLGAC(businessLogic.ProjectDaoTest)]" name="testAddLGAC" duration-ms="45" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAddLGAC -->
+        <test-method status="PASS" signature="testDeleteStudents()[pri:0, instance:testDeleteStudents(businessLogic.ProjectDaoTest)]" name="testDeleteStudents" duration-ms="20" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDeleteStudents -->
+        <test-method status="PASS" signature="testAddColaborators()[pri:0, instance:testAddColaborators(businessLogic.ProjectDaoTest)]" name="testAddColaborators" duration-ms="25" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAddColaborators -->
+        <test-method status="PASS" signature="testSave()[pri:0, instance:testSave(businessLogic.ProjectDaoTest)]" name="testSave" duration-ms="40" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSave -->
+        <test-method status="PASS" signature="testSearchIdNotFound()[pri:0, instance:testSearchIdNotFound(businessLogic.ProjectDaoTest)]" name="testSearchIdNotFound" duration-ms="21" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSearchIdNotFound -->
+        <test-method status="PASS" signature="testGetStudents()[pri:0, instance:testGetStudents(businessLogic.ProjectDaoTest)]" name="testGetStudents" duration-ms="60" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetStudents -->
+        <test-method status="PASS" signature="testGetLGAC()[pri:0, instance:testGetLGAC(businessLogic.ProjectDaoTest)]" name="testGetLGAC" duration-ms="38" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetLGAC -->
+        <test-method status="PASS" signature="testAddStudents()[pri:0, instance:testAddStudents(businessLogic.ProjectDaoTest)]" name="testAddStudents" duration-ms="26" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAddStudents -->
+        <test-method status="PASS" signature="testGetProjects()[pri:0, instance:testGetProjects(businessLogic.ProjectDaoTest)]" name="testGetProjects" duration-ms="33" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetProjects -->
+        <test-method status="PASS" signature="testGetReceptionWork()[pri:0, instance:testGetReceptionWork(businessLogic.ProjectDaoTest)]" name="testGetReceptionWork" duration-ms="136" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetReceptionWork -->
+        <test-method status="PASS" signature="testGetProjectById()[pri:0, instance:testGetProjectById(businessLogic.ProjectDaoTest)]" name="testGetProjectById" duration-ms="65" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetProjectById -->
+        <test-method status="PASS" signature="testAddReceptionWork()[pri:0, instance:testAddReceptionWork(businessLogic.ProjectDaoTest)]" name="testAddReceptionWork" duration-ms="71" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAddReceptionWork -->
+        <test-method status="PASS" signature="testDeleteRecepetionWorks()[pri:0, instance:testDeleteRecepetionWorks(businessLogic.ProjectDaoTest)]" name="testDeleteRecepetionWorks" duration-ms="26" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDeleteRecepetionWorks -->
+        <test-method status="PASS" signature="testSearchId()[pri:0, instance:testSearchId(businessLogic.ProjectDaoTest)]" name="testSearchId" duration-ms="23" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSearchId -->
+        <test-method status="PASS" signature="testUpdate()[pri:0, instance:testUpdate(businessLogic.ProjectDaoTest)]" name="testUpdate" duration-ms="45" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testUpdate -->
+      </class> <!-- businessLogic.ProjectDaoTest -->
+    </test> <!-- businessLogic.ProjectDaoTest -->
+    <test name="businessLogic.ReceptionWorkDAOTest" duration-ms="1040" started-at="2021-06-17T09:02:39Z" finished-at="2021-06-17T09:02:40Z">
+      <class name="businessLogic.ReceptionWorkDAOTest">
+        <test-method status="PASS" signature="testDeleteColaborators()[pri:0, instance:testDeleteColaborators(businessLogic.ReceptionWorkDAOTest)]" name="testDeleteColaborators" duration-ms="45" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDeleteColaborators -->
+        <test-method status="PASS" signature="testGetColaborators()[pri:0, instance:testGetColaborators(businessLogic.ReceptionWorkDAOTest)]" name="testGetColaborators" duration-ms="74" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetColaborators -->
+        <test-method status="PASS" signature="testAddLGAC()[pri:0, instance:testAddLGAC(businessLogic.ReceptionWorkDAOTest)]" name="testAddLGAC" duration-ms="18" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAddLGAC -->
+        <test-method status="PASS" signature="testDeleteStudents()[pri:0, instance:testDeleteStudents(businessLogic.ReceptionWorkDAOTest)]" name="testDeleteStudents" duration-ms="19" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDeleteStudents -->
+        <test-method status="PASS" signature="testGetId()[pri:0, instance:testGetId(businessLogic.ReceptionWorkDAOTest)]" name="testGetId" duration-ms="24" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetId -->
+        <test-method status="PASS" signature="testSave()[pri:0, instance:testSave(businessLogic.ReceptionWorkDAOTest)]" name="testSave" duration-ms="57" started-at="2021-06-17T04:02:39Z" finished-at="2021-06-17T04:02:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSave -->
+        <test-method status="PASS" signature="testGetStudents()[pri:0, instance:testGetStudents(businessLogic.ReceptionWorkDAOTest)]" name="testGetStudents" duration-ms="105" started-at="2021-06-17T04:02:40Z" finished-at="2021-06-17T04:02:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetStudents -->
+        <test-method status="PASS" signature="testGetLGAC()[pri:0, instance:testGetLGAC(businessLogic.ReceptionWorkDAOTest)]" name="testGetLGAC" duration-ms="45" started-at="2021-06-17T04:02:40Z" finished-at="2021-06-17T04:02:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetLGAC -->
+        <test-method status="PASS" signature="testAddStudents()[pri:0, instance:testAddStudents(businessLogic.ReceptionWorkDAOTest)]" name="testAddStudents" duration-ms="146" started-at="2021-06-17T04:02:40Z" finished-at="2021-06-17T04:02:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAddStudents -->
+        <test-method status="PASS" signature="testGetIdFailed()[pri:0, instance:testGetIdFailed(businessLogic.ReceptionWorkDAOTest)]" name="testGetIdFailed" duration-ms="28" started-at="2021-06-17T04:02:40Z" finished-at="2021-06-17T04:02:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetIdFailed -->
+        <test-method status="PASS" signature="testGetReceptionWorks()[pri:0, instance:testGetReceptionWorks(businessLogic.ReceptionWorkDAOTest)]" name="testGetReceptionWorks" duration-ms="287" started-at="2021-06-17T04:02:40Z" finished-at="2021-06-17T04:02:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetReceptionWorks -->
+        <test-method status="PASS" signature="testAddColaborator()[pri:0, instance:testAddColaborator(businessLogic.ReceptionWorkDAOTest)]" name="testAddColaborator" duration-ms="52" started-at="2021-06-17T04:02:40Z" finished-at="2021-06-17T04:02:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAddColaborator -->
+        <test-method status="PASS" signature="testGetReceptionWorkById()[pri:0, instance:testGetReceptionWorkById(businessLogic.ReceptionWorkDAOTest)]" name="testGetReceptionWorkById" duration-ms="94" started-at="2021-06-17T04:02:40Z" finished-at="2021-06-17T04:02:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetReceptionWorkById -->
+        <test-method status="PASS" signature="testUpdate()[pri:0, instance:testUpdate(businessLogic.ReceptionWorkDAOTest)]" name="testUpdate" duration-ms="28" started-at="2021-06-17T04:02:40Z" finished-at="2021-06-17T04:02:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testUpdate -->
+      </class> <!-- businessLogic.ReceptionWorkDAOTest -->
+    </test> <!-- businessLogic.ReceptionWorkDAOTest -->
+    <test name="businessLogic.StudentDAOTest" duration-ms="137" started-at="2021-06-17T09:02:40Z" finished-at="2021-06-17T09:02:40Z">
+      <class name="businessLogic.StudentDAOTest">
+        <test-method status="PASS" signature="testGetByEnrollmentFailed()[pri:0, instance:testGetByEnrollmentFailed(businessLogic.StudentDAOTest)]" name="testGetByEnrollmentFailed" duration-ms="79" started-at="2021-06-17T04:02:40Z" finished-at="2021-06-17T04:02:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetByEnrollmentFailed -->
+        <test-method status="PASS" signature="testSave()[pri:0, instance:testSave(businessLogic.StudentDAOTest)]" name="testSave" duration-ms="32" started-at="2021-06-17T04:02:40Z" finished-at="2021-06-17T04:02:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSave -->
+        <test-method status="PASS" signature="testGetByEnrollment()[pri:0, instance:testGetByEnrollment(businessLogic.StudentDAOTest)]" name="testGetByEnrollment" duration-ms="23" started-at="2021-06-17T04:02:40Z" finished-at="2021-06-17T04:02:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetByEnrollment -->
+      </class> <!-- businessLogic.StudentDAOTest -->
+    </test> <!-- businessLogic.StudentDAOTest -->
+    <test name="businessLogic.TopicDAOTest" duration-ms="224" started-at="2021-06-17T09:02:40Z" finished-at="2021-06-17T09:02:41Z">
+      <class name="businessLogic.TopicDAOTest">
+        <test-method status="PASS" signature="testSave()[pri:0, instance:testSave(businessLogic.TopicDAOTest)]" name="testSave" duration-ms="49" started-at="2021-06-17T04:02:40Z" finished-at="2021-06-17T04:02:41Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSave -->
+        <test-method status="PASS" signature="testDelete()[pri:0, instance:testDelete(businessLogic.TopicDAOTest)]" name="testDelete" duration-ms="16" started-at="2021-06-17T04:02:41Z" finished-at="2021-06-17T04:02:41Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testDelete -->
+        <test-method status="PASS" signature="testUpdate()[pri:0, instance:testUpdate(businessLogic.TopicDAOTest)]" name="testUpdate" duration-ms="21" started-at="2021-06-17T04:02:41Z" finished-at="2021-06-17T04:02:41Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testUpdate -->
+        <test-method status="PASS" signature="testGetAgendaTopics()[pri:0, instance:testGetAgendaTopics(businessLogic.TopicDAOTest)]" name="testGetAgendaTopics" duration-ms="135" started-at="2021-06-17T04:02:41Z" finished-at="2021-06-17T04:02:41Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetAgendaTopics -->
+      </class> <!-- businessLogic.TopicDAOTest -->
+    </test> <!-- businessLogic.TopicDAOTest -->
   </suite> <!-- SistemaCuerpoAcademico -->
 </testng-results>
