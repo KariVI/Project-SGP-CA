@@ -219,9 +219,11 @@ public class MeetingRegisterController implements Initializable {
         boolean value = true;
         Member leader= (Member) cbLeader.getSelectionModel().getSelectedItem();
         Member secretary = (Member) cbSecretary.getSelectionModel().getSelectedItem();
+        System.out.print(leader);
+        System.out.print(secretary);
+
         if(leader.getProfessionalLicense().equals(secretary.getProfessionalLicense())){
             value = false;
-        }else{  
             AlertMessage alertMessage = new AlertMessage();
             alertMessage.showAlertValidateFailed("El lider y secretario no pueden ser el mismo");
         }
