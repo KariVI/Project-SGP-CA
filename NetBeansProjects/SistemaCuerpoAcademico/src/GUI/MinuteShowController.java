@@ -184,7 +184,7 @@ public class MinuteShowController implements Initializable {
                 MinuteDAO minuteDAO = new MinuteDAO();
                 minuteDAO.approveMinute(idMinute, member.getProfessionalLicense());
                 AlertMessage alertMessage= new AlertMessage();
-                alertMessage.showAlertSuccesfulSave("Validacion");    
+                alertMessage.showAlertSuccesfulSave("La validacion");    
             } catch (BusinessException ex) {
                 Log.logException(ex);
             }
