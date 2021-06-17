@@ -36,7 +36,7 @@
       </Label>
       <HBox layoutX="499.0" layoutY="63.0" prefHeight="46.0" prefWidth="273.0" spacing="15.0">
          <children>
-            <RadioButton fx:id="rbApproveMinute" mnemonicParsing="false" text="Estoy de acuerdo">
+            <RadioButton fx:id="rbApproveMinute" mnemonicParsing="false" selected="true" text="Estoy de acuerdo">
                <toggleGroup>
                   <ToggleGroup fx:id="tgApproveMinute" />
                </toggleGroup></RadioButton>
