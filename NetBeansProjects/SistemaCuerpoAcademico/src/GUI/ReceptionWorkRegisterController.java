@@ -286,7 +286,7 @@ public class ReceptionWorkRegisterController implements Initializable {
                 if(receptionWorkDAO.savedSucessful(receptionWork)){  
                     receptionWork.setKey(receptionWorkDAO.getId(receptionWork));
                     saveColaborators();
-                   if(tfNumberStudents.getText() != ""){   
+                   if((! tfNumberStudents.getText().isEmpty())){   
                         recoverStudents();
                     }
                     recoverLgacs();
