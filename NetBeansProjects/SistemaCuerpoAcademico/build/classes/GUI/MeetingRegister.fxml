@@ -43,7 +43,7 @@
         </columns>
       </TableView>
       <Button fx:id="btAddPrerequisite" layoutX="479.0" layoutY="416.0" mnemonicParsing="false" onAction="#actionAddPrerequisite" prefHeight="20.0" prefWidth="59.0" text="Añadir" />
-      <Button fx:id="addTopic" layoutX="479.0" layoutY="474.0" mnemonicParsing="false" onAction="#actionAddTopics" text="Añadir agenda" />
+      <Button fx:id="btAddTopic" layoutX="479.0" layoutY="474.0" mnemonicParsing="false" onAction="#actionAddTopics" text="Añadir agenda" />
       <Button fx:id="btSave" layoutX="590.0" layoutY="474.0" mnemonicParsing="false" onAction="#actionSave" prefHeight="25.0" prefWidth="59.0" text="Guardar" />
       <Button fx:id="btExit" layoutX="664.0" layoutY="474.0" mnemonicParsing="false" onAction="#actionExit" prefHeight="25.0" prefWidth="59.0" text="Salir" />
       <Label layoutX="17.0" layoutY="245.0" prefHeight="17.0" prefWidth="94.0" text="Prerequisitos:" />
