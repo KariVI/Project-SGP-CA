@@ -1,10 +1,14 @@
-
+/*
+        *@author Karina Valdes
+        *@see IMeetingDAO
+        *@see Prerequisite
+        *@see Member
+    */
 package businessLogic;
 
 import dataaccess.Connector;
 import domain.Meeting;
 import domain.Member;
-import domain.Student;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

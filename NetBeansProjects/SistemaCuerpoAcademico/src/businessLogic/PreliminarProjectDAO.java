@@ -1,8 +1,12 @@
-
+/*
+        *@author Karina Valdes
+        *@see IPreliminarProjectDAO
+        *@see Student
+        *@see Member
+    */
 package businessLogic;
 
 import dataaccess.Connector;
-import domain.LGAC;
 import domain.Member;
 import domain.PreliminarProject;
 import domain.Student;

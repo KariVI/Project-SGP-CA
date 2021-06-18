@@ -1,4 +1,11 @@
-
+/*
+        *@author Karina Valdes
+        *@see IReceptionWorkDAO
+        *@see Member
+        *@see Student
+        *@see PreliminarProject
+        *@see LGAC
+    */
 package businessLogic;
 
 import dataaccess.Connector;
