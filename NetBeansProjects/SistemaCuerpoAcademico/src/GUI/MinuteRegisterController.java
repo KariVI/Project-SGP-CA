@@ -166,7 +166,7 @@ public class MinuteRegisterController implements Initializable {
     public void actionFinish(){
        String note = "";
        String due = "";
-       String initialState = "pendiente";
+       String initialState = "Registrada";
        note = taNote.getText();
        due = taDue.getText();
        Minute minute = new Minute(note,initialState,due,meeting.getKey());
