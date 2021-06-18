@@ -39,7 +39,6 @@ public class TopicShowController implements Initializable {
     
     private Meeting meeting;
     private Member member;
-
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {

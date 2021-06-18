@@ -41,7 +41,7 @@ public class MinuteCheckCommentController implements Initializable {
     private Member member;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }  
     
     public void setMinute(Minute minute){
@@ -60,7 +60,7 @@ public class MinuteCheckCommentController implements Initializable {
     private void setMembersApprove(){
         
         try {
-            GridPane gridPane= new GridPane();
+            GridPane gridPane = new GridPane();
             MinuteDAO minuteDAO = new MinuteDAO();
             ArrayList<Member> memberListApprove = minuteDAO.getMembersApprove(minute);
             gridPane.setVgap(7);      

@@ -51,7 +51,7 @@ public class MinuteRegisterController implements Initializable {
     @FXML Button btDelete;
     @FXML Button btAdd;
     @FXML Button btFinish;
-    private int idMinute = 1;
+    private int idMinute;
     private Meeting meeting;
     private int indexAgreement;
     private Member member;

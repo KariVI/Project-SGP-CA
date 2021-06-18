@@ -4,7 +4,6 @@ package GUI;
 import businessLogic.GroupAcademicDAO;
 import businessLogic.LGACDAO;
 import businessLogic.MemberDAO;
-import businessLogic.PreliminarProjectDAO;
 import businessLogic.ReceptionWorkDAO;
 import businessLogic.StudentDAO;
 import domain.LGAC;
@@ -43,7 +42,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import log.BusinessException;
@@ -52,9 +50,7 @@ import log.Log;
 public class ReceptionWorkModifyController implements Initializable {
 
     @FXML private TextField tfTitle;
-    @FXML private TextField tfDirector;
     @FXML private TextArea taDescription;
-    @FXML private TextArea taCodirectors;
     @FXML private Button btSave;
     @FXML private Button btExit;
     @FXML private ScrollPane spStudents;

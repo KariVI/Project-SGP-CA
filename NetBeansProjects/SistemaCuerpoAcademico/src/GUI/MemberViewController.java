@@ -20,13 +20,13 @@ import log.Log;
 public class MemberViewController implements Initializable {
     @FXML Button btReturn = new Button();
     @FXML Button btUpdate = new Button();
-    @FXML Label lName = new Label();
-    @FXML Label lRole = new Label();
-    @FXML Label lProfessionalLicense = new Label();
-    @FXML Label lDegree = new Label();
-    @FXML Label lNameDegree = new Label();
-    @FXML Label lDegreeYear = new Label();
-    @FXML Label lUniversityName = new Label();
+    @FXML Label lbName = new Label();
+    @FXML Label lbRole = new Label();
+    @FXML Label lbProfessionalLicense = new Label();
+    @FXML Label lbDegree = new Label();
+    @FXML Label lbNameDegree = new Label();
+    @FXML Label lbDegreeYear = new Label();
+    @FXML Label lbUniversityName = new Label();
     private Member member ;
 
     
@@ -39,13 +39,13 @@ public class MemberViewController implements Initializable {
     
     public void initializeMember(Member member) {
          this.member = member;
-         lName.setText(member.getName());
-         lRole.setText(member.getRole());
-         lProfessionalLicense.setText((member.getProfessionalLicense()));
-         lDegree.setText(member.getDegree());
-         lNameDegree.setText(member.getNameDegree());
-         lDegreeYear.setText(Integer.toString(member.getDegreeYear()));
-         lUniversityName.setText(member.getUniversityName());
+         lbName.setText(member.getName());
+         lbRole.setText(member.getRole());
+         lbProfessionalLicense.setText((member.getProfessionalLicense()));
+         lbDegree.setText(member.getDegree());
+         lbNameDegree.setText(member.getNameDegree());
+         lbDegreeYear.setText(Integer.toString(member.getDegreeYear()));
+         lbUniversityName.setText(member.getUniversityName());
     }
 
     

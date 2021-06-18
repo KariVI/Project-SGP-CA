@@ -35,11 +35,11 @@ public class MemberModifyController implements Initializable {
     @FXML private ComboBox<String> cbRoles;
     @FXML private ComboBox<String> cbDegrees;
     @FXML private TextField tfName;
-    @FXML private Label lProfessionalLicense;
+    @FXML private Label lbProfessionalLicense;
     @FXML private TextField tfNameDegree;
     @FXML private TextField tfUniversity;
     @FXML private Button btReturn;
-     @FXML private Button btSave;
+    @FXML private Button btSave;
     @FXML private ToggleGroup tgState;
     @FXML private RadioButton rbActive;
     @FXML private RadioButton rbInactive;
@@ -76,7 +76,7 @@ public class MemberModifyController implements Initializable {
        name = tfName.getText();
        role = cbRoles.getSelectionModel().getSelectedItem();
        degree = cbDegrees.getValue();
-       professionalLicense = lProfessionalLicense.getText();
+       professionalLicense = lbProfessionalLicense.getText();
        nameDegree = tfNameDegree.getText();
        degreeYear = cbYears.getSelectionModel().getSelectedItem();
        universityName = tfUniversity.getText();
@@ -106,7 +106,7 @@ public class MemberModifyController implements Initializable {
         cbYears.getSelectionModel().select((Integer)member.getDegreeYear());
         tfNameDegree.setText(member.getNameDegree());
         tfUniversity.setText(member.getUniversityName());
-        lProfessionalLicense.setText(member.getProfessionalLicense());
+        lbProfessionalLicense.setText(member.getProfessionalLicense());
         if(member.getState().equals("Activo")){
             rbActive.setSelected(true);
         }else{
