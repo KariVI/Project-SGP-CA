@@ -1,6 +1,7 @@
 /*
         *@author Karina Valdes
         *@see IPrerequisiteDAO
+        *@see Prerequisite
         *@see Member
     */
 package businessLogic;

@@ -1,6 +1,7 @@
 /*
         *@author Karina Valdes
         *@see IReceptionWorkDAO
+        *@see ReceptionWork
         *@see Member
         *@see Student
         *@see PreliminarProject

@@ -1,6 +1,7 @@
 /*
         *@author Karina Valdes
         *@see IMeetingDAO
+        *@see Meeting
         *@see Prerequisite
         *@see Member
     */

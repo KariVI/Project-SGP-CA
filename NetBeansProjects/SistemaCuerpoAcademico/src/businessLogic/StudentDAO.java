@@ -1,6 +1,8 @@
 /*
         *@author Karina Valdes
         *@see IStudentDAO
+        *@see Student
+        
     */
 package businessLogic;
 
