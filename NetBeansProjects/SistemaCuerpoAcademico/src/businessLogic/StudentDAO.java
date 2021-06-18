@@ -1,4 +1,7 @@
-
+/*
+        *@author Karina Valdes
+        *@see IStudentDAO
+    */
 package businessLogic;
 
 import dataaccess.Connector;
