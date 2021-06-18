@@ -20,7 +20,7 @@ public class PrerequisiteDAOTest {
     @Test
     public void testsearchId() throws BusinessException {
         System.out.println("searchId");
-        int idExpected = 2;
+        int idExpected = 1;
         PrerequisiteDAO prerequisiteDAO = new PrerequisiteDAO();
         Prerequisite prerequisite=  new Prerequisite("Verificar situacion de FEIBook");
         int result = prerequisiteDAO.getId(prerequisite,1 );

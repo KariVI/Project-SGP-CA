@@ -115,7 +115,7 @@ public class MeetingDAOTest {
     public void testGetAssistants() throws BusinessException{   
       MeetingDAO meetingDAO= new MeetingDAO();
       Meeting meeting= new Meeting(2, "Organizar agenda de actividades del seminario" ,"15/09/2021","15:30","Concluida");  
-      String professionalLicenseExpected= "8325134";
+      String professionalLicenseExpected= "7938268";
       meeting.setAssistants(meetingDAO.getAssistants(2));
       String professionalLicenseResult=meeting.getAssistants().get(0).getProfessionalLicense();
       assertEquals(professionalLicenseExpected, professionalLicenseResult);
