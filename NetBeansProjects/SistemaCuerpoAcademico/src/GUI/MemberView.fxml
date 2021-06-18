@@ -41,13 +41,13 @@
             <Label text="Especialización:" GridPane.rowIndex="5" />
             <Label text="Año:" GridPane.rowIndex="6" />
             <Label text="Universidad" GridPane.rowIndex="7" />
-            <Label fx:id="lName" text="Label" GridPane.columnIndex="1" />
-            <Label fx:id="lRole" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="lProfessionalLicense" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label fx:id="lDegree" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label fx:id="lNameDegree" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Label fx:id="lDegreeYear" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label fx:id="lUniversityName" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label fx:id="lbName" text="Label" GridPane.columnIndex="1" />
+            <Label fx:id="lbRole" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="lbProfessionalLicense" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="lbDegree" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label fx:id="lbNameDegree" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label fx:id="lbDegreeYear" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label fx:id="lbUniversityName" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
          </children>
       </GridPane>
       <Button fx:id="btReturn" layoutX="484.0" layoutY="346.0" mnemonicParsing="false" onAction="#actionReturn" prefHeight="26.0" prefWidth="87.0" text="Regresar" />
