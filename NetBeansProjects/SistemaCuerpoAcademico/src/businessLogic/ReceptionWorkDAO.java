@@ -1,11 +1,5 @@
 /*
         *@author Karina Valdes
-        *@see IReceptionWorkDAO
-        *@see ReceptionWork
-        *@see Member
-        *@see Student
-        *@see PreliminarProject
-        *@see LGAC
     */
 package businessLogic;
 
@@ -25,6 +19,11 @@ import log.Log;
 
 public class ReceptionWorkDAO implements IReceptionWorkDAO {
 
+    /*
+        *@params receptionWork Trabajo recepcional a guardar 
+        *@return Si el trabajo recepcional pudo ser guardado (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException
+    */
     public boolean savedSucessful(ReceptionWork receptionWork) throws BusinessException {
         boolean value=false;
         int idPreliminarProject= receptionWork.getPreliminarProject().getKey();
@@ -54,6 +53,13 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
         return value;
     }
 
+    /*
+        *@params id Identificador del Trabajo rececional a modificar 
+        *@params receptionWork La nueva información del trabajo recepcional a actualizar  
+        *@return Si el trabajo recepcional pudo ser actualizado (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException 
+    */
+    
     public boolean updatedSucessful(int id, ReceptionWork receptionWork) throws BusinessException {
         boolean updateSuccess=false;
         int idPreliminarProject= receptionWork.getPreliminarProject().getKey();
@@ -84,6 +90,12 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
         return updateSuccess;
     }
 
+      /*
+        *@params id Identificador del Trabajo rececional que va a recuperarse 
+        *@return El trabajo recepcional recuperado de acuerdo al id
+        *@throws Se cacho una excepción de tipo SQLException o si no es localizado el trabajo manda una excepción de tipo BusinessException
+    */
+    
     @Override
     public ReceptionWork getReceptionWorkById(int id) throws BusinessException {
         ReceptionWork receptionWork=null;
@@ -110,6 +122,8 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
                 receptionWork.setKey(idReceptionWork);
                 PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
                 receptionWork.setPreliminarProject(preliminarProjectDAO.getById(idPreliminarProject));
+            }else{  
+                throw new BusinessException("ReceptionWork not found ");
             }
             
         } catch (ClassNotFoundException ex) {
@@ -120,6 +134,11 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
         return receptionWork;
     }
 
+      /*
+        *@params receptionWork Trabajo recepcional del cual se busca su id
+        *@return La id del trabajo recepcional
+        *@throws Se cacho una excepción de tipo SQLException o si no es localizado el trabajo manda una excepción de tipo BusinessException
+    */
 
     public int getId(ReceptionWork receptionWork) throws BusinessException {
         Integer id= 0;
@@ -149,6 +168,13 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
         }
         return id;
     }
+    
+     /*
+        *@params keyGroupAcademic Clave del cuerpo académico para filtrar los trabajos recepcionales que le corresponden
+        *@return Trabajos recepcionales relacionados a un cuerpo académico
+        *@throws Se cacho una excepción de tipo SQLException
+    */
+    
     public ArrayList<ReceptionWork> getReceptionWorks(String keyGroupAcademic) throws BusinessException {
         ArrayList<ReceptionWork> receptionWorkList = new ArrayList<ReceptionWork>();
         try{
@@ -187,6 +213,13 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
             return receptionWorkList;
     }
     
+     /*
+        *@params receptionWork Trabajo recepcional al cual se le añaden los colaboradores
+        *@return Si el trabajo pudo ser guardar sus colaboradores  (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException 
+        *@see ReceptionWork
+    */
+    
     public boolean addedSucessfulColaborators(ReceptionWork receptionWork) throws BusinessException {
         boolean addColaboratorSuccess=false;
         int idReceptionWork=receptionWork.getKey();
@@ -216,6 +249,13 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
         return addColaboratorSuccess;
     }
 
+    /*
+        *@params receptionWork Trabajo recepcional al cual se le añaden los estudiantes
+        *@return Si el trabajo recepcional pudo ser guardar sus estudiantes (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException
+        *@see ReceptionWork
+    */
+    
     public boolean addedSucessfulStudents(ReceptionWork receptionWork) throws BusinessException {
         boolean addStudentsSuccess=false;
         int idReceptionWork=receptionWork.getKey();
@@ -242,8 +282,13 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
         return addStudentsSuccess;
     }
 
+     /*
+        *@params idReceptionWork Identificador del trabajo recepcional del cual se buscan sus colaboradores 
+        *@return Listado de colaboradores del trabajo recepcional
+        *@throws Se cacho una excepción de tipo SQLException
+    */
     @Override
-    public ArrayList<Member> getColaborators(int idPreliminarProject) throws BusinessException {
+    public ArrayList<Member> getColaborators(int idReceptionWork) throws BusinessException {
         ArrayList<Member> colaborators= new ArrayList<Member> ();
         MemberDAO memberDAO= new MemberDAO();
         try{
@@ -252,7 +297,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
             String query = "SELECT cedula,rol FROM Dirige where idTrabajoRecepcional=?";
 
                PreparedStatement preparedStatement = connectionDataBase.prepareStatement(query);
-               preparedStatement.setInt(1, idPreliminarProject);
+               preparedStatement.setInt(1, idReceptionWork);
                ResultSet resultSet;
                resultSet = preparedStatement.executeQuery();
                while(resultSet.next()){
@@ -273,6 +318,13 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
 
         return colaborators;
     }
+    
+     /*
+        *@params receptionWork Trabajo recepcional al cual se le eliminan los colaboradores
+        *@return Si fue posible eliminar los colaboradores de un trabajo recepcional (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException 
+        *@see ReceptionWork
+    */
     
     @Override
     public boolean deletedSucessfulColaborators(ReceptionWork receptionWork) throws BusinessException {
@@ -301,6 +353,12 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
         }
         return deleteSucess;
     }
+    
+      /*
+        *@params idReceptionWork Identificador del trabajo recepcional del cual se buscan sus estudiantes
+        *@return Listado de estudiantes del trabajo recepcional
+        *@throws Se cacho una excepción de tipo SQLException
+    */
 
     @Override
     public ArrayList<Student> getStudents(int idReceptionWork) throws BusinessException {
@@ -331,6 +389,14 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
         return students;
     }
 
+    
+      /*
+        *@params receptionWork Trabajo recepcional al cual se le eliminan los estudiantes
+        *@return Si fue posible eliminar los estudiantes de un trabajo recepcional (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException
+        *@see ReceptionWork
+    */
+    
     @Override
     public boolean deletedSucessfulStudents(ReceptionWork receptionWork) throws BusinessException {
         boolean deleteSucess=false;
@@ -360,6 +426,13 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
 
     }
 
+    /*
+        *@params receptionWork Trabajo recepcional al cual se le añaden las LGACs
+        *@return Si el trabajo recepcional pudo ser guardar sus LGACs  (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException
+        *@see ReceptionWork
+    */
+    
     public boolean addedSucessfulLGACs(ReceptionWork receptionWork) throws BusinessException {
         boolean addLGACSucces = false;
         int idReceptionWork = receptionWork.getKey();
@@ -385,6 +458,12 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
         return addLGACSucces;
 
     }
+    
+     /*
+        *@params idReceptionWork Identificador del trabajo recepcional del cual se buscan sus LGACs
+        *@return Listado de LGACs del trabajo recepcional
+        *@throws Se cacho una excepción de tipo SQLException 
+    */
 
     public ArrayList<LGAC> getLGACs(int idReceptionWork) throws BusinessException {
         ArrayList<LGAC> lgacs = new ArrayList<LGAC>();
@@ -411,6 +490,13 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
         return lgacs;
     }
 
+     /*
+        *@params receptionWork Trabajo recepcional al cual se le eliminan las LGACs
+        *@return Si fue posible eliminar las LGACs de un trabajo recepcional (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException 
+        *@see ReceptionWork
+    */
+    
     @Override
     public boolean deletedSucessfulLGACs(ReceptionWork receptionWork) throws BusinessException {
         boolean deleteSucess=false;

@@ -1,8 +1,6 @@
 /*
         *@author Karina Valdes
-        *@see IPrerequisiteDAO
-        *@see Prerequisite
-        *@see Member
+
     */
 package businessLogic;
 
@@ -20,34 +18,13 @@ import log.Log;
 public class PrerequisiteDAO implements IPrerequisiteDAO{
 
 
-    public int searchId(Prerequisite prerequisite, int idMeeting) throws BusinessException {
-        Integer idAuxiliar=0;
-        try{
-            Connector connectorDataBase=new Connector();
-            Connection connectionDataBase = connectorDataBase.getConnection();
-            ResultSet resultSet;
-            String selectIdPrerequisite = "SELECT idPrerequisito from  Prerequisito where descripcion=? and idReunion=? ";
-     
-            PreparedStatement preparedStatement = connectionDataBase.prepareStatement(selectIdPrerequisite);
-            preparedStatement.setString(1, prerequisite.getDescription());          
-            preparedStatement.setInt(2, idMeeting);     
-            
-            resultSet=preparedStatement.executeQuery();
-            if(resultSet.next()){
-                idAuxiliar=Integer.parseInt(resultSet.getString("idPrerequisito"));
-            }else{
-                throw new BusinessException("Prerequisite not found");
-            }
-                connectorDataBase.disconnect();
-        }catch(SQLException sqlException) {
-            throw new BusinessException("DataBase connection failed ", sqlException);
-        } catch (ClassNotFoundException ex) {
-            Log.logException(ex);
-        }
-        return idAuxiliar;
-    }
     
-
+ /*
+        *@params prerequisite Prerequisito que va ser guardado
+        *@params idMeeting Identificador de la reunión a la cual el prerequisito estará 
+        *@return Si el prerequisito fue guardado (true) o no (false) en la base de datos
+        *@throws Se cacho una excepción de tipo SQLException 
+    */
     public boolean savedSucessfulPrerequisites(Prerequisite prerequisite, int idMeeting) throws BusinessException {
         String professionalLicense= prerequisite.getMandated().getProfessionalLicense();
         boolean saveSuccess=false;
@@ -74,7 +51,12 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
     }
 
    
-
+    /*
+        *@params id Identificador del prerequisito ha actualizar
+        *@params prerequisite La nueva información del prerequisito a actualizar 
+        *@return Si el prerequisito pudo ser actualizado (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException 
+    */
  
      public boolean updatedSucessfulPrerequisite(int id, Prerequisite prerequisite) throws BusinessException{
          boolean updateSuccess=false;
@@ -101,7 +83,12 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
         return updateSuccess;
      }
  
-
+ /*
+        *@params prerequisite Prerequisito que se busca su id
+        *@params idMeeting Identificador de la reunión a la cual el prerequisito esta relacionada
+        *@return La id del prerequisito
+        *@throws Se cacho una excepción de tipo SQLException o si no es localizado el prerequisito manda una excepción de tipo BusinessException
+    */
     public int getId(Prerequisite prerequisite, int idMeeting) throws BusinessException {
         Integer idAuxiliar=0;
         try{
@@ -118,6 +105,8 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
             resultSet=preparedStatement.executeQuery();
             if(resultSet.next()){
                 idAuxiliar=Integer.parseInt(resultSet.getString("idPrerequisito"));
+            }else{
+                throw new BusinessException("Prerequisite not found");
             }
                 connectorDataBase.disconnect();
         }catch(SQLException sqlException) {
@@ -128,6 +117,12 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
         return idAuxiliar;
    
     }
+    
+     /*
+        *@params idPrerequisite Identificador del prerequisito a eliminar
+        *@return Si el prerequisito pudo ser eliminado (true) o no (false) de la base de datos
+        *@throws Se cacho una excepción de tipo SQLException 
+    */
 
     public boolean deletedSucessful(int idPrerequisite) throws BusinessException{
         boolean deleteSucess=false;
@@ -149,6 +144,11 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
         return deleteSucess;
     }
     
+     /*
+        *@params idMeeting Identificador de la reunión a la cual se buscan los prerequisitos
+        *@return Los prerequisitos relacionados a la reunión
+        *@throws Se cacho una excepción de tipo SQLException 
+    */
      public ArrayList<Prerequisite> getPrerequisites(int idMeeting) throws BusinessException{
         ArrayList<Prerequisite> prerequisiteList = new ArrayList<Prerequisite>();
         try{
@@ -183,28 +183,6 @@ public class PrerequisiteDAO implements IPrerequisiteDAO{
             return prerequisiteList;
         }
      
-    /* public boolean deletedSucessfulPrerequisites(ArrayList<Prerequisite> prerequisites, int idMeeting ) throws BusinessException{ 
-            boolean deleteSucess=false;
-            try{
-            Connector connectorDataBase=new Connector();
-            Connection connectionDataBase = connectorDataBase.getConnection();
-            String selectIdPrerequisite = "DELETE FROM Prerequisito where idReunion=?";
-     
-            PreparedStatement preparedStatement = connectionDataBase.prepareStatement(selectIdPrerequisite);
-            int i=0;
-            while(i< prerequisites.size()){
-                preparedStatement.setInt(1, idMeeting);
-                preparedStatement.executeUpdate();
-                deleteSucess=true;
-                i++;
-            }
-            connectorDataBase.disconnect();         
-        }catch(SQLException sqlException) {
-            throw new BusinessException("DataBase connection failed ", sqlException);
-        } catch (ClassNotFoundException ex) {
-            Log.logException(ex);
-        }
-        return deleteSucess;
-     }*/
+    
 
 }

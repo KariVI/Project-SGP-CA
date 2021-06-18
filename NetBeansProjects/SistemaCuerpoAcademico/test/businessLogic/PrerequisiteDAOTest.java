@@ -18,7 +18,7 @@ public class PrerequisiteDAOTest {
   
     
     @Test
-    public void testsearchId() throws BusinessException {
+    public void testGetId() throws BusinessException {
         System.out.println("searchId");
         int idExpected = 1;
         PrerequisiteDAO prerequisiteDAO = new PrerequisiteDAO();
@@ -28,13 +28,17 @@ public class PrerequisiteDAOTest {
     }
     
     @Test
-    public void testsearchNotFoundId() throws BusinessException {
+    public void testGetNotFoundId() throws BusinessException {
         System.out.println("searchIdNotFound");
-        int idExpected = 1;
+        boolean value=true;
         PrerequisiteDAO prerequisiteDAO = new PrerequisiteDAO();
-        Prerequisite prerequisite=  new Prerequisite("Situacion preinscripciones");
-        int result = prerequisiteDAO.getId(prerequisite,1 );
-        assertNotEquals(idExpected, result);
+        Prerequisite prerequisite=  new Prerequisite("Situacion de la facultad");
+        try{
+            int result = prerequisiteDAO.getId(prerequisite,1 );
+        }catch(BusinessException ex){  
+            value=false;
+        }
+        assertFalse(value);
     }
     
     @Test

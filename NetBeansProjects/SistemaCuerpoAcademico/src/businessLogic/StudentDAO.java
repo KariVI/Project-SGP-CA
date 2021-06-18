@@ -1,7 +1,6 @@
 /*
         *@author Karina Valdes
-        *@see IStudentDAO
-        *@see Student
+
         
     */
 package businessLogic;
@@ -16,6 +15,11 @@ import log.BusinessException;
 import log.Log;
 
 public class StudentDAO implements IStudentDAO{
+     /*
+        *@params student El Estudiante a guardar 
+        *@return Si el Estudiante pudo ser guardado (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException
+    */
     public boolean savedSucessful(Student student) throws BusinessException{
          boolean saveSuccess=false;
             try {
@@ -39,6 +43,11 @@ public class StudentDAO implements IStudentDAO{
         return saveSuccess;
     }
     
+    /*
+        *@params enrollment matricula del estudiante a buscar
+        *@return El estudiante pudo ser recuperado de acuerdo a la matricula
+        *@throws Se cacho una excepción de tipo SQLException o o si no es localizado el estudiante manda una excepción de tipo BusinessException
+    */
     public Student getByEnrollment(String enrollment)throws BusinessException{
         Student studentAuxiliar = null;
         try{

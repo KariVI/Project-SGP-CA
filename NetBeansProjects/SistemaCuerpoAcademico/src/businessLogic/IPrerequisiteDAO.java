@@ -12,7 +12,6 @@ public interface IPrerequisiteDAO {
         public boolean updatedSucessfulPrerequisite(int id, Prerequisite prerequisite) throws BusinessException;
         public boolean deletedSucessful(int idPrerequisite)throws BusinessException;
         public ArrayList<Prerequisite> getPrerequisites(int idMeeting) throws BusinessException;
-       // public boolean deletedSucessfulPrerequisites(ArrayList<Prerequisite> prerequisites, int idMeeting ) throws BusinessException;
 
 
     

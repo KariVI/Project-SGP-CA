@@ -70,9 +70,9 @@ public class MeetingDAOTest {
         try{
             meetingResult=meetingDAO.getMeetingById(12);
         } catch(BusinessException ex){
-            Log.logException(ex);
+            value=false;
         }
-      assertFalse(meetingExpected.equals(meetingResult));
+      assertFalse(value);
         
     }
    

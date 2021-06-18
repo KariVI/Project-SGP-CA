@@ -1,9 +1,6 @@
 /*
         *@author Karina Valdes
-        *@see IMeetingDAO
-        *@see Meeting
-        *@see Prerequisite
-        *@see Member
+
     */
 package businessLogic;
 
@@ -20,6 +17,12 @@ import log.BusinessException;
 import log.Log;
 
 public class MeetingDAO implements IMeetingDAO{
+    
+     /*
+        *@params meeting Reunión a guardar 
+        *@return Si la reunión pudo ser guardada (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException
+    */
 
     public boolean savedSucessful(Meeting meeting) throws BusinessException  {    
         boolean saveSuccess=false;
@@ -47,6 +50,12 @@ public class MeetingDAO implements IMeetingDAO{
         return saveSuccess;
         
     } 
+    
+    /*
+        *@params meeting Reunión de la cual se busca su id
+        *@return La id de la reunión
+        *@throws Se cacho una excepción de tipo SQLException o si no es localizada la reunión manda una excepción de tipo BusinessException
+    */
 
     public int getId(Meeting meeting) throws BusinessException {
         Integer idAuxiliar=0;
@@ -76,14 +85,11 @@ public class MeetingDAO implements IMeetingDAO{
         return idAuxiliar;
     }
     
-    public boolean findMeetingById(int id) {
-        boolean value=true;
-       if(id== 0){
-           value=false;
-       }
-       return value;
-    }
-
+  /*
+        *@params id Identificador de la reunión que va a recuperarse 
+        *@return La reunión recuperada  de acuerdo al id
+        *@throws Se cacho una excepción de tipo SQLException o si no es localizada la reunión manda una excepción de tipo BusinessException
+    */
     public Meeting getMeetingById(int idMeeting) throws BusinessException  {
         Meeting meetingAuxiliar = null;
         try{
@@ -105,6 +111,8 @@ public class MeetingDAO implements IMeetingDAO{
                 String keyGroupAcademic= resultSet.getString("clave_CA");
                 meetingAuxiliar=new Meeting(id,subject,date,hourStart, state);
                 meetingAuxiliar.setKeyGroupAcademic(keyGroupAcademic);
+            }else{  
+                throw new BusinessException("Meeting not found ");
             }
                 connectorDataBase.disconnect();
         }catch(SQLException sqlException) {
@@ -116,6 +124,11 @@ public class MeetingDAO implements IMeetingDAO{
         
     }
 
+    /*
+        *@params keyGroupAcademic Clave del cuerpo académico para filtrar las reuniones que le corresponden
+        *@return Reuniones relacionadas a un cuerpo académico
+        *@throws Se cacho una excepción de tipo SQLException
+    */
     public ArrayList<Meeting>  getMeetings(String keyGroupAcademic){
         ArrayList<Meeting> meetingList = new ArrayList<Meeting>();
         try{
@@ -149,6 +162,11 @@ public class MeetingDAO implements IMeetingDAO{
             return meetingList;
         }
 
+      /*
+        *@params meeting La nueva información de la reunión que se va actualizar  
+        *@return Si la reunión pudo ser actualizada (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException 
+    */
     public boolean updatedSucessful(Meeting meeting) throws BusinessException{
       boolean updateSuccess=false;
             try {
@@ -173,6 +191,12 @@ public class MeetingDAO implements IMeetingDAO{
             }
         return updateSuccess;  
     }    
+    
+     /*
+        *@params meeting La reunión a la cual se le modificará el estado 
+        *@return Si el estado de la reunión pudo ser actualizada (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException 
+    */
 
     @Override
     public boolean changedStateSucessful(Meeting meeting) throws BusinessException {
@@ -197,6 +221,13 @@ public class MeetingDAO implements IMeetingDAO{
             }
         return updateSuccess;    
     }
+    
+     /*
+        *@params meeting Reunión a la cual se le añaden los asistentes
+        *@return Si la reunión pudo ser guardar sus asistentes (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException 
+        *@see Meeting
+    */
     
      public boolean addedSucessfulAssistants(Meeting meeting) throws BusinessException {
         boolean addAssistantSuccess=false;
@@ -224,6 +255,13 @@ public class MeetingDAO implements IMeetingDAO{
             }
         return addAssistantSuccess;
     }
+     
+   /*
+        *@params meeting Reunión a la cual se le eliminan los asistentes
+        *@return Si fue posible eliminar los asistentes de una reunión (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException 
+        *@see Meeting
+    */
 
     @Override
     public boolean deletedSucessfulAssistants(Meeting meeting, Member assistant) throws BusinessException {
@@ -252,6 +290,12 @@ public class MeetingDAO implements IMeetingDAO{
         }
         return deleteSucess;
     }
+    
+    /*
+        *@params idMeeting Identificador de la reunión del cual se buscan sus asistentes
+        *@return Listado de asistentes de una reunión
+        *@throws Se cacho una excepción de tipo SQLException
+    */
 
     @Override
     public ArrayList<Member> getAssistants(int idMeeting) throws BusinessException {

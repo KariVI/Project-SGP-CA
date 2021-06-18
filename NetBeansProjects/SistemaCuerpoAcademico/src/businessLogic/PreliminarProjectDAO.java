@@ -1,8 +1,6 @@
 /*
         *@author Karina Valdes
-        *@see IPreliminarProjectDAO
-        *@see Student
-        *@see Member
+ 
     */
 package businessLogic;
 
@@ -20,6 +18,11 @@ import log.Log;
 
 public class PreliminarProjectDAO implements IPreliminarProjectDAO {
 
+      /*
+        *@params preliminarProject El anteproyecto a guardar 
+        *@return Si el anteproyecto pudo ser guardado (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException
+    */
     @Override
     public boolean savedSucessful(PreliminarProject preliminarProject) throws BusinessException {
          boolean value=false;
@@ -45,6 +48,12 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
             }
         return value;
     }
+    
+     /*
+        *@params preliminarProject Anteproyecto del cual se busca su id
+        *@return La id del anteproyecto
+        *@throws Se cacho una excepción de tipo SQLException o si no es localizado el anteproyecto manda una excepción de tipo BusinessException
+    */
 
     @Override
     public int getId(PreliminarProject preliminarProject) throws BusinessException {
@@ -77,6 +86,13 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
         }
         return id;
     }
+    
+      /*
+        *@params id Identificador del anteproyecto a modificar 
+        *@params preliminarProject La nueva información del anteproyecto a actualizar  
+        *@return Si el anteproyecto pudo ser actualizado (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException 
+    */
 
     @Override
     public boolean updatedSucessful(int id,PreliminarProject preliminarProject) throws BusinessException {
@@ -104,6 +120,12 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
         return updateSucess;
     }
 
+    /*
+        *@params keyGroupAcademic Clave del cuerpo académico para filtrar los anteproyectos que le corresponden
+        *@return Anteproyectos relacionados a un cuerpo académico
+        *@throws Se cacho una excepción de tipo SQLException
+    */
+    
     @Override
     public ArrayList<PreliminarProject> getPreliminarProjects(String keyGroupAcademic) throws BusinessException {
        ArrayList<PreliminarProject> preliminarProjectList = new ArrayList<PreliminarProject>();
@@ -136,6 +158,12 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
             }
             return preliminarProjectList;
     }
+    
+     /*
+        *@params id Identificador del Anteproyecto que va a recuperarse 
+        *@return El anteproyecto recuperado de acuerdo al id
+        *@throws Se cacho una excepción de tipo SQLException o si no es localizado el anteproyecto manda una excepción de tipo BusinessException
+    */
 
     @Override
     public PreliminarProject getById(int id) throws BusinessException {
@@ -169,7 +197,12 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
         return preliminarProject;
     }
 
-  
+     /*
+        *@params preliminarProject Anteproyecto al cual se le añaden los colaboradores
+        *@return Si el anteproyecto pudo ser guardar sus colaboradores  (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException 
+        *@see PreliminarProject
+    */
     public boolean addedSucessfulColaborators(PreliminarProject preliminarProject) throws BusinessException {
         boolean addColaboratorSuccess=false;
         int idPreliminarProject=preliminarProject.getKey();
@@ -197,6 +230,12 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
         return addColaboratorSuccess;
     }
     
+    /*
+        *@params preliminarProject El Anteproyecto al cual se le añaden los estudiantes
+        *@return Si el anteproyecto pudo ser guardar sus estudiantes (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException
+        *@see PreliminarProject
+    */
     public boolean addedSucessfulStudents(PreliminarProject preliminarProject) throws BusinessException {
         boolean addStudentsSuccess=false;
         int idPreliminarProject=preliminarProject.getKey();
@@ -223,6 +262,11 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
         return addStudentsSuccess;
     }
 
+    /*
+        *@params idPreliminarProject Identificador del anteproyecto del cual se buscan sus colaboradores 
+        *@return Listado de colaboradores del anteproyecto
+        *@throws Se cacho una excepción de tipo SQLException
+    */
     public ArrayList<Member> getColaborators(int idPreliminarProject) throws BusinessException {
         ArrayList<Member> colaborators= new ArrayList<Member> ();
         MemberDAO memberDAO= new MemberDAO();
@@ -252,6 +296,13 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
 
         return colaborators;
     }
+    
+    /*
+        *@params preliminarProject Anteproyecto al cual se le eliminan los colaboradores
+        *@return Si fue posible eliminar los colaboradores de un anteproyecto (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException 
+        *@see PreliminarProject
+    */
 
     @Override
     public boolean deletedSucessfulColaborators(PreliminarProject preliminarProject) throws BusinessException {
@@ -281,6 +332,11 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
         return deleteSucess;
     }
 
+    /*
+        *@params idPreliminarProject Identificador del anteproyecto del cual se buscan sus estudiantes
+        *@return Listado de estudiantes del anteproyecto
+        *@throws Se cacho una excepción de tipo SQLException
+    */
     @Override
     public ArrayList<Student> getStudents(int idPreliminarProject) throws BusinessException {
         ArrayList<Student> students= new ArrayList<Student> ();
@@ -310,6 +366,13 @@ public class PreliminarProjectDAO implements IPreliminarProjectDAO {
         return students;
     }
 
+    /*
+        *@params preliminarProject Anteproyecto al cual se le eliminan los estudiantes
+        *@return Si fue posible eliminar los estudiantes de un anteproyecto (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException
+        *@see PreliminarProject
+    */
+    
     @Override
     public boolean deletedSucessfulStudents(PreliminarProject preliminarProject) throws BusinessException {
         boolean deleteSucess=false;

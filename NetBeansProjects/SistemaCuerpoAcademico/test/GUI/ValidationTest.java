@@ -21,7 +21,7 @@ public class ValidationTest {
     @Test
     public void testFindInvalidField(){ 
           System.out.println("findInvalidField");
-        String field = "Karina/&? Valdes -?Iglesias";
+        String field = "Karina///$$$ Valdes***Iglesias";
         Validation validation= new Validation();
         boolean result = validation.findInvalidField(field);
         assertTrue(result);
@@ -72,4 +72,36 @@ public class ValidationTest {
          Validation validation= new Validation();
          assertTrue(validation.validateCorrectHours(startHour, finishHour));
      }
-}
+     
+    @Test
+       public void testValidateCorrectHourFailed(){
+         String startHour = "22:21";
+         String finishHour = "09:20";
+         Validation validation= new Validation();
+         assertFalse(validation.validateCorrectHours(startHour, finishHour));
+     }
+       
+     @Test
+     public void testvalidateNumberField(){ 
+         String number= "12";
+          Validation validation= new Validation();
+         assertTrue(validation.validateNumberField(number));
+         
+     }
+     
+     @Test
+     public void testvalidateNumberFieldFailed(){ 
+         String number= "Doce";
+         boolean value=true;
+          Validation validation= new Validation();
+          try{
+              validation.validateNumberField(number);
+          }catch(ExceptionInInitializerError ex){    
+              value=false;
+          }
+         assertFalse(value);
+     }
+         
+ }
+
+

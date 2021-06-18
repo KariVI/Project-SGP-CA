@@ -1,7 +1,6 @@
 /*
         *@author Karina Valdes
-        *@see ILGACDAO
-        *@see LGAC
+
     */
 package businessLogic;
 
@@ -18,6 +17,11 @@ import log.Log;
 
 public class LGACDAO implements ILGACDAO {
     
+    /*
+        *@params lgac LGAC a guardar 
+        *@return Si la LGAC pudo ser guardada (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException
+    */
     public boolean savedSucessful(LGAC lgac) throws BusinessException{    
         boolean value=false;
         Connector connectorDataBase=new Connector();
@@ -41,6 +45,11 @@ public class LGACDAO implements ILGACDAO {
         return value;
     }
 
+     /*
+        *@params name nombre de la LGAC a buscar
+        *@return La LGAC pudo ser recuperada de acuerdo al nombre
+        *@throws Se cacho una excepción de tipo SQLException o o si no es localizada la LGAC manda una excepción de tipo BusinessException
+    */
     @Override
     public LGAC getLgacByName(String name) throws BusinessException {
         LGAC lgacAuxiliar=null;
@@ -69,7 +78,12 @@ public class LGACDAO implements ILGACDAO {
         return lgacAuxiliar;
     }
 
-   
+   /*
+        *@params beforeName Nombre anterior de la LGAC ha actualizar
+        *@params lgac La nueva información de la LGAC a actualizar 
+        *@return Si la LGAC pudo ser actualizada (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException 
+    */
     public boolean updatedSucessful(String beforeName, LGAC lgac) throws BusinessException {
         boolean updateSucess=false;
         Connector connectorDataBase=new Connector();
