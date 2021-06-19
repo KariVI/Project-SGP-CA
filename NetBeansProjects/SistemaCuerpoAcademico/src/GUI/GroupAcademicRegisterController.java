@@ -193,19 +193,22 @@ public class GroupAcademicRegisterController implements Initializable  {
     private void recoverlgacs(GroupAcademic groupAcademic){   
         GridPane gridPane= (GridPane) spLgac.getContent();
             int i=1;
-            Integer lgacs=Integer.parseInt(tflgacsNumber.getText());  
-            int sizeRows=3;
-           while (i < (sizeRows * lgacs)){
-               TextField namelgac = (TextField) getNodeFromGridPane( gridPane, 1, i);
-               TextArea descriptionlgac = (TextArea) getNodeFromGridPane( gridPane, 1, (i + 1));
-               if(validateFieldslgacs(namelgac,descriptionlgac)){         
-                 String name= namelgac.getText();
-                 String description= descriptionlgac.getText(); 
-                 LGAC lgac = new LGAC(name, description);
-                 savelgacs(groupAcademic, lgac);
+             Validation validation = new Validation();
+             if(validation.validateNumberField(tflgacsNumber.getText())){
+                Integer lgacs=Integer.parseInt(tflgacsNumber.getText());  
+                int sizeRows=3;
+               while (i < (sizeRows * lgacs)){
+                   TextField namelgac = (TextField) getNodeFromGridPane( gridPane, 1, i);
+                   TextArea descriptionlgac = (TextArea) getNodeFromGridPane( gridPane, 1, (i + 1));
+                   if(validateFieldslgacs(namelgac,descriptionlgac)){         
+                     String name= namelgac.getText();
+                     String description= descriptionlgac.getText(); 
+                     LGAC lgac = new LGAC(name, description);
+                     savelgacs(groupAcademic, lgac);
+                   }
+                   i=i+3;              
                }
-               i=i+3;
-           }
+             }
     }
     
     private void savelgacs(GroupAcademic groupAcademic,LGAC lgac){   

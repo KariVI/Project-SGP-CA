@@ -369,22 +369,25 @@ public class ReceptionWorkRegisterController implements Initializable {
         GridPane gridPane= (GridPane) spStudent.getContent();
         ArrayList<Student> students = new ArrayList<Student>();
             int i=1;
-            Integer lgacs=Integer.parseInt(tfNumberStudents.getText());  
-            int sizeRows=3;
-           while (i < (sizeRows * lgacs)){
-               TextField enrollment = (TextField) getNodeFromGridPane( gridPane, 1, i);
-               TextField name = (TextField) getNodeFromGridPane( gridPane, 1, (i + 1));
-               i=i+3;
-               if(validateFieldsStudent(enrollment,name)){         
-                 String enrollmentStudent= enrollment.getText();
-                 String nameStudent= name.getText(); 
-                 Student student = new Student(enrollmentStudent,nameStudent);
-                 students.add(student);
-                 saveStudent(student);
+            Validation validation = new Validation();
+             if(validation.validateNumberField(tfNumberStudents.getText())){
+                Integer lgacs=Integer.parseInt(tfNumberStudents.getText());  
+                int sizeRows=3;
+               while (i < (sizeRows * lgacs)){
+                   TextField enrollment = (TextField) getNodeFromGridPane( gridPane, 1, i);
+                   TextField name = (TextField) getNodeFromGridPane( gridPane, 1, (i + 1));
+                   i=i+3;
+                   if(validateFieldsStudent(enrollment,name)){         
+                     String enrollmentStudent= enrollment.getText();
+                     String nameStudent= name.getText(); 
+                     Student student = new Student(enrollmentStudent,nameStudent);
+                     students.add(student);
+                     saveStudent(student);
+                   }
                }
-           }
-           receptionWork.setStudents(students);
-           addStudentsInReceptionWork();
+               receptionWork.setStudents(students);
+               addStudentsInReceptionWork();
+             }
     }
     
      private boolean validateFieldsStudent(TextField enrollment, TextField name){
