@@ -39,21 +39,6 @@ public class MinuteDAOTest {
     }
     
     @Test
-    public void testGetMinutes() throws BusinessException {
-        System.out.println("getMinutes");
-        MinuteDAO instanceMinute = new MinuteDAO();
-        ArrayList<Minute> result = instanceMinute.getMinutes();
-        ArrayList<Minute> resultExpected = new ArrayList<Minute>();
-        Minute minute1 = new Minute(3,"Los acuerdos registrados son pendientes","Registrada","Revisar el punto 1.3",3);
-        Minute minute2 = new Minute(2,"La segunda version de FEIBook estará disponible hasta el 11 de septiembre","Registrada","Sin pendientes",4);
-        Minute minute3 = new Minute(1,"El seminario se realizara el dia 13 de agosto del 2022","Registrada","Asignar horario a ponentes",2);
-        resultExpected.add(minute3);
-        resultExpected.add(minute2);
-        resultExpected.add(minute1);
-        assertEquals(result,resultExpected);
-    }  
-    
-    @Test
     public void testGetMinuteComments() throws BusinessException {
         System.out.println("getMinutesComments");
         MinuteDAO instance = new MinuteDAO();

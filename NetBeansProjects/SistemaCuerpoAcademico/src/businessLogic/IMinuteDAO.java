@@ -11,7 +11,6 @@ public interface IMinuteDAO {
     public int getIdMinute(Minute minute)throws BusinessException;
     public boolean approveMinute(int idMinute, String professionalLicense)throws BusinessException;
     public boolean disapproveMinute(MinuteComment minuteComment)throws BusinessException;
-    public ArrayList<Minute>  getMinutes()throws BusinessException;
     public ArrayList<MinuteComment>  getMinutesComments(int idMinute) throws BusinessException;
     public boolean deletedSucessfulMinuteComment(MinuteComment minuteComment) throws BusinessException;
     public boolean deletedSucessfulMinutesComments(int idMinute) throws BusinessException;

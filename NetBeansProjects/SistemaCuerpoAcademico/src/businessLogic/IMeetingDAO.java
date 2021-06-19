@@ -11,7 +11,6 @@ import log.BusinessException;
 public interface IMeetingDAO {
     public boolean savedSucessful(Meeting meeting )throws BusinessException ;
     public int getId(Meeting meeting) throws BusinessException;
-    public boolean findMeetingById(int id);
     public Meeting getMeetingById(int id) throws BusinessException;
     public boolean addedSucessfulAssistants(Meeting meeting) throws BusinessException;
     public ArrayList<Member> getAssistants(int idMeeting) throws BusinessException;

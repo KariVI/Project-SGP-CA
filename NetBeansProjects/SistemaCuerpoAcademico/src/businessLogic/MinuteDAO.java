@@ -111,41 +111,7 @@ public class MinuteDAO implements IMinuteDAO {
         return disapproveSucess;
     }
     
-    /*
-        *@return Todas las minutas almacenadas en la base de datosArrayList<Minute> 
-        *@throws BusinessException Se cacho una excepción de tipo SQLException
-    */    
-    @Override
-    public ArrayList<Minute>  getMinutes() throws BusinessException{
-        ArrayList<Minute> minuteList = new ArrayList<>();
-        try{
-            Connector connectorDataBase = new Connector();
-            Connection connectionDataBase = connectorDataBase.getConnection();
-            try{
-                PreparedStatement getMinutesStatment;
-                getMinutesStatment = connectionDataBase.prepareStatement("SELECT * FROM Minuta");
-                ResultSet minuteResultSet;
-                minuteResultSet = getMinutesStatment.executeQuery();
-                while(minuteResultSet.next()){
-                    int idMinute = minuteResultSet.getInt("idMinuta");
-                    String note = minuteResultSet.getString("nota");
-                    String due = minuteResultSet.getString("pendiente");
-                    String state = minuteResultSet.getString("estado");
-                    int idMeeting = minuteResultSet.getInt("idReunion");
-                    Minute minute = new Minute(idMinute, note, state, due,idMeeting);
-                    minuteList.add(minute);
-                }
-               
-                connectorDataBase.disconnect();          
-            }catch(SQLException sqlException) {
-                throw new BusinessException("Parameter index ", sqlException);
-            }
-        }catch(ClassNotFoundException ex) {
-            Log.logException(ex);
-        }
-        
-        return minuteList;  
-    }
+
     
     /*
         *@params idMinute ID de la Minuta de la cual se buscarán comentarios
