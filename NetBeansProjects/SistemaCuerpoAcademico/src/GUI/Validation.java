@@ -53,7 +53,7 @@ public class Validation {
                     value=true;
                } catch (NumberFormatException exception) {
                    AlertMessage alertMessage=new AlertMessage();
-                   alertMessage.showAlertValidateFailed("Inserte un formato de número correcto en número de lgac");
+                   alertMessage.showAlertValidateFailed("Inserte un formato de número correcto");
                }
 
               return value;
