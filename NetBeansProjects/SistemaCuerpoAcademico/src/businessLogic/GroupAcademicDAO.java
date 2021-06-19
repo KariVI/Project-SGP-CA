@@ -1,7 +1,6 @@
 /*
         *@author Karina Valdes
-        *@see IGroupAcademicDAO
-        *@see LGAC
+
     */
 package businessLogic;
 
@@ -18,6 +17,12 @@ import log.Log;
 
 public class GroupAcademicDAO implements IGroupAcademicDAO {
 
+     
+     /*
+        *@params groupAcadmeic Cuerpo Académico a guardar 
+        *@return Si el cuerpo académico pudo ser guardado (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException
+    */
     @Override
     public boolean savedSucessful(GroupAcademic groupAcademic) throws BusinessException {
         boolean value=false;
@@ -46,6 +51,13 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
             }
         return value;
     }
+    
+    
+    /*
+        *@params ket Clave de cuerpo académico que se busca recuperar
+        *@return Cuerpo académico recuperado por su clave
+        *@throws Se cacho una excepción de tipo SQLException o si no es localizado el cuerpo académico manda una excepción de tipo BusinessException
+    */
  
 @Override
     public GroupAcademic getGroupAcademicById(String key ) throws BusinessException{
@@ -81,6 +93,13 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
         return groupAcademicAuxiliar;
         
     }  
+    
+       /*
+        *@params groupAcademic Cuerpo Académico al cual se le añade una lgac
+        *@params lgac LGAC que se va añadir
+        *@return Si el cuerpo académico  se le añadió una lgac (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException 
+    */
 
     @Override
     public boolean addedLGACSucessful(GroupAcademic groupAcademic, LGAC lgac) throws BusinessException {
@@ -104,6 +123,12 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
     }
 
  
+    /*
+        *@params lastKey La última clave del cuerpo académico que se va actualizar
+        *@params groupAcademic La nueva información del cuerpo académico que se va actualizar 
+        *@return Si el cuerpo académico pudo ser actualizado (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException 
+    */
     public boolean updatedSucessful(String lastKey,GroupAcademic groupAcademic) throws BusinessException {
         boolean updateSucess=false;
         Connector connectorDataBase=new Connector();
@@ -130,6 +155,12 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
         return updateSucess;
     }
     
+        /*
+        *@params keyGroupAcademic Cuerpo Académico del cual se buscan sus lgacs 
+        *@return Listado de lgacs del cuerpo académico correspondiente
+        *@throws Se cacho una excepción de tipo SQLException 
+    */
+
     public ArrayList<LGAC> getLGACs(String keyGroupAcademic) throws BusinessException{  
         ArrayList<LGAC> lgacList = new ArrayList<LGAC>();
         Connector connectorDataBase=new Connector();
@@ -156,6 +187,13 @@ public class GroupAcademicDAO implements IGroupAcademicDAO {
         }
       return lgacList;
     }
+
+       /*
+        *@params groupAcademic Cuerpo Académico al cual se le elimina una lgac
+        *@params lgac LGAC que se va eliminar
+        *@return Si el cuerpo académico  se le eliminó una lgac (true) o no (false) en la base de datos 
+        *@throws Se cacho una excepción de tipo SQLException 
+    */
 
    public boolean deletedLGACSuccesful(String keyGroupAcademic, LGAC lgac) throws BusinessException {
        boolean value=false;
