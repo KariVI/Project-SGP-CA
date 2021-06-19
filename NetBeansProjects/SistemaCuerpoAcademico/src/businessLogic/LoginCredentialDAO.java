@@ -1,10 +1,7 @@
 package businessLogic;
 
-
-import businessLogic.ILoginCredentialDAO;
 import dataaccess.Connector;
 import domain.LoginCredential;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,8 +9,17 @@ import java.sql.SQLException;
 import log.BusinessException;
 import log.Log;
 
+/*
+        *@author Mariana Vargas
+*/
 public class LoginCredentialDAO implements ILoginCredentialDAO {
     
+    /*
+        *@param credential Credencial a registrar
+        *@return Si la credencial pudo ser registrada (true) o no (false) en la base de datos 
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */
+    @Override
     public boolean registerSuccesful(LoginCredential credential) throws BusinessException {
         boolean saveSuccess = false;
         try {  
@@ -32,15 +38,20 @@ public class LoginCredentialDAO implements ILoginCredentialDAO {
                 saveSuccess = true;
              }catch(SQLException sqlException) {
                 throw new BusinessException("Parameter index ", sqlException);
-             } 
-            
+             }             
          }catch(ClassNotFoundException ex) {
             Log.logException(ex);
         } 
         
         return saveSuccess;
     } 
-     
+    
+    /*
+        *@param credential Credencial a buscar
+        *@return La credencial recuperada de la base de datos (LoginCredential)
+        *@throws BusinessException Se cacho una excepción de tipo SQLException o no se encontró la credencial
+    */     
+    @Override
     public LoginCredential searchLoginCredential(LoginCredential credential)throws BusinessException  {
         LoginCredential retrievedCredential = null;
         try{

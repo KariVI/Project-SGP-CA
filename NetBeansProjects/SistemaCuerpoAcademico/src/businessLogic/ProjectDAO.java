@@ -14,138 +14,163 @@ import java.util.ArrayList;
 import log.Log;
 import log.BusinessException;
 
+/*
+        *@author Mariana Vargas
+*/
 public class ProjectDAO implements IProjectDAO {
+    
+    /*
+        *@param project Proyecto a guardar 
+        *@return Si el proyecto pudo ser guardada (true) o no (false) en la base de datos 
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */
+    @Override
+    public boolean savedSucessful(Project project) throws BusinessException{
+        boolean saveSuccess = false;
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            try{
+                PreparedStatement insertProjectStatment;
+                insertProjectStatment = connectionDataBase.prepareStatement("INSERT INTO Proyecto(titulo,descripcion,fechaInicio,fechaFin,clave) VALUES(?,?,?,?,?) ");
+                insertProjectStatment.setString(1, project.getTitle());
+                insertProjectStatment.setString(2,  project.getDescription());
+                insertProjectStatment.setString(3, project.getStartDate());
+                insertProjectStatment.setString(4, project.getFinishDate());
+                insertProjectStatment.setString(5, project.getGroupAcademicKey());
+                insertProjectStatment.executeUpdate();
+                connectorDataBase.disconnect();
+                saveSuccess = true;
+            }catch(SQLException sqlException) {
+                throw new BusinessException("Parameter index ", sqlException);
+            }
 
-        @Override
-        public boolean savedSucessful(Project project) throws BusinessException{
-            boolean saveSuccess = false;
+        }catch(ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+
+        return saveSuccess;
+    }
+    
+     /*
+        *@return Todos los proyectos de la base de datos (ArrayList<Project>)
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */       
+    @Override
+    public ArrayList<Project>  getProjects() throws BusinessException{
+        ArrayList<Project> projectList = new ArrayList<Project>();
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
             try{
-                Connector connectorDataBase = new Connector();
-                Connection connectionDataBase = connectorDataBase.getConnection();
-                try{
-                    PreparedStatement insertProjectStatment;
-                    insertProjectStatment = connectionDataBase.prepareStatement("INSERT INTO Proyecto(titulo,descripcion,fechaInicio,fechaFin,clave) VALUES(?,?,?,?,?) ");
-                    insertProjectStatment.setString(1, project.getTitle());
-                    insertProjectStatment.setString(2,  project.getDescription());
-                    insertProjectStatment.setString(3, project.getStartDate());
-                    insertProjectStatment.setString(4, project.getFinishDate());
-                    insertProjectStatment.setString(5, project.getGroupAcademicKey());
-                    insertProjectStatment.executeUpdate();
+                PreparedStatement getProjectsStatment;
+                getProjectsStatment = connectionDataBase.prepareStatement("SELECT * FROM Proyecto");
+                ResultSet projectResultSet;
+                projectResultSet = getProjectsStatment.executeQuery();
+                while(projectResultSet.next()){
+                    int idProject = projectResultSet.getInt("idProyecto");
+                    String title = projectResultSet.getString("titulo");
+                    String description = projectResultSet.getString("descripcion");
+                    String startDate = projectResultSet.getString("fechaInicio");
+                    String finishDate = projectResultSet.getString("fechaFin");
+                    String groupAcademicKey = projectResultSet.getString("clave");
+                    Project projectData = new Project(idProject,title, description, startDate, finishDate,groupAcademicKey);
+                    projectList.add(projectData);
+                }
+
+                connectorDataBase.disconnect();
+
+            }catch(SQLException sqlException) {
+                throw new BusinessException("Parameter index ", sqlException);
+            }
+
+        }catch(ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+
+        return projectList;  
+    }
+    
+    /*
+        *@param project Proyecto del cual se busca obtener el ID
+        *@return Si se encuentra el proyecto, su ID (int)
+        *@throws BusinessException Se cacho una excepción de tipo SQLException o si no se encontro el proyecto a buscar
+    */                    
+    @Override
+    public int searchId(Project project) throws BusinessException{
+        int idProject = 0;
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            try{
+                PreparedStatement projectStatment;
+                projectStatment = connectionDataBase.prepareStatement("SELECT idProyecto FROM Proyecto where titulo = ?");
+                projectStatment.setString(1,project.getTitle());
+                ResultSet projectResultSet;
+                projectResultSet = projectStatment.executeQuery();
+                if(projectResultSet.next()){
+                    idProject = projectResultSet.getInt("idProyecto");
+                }else{
+                    throw new BusinessException("Project not found");
+                }
+
                     connectorDataBase.disconnect();
-                    saveSuccess = true;
-                }catch(SQLException sqlException) {
+
+               }catch(SQLException sqlException) {
                     throw new BusinessException("Parameter index ", sqlException);
-                }
-                
-            }catch(ClassNotFoundException ex) {
-                Log.logException(ex);
-            }
-            
-            return saveSuccess;
+               }
+
+        }catch(ClassNotFoundException ex) {
+            Log.logException(ex);
         }
-        
-        @Override
-        public ArrayList<Project>  getProjects() throws BusinessException{
-            ArrayList<Project> projectList = new ArrayList<Project>();
+
+        return idProject;
+    }
+    
+   /*
+        *@params idProject ID del proyecto a buscar
+        *@return El proyecto con el id (Project)
+        *@throws BusinessException Se cacho una excepción de tipo SQLException o si no se encontro el proyecto a a buscar
+    */         
+    @Override
+    public Project getProjectById(int idProject) throws BusinessException{
+        Project project = null;
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
             try{
-                Connector connectorDataBase = new Connector();
-                Connection connectionDataBase = connectorDataBase.getConnection();
-                try{
-                    PreparedStatement getProjectsStatment;
-                    getProjectsStatment = connectionDataBase.prepareStatement("SELECT * FROM Proyecto");
-                    ResultSet projectResultSet;
-                    projectResultSet = getProjectsStatment.executeQuery();
-                    while(projectResultSet.next()){
-                        int idProject = projectResultSet.getInt("idProyecto");
-                        String title = projectResultSet.getString("titulo");
-                        String description = projectResultSet.getString("descripcion");
-                        String startDate = projectResultSet.getString("fechaInicio");
-                        String finishDate = projectResultSet.getString("fechaFin");
-                        String groupAcademicKey = projectResultSet.getString("clave");
-                        Project projectData = new Project(idProject,title, description, startDate, finishDate,groupAcademicKey);
-                        projectList.add(projectData);
-                    }
-                   
-                    connectorDataBase.disconnect();
-                           
-                }catch(SQLException sqlException) {
-                    throw new BusinessException("Parameter index ", sqlException);
+                PreparedStatement getProjectStatment;
+                getProjectStatment = connectionDataBase.prepareStatement("SELECT * FROM Proyecto where idProyecto = ?");
+                getProjectStatment.setInt(1,idProject);
+                ResultSet projectResultSet;           
+                projectResultSet = getProjectStatment.executeQuery();            
+                if(projectResultSet.next()){
+                    int id = projectResultSet.getInt("idProyecto");
+                    String title = projectResultSet.getString("titulo");
+                    String description = projectResultSet.getString("descripcion");
+                    String startDate = projectResultSet.getString("fechaInicio");
+                    String finishDate = projectResultSet.getString("fechaFin");
+                    String groupAcademicKey = projectResultSet.getString("Clave");
+                    project = new Project(id, title, description, startDate, finishDate, groupAcademicKey);
                 }
-                
-            }catch(ClassNotFoundException ex) {
-                Log.logException(ex);
+
+                connectorDataBase.disconnect();              
+            }catch(SQLException sqlException) {
+                throw new BusinessException("Parameter index ", sqlException);
             }
-                   
-            return projectList;  
+
+        }catch(ClassNotFoundException ex) {
+            Log.logException(ex);
         }
-        
-      
-        
-        @Override
-        public int searchId(Project project) throws BusinessException{
-            int idProject = 0;
-            try{
-                Connector connectorDataBase = new Connector();
-                Connection connectionDataBase = connectorDataBase.getConnection();
-                try{
-                    PreparedStatement projectStatment;
-                    projectStatment = connectionDataBase.prepareStatement("SELECT idProyecto FROM Proyecto where titulo = ?");
-                    projectStatment.setString(1,project.getTitle());
-                    ResultSet projectResultSet;
-                    projectResultSet = projectStatment.executeQuery();
-                    if(projectResultSet.next()){
-                        idProject = projectResultSet.getInt("idProyecto");
-                    }else{
-                        throw new BusinessException("Project not found");
-                    }
-                        
-                        connectorDataBase.disconnect();
-                           
-                   }catch(SQLException sqlException) {
-                        throw new BusinessException("Parameter index ", sqlException);
-                   }
-                
-            }catch(ClassNotFoundException ex) {
-                Log.logException(ex);
-            }
-            
-            return idProject;
-        }
-        
-        @Override
-        public Project getProjectById(int idProject) throws BusinessException{
-            Project project = null;
-            try{
-                Connector connectorDataBase = new Connector();
-                Connection connectionDataBase = connectorDataBase.getConnection();
-                try{
-                    PreparedStatement getProjectStatment;
-                    getProjectStatment = connectionDataBase.prepareStatement("SELECT * FROM Proyecto where idProyecto = ?");
-                    getProjectStatment.setInt(1,idProject);
-                    ResultSet projectResultSet;           
-                    projectResultSet = getProjectStatment.executeQuery();            
-                    if(projectResultSet.next()){
-                        int id = projectResultSet.getInt("idProyecto");
-                        String title = projectResultSet.getString("titulo");
-                        String description = projectResultSet.getString("descripcion");
-                        String startDate = projectResultSet.getString("fechaInicio");
-                        String finishDate = projectResultSet.getString("fechaFin");
-                        String groupAcademicKey = projectResultSet.getString("Clave");
-                        project = new Project(id, title, description, startDate, finishDate, groupAcademicKey);
-                    }
-                        
-                    connectorDataBase.disconnect();              
-                }catch(SQLException sqlException) {
-                    throw new BusinessException("Parameter index ", sqlException);
-                }
-                
-            }catch(ClassNotFoundException ex) {
-                Log.logException(ex);
-            }
-            
-            return project;  
-        }
-        
+
+        return project;  
+    }
+    
+    /*
+        *@param newProject proyecto con los datos nuevos a actualizar
+        *@return Si el proyecto pudo ser actualizado (true) o no (false) en la base de datos
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */          
     @Override
     public boolean updatedSucessful(Project newProject) throws BusinessException {
         boolean updateSucess = false;
@@ -169,7 +194,12 @@ public class ProjectDAO implements IProjectDAO {
         
         return updateSucess;
     }
-
+    
+    /*
+        *@param project Proyecto al cual se añaden los estudiantes
+        *@return Si los estudiantes pueden ser guardados (true) o no (false) en la base de datos
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */
     @Override
     public boolean addStudents(Project project) throws BusinessException {
         boolean addStudentsSuccess = false;
@@ -196,7 +226,12 @@ public class ProjectDAO implements IProjectDAO {
             }
         return addStudentsSuccess;
     }
-
+    
+    /*
+        *@param project Proyecto al cual se añaden los colaboradores
+        *@return Si los colaboradores pueden ser guardados (true) o no (false) en la base de datos
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */
     @Override
     public boolean addColaborators(Project project) throws BusinessException {
         boolean addColaboratorsSuccess = false;
@@ -223,7 +258,12 @@ public class ProjectDAO implements IProjectDAO {
             }
         return addColaboratorsSuccess;
     }
-
+    
+    /*
+        *@param project Proyecto al cual se añaden las LGACs
+        *@return Si las LGACs pueden ser guardadas (true) o no (false) en la base de datos
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */
     @Override
     public boolean addLGAC(Project project) throws BusinessException {
         boolean addLGACSucces = false;
@@ -250,7 +290,12 @@ public class ProjectDAO implements IProjectDAO {
             }
         return addLGACSucces;
     }
-
+    
+    /*
+        *@param project Proyecto del cual se recuperarán los colaboradores
+        *@return Colaboradores del proyecto relacionado (ArrayList<Member>)
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */
     @Override
     public ArrayList<Member> getColaborators(Project project) throws BusinessException {
         ArrayList<Member> members = new ArrayList<Member>();
@@ -277,7 +322,12 @@ public class ProjectDAO implements IProjectDAO {
         
         return members;
     }
-
+    
+    /*
+        *@param project Proyecto del cual se recuperarán los estudiantes
+        *@return Estudiantes del proyecto relacionado (ArrayList<Student>)
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */
     @Override
     public ArrayList<Student> getStudents(Project project) throws BusinessException {
         ArrayList<Student> students= new ArrayList<Student>();
@@ -304,7 +354,12 @@ public class ProjectDAO implements IProjectDAO {
 
         return students;
     }
-
+    
+    /*
+        *@param project Proyecto del cual se recuperarán las LGACs
+        *@return LGACs del proyecto relacionado (ArrayList<LGAC>)
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */
     @Override
     public ArrayList<LGAC> getLGACs(Project project) throws BusinessException {
         ArrayList<LGAC> lgacs = new ArrayList<LGAC>();
@@ -332,6 +387,11 @@ public class ProjectDAO implements IProjectDAO {
         return lgacs;
     }
 
+    /*
+        *@param project Proyecto al cual se añaden los trabajos recepcionales
+        *@return Si los trabajos recepcionales pueden ser guardadas (true) o no (false) en la base de datos
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */
     @Override
     public boolean addReceptionWork(Project project) throws BusinessException {
         boolean addReceptionWorkSucces = false;
@@ -358,7 +418,12 @@ public class ProjectDAO implements IProjectDAO {
             }
         return addReceptionWorkSucces;
     }
-
+    
+    /*
+        *@param project Proyecto del cual se recuperarán los trabajos recepcionales
+        *@return Trabajos recepcionales del proyecto relacionado (ArrayList<ReceptionWork>)
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */
     @Override
     public ArrayList<ReceptionWork> getReceptionWorks(Project project) throws BusinessException {
         ArrayList<ReceptionWork> receptionWorks = new ArrayList<ReceptionWork>();
@@ -385,6 +450,11 @@ public class ProjectDAO implements IProjectDAO {
         return receptionWorks;
     }
     
+    /*
+        *@param project Proyecto del cual se eliminarán los colaboradores
+        *@return Si los colaboradores puedieron ser eliminados (true) o no (false) en la base de datos
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */    
     @Override
     public boolean deletedSucessfulColaborators(Project project) throws BusinessException {
         boolean deleteSucess = false;
@@ -406,7 +476,12 @@ public class ProjectDAO implements IProjectDAO {
         }
         return deleteSucess;
     }
-
+    
+    /*
+        *@param project Proyecto del cual se eliminarán los trabajos recepcionales
+        *@return Si los trabajos recepcionales puedieron ser eliminados (true) o no (false) en la base de datos
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */
     @Override
     public boolean deletedSucessfulReceptionWorks(Project project) throws BusinessException {
         boolean deleteSucess = false;
@@ -428,7 +503,12 @@ public class ProjectDAO implements IProjectDAO {
         }
         return deleteSucess;
     }
-
+    
+    /*
+        *@param project Proyecto del cual se eliminarán los estudiantes
+        *@return Si los estudiantes puedieron ser eliminados (true) o no (false) en la base de datos
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */
     @Override
     public boolean deletedSucessfulStudents(Project project) throws BusinessException {
        boolean deleteSucess = false;
@@ -450,7 +530,12 @@ public class ProjectDAO implements IProjectDAO {
         }
         return deleteSucess;
     }
-
+    
+    /*
+        *@param project Proyecto del cual se eliminarán las LGACs
+        *@return Si las LGACs puedieron ser eliminadas (true) o no (false) en la base de datos
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */
     @Override
     public boolean deletedSucessfulLGACS(Project project) throws BusinessException {
         boolean deleteSucess = false;

@@ -11,9 +11,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-
-public class TopicDAO implements ITopic {
-
+/*
+    *@author Mariana Vargas
+*/
+public class TopicDAO implements ITopicDAO{
+    
+    /*
+        *@params agendaTopic Tema a guardar
+        *@return Si el tema pudo ser guardado (true) o no (false) en la base de datos 
+        *@throws BusinessException Se cacho una excepción de tipo SQLException 
+    */
     @Override
     public boolean savedSucessful(Topic agendaTopic)throws BusinessException {
         boolean saveSuccess = false;
@@ -41,7 +48,12 @@ public class TopicDAO implements ITopic {
             
         return saveSuccess;
     }
-
+    
+    /*
+        *@params idMeeting ID de la reunión de los temas a recuperar
+        *@return Una lista con los temas de la reunión (ArrayList<Topic>)
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */
     @Override
     public ArrayList<Topic> getAgendaTopics(int idMeeting) throws BusinessException {
         ArrayList<Topic> agendaList = new ArrayList<Topic>();
@@ -76,7 +88,12 @@ public class TopicDAO implements ITopic {
                    
         return agendaList;  
     }
-       
+    
+     /*
+        *@params newTopic Tema con los datos nuevos a actualizar
+        *@return Si el tema pudo ser actualizado (true) o no (false) en la base de datos
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */      
     @Override
     public boolean updatedSucessful( Topic newTopic) throws BusinessException {
         boolean updateSucess = false;
@@ -103,6 +120,11 @@ public class TopicDAO implements ITopic {
         return updateSucess;
     }
     
+    /*
+        *@params topic Tema a eliminar
+        *@return Si el tema pudo ser eliminado (true) o no (false) en la base de datos
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */ 
     @Override
     public boolean deletedSucessful(Topic topic) throws BusinessException{
         boolean deleteSucess=false;

@@ -11,9 +11,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import log.Log;
 import log.BusinessException;
-
+/*
+        *@author Mariana Vargas
+*/
 public class MinuteDAO implements IMinuteDAO {
-
+    
+     /*
+        *@param minute Minuta a guardar 
+        *@return Si la minuta pudo ser guardada (true) o no (false) en la base de datos 
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */
     @Override
     public boolean savedSucessfulMinute(Minute minute)throws BusinessException {
         boolean saveSuccess = false;
@@ -41,8 +48,15 @@ public class MinuteDAO implements IMinuteDAO {
         return saveSuccess;
     }
     
+    /*
+        *@param idMinute Minuta a aprobar
+        *@param professionalLicense cedula del miembro que aprueba la minuta
+        *@return Si la minuta pudo ser aprobada (true) o no (false) en la base de datos 
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */   
     @Override
-    public void approveMinute(int idMinute, String professionalLicense)throws BusinessException{
+    public boolean approveMinute(int idMinute, String professionalLicense)throws BusinessException{
+        boolean approveSuccess = false;
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
@@ -53,6 +67,7 @@ public class MinuteDAO implements IMinuteDAO {
                 insertMinuteStatment.setString(2, professionalLicense);
                 insertMinuteStatment.executeUpdate();
                 connectorDataBase.disconnect();
+                approveSuccess = true;
             }catch(SQLException sqlException) {
                 throw new BusinessException("Parameter index ", sqlException);
             }
@@ -60,10 +75,18 @@ public class MinuteDAO implements IMinuteDAO {
         }catch(ClassNotFoundException ex) {
             Log.logException(ex);
         }
+        
+        return approveSuccess;
     }
-
+    
+    /*
+        *@param minuteComment Comentario de la minuta que se desaprueba
+        *@return Si la minuta pudo ser desaprobada (true) o no (false) en la base de datos 
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */   
     @Override
-    public void disapproveMinute(MinuteComment minuteComment)throws BusinessException {
+    public boolean disapproveMinute(MinuteComment minuteComment)throws BusinessException {
+        boolean disapproveSucess = false;
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
@@ -76,6 +99,7 @@ public class MinuteDAO implements IMinuteDAO {
                 insertMinuteStatment.setString(4, "Pendiente");
                 insertMinuteStatment.executeUpdate();
                 connectorDataBase.disconnect();
+                disapproveSucess = true;
             }catch(SQLException sqlException) {
                 throw new BusinessException("Parameter index ", sqlException);
             }
@@ -83,8 +107,14 @@ public class MinuteDAO implements IMinuteDAO {
         }catch(ClassNotFoundException ex) {
             Log.logException(ex);
         }
+        
+        return disapproveSucess;
     }
     
+    /*
+        *@return Todas las minutas almacenadas en la base de datosArrayList<Minute> 
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */    
     @Override
     public ArrayList<Minute>  getMinutes() throws BusinessException{
         ArrayList<Minute> minuteList = new ArrayList<>();
@@ -117,6 +147,11 @@ public class MinuteDAO implements IMinuteDAO {
         return minuteList;  
     }
     
+    /*
+        *@params idMinute ID de la Minuta de la cual se buscarán comentarios
+        *@return Comentarios de la minuta relacionados a una minuta (ArrayList<MinuteComment>)
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */
     @Override
     public ArrayList<MinuteComment>  getMinutesComments(int idMinute) throws BusinessException{
         ArrayList<MinuteComment> commentList = new ArrayList<>();
@@ -149,6 +184,11 @@ public class MinuteDAO implements IMinuteDAO {
         return commentList;  
     }
     
+    /*
+        *@param newMinute minuta con los datos nuevos a actualizar
+        *@return Si la minuta pudo ser actualizada (true) o no (false) en la base de datos
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */    
     @Override
     public boolean updatedSucessful(Minute newMinute) throws BusinessException {
         boolean updateSucess = false;
@@ -172,7 +212,12 @@ public class MinuteDAO implements IMinuteDAO {
       
         return updateSucess;
     } 
-
+    
+    /*
+        *@param minute  la Minuta de la cual se buscarán los miembros que la aprobaron
+        *@return Miembros que aprobaron la minuta(ArrayList<Member>)
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */
     @Override
     public ArrayList<Member> getMembersApprove(Minute minute) throws BusinessException {
         ArrayList<Member> members = new ArrayList<Member>();
@@ -199,7 +244,12 @@ public class MinuteDAO implements IMinuteDAO {
         
         return members;
     }
-
+    
+    /*
+        *@param minute  la Minuta de la cual se busca obtener el ID
+        *@return Si se encuentra la minuta, su ID (int)
+        *@throws BusinessException Se cacho una excepción de tipo SQLException o si no se encontro la minuta a buscar
+    */
     @Override
     public int getIdMinute(Minute minute) throws BusinessException {
         int idMinute = 0;
@@ -229,6 +279,11 @@ public class MinuteDAO implements IMinuteDAO {
         return idMinute;
     }
     
+    /*
+        *@params idMeeting el ID de la reunión de la cual se buscará la minuta
+        *@return La minuta de la reunión correpondiente (Minute)
+        *@throws BusinessException Se cacho una excepción de tipo SQLException o si no se encontro la minuta a buscar
+    */   
     @Override
     public Minute getMinute(int idMeeting) throws BusinessException {
         Minute minute = null ;
@@ -256,7 +311,12 @@ public class MinuteDAO implements IMinuteDAO {
         }
         return minute;
     }
-
+    
+    /*
+        *@param minuteComment Comentario a eliminar
+        *@return Si el comentario pudo ser eliminado (true) o no (false) en la base de datos
+        *@throws BusinessException se cacho una excepción de tipo SQLException
+    */
     @Override
     public boolean deletedSucessfulMinuteComment(MinuteComment minuteComment) throws BusinessException {
         boolean deleteSucess = false;
@@ -278,6 +338,11 @@ public class MinuteDAO implements IMinuteDAO {
         return deleteSucess;
     }
 
+    /*
+        *@param idMinute ID de la minuta de la cual se eliminarán los comentarios
+        *@return Si los comentarios puedieron ser eliminados (true) o no (false) en la base de datos
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */
     @Override
     public boolean deletedSucessfulMinutesComments(int idMinute) throws BusinessException {
        boolean deleteSucess = false;

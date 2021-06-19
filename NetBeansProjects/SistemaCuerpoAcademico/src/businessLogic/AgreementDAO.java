@@ -11,8 +11,16 @@ import java.util.ArrayList;
 import log.BusinessException;
 import log.Log;
 
-public class AgreementDAO implements IAgreement{
-
+/*
+    *@author Mariana Vargas
+*/
+public class AgreementDAO implements IAgreementDAO{
+    
+    /*
+        *@param agreement Acuerdo a guardar
+        *@return Si el acuerdo pudo ser guardado (true) o no (false) en la base de datos 
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */
     @Override
     public boolean savedSucessfulAgreement(Agreement agreement) throws BusinessException {
         boolean saveSuccess = false;
@@ -38,7 +46,12 @@ public class AgreementDAO implements IAgreement{
         
         return saveSuccess;
     }
-    
+
+   /*
+        *@param idMinute ID de la minuta de los acuerdos a buscar
+        *@return Una lista con los acuerdos de la minuta (ArrayList<Agreement>)
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */ 
     @Override
     public ArrayList<Agreement> getAgreementsMinute(int idMinute) throws BusinessException {
         ArrayList<Agreement> agreementList = new ArrayList<>();
@@ -72,6 +85,11 @@ public class AgreementDAO implements IAgreement{
         return agreementList;  
     }
     
+    /*
+        *@param newAgreement acuerdo con los datos nuevos a actualizar
+        *@return Si el acuerdo pudo ser actualizado (true) o no (false) en la base de datos
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */     
     @Override
     public boolean updatedSucessful(Agreement newAgreement) throws BusinessException {
         boolean updateSucess = false;
@@ -96,6 +114,11 @@ public class AgreementDAO implements IAgreement{
         return updateSucess;
     }
     
+    /*
+        *@param agreement acuerdo a eliminar
+        *@return Si el acuerdo pudo ser eliminado (true) o no (false) en la base de datos
+        *@throws BusinessException Se cacho una excepción de tipo SQLException 
+    */     
     @Override
     public boolean deletedSucessful(Agreement agreement) throws BusinessException{
         boolean deleteSucess=false;

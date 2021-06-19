@@ -8,9 +8,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import log.BusinessException;
 import log.Log;
-
+/*
+    *@author Mariana Vargas
+*/
 public class MemberDAO implements IMemberDAO{
-
+    
+    /*
+        *@param member Miembro a guardar
+        *@return Si el miembro pudo ser guardado (true) o no (false) en la base de datos 
+        *@throws BusinessException Se cacho una excepción de tipo SQLException
+    */
     @Override
     public boolean savedSucessfulMember(Member member) throws BusinessException{
         boolean saveSuccess = false;
@@ -39,7 +46,11 @@ public class MemberDAO implements IMemberDAO{
         
         return saveSuccess;
     }
- 
+     /*
+        *@param memberName nombre del miembro a buscar
+        *@return  Si la cedula pudo ser recuperada de acuerdo al nombre del miembro (String)
+        *@throws BusinessException Se cacho una excepción de tipo SQLException o no se encontro el miembro
+    */
     @Override
     public String searchProfessionalLicenseByName(String memberName) throws BusinessException{
         String professionalLicenseAuxiliar = "";
@@ -66,7 +77,12 @@ public class MemberDAO implements IMemberDAO{
         
         return professionalLicenseAuxiliar;
     }
-
+    
+    /*
+        *@param professionalLicenseMember cedula del miembro a buscar
+        *@return  El miembro que fue recuperado de acuerdo a la cedula (Member)
+        *@throws BusinessException Se cacho una excepción de tipo SQLException o no se encontro el miembro
+    */
     @Override
     public Member getMemberByLicense(String professionalLicenseMember) throws BusinessException {
         Member memberAuxiliar = null;
@@ -104,8 +120,11 @@ public class MemberDAO implements IMemberDAO{
         return memberAuxiliar;
     }
     
-
-
+    /*
+        *@param newMember miembro con los datos nuevos a actualizar
+        *@return  Si el miembro pudo ser guardado (true) o no (false) en la base de datos 
+        *@throws BusinessException Se cacho una excepción de tipo SQLException 
+    */
     public boolean updatedSucessful(Member newMember) throws BusinessException {
         boolean updateSucess = false;
         Connector connectorDataBase=new Connector();
@@ -131,8 +150,13 @@ public class MemberDAO implements IMemberDAO{
         }
       
         return updateSucess;
-    }    
-
+    }   
+    
+    /*
+        *@param newMember miembro a desactivar
+        *@return  Si el miembro pudo ser desactivado (true) o no (false) en la base de datos 
+        *@throws BusinessException Se cacho una excepción de tipo SQLException 
+    */
     @Override
     public boolean desactivateMember(Member newMember) throws BusinessException {
         boolean updateSucess = false;
@@ -153,7 +177,12 @@ public class MemberDAO implements IMemberDAO{
       
         return updateSucess;
     }
-
+    
+   /*
+        *@param newMember miembro a activar
+        *@return  Si el miembro pudo ser activado (true) o no (false) en la base de datos 
+        *@throws BusinessException Se cacho una excepción de tipo SQLException 
+    */
     @Override
     public boolean activateMember(Member newMember) throws BusinessException {
         boolean updateSucess = false;
@@ -174,9 +203,13 @@ public class MemberDAO implements IMemberDAO{
       
         return updateSucess;
     }
-
+    
+   /*
+        *@param groupAcademicKey clave del cuerpo académico de los miembros a buscar 
+        *@return  Lista con los miembros con la clave del cuerpo académico(ArrayList<Member>)
+        *@throws BusinessException Se cacho una excepción de tipo SQLException 
+    */
     @Override
-
     public ArrayList<Member> getMembers(String groupAcademicKey) throws BusinessException {
         ArrayList<Member> memberList = new ArrayList<Member>();
         try{
