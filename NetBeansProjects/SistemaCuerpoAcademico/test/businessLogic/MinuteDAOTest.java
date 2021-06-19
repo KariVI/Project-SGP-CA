@@ -24,7 +24,7 @@ public class MinuteDAOTest {
         int idMinute = 1;
         String professionalLicense = "8325134";
         MinuteDAO minuteDAO = new MinuteDAO();
-        minuteDAO.approveMinute(idMinute, professionalLicense);
+        assertTrue(minuteDAO.approveMinute(idMinute, professionalLicense));
     }
 
 
@@ -34,8 +34,8 @@ public class MinuteDAOTest {
         int idMinute = 1;
         String professionalLicense = "7938268";
         MinuteComment minuteComment = new MinuteComment("No se encuentran algunos acuerdos.",professionalLicense,idMinute);
-        MinuteDAO minuteDAO = new MinuteDAO();
-        minuteDAO.disapproveMinute(minuteComment);
+        MinuteDAO minuteDAO = new MinuteDAO();  
+        assertTrue(minuteDAO.disapproveMinute(minuteComment));
     }
     
     @Test
