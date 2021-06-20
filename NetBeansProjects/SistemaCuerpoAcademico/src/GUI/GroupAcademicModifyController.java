@@ -5,6 +5,7 @@ import businessLogic.GroupAcademicDAO;
 import businessLogic.LGACDAO;
 import domain.GroupAcademic;
 import domain.LGAC;
+import domain.Member;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -50,9 +51,14 @@ public class GroupAcademicModifyController implements Initializable {
     private GroupAcademic groupAcademic= new GroupAcademic();
     private GroupAcademic groupAcademicNew=new GroupAcademic();
     private GridPane gridPane = new GridPane();
-    int nextRowPosition=0;
-  
-   
+    private int nextRowPosition=0;
+    private int newLGACs=0;
+    private Member member;
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+    
    public void setGroupAcademic(GroupAcademic groupAcademic){
      this.groupAcademic.setKey(groupAcademic.getKey());
       this.groupAcademic.setConsolidationGrade(groupAcademic.getConsolidationGrade());
@@ -69,7 +75,7 @@ public class GroupAcademicModifyController implements Initializable {
         cbConsolidateGrade.setValue (groupAcademic.getConsolidationGrade());
         taVision.setText(groupAcademic.getVision());
         taMision.setText(groupAcademic.getMission());
-    
+        
         try {
            getlgacs();
          } catch (BusinessException ex) {
@@ -134,8 +140,9 @@ public class GroupAcademicModifyController implements Initializable {
                 gridPane.add(label,1,nextRowPosition);
                 gridPane.add(tfNamelgac,1,(nextRowPosition + 1));
                 gridPane.add(taDescriptionlgac,1, (nextRowPosition + 2));
-             nextRowPosition= nextRowPosition + sizeRows ;
-              spLGACs.setContent(gridPane);
+                nextRowPosition= nextRowPosition + sizeRows ;
+                spLGACs.setContent(gridPane);
+                newLGACs++;
 
     }
     @FXML
@@ -181,7 +188,8 @@ public class GroupAcademicModifyController implements Initializable {
                 GroupAcademicDAO groupAcademicDAO= new GroupAcademicDAO();
                 GroupAcademic groupAcademic;          
                 groupAcademic= groupAcademicDAO.getGroupAcademicById(groupAcademicNew.getKey());
-                groupAcademicShowController.setGroupAcademic(groupAcademic);
+                groupAcademicShowController.setMember(member);
+                groupAcademicShowController.setGroupAcademic(groupAcademic);              
                 groupAcademicShowController.initializeGroupAcademic();
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
@@ -200,8 +208,9 @@ public class GroupAcademicModifyController implements Initializable {
         GroupAcademicDAO groupAcademicDAO =new GroupAcademicDAO();
         AlertMessage alertMessage =new AlertMessage();
         try {
+            deleteLgacs();
             if(groupAcademicDAO.updatedSucessful(groupAcademic.getKey(),groupAcademicNew)){
-                recoverlgacs();
+                recoverLgacs();
                 alertMessage.showUpdateMessage();
                 Stage stage = (Stage) btSave.getScene().getWindow();
                 stage.close();
@@ -216,51 +225,40 @@ public class GroupAcademicModifyController implements Initializable {
         }                
     }
     
-    private void recoverlgacs() throws BusinessException{   
+    private void deleteLgacs() throws BusinessException{ 
+        LGACDAO lgacDAO = new LGACDAO();
+        GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO();
+        ArrayList<LGAC> lgacsOld = groupAcademicDAO.getLGACs(groupAcademic.getKey());
+        int i=0;
+        while(i < lgacsOld.size()){ 
+            groupAcademicDAO.deletedLGACSuccesful(groupAcademic.getKey(), lgacsOld.get(i));
+            i++;
+        }
+    }
+    
+    private void recoverLgacs() throws BusinessException{   
         GridPane gridPane= (GridPane) spLGACs.getContent();
             int i=1;
             int indexLGAC=0;
             GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO();
-            ArrayList<LGAC> lgacsOld = groupAcademicDAO.getLGACs(groupAcademic.getKey());
-            
+            ArrayList<LGAC> lgacsOld = groupAcademic.getLGACs();
             int sizeRows=3;
-           
-           while (i < (lgacsOld.size() * sizeRows)){
+           int size= (lgacsOld.size() + newLGACs ) * sizeRows;
+           while (i < size){
                TextField namelgac = (TextField) getNodeFromGridPane( gridPane, 1, i);
                TextArea descriptionlgac = (TextArea) getNodeFromGridPane( gridPane, 1, (i + 1));
                if(validateFieldslgacs(namelgac,descriptionlgac)){         
                  String name= namelgac.getText();
                  String description= descriptionlgac.getText(); 
                  LGAC lgac = new LGAC(name, description);
-                 String nameLast = lgacsOld.get(indexLGAC).getName();
-                 updatelgacs(nameLast,  lgac);
+                 savelgacs(groupAcademicNew, lgac);
                }
                i=i+3;
                indexLGAC++;              
            }
-           
-          addNewLGACs(i);
-           
-           
     }
     
-    private void addNewLGACs(int indexCurrently){
-         
-        while(indexCurrently<nextRowPosition){    
-                TextField namelgac = (TextField) getNodeFromGridPane( gridPane, 1, indexCurrently);
-               TextArea descriptionlgac = (TextArea) getNodeFromGridPane( gridPane, 1, (indexCurrently + 1));
-               if(validateFieldslgacs(namelgac,descriptionlgac)){         
-                 String name= namelgac.getText();
-                 String description= descriptionlgac.getText(); 
-                 LGAC lgac = new LGAC(name, description);
-                 savelgacs(groupAcademic,lgac);
-           }
-           indexCurrently= indexCurrently+3;    
-        }
-    
-    }
-    
-     private void savelgacs(GroupAcademic groupAcademic,LGAC lgac){   
+    private void savelgacs(GroupAcademic groupAcademic,LGAC lgac){   
         GroupAcademicDAO groupAcademicDAO= new GroupAcademicDAO();
         LGACDAO lgacDAO =new LGACDAO();
         AlertMessage alertMessage =new AlertMessage();
@@ -280,7 +278,8 @@ public class GroupAcademicModifyController implements Initializable {
             }
         }
     }
-     
+    
+
     
      public boolean searchRepeatedLGAC(String name)   { 
        boolean value=false; 
@@ -303,27 +302,6 @@ public class GroupAcademicModifyController implements Initializable {
     }
      return null;
    }
-    
-    private void updatelgacs(String nameLGACLast ,LGAC lgac){   
-        GroupAcademicDAO groupAcademicDAO= new GroupAcademicDAO();
-        LGACDAO lgacDAO =new LGACDAO();
-        
-        try {
-                LGAC lgacLast = lgacDAO.getLgacByName(nameLGACLast);
-                lgacDAO.updatedSucessful(nameLGACLast, lgac);
-                groupAcademicDAO.deletedLGACSuccesful(groupAcademic.getKey(),lgacLast);
-                groupAcademicDAO.addedLGACSucessful(groupAcademicNew, lgac);
-
-        } catch (BusinessException ex) {
-            if(ex.getMessage().equals("DataBase connection failed ")){
-                AlertMessage alertMessage = new AlertMessage();
-                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
-            }else{  
-                Log.logException(ex);
-            }
-        }
-    }
-    
        
     private boolean validateFieldEmpty(){ 
           boolean value=false;

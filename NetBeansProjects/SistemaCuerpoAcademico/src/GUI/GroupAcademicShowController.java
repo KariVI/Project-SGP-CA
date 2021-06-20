@@ -91,6 +91,7 @@ public class GroupAcademicShowController implements Initializable {
               loader.load();
               GroupAcademicModifyController groupAcademicModifyController =loader.getController();      
               groupAcademicModifyController.setGroupAcademic(groupAcademic);
+              groupAcademicModifyController.setMember(member);
               groupAcademicModifyController.initializeGroupAcademic();
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);

@@ -69,7 +69,8 @@ public class PreliminarProjectModifyController implements Initializable {
     private Member member;
     private String keyGroupAcademic;
     private GridPane gridPane= new GridPane();
-    int nextRowPosition=0;
+    private int nextRowPosition=0;
+    private int newStudents=0;
 
     public void setMember(Member member) {
         this.member = member;
@@ -105,6 +106,7 @@ public class PreliminarProjectModifyController implements Initializable {
                 gridPane.add(tfNameStudent,1, (nextRowPosition + 2));
                 nextRowPosition= nextRowPosition + sizeRows;
                 spStudents.setContent(gridPane);
+                newStudents++;
 
         }
         
@@ -321,17 +323,7 @@ public class PreliminarProjectModifyController implements Initializable {
             spStudents.setContent(gridPane);
     }
     
-    private int calculateSize(int sizeStudents){    
-        int sizeRowsGridPane=3;
-        int size=0;
-        if(nextRowPosition>0){ 
-            size=nextRowPosition;
-        }else{  
-            size= sizeStudents;
-        }
-        
-        return size;
-    }
+  
     
     private void recoverStudents() throws BusinessException{   
         GridPane gridPane= (GridPane) spStudents.getContent();
@@ -340,7 +332,7 @@ public class PreliminarProjectModifyController implements Initializable {
             ArrayList<Student> students = new ArrayList<Student>();
                 int i=1;
                 int sizeRows=3;
-                int size= calculateSize(studentsOld.size());
+                int size= (studentsOld.size() + newStudents) * sizeRows;
                while (i <  size){
                    TextField enrollment = (TextField) getNodeFromGridPane( gridPane, 1, i);
                    TextField name = (TextField) getNodeFromGridPane( gridPane, 1, (i + 1));
