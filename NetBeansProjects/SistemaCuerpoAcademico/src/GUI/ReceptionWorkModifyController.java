@@ -79,8 +79,7 @@ public class ReceptionWorkModifyController implements Initializable {
     private Member member;
     private String keyGroupAcademic;
     private GridPane gridPane= new GridPane();
-    private int nextRowPosition=0;
-    private int newStudents=0;
+    int nextRowPosition=0;
 
     public void setMember(Member member) {
         this.member = member;
@@ -111,7 +110,6 @@ public class ReceptionWorkModifyController implements Initializable {
             gridPane.add(tfNameStudent,1, (nextRowPosition + 2));
             nextRowPosition= nextRowPosition + sizeRows ;
               spStudents.setContent(gridPane);
-              newStudents++;
 
     }
 
@@ -587,7 +585,7 @@ public class ReceptionWorkModifyController implements Initializable {
         ArrayList<Student> students = new ArrayList<Student>();       
         int i=1;
         int sizeRows=3;
-        int size= (studentsOld.size() + newStudents) * sizeRows;
+        int size= calculateSize(studentsOld.size());
          while (i <  size){
             TextField enrollment = (TextField) getNodeFromGridPane( gridPane, 1, i);
             TextField name = (TextField) getNodeFromGridPane( gridPane, 1, (i + 1));

@@ -75,9 +75,7 @@ public class MenuController implements Initializable {
     
     @FXML 
     private void actionQuery(ActionEvent actionEvent) throws BusinessException{  
-        Stage stage = (Stage) btConsult.getScene().getWindow();
-        stage.close(); 
-        try{ 
+         try{ 
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/groupAcademicShow.fxml").toURI().toURL();
            try{
@@ -113,7 +111,8 @@ public class MenuController implements Initializable {
     
     public void initializeMenu(Member member){
         this.member = member;
-        fillOptions();   
+        fillOptions();
+        
     }
     
     @Override
