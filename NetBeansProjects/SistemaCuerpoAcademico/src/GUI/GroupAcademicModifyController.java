@@ -5,6 +5,7 @@ import businessLogic.GroupAcademicDAO;
 import businessLogic.LGACDAO;
 import domain.GroupAcademic;
 import domain.LGAC;
+import domain.Member;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -51,6 +52,11 @@ public class GroupAcademicModifyController implements Initializable {
     private GroupAcademic groupAcademicNew=new GroupAcademic();
     private GridPane gridPane = new GridPane();
     int nextRowPosition=0;
+    private Member member;
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
   
    
    public void setGroupAcademic(GroupAcademic groupAcademic){
@@ -155,6 +161,7 @@ public class GroupAcademicModifyController implements Initializable {
               groupAcademicNew.setMission(mision);
               groupAcademicNew.setVision(vision);
               updateGroupAcademic();
+               
 
         }else{  
             sendAlert();
@@ -169,6 +176,16 @@ public class GroupAcademicModifyController implements Initializable {
         
     }
     
+    private void deleteLgacs() throws BusinessException{ 
+        GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO();
+         ArrayList<LGAC> lgacsOld = groupAcademicDAO.getLGACs(groupAcademic.getKey());
+        int i =0;
+        while(i< lgacsOld.size()){
+            groupAcademicDAO.deletedLGACSuccesful(groupAcademic.getKey(), lgacsOld.get(i));
+            i++;
+        } 
+    
+    }
     private void openShowWindow() throws BusinessException{  
         try{ 
             Stage primaryStage= new Stage();
@@ -182,6 +199,7 @@ public class GroupAcademicModifyController implements Initializable {
                 GroupAcademic groupAcademic;          
                 groupAcademic= groupAcademicDAO.getGroupAcademicById(groupAcademicNew.getKey());
                 groupAcademicShowController.setGroupAcademic(groupAcademic);
+                groupAcademicShowController.setMember(member);
                 groupAcademicShowController.initializeGroupAcademic();
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
@@ -200,6 +218,7 @@ public class GroupAcademicModifyController implements Initializable {
         GroupAcademicDAO groupAcademicDAO =new GroupAcademicDAO();
         AlertMessage alertMessage =new AlertMessage();
         try {
+            deleteLgacs();
             if(groupAcademicDAO.updatedSucessful(groupAcademic.getKey(),groupAcademicNew)){
                 recoverlgacs();
                 alertMessage.showUpdateMessage();
@@ -221,7 +240,7 @@ public class GroupAcademicModifyController implements Initializable {
             int i=1;
             int indexLGAC=0;
             GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO();
-            ArrayList<LGAC> lgacsOld = groupAcademicDAO.getLGACs(groupAcademic.getKey());
+            ArrayList<LGAC> lgacsOld = groupAcademic.getLGACs();
             
             int sizeRows=3;
            
@@ -232,35 +251,17 @@ public class GroupAcademicModifyController implements Initializable {
                  String name= namelgac.getText();
                  String description= descriptionlgac.getText(); 
                  LGAC lgac = new LGAC(name, description);
-                 String nameLast = lgacsOld.get(indexLGAC).getName();
-                 updatelgacs(nameLast,  lgac);
+                 saveLgacs(groupAcademicNew,lgac);
                }
                i=i+3;
                indexLGAC++;              
            }
-           
-          addNewLGACs(i);
-           
-           
+     
     }
     
-    private void addNewLGACs(int indexCurrently){
-         
-        while(indexCurrently<nextRowPosition){    
-                TextField namelgac = (TextField) getNodeFromGridPane( gridPane, 1, indexCurrently);
-               TextArea descriptionlgac = (TextArea) getNodeFromGridPane( gridPane, 1, (indexCurrently + 1));
-               if(validateFieldslgacs(namelgac,descriptionlgac)){         
-                 String name= namelgac.getText();
-                 String description= descriptionlgac.getText(); 
-                 LGAC lgac = new LGAC(name, description);
-                 savelgacs(groupAcademic,lgac);
-           }
-           indexCurrently= indexCurrently+3;    
-        }
+
     
-    }
-    
-     private void savelgacs(GroupAcademic groupAcademic,LGAC lgac){   
+     private void saveLgacs(GroupAcademic groupAcademic,LGAC lgac){   
         GroupAcademicDAO groupAcademicDAO= new GroupAcademicDAO();
         LGACDAO lgacDAO =new LGACDAO();
         AlertMessage alertMessage =new AlertMessage();
