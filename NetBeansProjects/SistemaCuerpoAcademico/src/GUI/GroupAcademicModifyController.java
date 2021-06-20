@@ -129,7 +129,7 @@ public class GroupAcademicModifyController implements Initializable {
                 taDescriptionlgac.setPrefHeight(80); 
                 taDescriptionlgac.setPrefWidth(170);
                 taDescriptionlgac.setPromptText("Descripción");
-                String lgacName= "LGAC "+( (nextRowPosition/sizeRows) +1) ;
+                String lgacName= "Nueva LGAC ";
                 Label label = new Label(lgacName);
                 gridPane.add(label,1,nextRowPosition);
                 gridPane.add(tfNamelgac,1,(nextRowPosition + 1));
