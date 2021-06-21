@@ -114,7 +114,7 @@ public class GroupAcademicRegisterController implements Initializable  {
         try {           
             if(groupAcademicDAO.savedSucessful(groupAcademic)){
                 if(!(tflgacsNumber.getText().isEmpty())){   
-                    recoverlgacs(groupAcademic);
+                    recoverLgacs(groupAcademic);
                 }
                 alertMessage.showAlertSuccesfulSave("Cuerpo Academico");
                 updateMember(groupAcademic.getKey());
@@ -190,7 +190,7 @@ public class GroupAcademicRegisterController implements Initializable  {
     
     
     
-    private void recoverlgacs(GroupAcademic groupAcademic){   
+    private void recoverLgacs(GroupAcademic groupAcademic){   
         GridPane gridPane= (GridPane) spLgac.getContent();
             int i=1;
              Validation validation = new Validation();
@@ -204,14 +204,14 @@ public class GroupAcademicRegisterController implements Initializable  {
                      String name= namelgac.getText();
                      String description= descriptionlgac.getText(); 
                      LGAC lgac = new LGAC(name, description);
-                     savelgacs(groupAcademic, lgac);
+                     saveLgacs(groupAcademic, lgac);
                    }
                    i=i+3;              
                }
              }
     }
     
-    private void savelgacs(GroupAcademic groupAcademic,LGAC lgac){   
+    private void saveLgacs(GroupAcademic groupAcademic,LGAC lgac){   
         GroupAcademicDAO groupAcademicDAO= new GroupAcademicDAO();
         LGACDAO lgacDAO =new LGACDAO();
         AlertMessage alertMessage =new AlertMessage();

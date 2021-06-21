@@ -53,6 +53,7 @@ public class GroupAcademicModifyController implements Initializable {
     private GridPane gridPane = new GridPane();
     int nextRowPosition=0;
     private Member member;
+    private int newLgacs=0;
 
     public void setMember(Member member) {
         this.member = member;
@@ -142,6 +143,7 @@ public class GroupAcademicModifyController implements Initializable {
                 gridPane.add(taDescriptionlgac,1, (nextRowPosition + 2));
              nextRowPosition= nextRowPosition + sizeRows ;
               spLGACs.setContent(gridPane);
+              newLgacs++;
 
     }
     @FXML
@@ -178,11 +180,14 @@ public class GroupAcademicModifyController implements Initializable {
     
     private void deleteLgacs() throws BusinessException{ 
         GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO();
+        LGACDAO lgacDAO = new LGACDAO();
          ArrayList<LGAC> lgacsOld = groupAcademicDAO.getLGACs(groupAcademic.getKey());
         int i =0;
         while(i< lgacsOld.size()){
             groupAcademicDAO.deletedLGACSuccesful(groupAcademic.getKey(), lgacsOld.get(i));
+           
             i++;
+            
         } 
     
     }
@@ -236,15 +241,14 @@ public class GroupAcademicModifyController implements Initializable {
     }
     
     private void recoverlgacs() throws BusinessException{   
-        GridPane gridPane= (GridPane) spLGACs.getContent();
+            GridPane gridPane= (GridPane) spLGACs.getContent();
             int i=1;
-            int indexLGAC=0;
             GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO();
             ArrayList<LGAC> lgacsOld = groupAcademic.getLGACs();
             
             int sizeRows=3;
-           
-           while (i < (lgacsOld.size() * sizeRows)){
+            int size= (lgacsOld.size() + newLgacs) * sizeRows;
+           while (i < size){
                TextField namelgac = (TextField) getNodeFromGridPane( gridPane, 1, i);
                TextArea descriptionlgac = (TextArea) getNodeFromGridPane( gridPane, 1, (i + 1));
                if(validateFieldslgacs(namelgac,descriptionlgac)){         
@@ -253,8 +257,7 @@ public class GroupAcademicModifyController implements Initializable {
                  LGAC lgac = new LGAC(name, description);
                  saveLgacs(groupAcademicNew,lgac);
                }
-               i=i+3;
-               indexLGAC++;              
+               i=i+3;           
            }
      
     }
@@ -269,10 +272,8 @@ public class GroupAcademicModifyController implements Initializable {
         try {
             if(!searchRepeatedLGAC(lgac.getName())){
                 lgacDAO.savedSucessful(lgac);
-                groupAcademicDAO.addedLGACSucessful(groupAcademic, lgac);
-            }else { 
-                alertMessage.showAlertValidateFailed("La LGAC ya se encuentra registrada");
             }
+            groupAcademicDAO.addedLGACSucessful(groupAcademic, lgac);
         } catch (BusinessException ex) {
             if(ex.getMessage().equals("DataBase connection failed ")){
                 alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
