@@ -80,7 +80,7 @@ public class Topic {
             Topic topicCompare = (Topic) object;
 
             if (this.getStartTime().equals(topicCompare.getStartTime()) && this.getFinishTime().equals(topicCompare.getFinishTime()) &&
-                    this.getTopicName().equals(topicCompare.getTopicName())){
+                    this.getTopicName().equals(topicCompare.getTopicName()) && this.professionalLicense.equals(topicCompare.getProfessionalLicense())){
                 value = true;
             }
         }
