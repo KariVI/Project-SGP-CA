@@ -312,6 +312,7 @@ public class MinuteRegisterController implements Initializable {
                  MeetingShowController meetingShowController = loader.getController();
                  meetingShowController.setMeeting(meeting);
                  meetingShowController.setMember(member);
+                 
                       try {
                           meetingShowController.initializeMeeting();
                       } catch (BusinessException ex) {

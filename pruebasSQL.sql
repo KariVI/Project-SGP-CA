@@ -81,7 +81,7 @@ INSERT INTO Reunion(asunto,hora, fecha, estado,clave_CA) VALUES ("Revisión de a
 INSERT INTO Reunion(asunto,hora, fecha, estado,clave_CA) VALUES( "Organizar agenda de actividades del seminario" ,"15:30","15/09/2021","Concluida","JDOEIJ804");
 INSERT INTO Reunion(asunto,hora, fecha, estado,clave_CA) VALUES("Actualizar plan de trabajo de la LIS","13:00","11/08/2021", "Concluida","JDOEIJ804");
 INSERT INTO Reunion(asunto,hora, fecha, estado,clave_CA) VALUES("Lanzamiento FEIBook" ,"12:30","11/11/2021","Concluida","JDOEIJ804");
-
+INSERT INTO Reunion(asunto,hora, fecha, estado,clave_CA) VALUES("Lanzamiento del GastroCafe" ,"12:30","21/06/2021","´Proxima","JDOEIJ804");
 INSERT INTO Tema(tema,horaInicio,idReunion,horaFin,cedula) VALUES("Agenda","11:00",2,"14:00","8325134");
 
 INSERT INTO Minuta(nota, estado, pendiente, idReunion) VALUES ("El seminario se realizara el dia 13 de agosto del 2022","Registrada","Asignar horario a ponentes",2);
