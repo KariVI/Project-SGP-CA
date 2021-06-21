@@ -116,7 +116,9 @@ public class MeetingShowController implements Initializable {
     
     @FXML 
     private void actionShowSchedule(ActionEvent ActionEvent){  
-            try{ 
+        Stage stage = (Stage) btShowSchedule.getScene().getWindow();
+        stage.close();   
+        try{ 
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/topicShow.fxml").toURI().toURL();
            try{
@@ -258,6 +260,8 @@ public class MeetingShowController implements Initializable {
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);
+              Stage stage = (Stage) btMeetingStart.getScene().getWindow();
+              stage.close();
             } catch (IOException ex) {
                     Log.logException(ex);
             }

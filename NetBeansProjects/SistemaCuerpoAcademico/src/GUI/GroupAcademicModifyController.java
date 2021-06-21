@@ -270,7 +270,7 @@ public class GroupAcademicModifyController implements Initializable {
         AlertMessage alertMessage =new AlertMessage();
         
         try {
-            if(!searchRepeatedLGAC(lgac.getName())){
+            if(!searchRepeatedLgac(lgac.getName())){
                 lgacDAO.savedSucessful(lgac);
             }
             if(!searchRepeatedInAcademicGroup(lgac)){
@@ -286,7 +286,7 @@ public class GroupAcademicModifyController implements Initializable {
     }
      
     
-     public boolean searchRepeatedLGAC(String name)   { 
+     public boolean searchRepeatedLgac(String name)   { 
        boolean value=false; 
         try {   
             LGACDAO lgacDAO = new LGACDAO();

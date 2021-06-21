@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -89,13 +91,18 @@ public class TopicShowController implements Initializable {
               MeetingShowController meetingShowController  = loader.getController();
               meetingShowController.setMember(member);
               meetingShowController.setMeeting(meeting);
+            try {
+                meetingShowController.initializeMeeting();
+            } catch (BusinessException ex) {
+                Log.logException(ex);
+            }
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);
               primaryStage.show();
             }catch (IOException ex) {
                 Log.logException(ex);
-            }
+            } 
     }
     
     @FXML
