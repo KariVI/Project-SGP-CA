@@ -381,8 +381,10 @@ public class ReceptionWorkRegisterController implements Initializable {
                      String enrollmentStudent= enrollment.getText();
                      String nameStudent= name.getText(); 
                      Student student = new Student(enrollmentStudent,nameStudent);
-                     students.add(student);
-                     saveStudent(student);
+                      if(!findRepeteadedStudents(students,student)) {  
+                        students.add(student);
+                        saveStudent(student);
+                      }
                    }
                }
                receptionWork.setStudents(students);
@@ -390,6 +392,19 @@ public class ReceptionWorkRegisterController implements Initializable {
              }
     }
     
+     public boolean findRepeteadedStudents(ArrayList<Student> students,Student student){
+       boolean value=false; 
+            
+            int i =0;
+            while(i < students.size() && value==false){ 
+                if(students.get(i).equals(student)){    
+                    value=true;
+                }
+                i++;
+            }
+        return value;
+    }
+     
      private boolean validateFieldsStudent(TextField enrollment, TextField name){
         boolean value=true;
         AlertMessage alertMessage =new AlertMessage();

@@ -273,7 +273,9 @@ public class GroupAcademicModifyController implements Initializable {
             if(!searchRepeatedLGAC(lgac.getName())){
                 lgacDAO.savedSucessful(lgac);
             }
-            groupAcademicDAO.addedLGACSucessful(groupAcademic, lgac);
+            if(!searchRepeatedInAcademicGroup(lgac)){
+                groupAcademicDAO.addedLGACSucessful(groupAcademic, lgac);
+            }
         } catch (BusinessException ex) {
             if(ex.getMessage().equals("DataBase connection failed ")){
                 alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
@@ -291,6 +293,25 @@ public class GroupAcademicModifyController implements Initializable {
             lgacDAO.getLgacByName(name);
 
             value=true;
+        }catch (BusinessException ex){ 
+            Log.logException(ex);
+        }
+        return value;
+    }
+     
+      public boolean searchRepeatedInAcademicGroup(LGAC lgac){
+       boolean value=false; 
+        try {   
+            GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO();
+             LGACDAO lgacDAO = new LGACDAO();
+            ArrayList<LGAC> lgacsNew = groupAcademicDAO.getLGACs(groupAcademic.getKey());
+            int i =0;
+            while(i< lgacsNew.size() && value==false){  
+                if(lgacsNew.get(i).equals(lgac)){   
+                    value=true;
+                }
+            }
+                
         }catch (BusinessException ex){ 
             Log.logException(ex);
         }

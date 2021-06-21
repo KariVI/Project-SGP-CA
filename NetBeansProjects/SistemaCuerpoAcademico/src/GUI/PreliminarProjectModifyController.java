@@ -351,8 +351,10 @@ public class PreliminarProjectModifyController implements Initializable {
                      String enrollmentStudent= enrollment.getText();
                      String nameStudent= name.getText(); 
                      Student student = new Student(enrollmentStudent,nameStudent);
-                     students.add(student);
-                     saveStudent(student);
+                    if(!findRepeteadedStudents(students,student)) {  
+                        students.add(student);
+                        saveStudent(student);
+                    }
                    }
                }
                preliminarProjectNew.setStudents(students);
@@ -386,7 +388,9 @@ public class PreliminarProjectModifyController implements Initializable {
     private void addStudentsInPreliminarProject(){ 
         PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
         try {
-            preliminarProjectDAO.addedSucessfulStudents(preliminarProjectNew);
+            
+                preliminarProjectDAO.addedSucessfulStudents(preliminarProjectNew);
+            
         } catch (BusinessException ex) {
             if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage= new AlertMessage();
@@ -395,6 +399,19 @@ public class PreliminarProjectModifyController implements Initializable {
                 Log.logException(ex);
             }
         }
+    }
+    
+    public boolean findRepeteadedStudents(ArrayList<Student> students,Student student){
+       boolean value=false; 
+            
+            int i =0;
+            while(i < students.size() && value==false){ 
+                if(students.get(i).equals(student)){    
+                    value=true;
+                }
+                i++;
+            }
+        return value;
     }
     
    
