@@ -109,8 +109,26 @@ public class GroupAcademicShowController implements Initializable {
     private void actionReturn(ActionEvent actionEvent){   
         Stage stage = (Stage) btReturn.getScene().getWindow();
         stage.close();
+        openViewMenu();
     }
- 
+    
+    private void openViewMenu(){   
+        Stage primaryStage = new Stage();
+        try{
+              URL url = new File("src/GUI/Menu.fxml").toURI().toURL();
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              MenuController menu = loader.getController();
+              menu.initializeMenu(member);
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);
+              primaryStage.setScene(scene);
+              primaryStage.show();
+            }catch (IOException ex) {
+                Log.logException(ex);
+            }
+    }
    
     private void getlgacs() throws BusinessException{
         GridPane gridPane= new GridPane();
