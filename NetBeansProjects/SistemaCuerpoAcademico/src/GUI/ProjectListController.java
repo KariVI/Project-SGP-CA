@@ -41,25 +41,9 @@ public class ProjectListController implements Initializable {
           @Override
           public void changed(ObservableValue<? extends Project> observaleValue, Project oldValue, Project newValue) {
              Project selectedProject = lvProjects.getSelectionModel().getSelectedItem();
-            try {
-              Stage primaryStage= new Stage();
-              URL url = new File("src/GUI/ProjectShow.fxml").toURI().toURL();
-              FXMLLoader loader = new FXMLLoader(url);
-              loader.setLocation(url);
-              loader.load();
-              ProjectShowController projectShowController =loader.getController(); 
-              projectShowController.setMember(member);
-              projectShowController.setProject(selectedProject);
-              Parent root = loader.getRoot();
-              Scene scene = new Scene(root);
-              primaryStage.setScene(scene);
-              Stage stage = (Stage) lvProjects.getScene().getWindow();
-              stage.close();
-              primaryStage.show();
-            } catch (IOException ex) {
-              Log.logException(ex);
-            }
-            
+             Stage stage = (Stage) lvProjects.getScene().getWindow();
+             stage.close();
+             openShowProject(selectedProject);
           }
       });
     }
@@ -67,6 +51,25 @@ public class ProjectListController implements Initializable {
     public void setMember(Member member){
         this.member = member;
         initializeProjects();
+    }
+    
+    private void openShowProject(Project selectedProject){
+        try {
+          Stage primaryStage= new Stage();
+          URL url = new File("src/GUI/ProjectShow.fxml").toURI().toURL();
+          FXMLLoader loader = new FXMLLoader(url);
+          loader.setLocation(url);
+          loader.load();
+          ProjectShowController projectShowController =loader.getController(); 
+          projectShowController.setMember(member);
+          projectShowController.setProject(selectedProject);
+          Parent root = loader.getRoot();
+          Scene scene = new Scene(root);
+          primaryStage.setScene(scene);
+          primaryStage.show();
+        } catch (IOException ex) {
+          Log.logException(ex);
+        }
     }
     
     private void initializeProjects(){

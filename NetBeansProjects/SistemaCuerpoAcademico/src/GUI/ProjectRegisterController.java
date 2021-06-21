@@ -31,7 +31,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import log.BusinessException;
@@ -41,7 +40,7 @@ public class ProjectRegisterController implements Initializable {
 
     @FXML private DatePicker dpFinishDate;
     @FXML private DatePicker dpStartDate;
-    @FXML private TextField tfTitle;
+    @FXML private TextFieldLimited tfTitle;
     @FXML private TextArea taDescription;
     @FXML private TableView<LGAC> tvLGAC;
     @FXML private TableColumn<LGAC, String> tcLGAC;
@@ -54,8 +53,8 @@ public class ProjectRegisterController implements Initializable {
     @FXML private TableColumn<Student, String> tcStudentEnrollment;
     @FXML private Button btSave;
     @FXML private Button btCancel;
-    @FXML private TextField tfName;
-    @FXML private TextField tfEnrollment;
+    @FXML private TextFieldLimited tfName;
+    @FXML private TextFieldLimited tfEnrollment;
     @FXML private ComboBox<Member> cbMember;
     @FXML private ComboBox<ReceptionWork> cbReceptionWork;
     @FXML private ComboBox<LGAC> cbLGAC;
@@ -74,6 +73,9 @@ public class ProjectRegisterController implements Initializable {
  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        tfTitle.setMaxlength(200);
+        tfName.setMaxlength(150);
+        tfEnrollment.setMaxlength(10);
         tcLGAC.setCellValueFactory(new PropertyValueFactory<LGAC,String>("name"));
         tcMember.setCellValueFactory(new PropertyValueFactory<Member,String>("name"));
         tcStudentName.setCellValueFactory(new PropertyValueFactory<Student,String>("name"));
@@ -100,18 +102,21 @@ public class ProjectRegisterController implements Initializable {
              }
             }
         );
+        
         tvStudent.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                  setSelectedStudent();
              }
             }
         );
+        
        tvReceptionWork.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                  setSelectedReceptionWork();
              }
             }
         );
+       
         tvLGAC.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                  setSelectedLGAC();
@@ -121,7 +126,7 @@ public class ProjectRegisterController implements Initializable {
     }
     
    @FXML 
-   public void actionSave(){
+   private void actionSave(){
        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
        String title = "";
        String description = "";
@@ -137,7 +142,6 @@ public class ProjectRegisterController implements Initializable {
          Project project = new Project(title,description,startDate,finishDate,member.getKeyGroupAcademic());         
          project = setProject(project);
          if(validateProject(project)){   
- 
              try {
                  saveStudents();
                  ProjectDAO projectDAO = new ProjectDAO();
@@ -157,6 +161,7 @@ public class ProjectRegisterController implements Initializable {
                   }else{  
                      Log.logException(ex);
                   }
+                  
              }
          }
        }else{
@@ -165,7 +170,8 @@ public class ProjectRegisterController implements Initializable {
            
    }
    
-   @FXML public void actionCancel(){
+   @FXML 
+   private void actionCancel(){
        Stage stage = (Stage)btCancel.getScene().getWindow();
        stage.close();
    }
@@ -183,12 +189,15 @@ public class ProjectRegisterController implements Initializable {
                   }else{  
                      Log.logException(ex);
                   }
+                  
                }
-           }     
+           }
+           
        }
+       
    }
    
-   public boolean studentAlreadyRegistered(Student student){
+   private boolean studentAlreadyRegistered(Student student){
       boolean value = false;
         try {
             StudentDAO studentDAO = new StudentDAO();
@@ -197,6 +206,7 @@ public class ProjectRegisterController implements Initializable {
             if(studentRetrivied.equals(student)){
                 value = true;
             }
+            
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
@@ -230,14 +240,17 @@ public class ProjectRegisterController implements Initializable {
            value = false;
            alertMessage.showAlertValidateFailed("Campos vacios");
        }
+       
        if(invalidFields(project)){
            value = false;
            alertMessage.showAlertValidateFailed("Campos invalidos");
        }
+       
        if(projectAlreadyRegistered(project)){
            value = false;
            alertMessage.showAlertValidateFailed("El proyecto ya se encuentra registrado");
        }
+       
        return value;     
    }
    
@@ -276,14 +289,15 @@ public class ProjectRegisterController implements Initializable {
    }
  
    @FXML
-    private void addMember(ActionEvent event){
-        Member member = cbMember.getSelectionModel().getSelectedItem();
-        if(validateMember(member)){
-            membersTable.add(member);           
+   private void addMember(ActionEvent event){
+        Member newMember = cbMember.getSelectionModel().getSelectedItem();
+        if(validateMember(newMember)){
+            membersTable.add(newMember);           
         }else{
             AlertMessage alertMessage = new AlertMessage();
             alertMessage.showAlertValidateFailed("Participante del CA repetido");
         }
+        
     }
     
     private boolean validateMember(Member member){
@@ -293,29 +307,34 @@ public class ProjectRegisterController implements Initializable {
             if(membersTable.get(i).equals(member)){
                 value = false;
             }
+            
             i++;
         }
+        
        return value;
     }
     
     private Member getSelectedMember(){
-        Member member = null;
-        int tamTable = 1;
+        Member newMember = null;
+        int tableSize = 1;
         if(tvMember != null){
             List<Member> memberTable = tvMember.getSelectionModel().getSelectedItems();
-            if(memberTable.size() == tamTable){
-                member = memberTable.get(0);
+            if(memberTable.size() == tableSize){
+                newMember = memberTable.get(0);
             }
+            
         }
-        return member;
+        
+        return newMember;
     }
     
     private void setSelectedMember(){
-        Member member = getSelectedMember();
-        indexMember = membersTable.indexOf(member);
-        if(member != null){
-            cbMember.getSelectionModel().select(member);
+        Member newMember = getSelectedMember();
+        indexMember = membersTable.indexOf(newMember);
+        if(newMember != null){
+            cbMember.getSelectionModel().select(newMember);
         }
+        
     }
     
     @FXML
@@ -332,6 +351,7 @@ public class ProjectRegisterController implements Initializable {
             AlertMessage alertMessage = new AlertMessage();
             alertMessage.showAlertValidateFailed("LGAC repetida");
         }
+        
     } 
     
     private boolean validateLgac(LGAC lgac){
@@ -341,20 +361,24 @@ public class ProjectRegisterController implements Initializable {
             if(lgacsTable.get(i).equals(lgac)){
                 value = false;
             }
+            
             i++;
         }
+        
        return value;
     }
     
     private LGAC getSelectedLGAC(){
         LGAC lgac = null;
-        int tamTable = 1;
+        int tableSize = 1;
         if(tvLGAC != null){
             List<LGAC> lgacTable = tvLGAC.getSelectionModel().getSelectedItems();
-            if(lgacTable.size() == tamTable){
+            if(lgacTable.size() == tableSize){
                 lgac = lgacTable.get(0);
             }
+            
         }
+        
         return lgac;
     }
     
@@ -364,6 +388,7 @@ public class ProjectRegisterController implements Initializable {
         if(lgac != null){
             cbLGAC.getSelectionModel().select(lgac);
         }
+        
     }
     
     @FXML
@@ -379,18 +404,21 @@ public class ProjectRegisterController implements Initializable {
         }else{
             AlertMessage alertMessage = new AlertMessage();
             alertMessage.showAlertValidateFailed("Trabajo recepcional repetido");
-        }  
+        } 
+        
     } 
     
     private ReceptionWork getSelectedReceptionWork(){
         ReceptionWork receptionWork = null;
-        int tamTable = 1;
+        int tableSize = 1;
         if(tvReceptionWork != null){
             List<ReceptionWork> receptionWorkTable = tvReceptionWork.getSelectionModel().getSelectedItems();
-            if(receptionWorkTable.size() == tamTable){
+            if(receptionWorkTable.size() == tableSize){
                 receptionWork = receptionWorkTable.get(0);
             }
+            
         }
+        
         return receptionWork;
     }
     
@@ -400,6 +428,7 @@ public class ProjectRegisterController implements Initializable {
         if(receptionWork != null){
             cbReceptionWork.getSelectionModel().select(receptionWork);
         }
+        
     }    
     
     @FXML
@@ -414,8 +443,10 @@ public class ProjectRegisterController implements Initializable {
             if(receptionWorksTable.get(i).equals(receptionWork)){
                 value = false;
             }
+            
             i++;
         }
+        
        return value;
     }
      
@@ -440,26 +471,31 @@ public class ProjectRegisterController implements Initializable {
            value = false;
            alertMessage.showAlertValidateFailed("Campos invalidos");
         }
+        
         if(emptyFields(student)){
             value = false;
             alertMessage.showAlertValidateFailed("Existen campos vacios");
         }
+        
         if(repeatedStudent(student)){
             value = false;
             alertMessage.showAlertValidateFailed("Estudiante repetido");
         }
+        
         return value;
     }
     
     private Student getSelectedStudent(){
         Student student = null;
-        int tamTable = 1;
+        int tableSize = 1;
         if(tvStudent!= null){
             List<Student> studentTable = tvStudent.getSelectionModel().getSelectedItems();
-            if(studentTable.size() == tamTable){
+            if(studentTable.size() == tableSize){
                 student = studentTable.get(0);
             }
+            
         }
+        
         return student;
     }
     
@@ -470,6 +506,7 @@ public class ProjectRegisterController implements Initializable {
             tfName.setText(student.getName());
             tfEnrollment.setText(student.getEnrollment());
         }
+        
     }
 
     
@@ -490,6 +527,7 @@ public class ProjectRegisterController implements Initializable {
         if( validation.findInvalidField(student.getName()) || validation.findInvalidKeyAlphanumeric(student.getEnrollment())){  
             value = true;
         }
+        
         return value;
     }
     
@@ -498,6 +536,7 @@ public class ProjectRegisterController implements Initializable {
         if( student.getName().isEmpty()|| student.getEnrollment().isEmpty()){        
             value = true;
         }
+        
         return value;
     }
 
@@ -515,8 +554,10 @@ public class ProjectRegisterController implements Initializable {
             if(studentsTable.get(i).equals(student)){
                 value = true;
             }
+            
             i++;
         }
+        
        return value;
     }
     
@@ -528,6 +569,7 @@ public class ProjectRegisterController implements Initializable {
             for(int i = 0; i< memberList.size(); i++){
                      members.add(memberList.get(i));                
             }
+            
             cbMember.getSelectionModel().selectFirst();
         } catch (BusinessException ex) {
             Log.logException(ex);
@@ -542,6 +584,7 @@ public class ProjectRegisterController implements Initializable {
             for(int i = 0; i< lgacList.size(); i++){
                      lgacs.add(lgacList.get(i));   
             }
+            
             cbLGAC.getSelectionModel().selectFirst();
         } catch (BusinessException ex) {
             Log.logException(ex);
@@ -556,6 +599,7 @@ public class ProjectRegisterController implements Initializable {
             for(int i = 0; i< receptionWorkList .size(); i++){
                      receptionWorks.add(receptionWorkList.get(i));   
             }
+            
             cbReceptionWork.getSelectionModel().selectFirst();      
         } catch (BusinessException ex) {
             Log.logException(ex);

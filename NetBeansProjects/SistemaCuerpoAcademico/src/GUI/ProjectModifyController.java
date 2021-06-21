@@ -32,7 +32,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import log.BusinessException;
@@ -42,7 +41,7 @@ public class ProjectModifyController implements Initializable {
 
     @FXML private DatePicker dpFinishDate;
     @FXML private DatePicker dpStartDate;
-    @FXML private TextField tfTitle;
+    @FXML private TextFieldLimited tfTitle;
     @FXML private TextArea taDescription;
     @FXML private TableView<LGAC> tvLGAC;
     @FXML private TableColumn<LGAC, String> tcLGAC;
@@ -55,8 +54,8 @@ public class ProjectModifyController implements Initializable {
     @FXML private TableColumn<Student, String> tcStudentEnrollment;
     @FXML private Button btSave;
     @FXML private Button btCancel;
-    @FXML private TextField tfName;
-    @FXML private TextField tfEnrollment;
+    @FXML private TextFieldLimited tfName;
+    @FXML private TextFieldLimited tfEnrollment;
     @FXML private ComboBox<Member> cbMember;
     @FXML private ComboBox<ReceptionWork> cbReceptionWork;
     @FXML private ComboBox<LGAC> cbLGAC;
@@ -81,6 +80,9 @@ public class ProjectModifyController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        tfTitle.setMaxlength(200);
+        tfName.setMaxlength(150);
+        tfEnrollment.setMaxlength(10);
         tcLGAC.setCellValueFactory(new PropertyValueFactory<LGAC,String>("name"));
         tcMember.setCellValueFactory(new PropertyValueFactory<Member,String>("name"));
         tcStudentName.setCellValueFactory(new PropertyValueFactory<Student,String>("name"));
@@ -118,12 +120,14 @@ public class ProjectModifyController implements Initializable {
              }
             }
         );
+        
        tvReceptionWork.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                  setSelectedReceptionWork();
              }
             }
         );
+       
         tvLGAC.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                  setSelectedLGAC();
@@ -133,7 +137,7 @@ public class ProjectModifyController implements Initializable {
     }
     
    @FXML 
-   public void actionSave(){
+   private void actionSave(){
        
        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
        String title = "";
@@ -150,7 +154,6 @@ public class ProjectModifyController implements Initializable {
          Project project = new Project(title,description,startDate,finishDate,groupAcademicKey);  
           project = setProjectInfo(project);
          if(validateProject(project)){   
- 
              try {
                  saveStudents();
                  ProjectDAO projectDAO = new ProjectDAO();
@@ -175,7 +178,7 @@ public class ProjectModifyController implements Initializable {
            
    }
    
-   public void deleteProjectInfo(Project project){
+   private void deleteProjectInfo(Project project){
         try {
             ProjectDAO projectDAO = new ProjectDAO();
             projectDAO.updatedSucessful(project);
@@ -188,7 +191,7 @@ public class ProjectModifyController implements Initializable {
         }
    }
    
-      public void addProjectInfo(Project project){
+   private void addProjectInfo(Project project){
         try {
            ProjectDAO projectDAO = new ProjectDAO();
            projectDAO.addStudents(project);
@@ -201,13 +204,13 @@ public class ProjectModifyController implements Initializable {
    }
    
    @FXML
-   public void actionCancel(){
+   private void actionCancel(){
        Stage stage = (Stage)btCancel.getScene().getWindow();
        stage.close();
        openViewProject(projectRetrieved);
    }
    
-       private void  openViewProject(Project project){   
+    private void  openViewProject(Project project){   
         Stage primaryStage = new Stage();
         try{
               URL url = new File("src/GUI/ProjectShow.fxml").toURI().toURL();
@@ -221,9 +224,9 @@ public class ProjectModifyController implements Initializable {
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);
               primaryStage.show();
-            }catch (IOException ex) {
-                Log.logException(ex);
-            }
+        }catch (IOException ex) {
+            Log.logException(ex);
+        }
     }
    
    private void saveStudents(){  
@@ -239,12 +242,15 @@ public class ProjectModifyController implements Initializable {
                   }else{  
                      Log.logException(ex);
                   }
+                  
                }
-           }     
+           }
+           
        }
+       
    }
    
-   public boolean studentAlreadyRegistered(Student student){
+   private boolean studentAlreadyRegistered(Student student){
       boolean value = false;
         try {
             StudentDAO studentDAO = new StudentDAO();
@@ -256,7 +262,8 @@ public class ProjectModifyController implements Initializable {
         } catch (BusinessException ex) {
             Log.logException(ex);          
         }
-         return value;
+        
+        return value;
    }
    
    private Project setProjectInfo(Project project){
@@ -287,10 +294,12 @@ public class ProjectModifyController implements Initializable {
            value = false;
            alertMessage.showAlertValidateFailed("Campos vacios");
        }
+       
        if(invalidFields(project)){
            value = false;
            alertMessage.showAlertValidateFailed("Campos invalidos");
        }
+       
        return value;     
    }
     
@@ -316,10 +325,10 @@ public class ProjectModifyController implements Initializable {
    }
  
    @FXML
-    private void addMember(ActionEvent event){
-        Member member = cbMember.getSelectionModel().getSelectedItem();
-        if(validateMember(member)){
-            membersTable.add(member);           
+   private void addMember(ActionEvent event){
+        Member newMember = cbMember.getSelectionModel().getSelectedItem();
+        if(validateMember(newMember)){
+            membersTable.add(newMember);           
         }else{
             AlertMessage alertMessage = new AlertMessage();
             alertMessage.showAlertValidateFailed("Participante del CA repetido");
@@ -333,28 +342,32 @@ public class ProjectModifyController implements Initializable {
             if(membersTable.get(i).equals(member)){
                 value = false;
             }
+            
             i++;
         }
+        
        return value;
     }
     
     private Member getSelectedMember(){
-        Member member = null;
-        int tamTable = 1;
+        Member newMember = null;
+        int tableSize = 1;
         if(tvMember != null){
             List<Member> memberTable = tvMember.getSelectionModel().getSelectedItems();
-            if(memberTable.size() == tamTable){
-                member = memberTable.get(0);
+            if(memberTable.size() == tableSize){
+                newMember = memberTable.get(0);
             }
+            
         }
-        return member;
+        
+        return newMember;
     }
     
     private void setSelectedMember(){
-        Member member = getSelectedMember();
-        indexMember = membersTable.indexOf(member);
-        if(member != null){
-            cbMember.getSelectionModel().select(member);
+        Member newMember = getSelectedMember();
+        indexMember = membersTable.indexOf(newMember);
+        if(newMember != null){
+            cbMember.getSelectionModel().select(newMember);
         }
     }
     
@@ -363,7 +376,7 @@ public class ProjectModifyController implements Initializable {
         membersTable.remove(indexMember);
     }
     
-   @FXML
+    @FXML
     private void addLgac(ActionEvent event){
         LGAC lgac = cbLGAC.getSelectionModel().getSelectedItem();
         if(validateLgac(lgac)){
@@ -388,10 +401,10 @@ public class ProjectModifyController implements Initializable {
     
     private LGAC getSelectedLGAC(){
         LGAC lgac = null;
-        int tamTable = 1;
+        int tableSize = 1;
         if(tvLGAC != null){
             List<LGAC> lgacTable = tvLGAC.getSelectionModel().getSelectedItems();
-            if(lgacTable.size() == tamTable){
+            if(lgacTable.size() == tableSize){
                 lgac = lgacTable.get(0);
             }
         }
@@ -424,10 +437,10 @@ public class ProjectModifyController implements Initializable {
     
     private ReceptionWork getSelectedReceptionWork(){
         ReceptionWork receptionWork = null;
-        int tamTable = 1;
+        int tableSize = 1;
         if(tvReceptionWork != null){
             List<ReceptionWork> receptionWorkTable = tvReceptionWork.getSelectionModel().getSelectedItems();
-            if(receptionWorkTable.size() == tamTable){
+            if(receptionWorkTable.size() == tableSize){
                 receptionWork = receptionWorkTable.get(0);
             }
         }
@@ -492,13 +505,15 @@ public class ProjectModifyController implements Initializable {
     
     private Student getSelectedStudent(){
         Student student = null;
-        int tamTable = 1;
+        int tableSize = 1;
         if(tvStudent!= null){
             List<Student> studentTable = tvStudent.getSelectionModel().getSelectedItems();
-            if(studentTable.size() == tamTable){
+            if(studentTable.size() == tableSize){
                 student = studentTable.get(0);
             }
+            
         }
+        
         return student;
     }
     
@@ -509,6 +524,7 @@ public class ProjectModifyController implements Initializable {
             tfName.setText(student.getName());
             tfEnrollment.setText(student.getEnrollment());
         }
+        
     }
     
     @FXML
@@ -516,19 +532,6 @@ public class ProjectModifyController implements Initializable {
        studentsTable.remove(indexStudent);
        cleanFields();
     }
-    
-    @FXML
-    public void actionUpdateStudent(){
-        String name = "";
-        String enrollment = "";
-        name = tfName.getText();
-        enrollment = tfEnrollment.getText();
-        Student student = new Student(enrollment, name);
-        if(validateStudent(student)){    
-            studentsTable.set(indexStudent,student);
-        }
-        cleanFields();
-   }
     
     private void cleanFields(){
         tfName.setText("");
@@ -541,6 +544,7 @@ public class ProjectModifyController implements Initializable {
         if( validation.findInvalidField(student.getName()) || validation.findInvalidKeyAlphanumeric(student.getEnrollment())){  
             value = true;
         }
+        
         return value;
     }
     
@@ -549,6 +553,7 @@ public class ProjectModifyController implements Initializable {
         if( student.getName().isEmpty()|| student.getEnrollment().isEmpty()){        
             value = true;
         }
+        
         return value;
     }
 
@@ -560,8 +565,10 @@ public class ProjectModifyController implements Initializable {
             if(studentsTable.get(i).equals(student)){
                 value = true;
             }
+            
             i++;
         }
+        
        return value;
     }
     
@@ -573,6 +580,7 @@ public class ProjectModifyController implements Initializable {
             for(int i = 0; i< memberList.size(); i++){
                      members.add(memberList.get(i));                  
             }
+            
             cbMember.getSelectionModel().selectFirst();
         } catch (BusinessException ex) {
             Log.logException(ex);
@@ -587,6 +595,7 @@ public class ProjectModifyController implements Initializable {
             for(int i = 0; i< lgacList.size(); i++){
                      lgacs.add(lgacList.get(i));   
             }
+            
             cbLGAC.getSelectionModel().selectFirst();
         } catch (BusinessException ex) {
             Log.logException(ex);
@@ -601,6 +610,7 @@ public class ProjectModifyController implements Initializable {
             for(int i = 0; i< receptionWorkList .size(); i++){
                      receptionWorks.add(receptionWorkList.get(i));   
             }
+            
             cbReceptionWork.getSelectionModel().selectFirst();      
         } catch (BusinessException ex) {
             Log.logException(ex);
@@ -619,9 +629,11 @@ public class ProjectModifyController implements Initializable {
         initializeStudents(projectRetrieved);
         initializeReceptionWorks(projectRetrieved);
     }
+    
     public void setMember(Member member){
         this.member = member;
     }
+    
     private void initializeProject(Project projectRetrieved){
         tfTitle.setText(projectRetrieved.getTitle());
         LocalDate startDate = LocalDate.parse(projectRetrieved.getStartDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -640,6 +652,7 @@ public class ProjectModifyController implements Initializable {
                 lgacsTableOld.add(lgacList.get(i));
                 lgacsTable.add(lgacList.get(i));
             }
+            
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
@@ -654,6 +667,7 @@ public class ProjectModifyController implements Initializable {
                 membersTableOld.add(memberList.get(i));
                 membersTable.add(memberList.get(i));
             }
+            
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
@@ -668,6 +682,7 @@ public class ProjectModifyController implements Initializable {
                 studentsTableOld.add(studentList.get(i));
                 studentsTable.add(studentList.get(i));
             }
+            
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
@@ -682,6 +697,7 @@ public class ProjectModifyController implements Initializable {
                 receptionWorksTableOld.add(receptionWorkList.get(i));
                 receptionWorksTable.add(receptionWorkList.get(i));
             }
+            
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
