@@ -263,6 +263,8 @@ INSERT INTO ParticipaReunion(idReunion, cedula, rol) VALUES (2,"8325134","Secret
 INSERT INTO ParticipaReunion(idReunion, cedula, rol) VALUES (2,"7938268","Asistente");
 INSERT INTO ParticipaReunion(idReunion, cedula, rol) VALUES (4,"8325134","Asistente");
 INSERT INTO ParticipaReunion(idReunion,cedula,rol) VALUES(4,"7938268","Lider");
+INSERT INTO ParticipaReunion(idReunion, cedula, rol) VALUES (5,"8325134","Asistente");
+INSERT INTO ParticipaReunion(idReunion,cedula,rol) VALUES(5,"7938268","Lider");
 
 INSERT INTO ValidarMinuta(idMinuta, cedula, estado, comentario) VALUES (2,8325134,"Pendiente","Falto el pendiente de agendar la siguiente reunión");
 INSERT INTO ValidarMinuta(idMinuta, cedula) VALUES (2,7938268);
