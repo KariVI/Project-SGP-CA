@@ -28,14 +28,11 @@ public class MemberViewController implements Initializable {
     @FXML Label lbDegreeYear = new Label();
     @FXML Label lbUniversityName = new Label();
     private Member member ;
-
-    
-    
+  
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         
     }
-
     
     public void initializeMember(Member member) {
          this.member = member;
@@ -47,8 +44,7 @@ public class MemberViewController implements Initializable {
          lbDegreeYear.setText(Integer.toString(member.getDegreeYear()));
          lbUniversityName.setText(member.getUniversityName());
     }
-
-    
+   
     @FXML
     public void actionReturn(){
         Stage stage = (Stage) btReturn.getScene().getWindow();
@@ -76,23 +72,22 @@ public class MemberViewController implements Initializable {
         }
     }
     
-      private void openListMember(){   
-        Stage primaryStage = new Stage();
-        try{
-              URL url = new File("src/GUI/MemberList.fxml").toURI().toURL();
-              FXMLLoader loader = new FXMLLoader(url);
-              loader.setLocation(url);
-              loader.load();
-              MemberListController memberListController  = loader.getController();
-              memberListController.setMember(member);
-              Parent root = loader.getRoot();
-              Scene scene = new Scene(root);
-              primaryStage.setScene(scene);
-              primaryStage.show();
-            }catch (IOException ex) {
-                Log.logException(ex);
-            }
-    }
-    
+    private void openListMember(){   
+      Stage primaryStage = new Stage();
+      try{
+            URL url = new File("src/GUI/MemberList.fxml").toURI().toURL();
+            FXMLLoader loader = new FXMLLoader(url);
+            loader.setLocation(url);
+            loader.load();
+            MemberListController memberListController  = loader.getController();
+            memberListController.setMember(member);
+            Parent root = loader.getRoot();
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+     }catch (IOException ex) {
+        Log.logException(ex);
+     }
+   }  
 
 }

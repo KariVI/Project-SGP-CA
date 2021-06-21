@@ -31,36 +31,45 @@ public class MemberListController implements  Initializable {
     @FXML private ListView<Member> lvMembers = new ListView<Member>();
     private ObservableList <Member> members ;
     private Member loginMember;
-  
+    
+    public void setMember(Member member){
+        this.loginMember = member;
+        initializeMembers();
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-      members = FXCollections.observableArrayList();
-     
+      members = FXCollections.observableArrayList();   
       lvMembers.setItems(members);
       lvMembers.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Member>() {
           @Override
           public void changed(ObservableValue<? extends Member> observaleValue, Member oldValue, Member newValue) {
-              Member selectedMember = lvMembers.getSelectionModel().getSelectedItem();
-            try {
+            Member selectedMember = lvMembers.getSelectionModel().getSelectedItem();
+            Stage stage = (Stage) lvMembers.getScene().getWindow();
+            stage.close();
+            openMemberShow(selectedMember);
+          }
+      });
+      
+    }
+    
+    public void openMemberShow(Member selectedMember){
+        try {
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/memberView.fxml").toURI().toURL();
             FXMLLoader loader = new FXMLLoader(url);
-              loader.setLocation(url);
-              loader.load();
-              MemberViewController memberViewController =loader.getController();      
-              memberViewController.initializeMember(selectedMember);
-              Parent root = loader.getRoot();
-              Scene scene = new Scene(root);
-              primaryStage.setScene(scene);
-              Stage stage = (Stage) lvMembers.getScene().getWindow();
-              stage.close();
-              primaryStage.show();
+            loader.setLocation(url);
+            loader.load();
+            MemberViewController memberViewController =loader.getController();      
+            memberViewController.initializeMember(selectedMember);
+            Parent root = loader.getRoot();
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            primaryStage.show();
         } catch (IOException ex) {
             Log.logException(ex);
-        }
-          }
-      });
-    }  
+        }       
+    }
 
     @FXML
     void initializeMembers() {
@@ -71,9 +80,10 @@ public class MemberListController implements  Initializable {
             for( int i = 0; i<memberList.size(); i++) {
                     members.add(memberList.get(i));     
             }
+            
         } catch (BusinessException ex) {
             Log.logException(ex);
-        }
+        }      
     }
     
     @FXML
@@ -101,11 +111,6 @@ public class MemberListController implements  Initializable {
             }
     }
     
-    public void setMember(Member member){
-        this.loginMember = member;
-        initializeMembers();
-    }
-    
     @FXML 
     public void actionRegister(){
         try {
@@ -126,4 +131,5 @@ public class MemberListController implements  Initializable {
             Log.logException(ex);
         }
     }
+    
 }

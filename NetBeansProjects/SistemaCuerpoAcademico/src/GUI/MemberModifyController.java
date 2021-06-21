@@ -26,7 +26,6 @@ import javafx.stage.Stage;
 import log.BusinessException;
 import log.Log;
 
-
 public class MemberModifyController implements Initializable {
     private ObservableList<String> roles;
     private ObservableList<String> degrees;
@@ -34,10 +33,10 @@ public class MemberModifyController implements Initializable {
     @FXML private ComboBox<Integer> cbYears;
     @FXML private ComboBox<String> cbRoles;
     @FXML private ComboBox<String> cbDegrees;
-    @FXML private TextField tfName;
+    @FXML private TextFieldLimited tfName;
     @FXML private Label lbProfessionalLicense;
-    @FXML private TextField tfNameDegree;
-    @FXML private TextField tfUniversity;
+    @FXML private TextFieldLimited tfNameDegree;
+    @FXML private TextFieldLimited tfUniversity;
     @FXML private Button btReturn;
     @FXML private Button btSave;
     @FXML private ToggleGroup tgState;
@@ -47,20 +46,24 @@ public class MemberModifyController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-     roles = FXCollections.observableArrayList();
-     roles.add("Integrante");
-     roles.add("Colaborador");
-     cbRoles.setItems(roles);
-     degrees = FXCollections.observableArrayList();
-     degrees.add("Maestria");
-     degrees.add("Doctorado");
-     cbDegrees.setItems(degrees);
-     years = FXCollections.observableArrayList();
-     for(int i = getCurrentYear(); i>1899; i--){
-            years.add(i);
-     }
-     cbYears.setItems(years);
-     cbYears.getSelectionModel().selectFirst();
+        tfName.setMaxlength(150);
+        tfNameDegree.setMaxlength(200);
+        tfUniversity.setMaxlength(200);
+        roles = FXCollections.observableArrayList();
+        roles.add("Integrante");
+        roles.add("Colaborador");
+        cbRoles.setItems(roles);
+        degrees = FXCollections.observableArrayList();
+        degrees.add("Maestria");
+        degrees.add("Doctorado");
+        cbDegrees.setItems(degrees);
+        years = FXCollections.observableArrayList();
+        for(int i = getCurrentYear(); i>1899; i--){
+               years.add(i);
+        }
+        
+        cbYears.setItems(years);
+        cbYears.getSelectionModel().selectFirst();
     }    
 
     @FXML 
@@ -83,17 +86,17 @@ public class MemberModifyController implements Initializable {
        state = ((RadioButton) tgState.getSelectedToggle()).getText();
        Member newMember = new Member(professionalLicense, name, role, degree,nameDegree,universityName, degreeYear,state,member.getKeyGroupAcademic());
        MemberDAO memberDAO = new MemberDAO();
-        if(validateMember(newMember)){
-             try { 
+       if(validateMember(newMember)){
+            try { 
               AlertMessage alertMessage = new AlertMessage();
               memberDAO.updatedSucessful(newMember);
               alertMessage.showUpdateMessage();
               Stage stage = (Stage) btSave.getScene().getWindow();
               stage.close();
               openShowMember(newMember);
-             } catch (BusinessException ex) {
+            } catch (BusinessException ex) {
                 Log.logException(ex);
-             }
+            }
        }
        
     }
@@ -118,10 +121,9 @@ public class MemberModifyController implements Initializable {
     @FXML
     public void actionReturn() {
         Stage stage = (Stage) btReturn.getScene().getWindow();
-       stage.close();
-       openShowMember(member);
+        stage.close();
+        openShowMember(member);
     }
-    
     
     public int getCurrentYear(){
         Date date = new Date();
@@ -155,6 +157,7 @@ public class MemberModifyController implements Initializable {
         if((member.getProfessionalLicense().isEmpty())||(member.getName().isEmpty())||(member.getRole().isEmpty())||(member.getDegree().isEmpty())|| (member.getNameDegree().isEmpty())||(member.getUniversityName().isEmpty())|| member.getDegreeYear() == 0){
             emptyFields = true;
         }
+        
         return emptyFields;
     }
     
@@ -167,6 +170,7 @@ public class MemberModifyController implements Initializable {
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
+        
         return value;
     }
     
@@ -175,12 +179,13 @@ public class MemberModifyController implements Initializable {
         Validation validation = new Validation();
         if(validation.findInvalidField(member.getName())||validation.findInvalidField(member.getNameDegree())||
            validation.findInvalidField(member.getUniversityName())){
-            value = false;
+           value = false;
         }
+        
         return value;
     }
     
-          private void openShowMember(Member member){   
+    private void openShowMember(Member member){   
         Stage primaryStage = new Stage();
         try{
               URL url = new File("src/GUI/MemberView.fxml").toURI().toURL();
@@ -193,8 +198,9 @@ public class MemberModifyController implements Initializable {
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);
               primaryStage.show();
-            }catch (IOException ex) {
-                Log.logException(ex);
-            }
+        }catch (IOException ex) {
+            Log.logException(ex);
+        }
     }
+    
 }

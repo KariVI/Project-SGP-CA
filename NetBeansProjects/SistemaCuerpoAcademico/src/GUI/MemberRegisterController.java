@@ -18,7 +18,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import log.BusinessException;
 import log.Log;
@@ -31,37 +30,50 @@ public class MemberRegisterController implements Initializable {
     @FXML private ComboBox<Integer> cbYears;
     @FXML private ComboBox<String> cbRoles;
     @FXML private ComboBox<String> cbDegrees;
-    @FXML private TextField tfName;
-    @FXML private TextField tfProfessionalLicense;
-    @FXML private TextField tfNameDegree;
-    @FXML private TextField tfUniversity;
+    @FXML private TextFieldLimited tfName;
+    @FXML private TextFieldLimited tfProfessionalLicense;
+    @FXML private TextFieldLimited tfNameDegree;
+    @FXML private TextFieldLimited tfUniversity;
     @FXML private Button btClose;
     private Member loginMember;
     
+    public void setMember(Member member){
+        this.loginMember = member;
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-      roles = FXCollections.observableArrayList();
-     roles.add("Integrante");
-     roles.add("Colaborador");
-     cbRoles.setItems(roles);
-     degrees = FXCollections.observableArrayList();
-     degrees.add("Maestria");
-     degrees.add("Doctorado");
-     cbDegrees.setItems(degrees);
-     years = FXCollections.observableArrayList();
-     for(int i = getActualYear(); i>1899; i--){
-            years.add(i);
-     }
-     cbYears.setItems(years);
-     cbRoles.getSelectionModel().selectFirst();
-     cbDegrees.getSelectionModel().selectFirst();
-     cbYears.getSelectionModel().selectFirst();
-
+        tfName.setMaxlength(150);
+        tfNameDegree.setMaxlength(200);
+        tfUniversity.setMaxlength(200);
+        tfProfessionalLicense.setMaxlength(10);
+        roles = FXCollections.observableArrayList();
+        roles.add("Integrante");
+        roles.add("Colaborador");
+        cbRoles.setItems(roles);
+        degrees = FXCollections.observableArrayList();
+        degrees.add("Maestria");
+        degrees.add("Doctorado");
+        cbDegrees.setItems(degrees);
+        years = FXCollections.observableArrayList();
+        for(int i = getCurrentYear(); i>1899; i--){
+               years.add(i);
+        }
+       
+        cbYears.setItems(years);
+        cbRoles.getSelectionModel().selectFirst();
+        cbDegrees.getSelectionModel().selectFirst();
+        cbYears.getSelectionModel().selectFirst();
     }    
 
     @FXML 
     public void save(){
-       String name = "", role = "", degree = "", professionalLicense = "", nameDegree = "", universityName = "";
+       String name = "";
+       String role = ""; 
+       String degree = "";
+       String professionalLicense = ""; 
+       String nameDegree = "";
+       String universityName = "";
        int degreeYear = 0;
        name = tfName.getText();
        role = cbRoles.getSelectionModel().getSelectedItem();
@@ -83,6 +95,7 @@ public class MemberRegisterController implements Initializable {
                 Log.logException(ex);
              }
        }
+       
     }
     
     private void openListMember(){   
@@ -109,9 +122,8 @@ public class MemberRegisterController implements Initializable {
         stage.close();
         openListMember();
     }
-    
    
-    public int getActualYear(){
+    public int getCurrentYear(){
         Date date = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -125,6 +137,7 @@ public class MemberRegisterController implements Initializable {
             value = false;
             alertMessage.showAlertValidateFailed("Campos vacios");
         }
+        
         if(isAlreadyRegisterd(member)){
             value = false;
             alertMessage.showAlertValidateFailed("El miembro ya se encuentra registrado");
@@ -136,9 +149,6 @@ public class MemberRegisterController implements Initializable {
         }
         
         return value;
-    }
-    public void setMember(Member member){
-        this.loginMember = member;
     }
     
     public boolean isEmptyFields(Member member){
@@ -171,8 +181,9 @@ public class MemberRegisterController implements Initializable {
         Validation validation = new Validation();
         if(validation.findInvalidField(member.getName())||validation.findInvalidField(member.getNameDegree())||
            validation.findInvalidField(member.getUniversityName())){
-            value = false;
+           value = false;
         }
+        
         return value;
     }
     
