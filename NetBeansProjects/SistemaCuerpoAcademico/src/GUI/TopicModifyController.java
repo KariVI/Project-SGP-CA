@@ -93,7 +93,7 @@ public class TopicModifyController implements Initializable {
         initializeMembers();
     }
     
-    public void initializeTopics(){
+    private void initializeTopics(){
         TopicDAO topicDAO = new TopicDAO();
         try {
             ArrayList<Topic> topicList = new ArrayList<Topic>();
@@ -184,7 +184,7 @@ public class TopicModifyController implements Initializable {
         }
     }
     
-   public void actionSave(){
+   private void actionSave(){
        TopicDAO topicDAO = new TopicDAO();
         try {
           for(int i = 0; i < oldTopics.size(); i++){
@@ -207,13 +207,13 @@ public class TopicModifyController implements Initializable {
         openTopicShow();
     }
    
-   public void actionCancel(){
+   private void actionCancel(){
       Stage stage = (Stage)btCancel.getScene().getWindow();
       stage.close(); 
       openTopicShow();
    }
    
-   public void actionUpdate(){
+   private void actionUpdate(){
         String finishTime = "";
         String startTime = "";
         String topicName = "";
@@ -249,7 +249,7 @@ public class TopicModifyController implements Initializable {
             }
     }
     
-    public boolean validateTopic(Topic topic){
+    private boolean validateTopic(Topic topic){
         boolean value = true;
         AlertMessage alertMessage = new AlertMessage();
         if(isEmptyFields(topic)){
@@ -275,7 +275,7 @@ public class TopicModifyController implements Initializable {
         return value;
     }
     
-    public boolean isEmptyFields(Topic topic){
+    private boolean isEmptyFields(Topic topic){
         boolean value = false;
         if(topic.getStartTime().isEmpty()||topic.getFinishTime().isEmpty()||topic.getTopicName().isEmpty()){
             value = true;
@@ -284,7 +284,7 @@ public class TopicModifyController implements Initializable {
         return value;
     }
     
-    public boolean invalidFields(Topic topic){
+    private boolean invalidFields(Topic topic){
         boolean value = false;
         Validation validation = new Validation();
         if(validation.findInvalidField(topic.getTopicName())){
@@ -294,7 +294,7 @@ public class TopicModifyController implements Initializable {
         return value;
     }
     
-    public boolean validateHours(Topic topic){
+    private boolean validateHours(Topic topic){
         boolean value = false;
         Validation validation = new Validation();
         if(validation.validateHour(topic.getFinishTime())&&validation.validateCorrectHours(topic.getStartTime(),topic.getFinishTime())){
@@ -304,7 +304,7 @@ public class TopicModifyController implements Initializable {
         return value;
     }
     
-    public boolean repeatedTopic(Topic topic){
+    private boolean repeatedTopic(Topic topic){
         Boolean value = false;
         int i = 0;
         while(!value && i<topics.size()){

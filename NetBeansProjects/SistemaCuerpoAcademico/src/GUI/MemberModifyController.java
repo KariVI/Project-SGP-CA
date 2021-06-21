@@ -66,7 +66,7 @@ public class MemberModifyController implements Initializable {
     }    
 
     @FXML 
-    public void save(){
+    private void save(){
        String name = "";
        String role = "";
        String degree = "";
@@ -118,20 +118,20 @@ public class MemberModifyController implements Initializable {
     }
     
     @FXML
-    public void actionReturn() {
+    private void actionReturn() {
         Stage stage = (Stage) btReturn.getScene().getWindow();
         stage.close();
         openShowMember(member);
     }
     
-    public int getCurrentYear(){
+    private int getCurrentYear(){
         Date date = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar.get(Calendar.YEAR);
     }
     
-    public boolean validateMember(Member member){
+    private boolean validateMember(Member member){
         boolean value = true;
         AlertMessage alertMessage = new AlertMessage();
         if(isEmptyFields(member)){
@@ -151,7 +151,7 @@ public class MemberModifyController implements Initializable {
         return value;
     }
     
-    public boolean isEmptyFields(Member member){
+    private boolean isEmptyFields(Member member){
         boolean emptyFields = false;
         if((member.getProfessionalLicense().isEmpty())||(member.getName().isEmpty())||(member.getRole().isEmpty())||(member.getDegree().isEmpty())|| (member.getNameDegree().isEmpty())||(member.getUniversityName().isEmpty())|| member.getDegreeYear() == 0){
             emptyFields = true;
@@ -160,7 +160,7 @@ public class MemberModifyController implements Initializable {
         return emptyFields;
     }
     
-    public boolean isAlreadyRegisterd(Member member){
+    private boolean isAlreadyRegisterd(Member member){
         boolean value = false;
         try {
             MemberDAO memberDAO = new MemberDAO();
@@ -173,7 +173,7 @@ public class MemberModifyController implements Initializable {
         return value;
     }
     
-    public boolean invalidFields(Member member){
+    private boolean invalidFields(Member member){
         boolean value = true;
         Validation validation = new Validation();
         if(validation.findInvalidField(member.getName())||validation.findInvalidField(member.getNameDegree())||

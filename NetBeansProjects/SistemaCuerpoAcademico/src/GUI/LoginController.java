@@ -31,7 +31,7 @@ public class LoginController implements Initializable {
     }    
       
     @FXML 
-    public void login(){
+    private void login(){
        String password = "";
        String user = "";
        user = tfUser.getText();
@@ -108,7 +108,7 @@ public class LoginController implements Initializable {
             
     }
     
-     public boolean verificarCredenciales(LoginCredential credential){
+     private boolean verificarCredenciales(LoginCredential credential){
         boolean value = true;
         try {
             LoginCredentialDAO credentialDAO = new LoginCredentialDAO();

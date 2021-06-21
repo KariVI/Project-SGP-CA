@@ -147,7 +147,7 @@ public class TopicRegisterController implements Initializable {
         
     }
     
-    void initializeMembers() {
+    private void initializeMembers() {
         try {
             MemberDAO memberDAO = new MemberDAO();
             ArrayList <Member> memberList = new ArrayList<Member>();
@@ -161,7 +161,7 @@ public class TopicRegisterController implements Initializable {
         }
     }
     
-   public void actionSave(){ 
+   private void actionSave(){ 
        if(!topics.isEmpty()){
         meetingRegisterController.setTopics(topics);       
         Stage stage = (Stage)btSave.getScene().getWindow();
@@ -174,12 +174,12 @@ public class TopicRegisterController implements Initializable {
    }
 
    
-   public void actionCancel(){
+   private void actionCancel(){
       Stage stage = (Stage)btCancel.getScene().getWindow();
       stage.close(); 
    }
     
-    public boolean validateTopic(Topic topic){
+   private boolean validateTopic(Topic topic){
         boolean value = true;
         AlertMessage alertMessage = new AlertMessage();
         if(isEmptyFields(topic)){
@@ -205,7 +205,7 @@ public class TopicRegisterController implements Initializable {
         return value;
     }
     
-    public boolean isEmptyFields(Topic topic){
+    private boolean isEmptyFields(Topic topic){
         boolean value = false;
         if(topic.getStartTime().isEmpty()||topic.getFinishTime().isEmpty()||topic.getTopicName().isEmpty()){
             value = true;
@@ -213,7 +213,7 @@ public class TopicRegisterController implements Initializable {
         return value;
     }
     
-    public boolean invalidFields(Topic topic){
+    private boolean invalidFields(Topic topic){
         boolean value = false;
         Validation validation = new Validation();
         if(validation.findInvalidField(topic.getTopicName())){
@@ -222,7 +222,7 @@ public class TopicRegisterController implements Initializable {
         return value;
     }
     
-    public boolean validateHours(Topic topic){
+    private boolean validateHours(Topic topic){
         boolean value = false;
         Validation validation = new Validation();
         if(validation.validateHour(topic.getFinishTime())&&validation.validateCorrectHours(topic.getStartTime(), topic.getFinishTime())){
@@ -231,7 +231,7 @@ public class TopicRegisterController implements Initializable {
         return value;
     }
     
-    public boolean repeatedTopic(Topic topic){
+    private boolean repeatedTopic(Topic topic){
         Boolean value = false;
         int i = 0;
         while(!value && i<topics.size()){

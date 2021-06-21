@@ -46,13 +46,13 @@ public class MemberViewController implements Initializable {
     }
    
     @FXML
-    public void actionReturn(){
+    private void actionReturn(){
         Stage stage = (Stage) btReturn.getScene().getWindow();
         stage.close();
         openListMember();
     }
  
-    public void actionUpdate(){
+    private void actionUpdate(){
         try {
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/memberModify.fxml").toURI().toURL();
