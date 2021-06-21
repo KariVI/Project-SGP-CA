@@ -142,7 +142,7 @@ public class GroupAcademicRegisterController implements Initializable  {
     }
     
    @FXML 
-    private void addlgacs(ActionEvent actionEvent){  
+    private void addLgacs(ActionEvent actionEvent){  
         GridPane gridPane= new GridPane();
         Validation validation =new Validation();
         if(!tflgacsNumber.getText().isEmpty() && (validation.validateNumberField(tflgacsNumber.getText()))){
@@ -310,9 +310,9 @@ public class GroupAcademicRegisterController implements Initializable  {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {          
-    tfName.setMaxlength(100);
-    tfKey.setMaxlength(10);
-    tflgacsNumber.setMaxlength(2);
+    tfName.setMaxLength(100);
+    tfKey.setMaxLength(10);
+    tflgacsNumber.setMaxLength(2);
      consolidateGrades= FXCollections.observableArrayList();
      consolidateGrades.add("En formación");
      consolidateGrades.add("En consolidación");

@@ -73,9 +73,9 @@ public class ProjectRegisterController implements Initializable {
  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tfTitle.setMaxlength(200);
-        tfName.setMaxlength(150);
-        tfEnrollment.setMaxlength(10);
+        tfTitle.setMaxLength(200);
+        tfName.setMaxLength(150);
+        tfEnrollment.setMaxLength(10);
         tcLGAC.setCellValueFactory(new PropertyValueFactory<LGAC,String>("name"));
         tcMember.setCellValueFactory(new PropertyValueFactory<Member,String>("name"));
         tcStudentName.setCellValueFactory(new PropertyValueFactory<Student,String>("name"));

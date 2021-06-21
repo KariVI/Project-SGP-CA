@@ -45,7 +45,7 @@ import log.Log;
 
 public class PreliminarProjectModifyController implements Initializable {
 
-   @FXML private TextField tfTitle;
+   @FXML private TextFieldLimited tfTitle;
     @FXML private TextArea taDescription;
     @FXML private Button btSave;
     @FXML private Button btExit;
@@ -536,6 +536,7 @@ public class PreliminarProjectModifyController implements Initializable {
     }
     
     public void initialize(URL url, ResourceBundle rb) {
+        tfTitle.setMaxLength(200);
         tcCodirector.setCellValueFactory(new PropertyValueFactory<Member,String>("name"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         dpStartDate.setConverter(new LocalDateStringConverter(formatter, null));

@@ -51,9 +51,9 @@ import log.Log;
 
 public class ReceptionWorkRegisterController implements Initializable {
 
-    @FXML private TextField tfTitle;
+    @FXML private TextFieldLimited tfTitle;
     @FXML private TextArea taDescription;
-    @FXML private TextField tfNumberStudents;
+    @FXML private TextFieldLimited tfNumberStudents;
     @FXML private Button btOk;
     @FXML private Button btSave;
     @FXML private Button btExit;
@@ -218,7 +218,8 @@ public class ReceptionWorkRegisterController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
- 
+            tfTitle.setMaxLength(200);
+            tfNumberStudents.setMaxLength(2);
             types=FXCollections.observableArrayList();
             states = FXCollections.observableArrayList();
             types.add("Práctico técnico");

@@ -78,13 +78,13 @@ public class GroupAcademicModifyController implements Initializable {
         taMision.setText(groupAcademic.getMission());
     
         try {
-           getlgacs();
+           getLgacs();
          } catch (BusinessException ex) {
              Log.logException(ex);
          }
     }
 
-     private void getlgacs() throws BusinessException{
+     private void getLgacs() throws BusinessException{
         GroupAcademicDAO groupAcademicDAO =new GroupAcademicDAO();
         groupAcademic.setLGACs(groupAcademicDAO.getLGACs(groupAcademic.getKey()));
          ArrayList<LGAC> lgacs= groupAcademicDAO.getLGACs(groupAcademic.getKey());
@@ -225,7 +225,7 @@ public class GroupAcademicModifyController implements Initializable {
         try {
             deleteLgacs();
             if(groupAcademicDAO.updatedSucessful(groupAcademic.getKey(),groupAcademicNew)){
-                recoverlgacs();
+                recoverLgacs();
                 alertMessage.showUpdateMessage();
                 Stage stage = (Stage) btSave.getScene().getWindow();
                 stage.close();
@@ -240,7 +240,7 @@ public class GroupAcademicModifyController implements Initializable {
         }                
     }
     
-    private void recoverlgacs() throws BusinessException{   
+    private void recoverLgacs() throws BusinessException{   
             GridPane gridPane= (GridPane) spLGACs.getContent();
             int i=1;
             GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO();
@@ -326,26 +326,7 @@ public class GroupAcademicModifyController implements Initializable {
     }
      return null;
    }
-    
-    private void updatelgacs(String nameLGACLast ,LGAC lgac){   
-        GroupAcademicDAO groupAcademicDAO= new GroupAcademicDAO();
-        LGACDAO lgacDAO =new LGACDAO();
-        
-        try {
-                LGAC lgacLast = lgacDAO.getLgacByName(nameLGACLast);
-                lgacDAO.updatedSucessful(nameLGACLast, lgac);
-                groupAcademicDAO.deletedLGACSuccesful(groupAcademic.getKey(),lgacLast);
-                groupAcademicDAO.addedLGACSucessful(groupAcademicNew, lgac);
-
-        } catch (BusinessException ex) {
-            if(ex.getMessage().equals("DataBase connection failed ")){
-                AlertMessage alertMessage = new AlertMessage();
-                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
-            }else{  
-                Log.logException(ex);
-            }
-        }
-    }
+  
     
        
     private boolean validateFieldEmpty(){ 
@@ -396,8 +377,8 @@ public class GroupAcademicModifyController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-      tfName.setMaxlength(100);
-      tfKey.setMaxlength(10);
+      tfName.setMaxLength(100);
+      tfKey.setMaxLength(10);
       consolidateGrades= FXCollections.observableArrayList();
       consolidateGrades.add("En formación");
       consolidateGrades.add("En consolidación");

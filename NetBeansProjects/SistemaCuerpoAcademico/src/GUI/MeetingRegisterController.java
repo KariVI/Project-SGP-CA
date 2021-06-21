@@ -330,9 +330,9 @@ public class MeetingRegisterController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       tfSubject.setMaxlength(200);
-       tfHour.setMaxlength(5);
-       tfDescription.setMaxlength(200);
+       tfSubject.setMaxLength(200);
+       tfHour.setMaxLength(5);
+       tfDescription.setMaxLength(200);
        disableButtonSave();
        tfHour.setPromptText("HH:MM");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

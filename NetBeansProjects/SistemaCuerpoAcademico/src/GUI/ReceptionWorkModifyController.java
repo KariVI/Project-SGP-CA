@@ -49,7 +49,7 @@ import log.Log;
 
 public class ReceptionWorkModifyController implements Initializable {
 
-    @FXML private TextField tfTitle;
+    @FXML private TextFieldLimited tfTitle;
     @FXML private TextArea taDescription;
     @FXML private Button btSave;
     @FXML private Button btExit;
@@ -433,6 +433,7 @@ public class ReceptionWorkModifyController implements Initializable {
       
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+            tfTitle.setMaxLength(200);
             types=FXCollections.observableArrayList();
             states = FXCollections.observableArrayList();
             types.add("Práctico técnico");

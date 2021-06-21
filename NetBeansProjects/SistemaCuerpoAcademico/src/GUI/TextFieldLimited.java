@@ -13,7 +13,7 @@ public class TextFieldLimited extends TextField {
         this.maxlength = 100;
     }
     
-    public void setMaxlength(int maxlength) {
+    public void setMaxLength(int maxlength) {
         this.maxlength = maxlength;
     }
     

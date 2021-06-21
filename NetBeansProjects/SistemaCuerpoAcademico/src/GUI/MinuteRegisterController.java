@@ -57,7 +57,7 @@ public class MinuteRegisterController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tfAgreement.setMaxlength(200);
+        tfAgreement.setMaxLength(200);
         tcAgreement.setCellValueFactory(new PropertyValueFactory("description"));
         tcPeriod.setCellValueFactory(new PropertyValueFactory("period"));
         tcMember.setCellValueFactory(new PropertyValueFactory("professionalLicense"));

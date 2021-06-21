@@ -69,7 +69,7 @@ public class GroupAcademicShowController implements Initializable {
         taMision.setText("Misión: "+groupAcademic.getMission());
         disableButtonUpdate();
         try {
-            getlgacs();
+            getLgacs();
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
@@ -130,7 +130,7 @@ public class GroupAcademicShowController implements Initializable {
             }
     }
    
-    private void getlgacs() throws BusinessException{
+    private void getLgacs() throws BusinessException{
         GridPane gridPane= new GridPane();
         GroupAcademicDAO groupAcademicDAO =new GroupAcademicDAO();
         ArrayList<LGAC> lgacs = groupAcademicDAO.getLGACs(groupAcademic.getKey());

@@ -390,8 +390,8 @@ public class PreliminarProjectRegisterController implements Initializable {
     }
     
     public void initialize(URL url, ResourceBundle rb) {
-        tfTitle.setMaxlength(200);
-        tfNumberStudents.setMaxlength(2);
+        tfTitle.setMaxLength(200);
+        tfNumberStudents.setMaxLength(2);
         tcCodirector.setCellValueFactory(new PropertyValueFactory<Member,String>("name"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         dpStartDate.setConverter(new LocalDateStringConverter(formatter, null));

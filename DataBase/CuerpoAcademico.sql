@@ -241,8 +241,8 @@ INSERT INTO ParticipaTrabajoRecepcional(idTrabajoRecepcional,matricula) values (
 INSERT INTO CultivaTrabajoRecepcional(idTrabajoRecepcional, nombreLGAC) values(3,"Tecnologías de software");
 INSERT INTO CultivaTrabajoRecepcional(idTrabajoRecepcional, nombreLGAC) values(4,"Tecnologías de software");
 
-INSERT INTO Credenciales(cedula,usuario,contrasenia) VALUES("8325134","JuanPer",hex(AES_ENCRYPT("12345",'Key')));
-INSERT INTO Credenciales(cedula,usuario,contrasenia) VALUES("7938268","KarenCor",hex(AES_ENCRYPT("wcm^Q$*y%Fsy",'Key')));
+INSERT INTO Credenciales(cedula,usuario,contrasenia) VALUES("8325134","JuanPer",hex(AES_ENCRYPT("14Sunblast60",'Key')));
+INSERT INTO Credenciales(cedula,usuario,contrasenia) VALUES("7938268","KarenCor",hex(AES_ENCRYPT("wcm^Q$*aBe",'Key')));
 INSERT INTO Credenciales(cedula,usuario,contrasenia) VALUES("7953781","JoseRoj",hex(AES_ENCRYPT("Jose11Rafael",'Key')));
 
 

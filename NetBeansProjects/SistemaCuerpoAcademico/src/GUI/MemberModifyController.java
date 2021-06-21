@@ -45,9 +45,9 @@ public class MemberModifyController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tfName.setMaxlength(150);
-        tfNameDegree.setMaxlength(200);
-        tfUniversity.setMaxlength(200);
+        tfName.setMaxLength(150);
+        tfNameDegree.setMaxLength(200);
+        tfUniversity.setMaxLength(200);
         roles = FXCollections.observableArrayList();
         roles.add("Integrante");
         roles.add("Colaborador");

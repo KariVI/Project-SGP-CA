@@ -47,9 +47,9 @@ public class TopicRegisterController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tfTopic.setMaxlength(200);
-        tfStartTime.setMaxlength(5);
-        tfFinishTime.setMaxlength(5);
+        tfTopic.setMaxLength(200);
+        tfStartTime.setMaxLength(5);
+        tfFinishTime.setMaxLength(5);
         tcTopic.setCellValueFactory(new PropertyValueFactory<Topic,String>("topicName"));
         tcStartTime.setCellValueFactory(new PropertyValueFactory<Topic,String>("startTime"));
         tcFinishTime.setCellValueFactory(new PropertyValueFactory<Topic,String>("finishTime"));
