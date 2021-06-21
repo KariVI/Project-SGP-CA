@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -85,8 +87,8 @@ public class MinuteShowController implements Initializable {
         
     }
     
-   public void verifyApprove(){
-        if(verifyMemberApproved()||verifyMinuteStateApprove()){
+   private void verifyApprove(){
+        if(verifyMemberApproved()||verifyMinuteStateApprove()||!verifyMeetingAssistant()){
             disableRadioButtons();
         }
      
@@ -95,8 +97,28 @@ public class MinuteShowController implements Initializable {
         }
      
    }    
+   
+   private boolean verifyMeetingAssistant(){
+        boolean value = false;
+        try {
+            MeetingDAO meetingDAO = new MeetingDAO();
+            ArrayList<Member> memberList = meetingDAO.getAssistants(idMeeting);
+            int i = 0;
+            while(!value && i<memberList.size()){
+                 if(member.equals(memberList.get(i))){
+                    value = true;
+                }  
+                 
+            }
+             
+        } catch (BusinessException ex) {
+            Logger.getLogger(MinuteShowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        return value;
+   }
     
-   public boolean verifyMinuteStateApprove(){
+   private boolean verifyMinuteStateApprove(){
        boolean value = false;
        MinuteDAO minuteDAO = new MinuteDAO();
        MeetingDAO meetingDAO = new MeetingDAO();
@@ -114,7 +136,7 @@ public class MinuteShowController implements Initializable {
        return value;
    }
    
-   public boolean verifyMemberApproved(){
+   private boolean verifyMemberApproved(){
        boolean value = false;
          try {
             MinuteDAO minuteDAO = new MinuteDAO();
@@ -147,7 +169,7 @@ public class MinuteShowController implements Initializable {
    
 
    
-    public void disableRadioButtons(){
+    private void disableRadioButtons(){
         rbApproveMinute.setOpacity(0);
         rbDisapproveMinute.setOpacity(0);
         rbApproveMinute.setDisable(true);
@@ -155,7 +177,7 @@ public class MinuteShowController implements Initializable {
     }
     
     
-    public void initializeAgreements(){
+    private void initializeAgreements(){
         AgreementDAO agreementDAO = new AgreementDAO();
         try {
             ArrayList<Agreement> agreementList = new ArrayList<Agreement>();
@@ -169,7 +191,7 @@ public class MinuteShowController implements Initializable {
     }
     
     @FXML
-    public void actionReturn(){
+    private void actionReturn(){
         checkRadioButtons();
         Stage stage = (Stage) btReturn.getScene().getWindow();
         stage.close();
@@ -219,14 +241,14 @@ public class MinuteShowController implements Initializable {
         this.member = member;      
     }
     
-    public void verifyMember(){
+    private void verifyMember(){
         if(!verifyRole()){
             disableBtShowComments();         
         }
         
     }
     
-    public boolean verifyRole(){
+    private boolean verifyRole(){
         MeetingDAO meetingDAO = new MeetingDAO();
         boolean value = false;    
         try {
@@ -246,12 +268,13 @@ public class MinuteShowController implements Initializable {
         return value;
     }
          
-    public void disableBtShowComments(){
+    private void disableBtShowComments(){
         btShowComments.setOpacity(0);       
         btShowComments.setDisable(true);
     }
     
-    public void actionMinuteComment(){
+    @FXML
+    private void actionMinuteComment(){
          try {
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/MinuteComment.fxml").toURI().toURL();
@@ -273,7 +296,7 @@ public class MinuteShowController implements Initializable {
     }
     
     @FXML
-    public void actionMinuteCheckComment(){
+    private void actionMinuteCheckComment(){
          try {
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/MinuteCheckComment.fxml").toURI().toURL();

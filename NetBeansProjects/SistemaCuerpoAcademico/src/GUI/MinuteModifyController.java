@@ -27,7 +27,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import log.BusinessException;
@@ -41,7 +40,7 @@ public class MinuteModifyController implements Initializable {
      private ObservableList<Agreement> agreementsOld;
      private ObservableList<String> periods;
     @FXML ComboBox<Member> cbMember;
-    @FXML TextField tfAgreement;
+    @FXML TextFieldLimited tfAgreement;
     @FXML ComboBox<String> cbPeriod;
     @FXML TableColumn <Member,String>tcMember;
     @FXML TableColumn <Agreement,String> tcAgreement;
@@ -65,7 +64,7 @@ public class MinuteModifyController implements Initializable {
         this.member = member;      
     }
      
-    public void initializeAgreements(){
+    private void initializeAgreements(){
         AgreementDAO agreementDAO = new AgreementDAO();
         try {
             ArrayList<Agreement> agreementList = new ArrayList<Agreement>();
@@ -100,6 +99,7 @@ public class MinuteModifyController implements Initializable {
         
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        tfAgreement.setMaxlength(200);
         tcAgreement.setCellValueFactory(new PropertyValueFactory("description"));
         tcPeriod.setCellValueFactory(new PropertyValueFactory("period"));
         tcMember.setCellValueFactory(new PropertyValueFactory("professionalLicense"));
@@ -164,7 +164,7 @@ public class MinuteModifyController implements Initializable {
         }
     }
     
-    void initializeMembers() {
+    private void initializeMembers() {
         try {
             MemberDAO memberDAO = new MemberDAO();
             ArrayList <Member> memberList = new ArrayList<Member>();
@@ -204,7 +204,7 @@ public class MinuteModifyController implements Initializable {
     }
     
     @FXML
-    public void actionSave(){
+    private void actionSave(){
        String note = "";
        String due = "";
        String initialState = "pendiente";
@@ -228,7 +228,7 @@ public class MinuteModifyController implements Initializable {
        }
     }
     
-    public void deleteComments(){
+    private void deleteComments(){
         try {
             MinuteDAO minuteDAO = new MinuteDAO();
             minuteDAO.deletedSucessfulMinutesComments(idMinute);
@@ -236,7 +236,8 @@ public class MinuteModifyController implements Initializable {
             Log.logException(ex);
         }
     }
-    public void addAgreements(){
+    
+    private void addAgreements(){
          try {
           AgreementDAO agreementDAO = new AgreementDAO();
           for(int i = 0; i < agreementsOld.size(); i++){
@@ -253,7 +254,7 @@ public class MinuteModifyController implements Initializable {
               }
     }
 
-    public boolean validateAgreement(Agreement agreement){
+    private boolean validateAgreement(Agreement agreement){
         boolean value = true;
         AlertMessage alertMessage = new AlertMessage();
         if(isEmptyFields(agreement)){
@@ -274,7 +275,7 @@ public class MinuteModifyController implements Initializable {
     }
     
         
-    public boolean validateMinute(Minute minute){
+    private boolean validateMinute(Minute minute){
         boolean value = true;
         AlertMessage alertMessage = new AlertMessage();
         if(isEmptyFields(minute)){
@@ -285,7 +286,7 @@ public class MinuteModifyController implements Initializable {
         return value;
     }
     
-    public boolean isEmptyFields(Agreement agreement){
+    private boolean isEmptyFields(Agreement agreement){
         boolean value = false;
         if(agreement.getDescription().isEmpty()||agreement.getPeriod().isEmpty()||agreement.getProfessionalLicense().isEmpty()){
             value = true;
@@ -293,7 +294,7 @@ public class MinuteModifyController implements Initializable {
         return value;
     }
     
-    public boolean invalidFields(Agreement agreement){
+    private boolean invalidFields(Agreement agreement){
         boolean value = false;
         Validation validation = new Validation();
         if(validation.findInvalidField(agreement.getDescription())){
@@ -302,7 +303,7 @@ public class MinuteModifyController implements Initializable {
         return value;
     }
     
-    public boolean repeatedAgreement(Agreement agreement){
+    private boolean repeatedAgreement(Agreement agreement){
         Boolean value = false;
         int i = 0;
         while(!value && i<agreements.size()){
@@ -321,8 +322,9 @@ public class MinuteModifyController implements Initializable {
         }
         return value;
     }
+    
     @FXML
-    public void actionReturn(){
+    private void actionReturn(){
          Stage stage = (Stage) btReturn.getScene().getWindow();
          stage.close();
          openMinuteCheckComment();

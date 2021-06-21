@@ -130,8 +130,7 @@ public class TopicModifyController implements Initializable {
         topics.remove(indexTopic);
         cleanFields();
     }
-
-    @FXML
+ 
     private void cleanFields(){
         tfTopic.setText("");
         tfFinishTime.setText("");
@@ -184,6 +183,7 @@ public class TopicModifyController implements Initializable {
         }
     }
     
+   @FXML 
    private void actionSave(){
        TopicDAO topicDAO = new TopicDAO();
         try {
@@ -207,12 +207,14 @@ public class TopicModifyController implements Initializable {
         openTopicShow();
     }
    
+  @FXML
    private void actionCancel(){
       Stage stage = (Stage)btCancel.getScene().getWindow();
       stage.close(); 
       openTopicShow();
    }
    
+  @FXML
    private void actionUpdate(){
         String finishTime = "";
         String startTime = "";

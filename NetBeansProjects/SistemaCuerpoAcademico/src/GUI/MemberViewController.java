@@ -51,7 +51,8 @@ public class MemberViewController implements Initializable {
         stage.close();
         openListMember();
     }
- 
+    
+    @FXML
     private void actionUpdate(){
         try {
             Stage primaryStage= new Stage();

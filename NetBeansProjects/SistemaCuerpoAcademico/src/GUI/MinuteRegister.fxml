@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import GUI.TextFieldLimited?>
 
 <AnchorPane id="AnchorPane" prefHeight="411.0" prefWidth="608.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MinuteRegisterController">
    <children>
@@ -24,7 +25,7 @@
       </TableView>
       <HBox layoutX="38.0" layoutY="219.0" prefHeight="26.0" prefWidth="508.0">
          <children>
-            <TextField fx:id="tfAgreement" prefHeight="21.0" prefWidth="240.0" />
+            <TextFieldLimited fx:id="tfAgreement" prefHeight="21.0" prefWidth="240.0" />
             <ComboBox fx:id="cbMember" prefHeight="26.0" prefWidth="149.0" />
             <ComboBox fx:id="cbPeriod" prefHeight="26.0" prefWidth="120.0" />
          </children>

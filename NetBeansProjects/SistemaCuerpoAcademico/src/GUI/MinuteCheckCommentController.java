@@ -50,15 +50,16 @@ public class MinuteCheckCommentController implements Initializable {
         setMembersDisapprove();
         setMinuteComments();
     }
+    
     public void setMeeting(Meeting meeting){
         this.meeting = meeting;
     }
+    
     public void setMember(Member member){
         this.member = member;
     }
     
-    private void setMembersApprove(){
-        
+    private void setMembersApprove(){       
         try {
             GridPane gridPane = new GridPane();
             MinuteDAO minuteDAO = new MinuteDAO();
@@ -69,15 +70,13 @@ public class MinuteCheckCommentController implements Initializable {
                 gridPane.add(lbMember, 1, i);
             } 
             
-            spMembersApprove.setContent(gridPane);
-            
+            spMembersApprove.setContent(gridPane);          
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
     }
    
-    private void setMembersDisapprove(){
-        
+    private void setMembersDisapprove(){        
         try {
             GridPane gridPane= new GridPane();
             MinuteDAO minuteDAO = new MinuteDAO();
@@ -86,13 +85,12 @@ public class MinuteCheckCommentController implements Initializable {
             
             for(int i = 0; i < memberListDisapprove.size(); i++){
                 MemberDAO memberDAO = new MemberDAO();
-                Member member = memberDAO.getMemberByLicense(memberListDisapprove.get(i).getProfessionalLicense());
-                Label lbMember = new Label(member.getName());
+                Member newMember = memberDAO.getMemberByLicense(memberListDisapprove.get(i).getProfessionalLicense());
+                Label lbMember = new Label(newMember.getName());
                 gridPane.add(lbMember, 1, i);
             }
             
-            spMembersDispprove.setContent(gridPane);
-            
+            spMembersDispprove.setContent(gridPane);            
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
@@ -103,20 +101,23 @@ public class MinuteCheckCommentController implements Initializable {
             GridPane gridPane= new GridPane();
             MinuteDAO minuteDAO = new MinuteDAO();
             ArrayList<MinuteComment> listDisapprove = minuteDAO.getMinutesComments(minute.getIdMinute());
-            gridPane.setVgap(10);
+            gridPane.setVgap(20);
             gridPane.setHgap(10);
+            int indexTable = 0;
             for(int i = 0; i < listDisapprove.size(); i++){
                 MemberDAO memberDAO = new MemberDAO();
-                Member member = memberDAO.getMemberByLicense(listDisapprove.get(i).getProfessionalLicense());
+                Member newMember = memberDAO.getMemberByLicense(listDisapprove.get(i).getProfessionalLicense());
                 TextArea taComment = new TextArea(listDisapprove.get(i).getComment());
-                RadioButton rbMember = new RadioButton(member.getName());
+                taComment.setPrefRowCount(2);
+                RadioButton rbMember = new RadioButton(newMember.getName());
                 taComment.setEditable(false);
-                gridPane.add(rbMember, 1, i);
-                gridPane.add(taComment, 1, i+1);
+                gridPane.add(rbMember, 1, indexTable);
+                indexTable++;
+                gridPane.add(taComment, 1, indexTable);
+                indexTable++;
             }
             
-            spMinuteComments.setContent(gridPane);
-            
+            spMinuteComments.setContent(gridPane);       
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
@@ -125,19 +126,18 @@ public class MinuteCheckCommentController implements Initializable {
     private ArrayList<Member> recoverMemberApprovedComments(){ 
         ArrayList<Member> members = new ArrayList<Member>();
         try {
-            GridPane gridPane = (GridPane) spMinuteComments.getContent();
-            
+            GridPane gridPane = (GridPane) spMinuteComments.getContent();            
             MemberDAO memberDAO = new MemberDAO();
             int i = 0;
-            int indexMembers =0;
+            int indexMembers = 0;
             MinuteDAO minuteDAO = new MinuteDAO();
             ArrayList<MinuteComment> listDisapprove = minuteDAO.getMinutesComments(minute.getIdMinute());
-            while (i < listDisapprove.size() ){
+            while (i < listDisapprove.size()*2){
                 RadioButton rbMember = (RadioButton) getNodeFromGridPane(gridPane, 1, i);
                 if(rbMember.isSelected()){   
                     String license = memberDAO.searchProfessionalLicenseByName(rbMember.getText());
-                    Member member = memberDAO.getMemberByLicense(license);
-                    members.add(member);
+                    Member newMember = memberDAO.getMemberByLicense(license);
+                    members.add(newMember);
                 }
                 i+=2;
             }
@@ -149,17 +149,18 @@ public class MinuteCheckCommentController implements Initializable {
     }
     
     @FXML
-    public void actionReturn(){ 
+    private void actionReturn(){ 
         if(deleteComments()){
-                   AlertMessage alertMessage = new AlertMessage();
-        alertMessage.showAlertSuccesfulSave("Los cambios");
+            AlertMessage alertMessage = new AlertMessage();
+            alertMessage.showAlertSuccesfulSave("Los cambios");
         }
+        
         Stage stage = (Stage) btReturn.getScene().getWindow();
         stage.close();
         openMinuteView();
     }
     
-    public boolean deleteComments(){
+    private boolean deleteComments(){
         boolean value = false;
         ArrayList<Member> members = recoverMemberApprovedComments();
         MinuteDAO minuteDAO = new MinuteDAO();
@@ -172,6 +173,7 @@ public class MinuteCheckCommentController implements Initializable {
                 Log.logException(ex);
             }
         }
+        
         return value;
     }
     
@@ -199,7 +201,7 @@ public class MinuteCheckCommentController implements Initializable {
     }
     
     @FXML 
-    public void actionUpdate(){
+    private void actionUpdate(){
         Stage stage = (Stage) btUpdate.getScene().getWindow();
         stage.close();
         openMinuteModify();
@@ -234,7 +236,9 @@ public class MinuteCheckCommentController implements Initializable {
             if (GridPane.getColumnIndex(node) == column && GridPane.getRowIndex(node) == row) {
                 primaryNode = node;
             }
+            
         }
+        
         return primaryNode;
    }
 

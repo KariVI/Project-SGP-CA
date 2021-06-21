@@ -17,7 +17,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import log.BusinessException;
@@ -160,7 +159,8 @@ public class TopicRegisterController implements Initializable {
             Log.logException(ex);
         }
     }
-    
+   
+   @FXML
    private void actionSave(){ 
        if(!topics.isEmpty()){
         meetingRegisterController.setTopics(topics);       
@@ -173,7 +173,7 @@ public class TopicRegisterController implements Initializable {
        
    }
 
-   
+   @FXML
    private void actionCancel(){
       Stage stage = (Stage)btCancel.getScene().getWindow();
       stage.close(); 

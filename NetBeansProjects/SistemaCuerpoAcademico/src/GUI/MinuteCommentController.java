@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package GUI;
 
 import businessLogic.MinuteDAO;
@@ -19,11 +15,6 @@ import javafx.stage.Stage;
 import log.BusinessException;
 import log.Log;
 
-/**
- * FXML Controller class
- *
- * @author Mariana
- */
 public class MinuteCommentController implements Initializable {
 
     private Member member;
@@ -33,14 +24,14 @@ public class MinuteCommentController implements Initializable {
     @FXML Button btCancel;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     } 
+    
     public void setMinute(Minute minute){
         this.idMinute = minute.getIdMinute();
     }
     
     @FXML
-    public void actionSave(){
+    private void actionSave(){
         try {
             String comment = taComment.getText();
             MinuteDAO minuteDAO = new MinuteDAO();
@@ -55,8 +46,8 @@ public class MinuteCommentController implements Initializable {
         }
     }
     
-    
-    public void actionCancel(){
+    @FXML
+    private void actionCancel(){
          Stage stage = (Stage) btCancel.getScene().getWindow();
          stage.close();
         
@@ -65,4 +56,5 @@ public class MinuteCommentController implements Initializable {
     public void setMember(Member member){
         this.member = member;
     }
+    
 }
