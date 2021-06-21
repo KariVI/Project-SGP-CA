@@ -36,7 +36,6 @@ public class TopicShowController implements Initializable {
     @FXML Button btAdd;
     @FXML Button btUpdate;
     @FXML Button btReturn; 
-    
     private Meeting meeting;
     private Member member;
     
@@ -101,7 +100,7 @@ public class TopicShowController implements Initializable {
     
     @FXML
     private void actionUpdate(){
-          try {
+        try {
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/topicModify.fxml").toURI().toURL();
             FXMLLoader loader = new FXMLLoader(url);

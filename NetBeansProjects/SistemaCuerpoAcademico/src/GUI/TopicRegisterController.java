@@ -28,9 +28,9 @@ public class TopicRegisterController implements Initializable {
     private ObservableList<Member> members;
     private ObservableList<Topic> topics;
     @FXML ComboBox<Member> cbMember;
-    @FXML TextField tfTopic;
-    @FXML TextField tfStartTime;
-    @FXML TextField tfFinishTime;
+    @FXML TextFieldLimited tfTopic;
+    @FXML TextFieldLimited tfStartTime;
+    @FXML TextFieldLimited tfFinishTime;
     @FXML TableColumn<Topic,String>  tcFinishTime;
     @FXML TableColumn<Topic,String>  tcStartTime;
     @FXML TableColumn<Topic,String>  tcMember;
@@ -48,6 +48,9 @@ public class TopicRegisterController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        tfTopic.setMaxlength(200);
+        tfStartTime.setMaxlength(5);
+        tfFinishTime.setMaxlength(5);
         tcTopic.setCellValueFactory(new PropertyValueFactory<Topic,String>("topicName"));
         tcStartTime.setCellValueFactory(new PropertyValueFactory<Topic,String>("startTime"));
         tcFinishTime.setCellValueFactory(new PropertyValueFactory<Topic,String>("finishTime"));
@@ -86,15 +89,16 @@ public class TopicRegisterController implements Initializable {
         String finishTime = "";
         String startTime = "";
         String topicName = "";
-        Member member = cbMember.getSelectionModel().getSelectedItem();
+        Member memberSelected = cbMember.getSelectionModel().getSelectedItem();
         finishTime = tfFinishTime.getText();
         startTime = tfStartTime.getText();
         topicName = tfTopic.getText();
-        Topic topic = new Topic(topicName,startTime,finishTime,member.getProfessionalLicense(), idMeeting);
+        Topic topic = new Topic(topicName,startTime,finishTime,memberSelected.getProfessionalLicense(), idMeeting);
         if(validateTopic(topic)){
             topics.add(topic);
+            cleanFields();
         }
-        cleanFields();
+      
     }
     
     @FXML
@@ -112,32 +116,35 @@ public class TopicRegisterController implements Initializable {
     
     private Topic getSelectedTopic(){
         Topic topic = null;
-        int tamTable = 1;
+        int tableSize = 1;
         if(tvTopic != null){
             List<Topic> topicTable = tvTopic.getSelectionModel().getSelectedItems();
-            if(topicTable.size() == tamTable){
+            if(topicTable.size() == tableSize){
                 topic = topicTable.get(0);
             }
+            
         }
+        
         return topic;
     }
     
     private void setSelectedTopic(){
         Topic topic = getSelectedTopic();
-        indexTopic = topics.indexOf(topic);
         if(topic != null){
+            indexTopic = topics.indexOf(topic);
             try {
                 MemberDAO memberDAO = new MemberDAO();
-                Member member = memberDAO.getMemberByLicense(topic.getProfessionalLicense());
+                Member newMember = memberDAO.getMemberByLicense(topic.getProfessionalLicense());
                 tfTopic.setText(topic.getTopicName());
                 tfFinishTime.setText(topic.getFinishTime());
                 tfStartTime.setText(topic.getStartTime());
-                cbMember.getSelectionModel().select(member);
+                cbMember.getSelectionModel().select(newMember);
                 
             } catch (BusinessException ex) {
                 Log.logException(ex);
             }
         }
+        
     }
     
     void initializeMembers() {
@@ -155,9 +162,15 @@ public class TopicRegisterController implements Initializable {
     }
     
    public void actionSave(){ 
+       if(!topics.isEmpty()){
         meetingRegisterController.setTopics(topics);       
         Stage stage = (Stage)btSave.getScene().getWindow();
         stage.close();
+       }else{
+           AlertMessage alertMessage = new AlertMessage();
+           alertMessage.showAlertValidateFailed("Campos vacios");
+       }
+       
    }
 
    
@@ -181,13 +194,14 @@ public class TopicRegisterController implements Initializable {
         
         if(!validateHours(topic)){
             value = false;
-            alertMessage.showAlertValidateFailed("Fecha inválida");
+            alertMessage.showAlertValidateFailed("Hora inválida");
         }
         
         if(repeatedTopic(topic)){
             value = false;
             alertMessage.showAlertValidateFailed("Tema repetido");
         }
+        
         return value;
     }
     
@@ -224,10 +238,11 @@ public class TopicRegisterController implements Initializable {
             if(topics.get(i).equals(topic)){
                 value = true;
             }
+            
             i++;
         }
+        
        return value;
-    }
-    
+    }    
     
 }

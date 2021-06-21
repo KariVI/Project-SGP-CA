@@ -24,7 +24,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import log.BusinessException;
@@ -36,9 +35,9 @@ public class TopicModifyController implements Initializable {
     private ObservableList<Topic> topics;
     private ObservableList<Topic> oldTopics;
     @FXML private ComboBox<Member> cbMember;
-    @FXML private TextField tfTopic;
-    @FXML private TextField tfStartTime;
-    @FXML private TextField tfFinishTime;
+    @FXML private TextFieldLimited tfTopic;
+    @FXML private TextFieldLimited tfStartTime;
+    @FXML private TextFieldLimited tfFinishTime;
     @FXML private TableColumn tcFinishTime;
     @FXML private TableColumn tcStartTime;
     @FXML private TableColumn tcMember;
@@ -56,6 +55,9 @@ public class TopicModifyController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        tfTopic.setMaxlength(200);
+        tfStartTime.setMaxlength(5);
+        tfFinishTime.setMaxlength(5);
         tcTopic.setCellValueFactory(new PropertyValueFactory<Topic,String>("topicName"));
         tcStartTime.setCellValueFactory(new PropertyValueFactory<Topic,String>("startTime"));
         tcFinishTime.setCellValueFactory(new PropertyValueFactory<Topic,String>("finishTime"));
@@ -111,15 +113,16 @@ public class TopicModifyController implements Initializable {
         String finishTime = "";
         String startTime = "";
         String topicName = "";
-        Member member = cbMember.getSelectionModel().getSelectedItem();
+        Member selectedMemmber = cbMember.getSelectionModel().getSelectedItem();
         finishTime = tfFinishTime.getText();
         startTime = tfStartTime.getText();
         topicName = tfTopic.getText();
-        Topic topic = new Topic(topicName,startTime,finishTime,member.getProfessionalLicense(),meeting.getKey());
+        Topic topic = new Topic(topicName,startTime,finishTime,selectedMemmber.getProfessionalLicense(),meeting.getKey());
         if(validateTopic(topic)){
             topics.add(topic);
+            cleanFields();
         }
-        cleanFields();
+
     }
     
     @FXML
@@ -137,13 +140,15 @@ public class TopicModifyController implements Initializable {
     
     private Topic getSelectedTopic(){
         Topic topic = null;
-        int tamTable = 1;
+        int tableSize = 1;
         if(tvTopic != null){
             List<Topic> topicTable = tvTopic.getSelectionModel().getSelectedItems();
-            if(topicTable.size() == tamTable){
+            if(topicTable.size() == tableSize){
                 topic = topicTable.get(0);
             }
+            
         }
+        
         return topic;
     }
     
@@ -153,11 +158,11 @@ public class TopicModifyController implements Initializable {
         if(topic != null){
             try {
                 MemberDAO memberDAO = new MemberDAO();
-                Member member = memberDAO.getMemberByLicense(topic.getProfessionalLicense());
+                Member newMember = memberDAO.getMemberByLicense(topic.getProfessionalLicense());
                 tfTopic.setText(topic.getTopicName());
                 tfFinishTime.setText(topic.getFinishTime());
                 tfStartTime.setText(topic.getStartTime());
-                cbMember.getSelectionModel().select(member);
+                cbMember.getSelectionModel().select(newMember);
                 
             } catch (BusinessException ex) {
                 Log.logException(ex);
@@ -212,14 +217,15 @@ public class TopicModifyController implements Initializable {
         String finishTime = "";
         String startTime = "";
         String topicName = "";
-        Member member = cbMember.getSelectionModel().getSelectedItem();
+        Member newMember = cbMember.getSelectionModel().getSelectedItem();
         finishTime = tfFinishTime.getText();
-        startTime = tfFinishTime.getText();
+        startTime = tfStartTime.getText();
         topicName = tfTopic.getText();
-        Topic topic = new Topic(topics.get(indexTopic).getIdTopic(),topicName,startTime,finishTime,member.getProfessionalLicense(),meeting.getKey());
+        Topic topic = new Topic(topics.get(indexTopic).getIdTopic(),topicName,startTime,finishTime,newMember.getProfessionalLicense(),meeting.getKey());
         if(validateTopic(topic)){    
             topics.set(indexTopic,topic);
         }
+        
         cleanFields();
    }
    
@@ -265,6 +271,7 @@ public class TopicModifyController implements Initializable {
             value = false;
             alertMessage.showAlertValidateFailed("Tema repetido");
         }
+        
         return value;
     }
     
@@ -273,6 +280,7 @@ public class TopicModifyController implements Initializable {
         if(topic.getStartTime().isEmpty()||topic.getFinishTime().isEmpty()||topic.getTopicName().isEmpty()){
             value = true;
         }
+        
         return value;
     }
     
@@ -282,6 +290,7 @@ public class TopicModifyController implements Initializable {
         if(validation.findInvalidField(topic.getTopicName())){
            value = true;
         }
+        
         return value;
     }
     
@@ -291,6 +300,7 @@ public class TopicModifyController implements Initializable {
         if(validation.validateHour(topic.getFinishTime())&&validation.validateCorrectHours(topic.getStartTime(),topic.getFinishTime())){
             value = true;
         }
+        
         return value;
     }
     
@@ -301,8 +311,10 @@ public class TopicModifyController implements Initializable {
             if(topics.get(i).equals(topic)){
                 value = true;
             }
+            
             i++;
         }
+        
        return value;
     }
     
