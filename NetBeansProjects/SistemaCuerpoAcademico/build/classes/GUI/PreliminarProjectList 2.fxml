@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="440.0" prefWidth="618.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.PreliminarProjectListController">
+    <stylesheets>
+        <URL value="@preliminarprojectlist.css" />
+    </stylesheets>
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1d1e1e" height="36.0" layoutY="-2.0" stroke="BLACK" strokeType="INSIDE" width="618.0" />
+      <ListView fx:id="lvPreliminarProjects" layoutX="30.0" layoutY="130.0" prefHeight="249.0" prefWidth="558.0" />
+      <Button fx:id="btAddPreliminarProject" layoutX="467.0" layoutY="51.0" mnemonicParsing="false" onAction="#actionAddPreliminarProject" text="Agregar Anteproyecto" />
+      <Button fx:id="btReturn" layoutX="534.0" layoutY="401.0" mnemonicParsing="false" onAction="#actionReturn" text="Regresar" />
+      <Label layoutX="37.0" layoutY="50.0" text="Anteproyectos">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

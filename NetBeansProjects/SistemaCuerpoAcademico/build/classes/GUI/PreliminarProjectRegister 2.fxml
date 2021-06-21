@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import GUI.TextFieldLimited?>
+
+<AnchorPane id="AnchorPane" prefHeight="578.0" prefWidth="716.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.PreliminarProjectRegisterController">
+    <stylesheets>
+        <URL value="@preliminarprojectregister.css" />
+    </stylesheets>
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#242525" height="31.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="716.0" />
+      <Label layoutX="19.0" layoutY="101.0" text="Título " />
+      <Label layoutX="11.0" layoutY="135.0" text="Fecha de inicio:" />
+      <Label layoutX="16.0" layoutY="165.0" text="Fecha de fin: " />
+      <Label layoutX="19.0" layoutY="203.0" text="Descripción:" />
+      <TextFieldLimited fx:id="tfTitle" layoutX="106.0" layoutY="97.0" prefHeight="25.0" prefWidth="287.0" />
+      <TextArea fx:id="taDescription" layoutX="106.0" layoutY="203.0" prefHeight="82.0" prefWidth="287.0" wrapText="true" />
+      <Button fx:id="btSave" layoutX="534.0" layoutY="532.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar" />
+      <Button fx:id="btExit" layoutX="622.0" layoutY="532.0" mnemonicParsing="false" onAction="#actionExit" prefHeight="25.0" prefWidth="59.0" text="Salir" />
+      <Label layoutX="19.0" layoutY="306.0" text="Director:" />
+      <Label layoutX="16.0" layoutY="339.0" />
+      <TextFieldLimited fx:id="tfNumberStudents" layoutX="606.0" layoutY="89.0" prefHeight="25.0" prefWidth="46.0" />
+      <Button fx:id="btOk" layoutX="652.0" layoutY="89.0" mnemonicParsing="false" onAction="#addStudents" text="Ok" />
+      <Label layoutX="460.0" layoutY="93.0" text="Número de estudiantes:" />
+      <Label layoutX="25.0" layoutY="41.0" text="Registro de Anteproyecto ">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="dpStartDate" layoutX="193.0" layoutY="131.0" prefHeight="25.0" prefWidth="200.0" />
+      <DatePicker fx:id="dpEndDate" layoutX="193.0" layoutY="161.0" prefHeight="25.0" prefWidth="200.0" />
+      <ComboBox fx:id="cbDirector" layoutX="133.0" layoutY="302.0" prefHeight="25.0" prefWidth="260.0" />
+      <TableView fx:id="tvCodirectors" layoutX="67.0" layoutY="339.0" prefHeight="139.0" prefWidth="326.0">
+        <columns>
+          <TableColumn fx:id="tcCodirector" prefWidth="325.0" text="Codirectores" />
+        </columns>
+      </TableView>
+      <HBox layoutX="67.0" layoutY="478.0" prefHeight="31.0" prefWidth="326.0">
+         <children>
+            <ComboBox fx:id="cbCodirectors" prefHeight="25.0" prefWidth="243.0" />
+            <Button fx:id="btAddCodirector" mnemonicParsing="false" onAction="#actionAddCodirector" prefHeight="7.0" prefWidth="70.0" text="Añadir" />
+         </children>
+      </HBox>
+      <Button fx:id="btDelete" layoutX="393.0" layoutY="453.0" mnemonicParsing="false" onAction="#actionDelete" text="X" />
+      <ScrollPane fx:id="spStudents" layoutX="424.0" layoutY="125.0" prefHeight="384.0" prefWidth="277.0" />
+   </children>
+</AnchorPane>

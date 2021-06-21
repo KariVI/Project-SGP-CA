@@ -36,35 +36,35 @@ public class LoginController implements Initializable {
        String user = "";
        user = tfUser.getText();
        password = pfPassword.getText();
-       user = tfUser.getText();
        LoginCredential credential = new LoginCredential(user,password);     
        if(verificarCredenciales(credential)){
-            MemberDAO memberDAO = new MemberDAO();
-            Member member = null;
+            MemberDAO memberDAO = new MemberDAO();         
             try {
-               member = memberDAO.getMemberByLicense(credentialRetrieved.getProfessionalLicense());
-                if(member.getKeyGroupAcademic()!=null){
+                Member member = memberDAO.getMemberByLicense(credentialRetrieved.getProfessionalLicense());
+               if(member.getKeyGroupAcademic() != null){
                     openMenu(member);
-                }else{  
+               }else{  
                     if(member.getRole().equals("Responsable")){ 
                         openMissingGroupAcademic(member);
                     }else{  
                         AlertMessage alertMessage = new AlertMessage();
                         alertMessage.showAlertValidateFailed("Lo lamento todavía no hay un cuerpo académico registrado");                       
                     }
-                }
+                    
+               }
+               
             } catch (BusinessException ex) {
                Log.logException(ex);
-            }
-           
+            }  
+            
        }else{
            AlertMessage alertMessage = new AlertMessage();
            alertMessage.showAlertValidateFailed("Credenciales incorrectas");
        }
+       
     }
     
-    
-    
+       
     private void openMissingGroupAcademic(Member member){    
          Stage primaryStage= new Stage();
             try{
@@ -83,6 +83,7 @@ public class LoginController implements Initializable {
             }catch (IOException ex) {
                Log.logException(ex);
             }
+            
     }
     
     
@@ -104,6 +105,7 @@ public class LoginController implements Initializable {
             }catch (IOException ex) {
              Log.logException(ex);
             }
+            
     }
     
      public boolean verificarCredenciales(LoginCredential credential){

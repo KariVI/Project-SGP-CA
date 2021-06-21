@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="586.0" prefWidth="828.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProjectShowController">
+    <stylesheets>
+        <URL value="@projectregister.css" />
+    </stylesheets>
+   <children>
+      <GridPane layoutX="22.0" layoutY="72.0" prefHeight="90.0" prefWidth="288.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.2161102294922" minWidth="10.0" prefWidth="101.28585815429688" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="232.40663146972656" minWidth="10.0" prefWidth="186.21414184570312" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Título:" />
+            <Label text="Fecha de inicio:" GridPane.rowIndex="1" />
+            <Label text="Fecha de fin:" GridPane.rowIndex="2" />
+            <Label fx:id="lbTitle" text="Label" GridPane.columnIndex="1" />
+            <Label fx:id="lbStartDate" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="lbFinishDate" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+      <Label layoutX="44.0" layoutY="22.0" text="Proyecto">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Label layoutX="326.0" layoutY="76.0" text="Descripción:" />
+      <TextArea fx:id="taDescription" editable="false" layoutX="327.0" layoutY="96.0" prefHeight="117.0" prefWidth="471.0" />
+      <TableView fx:id="tvLGAC" layoutX="34.0" layoutY="239.0" prefHeight="139.0" prefWidth="370.0">
+        <columns>
+          <TableColumn fx:id="tcLGAC" prefWidth="369.0000190734863" text="LGAC" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tvReceptionWork" layoutX="434.0" layoutY="237.0" prefHeight="139.0" prefWidth="369.0">
+         <columns>
+            <TableColumn fx:id="tcReceptionWork" prefWidth="368.0" text="Trabajo Recepcional" />
+         </columns>
+      </TableView>
+      <TableView fx:id="tvMember" layoutX="37.0" layoutY="398.0" prefHeight="140.0" prefWidth="370.0">
+         <columns>
+            <TableColumn fx:id="tcMember" prefWidth="369.00000762939453" text="Participantes del CA" />
+         </columns>
+      </TableView>
+      <TableView fx:id="tvStudent" layoutX="435.0" layoutY="395.0" prefHeight="141.0" prefWidth="370.0">
+         <columns>
+            <TableColumn fx:id="tcStudent" prefWidth="369.0" text="Participantes estudiante" />
+         </columns>
+      </TableView>
+      <Button fx:id="btReturn" layoutX="730.0" layoutY="543.0" mnemonicParsing="false" onAction="#actionReturn" prefHeight="32.0" prefWidth="75.0" text="Regresar" />
+      <Button fx:id="btUpdate" layoutX="644.0" layoutY="543.0" mnemonicParsing="false" onAction="#actionUpdate" prefHeight="32.0" prefWidth="75.0" text="Modificar" />
+   </children>
+</AnchorPane>
