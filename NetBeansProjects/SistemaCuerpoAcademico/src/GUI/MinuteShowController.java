@@ -104,11 +104,12 @@ public class MinuteShowController implements Initializable {
             MeetingDAO meetingDAO = new MeetingDAO();
             ArrayList<Member> memberList = meetingDAO.getAssistants(idMeeting);
             int i = 0;
-            while(!value && i<memberList.size()){
+            while(!value && i < memberList.size()){
                  if(member.equals(memberList.get(i))){
                     value = true;
                 }  
                  
+                i++; 
             }
              
         } catch (BusinessException ex) {
