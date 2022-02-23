@@ -3,6 +3,7 @@ package sistemacuerpoacademico;
 
 
 import GUI.WorkPlanRegisterController;
+import GUI.WorkPlanViewController;
 
 import domain.GroupAcademic;
 import java.io.File;
@@ -29,12 +30,12 @@ public class PrincipalMenu extends Application {
         
         try{
             
-            URL url = new File("src/GUI/WorkPlanRegister.fxml").toURI().toURL();
+            URL url = new File("src/GUI/WorkPlanView.fxml").toURI().toURL();
             try{
                 FXMLLoader loader = new FXMLLoader(url);
                 loader.setLocation(url);
                 loader.load();
-                WorkPlanRegisterController login = loader.getController();
+                WorkPlanViewController login = loader.getController();
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);

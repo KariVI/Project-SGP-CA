@@ -22,7 +22,7 @@
       <Label fx:id="lbObjective" layoutX="234.0" layoutY="157.0" prefHeight="17.0" prefWidth="298.0" text="Label" />
       <TableView fx:id="tvGoals" layoutX="119.0" layoutY="194.0" prefHeight="189.0" prefWidth="497.0">
         <columns>
-          <TableColumn prefWidth="496.0000228881836" text="Metas" />
+          <TableColumn fx:id="tcGoals" prefWidth="496.0000228881836" text="Metas" />
         </columns>
       </TableView>
       <Button fx:id="btBack" layoutX="620.0" layoutY="397.0" mnemonicParsing="false" onAction="#actionReturn" prefHeight="27.0" prefWidth="76.0" text="Regresar" />

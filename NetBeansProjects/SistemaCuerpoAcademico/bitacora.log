@@ -31713,3 +31713,23 @@ GRAVE: javafx.fxml.LoadException: TextBox is not a valid type.
 	at com.sun.glass.ui.win.WinApplication.lambda$null$152(WinApplication.java:177)
 	at java.lang.Thread.run(Thread.java:748)
 
+feb 23, 2022 3:30:54 PM log.Log logException
+INFORMACIÓN: Bitacora inicializada
+feb 23, 2022 3:30:54 PM log.Log logException
+GRAVE: javafx.fxml.LoadException: TextBox is not a valid type.
+/Users/gustavor/NetBeansProjects/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/WorkPlanRegister.fxml:39
+
+	at javafx.fxml.FXMLLoader.constructLoadException(FXMLLoader.java:2597)
+	at javafx.fxml.FXMLLoader.createElement(FXMLLoader.java:2774)
+	at javafx.fxml.FXMLLoader.processStartElement(FXMLLoader.java:2704)
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2527)
+	at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2441)
+	at javafx.fxml.FXMLLoader.load(FXMLLoader.java:2409)
+	at sistemacuerpoacademico.PrincipalMenu.start(PrincipalMenu.java:36)
+	at com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$8(LauncherImpl.java:863)
+	at com.sun.javafx.application.PlatformImpl.lambda$runAndWait$7(PlatformImpl.java:326)
+	at com.sun.javafx.application.PlatformImpl.lambda$null$5(PlatformImpl.java:295)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$6(PlatformImpl.java:294)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:95)
+
