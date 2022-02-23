@@ -1,11 +1,10 @@
-
 package domain;
 
-
 public class WorkPlan {
+
     private int id;
     private String objetiveGeneral;
-    private String  timePeriod;
+    private String timePeriod;
     private Goal[] goals;
 
     public WorkPlan(String objetiveGeneral, String timePeriod, Goal[] goals) {
@@ -45,7 +44,18 @@ public class WorkPlan {
     public void setGoals(Goal[] goals) {
         this.goals = goals;
     }
-    
-    
-    
+
+    public boolean equals(Object object) {
+        boolean value = false;
+        if (object instanceof WorkPlan) {
+            WorkPlan workPlan = (WorkPlan) object;
+            if ((this.timePeriod.equals(workPlan.getTimePeriod()))
+                    && this.id == workPlan.getId()) {
+                value = true;
+            }
+
+        }
+        return value;
+    }
+
 }

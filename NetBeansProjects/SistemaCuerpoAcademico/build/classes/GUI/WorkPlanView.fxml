@@ -25,7 +25,7 @@
           <TableColumn prefWidth="496.0000228881836" text="Metas" />
         </columns>
       </TableView>
-      <Button fx:id="btBack" layoutX="620.0" layoutY="397.0" mnemonicParsing="false" onAction="#actionReturn" prefHeight="27.0" prefWidth="76.0" text="Regresar" />
-      <Button fx:id="btModify" layoutX="508.0" layoutY="397.0" mnemonicParsing="false" onAction="#actionModify" prefHeight="27.0" prefWidth="76.0" text="Modificar" />
+      <Button fx:id="btBack" layoutX="620.0" layoutY="397.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="76.0" text="Regresar" />
+      <Button fx:id="btModify" layoutX="508.0" layoutY="397.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="76.0" text="Modificar" />
    </children>
 </AnchorPane>
