@@ -36,7 +36,7 @@
             <Label text="Periodo:" />
             <Label text="Rol:" GridPane.rowIndex="1" />
             <Label text="Cédula:" GridPane.rowIndex="2" />
-            
+            <TextBox GridPane.rowIndex="1"  />
          </children>
       </GridPane>
       <Button fx:id="btReturn" layoutX="484.0" layoutY="346.0" mnemonicParsing="false" onAction="#actionReturn" prefHeight="26.0" prefWidth="87.0" text="Regresar" />

@@ -2,13 +2,8 @@
 package sistemacuerpoacademico;
 
 
-import GUI.GroupAcademicShowController;
-import GUI.LoginController;
-import GUI.MenuController;
-import GUI.MinuteRegisterController;
-import GUI.MinuteShowController;
-import GUI.TopicModifyController;
-import GUI.TopicShowController;
+import GUI.WorkPlanRegisterController;
+
 import domain.GroupAcademic;
 import java.io.File;
 import log.Log;
@@ -34,12 +29,12 @@ public class PrincipalMenu extends Application {
         
         try{
             
-            URL url = new File("src/GUI/Login.fxml").toURI().toURL();
+            URL url = new File("src/GUI/WorkPlanRegister.fxml").toURI().toURL();
             try{
                 FXMLLoader loader = new FXMLLoader(url);
                 loader.setLocation(url);
                 loader.load();
-                LoginController login = loader.getController();
+                WorkPlanRegisterController login = loader.getController();
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);
