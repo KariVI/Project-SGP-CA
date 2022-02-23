@@ -7,7 +7,8 @@ public class Goal {
     private String description;
     private Action[] actions;
 
-    public Goal(String description) {
+    public Goal(int id, String description) {
+        this.id = id;
         this.description = description;
     }
 
@@ -36,5 +37,14 @@ public class Goal {
         this.description = description;
     }
     
-    
+       public boolean equals(Object object){
+        boolean value = false;
+            if (object instanceof Goal) {
+            Goal goalCompare = (Goal) object;
+            if( (this.description.equals(goalCompare.getDescription()))&& this.id == goalCompare.getId()) {
+                value=true;
+            }
+        }
+        return value;
+    }
 }
