@@ -369,9 +369,7 @@ public class MeetingModifyController implements Initializable {
     }
     
     private void setSelectedPrerequisite(){
-        tfSubject.setMaxLength(200);
-       tfHour.setMaxLength(5);
-       tfDescription.setMaxLength(200);
+ 
         Prerequisite prerequisite = getSelectedPrerequisite();
         indexPrerequisite = prerequisites.indexOf(prerequisite);
         if(prerequisite != null){
@@ -385,7 +383,6 @@ public class MeetingModifyController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        tfHour.setPromptText("HH:MM");
-       tfHour.setMaxLength(5);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         dpDate.setConverter(new LocalDateStringConverter(formatter, null));
         tcDescription.setCellValueFactory(new PropertyValueFactory<Prerequisite,String>("description"));

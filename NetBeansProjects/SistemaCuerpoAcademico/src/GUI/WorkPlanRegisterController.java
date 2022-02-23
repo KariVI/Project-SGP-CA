@@ -22,28 +22,14 @@ public class WorkPlanRegisterController implements Initializable {
     @FXML Button btUpdate = new Button();
     @FXML Label lbName = new Label();
     @FXML Label lbRole = new Label();
-    @FXML Label lbProfessionalLicense = new Label();
-    @FXML Label lbDegree = new Label();
-    @FXML Label lbNameDegree = new Label();
-    @FXML Label lbDegreeYear = new Label();
-    @FXML Label lbUniversityName = new Label();
-    private Member member ;
+   
+   
   
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         
     }
     
-    public void initializeMember(Member member) {
-         this.member = member;
-         lbName.setText(member.getName());
-         lbRole.setText(member.getRole());
-         lbProfessionalLicense.setText((member.getProfessionalLicense()));
-         lbDegree.setText(member.getDegree());
-         lbNameDegree.setText(member.getNameDegree());
-         lbDegreeYear.setText(Integer.toString(member.getDegreeYear()));
-         lbUniversityName.setText(member.getUniversityName());
-    }
    
     @FXML
     private void actionReturn(){
@@ -60,8 +46,7 @@ public class WorkPlanRegisterController implements Initializable {
             FXMLLoader loader = new FXMLLoader(url);
             loader.setLocation(url);
             loader.load();
-            MemberModifyController memberModifyController = loader.getController();
-            memberModifyController.initializeMember(member);
+    
             Parent root = loader.getRoot();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
@@ -81,7 +66,7 @@ public class WorkPlanRegisterController implements Initializable {
             loader.setLocation(url);
             loader.load();
             MemberListController memberListController  = loader.getController();
-            memberListController.setMember(member);
+
             Parent root = loader.getRoot();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
