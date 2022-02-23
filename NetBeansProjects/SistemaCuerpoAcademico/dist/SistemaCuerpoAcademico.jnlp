@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="SistemaCuerpoAcademico.jnlp">
+  <information>
+    <title>SistemaCuerpoAcademico</title>
+    <vendor>kari</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="SistemaCuerpoAcademico.jar" size="304894" download="eager" />
+    <jar href="lib\javafx-swt.jar" size="37113" download="eager" />
+    <jar href="lib\javafx.base.jar" size="745872" download="eager" />
+    <jar href="lib\javafx.controls.jar" size="2545470" download="eager" />
+    <jar href="lib\javafx.fxml.jar" size="129486" download="eager" />
+    <jar href="lib\javafx.graphics.jar" size="4252488" download="eager" />
+    <jar href="lib\javafx.media.jar" size="275925" download="eager" />
+    <jar href="lib\javafx.swing.jar" size="88803" download="eager" />
+    <jar href="lib\javafx.web.jar" size="720447" download="eager" />
+    <jar href="lib\mysql-connector-java-8.0.23.jar" size="2415211" download="eager" />
+    <jar href="lib\org-netbeans-modules-javafx2-editor.jar" size="1011699" download="eager" />
+    <jar href="lib\org-netbeans-modules-javafx2-kit.jar" size="68109" download="eager" />
+    <jar href="lib\org-netbeans-modules-javafx2-platform.jar" size="111783" download="eager" />
+    <jar href="lib\org-netbeans-modules-javafx2-project.jar" size="1559114" download="eager" />
+    <jar href="lib\org-netbeans-modules-javafx2-samples.jar" size="2098812" download="eager" />
+    <jar href="lib\org-netbeans-modules-javafx2-scenebuilder.jar" size="137362" download="eager" />
+    <jar href="lib\org-netbeans-modules-maven-htmlui.jar" size="164553" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="SistemaCuerpoAcademico" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="sistemacuerpoacademico.PrincipalMenu"  name="SistemaCuerpoAcademico" />
+  <update check="always"/>
+</jnlp>
