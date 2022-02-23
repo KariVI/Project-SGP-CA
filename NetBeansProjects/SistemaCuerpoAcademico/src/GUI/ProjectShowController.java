@@ -52,7 +52,6 @@ public class ProjectShowController implements Initializable {
     private Project project;
     private Member member;
 
-    @Override
     public void initialize(URL url, ResourceBundle rb) {
         tcLGAC.setCellValueFactory(new PropertyValueFactory<LGAC,String>("name"));
         tcMember.setCellValueFactory(new PropertyValueFactory<Member,String>("name"));
