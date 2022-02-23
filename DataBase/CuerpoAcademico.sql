@@ -167,7 +167,48 @@ CREATE TABLE ProyectoTrabajoRecepcional(
 /*create user 'integrante'@'localhost' identified by 'password';
 Grant SELECT, UPDATE, DELETE, INSERT on cuerpoAcademico.* TO 'integrante'@'localhost'; */
 
+CREATE TABLE PlanTrabajo(
+  idPlanTrabajo int auto_increment NOT NULL,
+  periodo varchar(50) NOT NULL,
+  objetivo varchar(500) NOT NULL,
+  PRIMARY KEY (idPlanTrabajo)
+  );
+
+CREATE TABLE Meta(
+  idPlanTrabajo int NOT NULL,
+ idMeta int auto_increment NOT NULL,
+ descripcion varchar(500) NOT NULL,
+ PRIMARY KEY (idMeta,idPlanTrabajo),
+FOREIGN KEY (idPlanTrabajo) REFERENCES PlanTrabajo(idPlanTrabajo)
+ );
+
+CREATE TABLE Accion(
+  idAccion int auto_increment NOT NULL,
+  idMeta int NOT NULL,
+  descripcion varchar(500) NOT NULL,
+  fechaConclusion varchar(50) NOT NULL,
+  responsable varchar(50) NOT NULL,
+  recurso varchar(500) NOT NULL,
+  PRIMARY KEY (idAccion, idMeta),
+  FOREIGN KEY (idMeta) REFERENCES Meta(idMeta)
+  );
+
+
 use cuerpoAcademico;
+INSERT INTO PlanTrabajo(periodo, objetivo) VALUES("2020-2023", "Mantener el grado en consolidación del cuerpo academico");
+INSERT INTO Meta(idPlanTrabajo,descripcion) VALUES(1, "Lograr un acuerdo de colaboración con un CA externo");
+INSERT INTO Accion(idMeta,descripcion,fechaConclusion,responsable,recurso) VALUES(1, "Obtener una lista de contactos de los CA", "Diciembre 2020","KVC","Lista de cuerpos académicos de PRODEP");
+
+
+
+
+INSERT INTO PlanTrabajo(periodo,objetivo) VALUES("2018-2020", "Mantener el grado en consolidación del cuerpo académico");
+
+INSERT INTO Meta(idPlanTrabajo, descripcion) VALUES (2, "Para el 2022 el 80 % de los integrantes del CA tiene el grado de doctor");
+INSERT INTO Meta(idPlanTrabajo, descripcion) VALUES (2, "Participar en al menos 1 convocatoria para la obtención de recursos externos");
+
+INSERT INTO Accion (idMeta, descripcion, fechaConclusion, responsable, recurso) VALUES (2, "Integrar a un nuevo PTC con grado de Doctor al CA", "Mayo -Agosto 2019", "KVC y XLR", "Documentación del nuevo PTC");
+INSERT INTO Accion (idMeta, descripcion, fechaConclusion, responsable, recurso) VALUES (3, "Rastrear cuales son los proyectos con financiamiento externo que reportan los CA (dependencias de gobierno, ONGs, Empresas", "Mayo 2018– Septiembre 2020", "JCPA, OOH Y XLR", "Proyectos del CA, , Convocatorias, Información de cuerpos académicos de PRODEP");
 
 INSERT INTO Miembro(cedula, nombre, rol, grado, nombreGrado, universidad, anio, estado) VALUES("7953781","José Rafael Rojano Cáceres","Responsable","Doctorado", "Doctorado en Ciencias Computacionales", "UNAM", "2001", "Activo");
 
@@ -263,6 +304,8 @@ INSERT INTO ParticipaReunion(idReunion, cedula, rol) VALUES (2,"8325134","Secret
 INSERT INTO ParticipaReunion(idReunion, cedula, rol) VALUES (2,"7938268","Asistente");
 INSERT INTO ParticipaReunion(idReunion, cedula, rol) VALUES (4,"8325134","Asistente");
 INSERT INTO ParticipaReunion(idReunion,cedula,rol) VALUES(4,"7938268","Lider");
+INSERT INTO ParticipaReunion(idReunion, cedula, rol) VALUES (5,"8325134","Asistente");
+INSERT INTO ParticipaReunion(idReunion,cedula,rol) VALUES(5,"7938268","Lider");
 
 INSERT INTO ValidarMinuta(idMinuta, cedula, estado, comentario) VALUES (2,8325134,"Pendiente","Falto el pendiente de agendar la siguiente reunión");
 INSERT INTO ValidarMinuta(idMinuta, cedula) VALUES (2,7938268);

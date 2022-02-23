@@ -1,27 +1,13 @@
-<<<<<<< HEAD
-/NetBeansProjects/SistemaCuerpoAcademico/nbproject/private/
-/NetBeansProjects/SistemaCuerpoAcademico/dist/
-=======
-/NetBeansProjects/SistemaCuerpoAcademico/nbproject/private/
->>>>>>> KarinaChanges
-NetBeansProjects/SistemaCuerpoAcademico/nbproject/private/private.properties
-NetBeansProjects/SistemaCuerpoAcademico/nbproject/private/private.xml
-NetBeansProjects/SistemaCuerpoAcademico/nbproject/private/private.properties
-NetBeansProjects/SistemaCuerpoAcademico/nbproject/private/private.xml
-NetBeansProjects/SistemaCuerpoAcademico/build/built-jar.properties
-NetBeansProjects/SistemaCuerpoAcademico/build/classes/GUI/MemberListController$1.class
-NetBeansProjects/SistemaCuerpoAcademico/build/built-jar.properties
-NetBeansProjects/SistemaCuerpoAcademico/bitacora.log.2
-NetBeansProjects/SistemaCuerpoAcademico/build/built-jar.properties
-NetBeansProjects/SistemaCuerpoAcademico/nbproject/private/private.xml
+
+
 *.class
 *.class
-NetBeansProjects/SistemaCuerpoAcademico/bitacora.log
 *.class
 *.log
 *.class
 *.log
 *.class
 *.properties
+*.
 *.lck
 *.xml
