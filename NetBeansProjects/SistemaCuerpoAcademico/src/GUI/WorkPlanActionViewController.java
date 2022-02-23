@@ -40,8 +40,7 @@ public class WorkPlanActionViewController implements Initializable {
      
     }    
      public void setGoal(Goal goal){
-        this.goal.setId(goal.getId());
-        this.goal.setDescription(goal.getDescription());
+        this.goal = goal;
     }
      
     @FXML

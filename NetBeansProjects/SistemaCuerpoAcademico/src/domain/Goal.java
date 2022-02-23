@@ -12,6 +12,8 @@ public class Goal {
         this.description = description;
     }
 
+    public Goal() {}
+    
     public Action[] getActions() {
         return actions;
     }
