@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="440.0" prefWidth="618.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.WorkPlanViewController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#171717" height="31.0" layoutX="-1.0" stroke="BLACK" strokeType="INSIDE" width="723.0" />
+      <Label layoutX="244.0" layoutY="45.0" text="Plan de Trabajo">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="118.0" layoutY="124.0" text="Periodo" />
+      <Label fx:id="lbTimePeriod" layoutX="234.0" layoutY="124.0" prefHeight="17.0" prefWidth="298.0" text="Label" />
+      <Label layoutX="118.0" layoutY="157.0" text="Objetivo General" />
+      <Label fx:id="lbObjective" layoutX="234.0" layoutY="157.0" prefHeight="17.0" prefWidth="298.0" text="Label" />
+      <TableView fx:id="tvGoals" layoutX="119.0" layoutY="194.0" prefHeight="189.0" prefWidth="497.0">
+        <columns>
+          <TableColumn fx:id="tcGoals" prefWidth="496.0000228881836" text="Metas" />
+        </columns>
+      </TableView>
+      <Button fx:id="btBack" layoutX="620.0" layoutY="397.0" mnemonicParsing="false" onAction="#actionReturn" prefHeight="27.0" prefWidth="76.0" text="Regresar" />
+      <Button fx:id="btModify" layoutX="508.0" layoutY="397.0" mnemonicParsing="false" onAction="#actionModify" prefHeight="27.0" prefWidth="76.0" text="Modificar" />
+   </children>
+</AnchorPane>

@@ -8,7 +8,8 @@ public class Action {
     private String memberInCharge;
     private String resource;
 
-    public Action(String description, String dateFinish, String memberInCharge, String resource) {
+    public Action(int id, String description, String dateFinish, String memberInCharge, String resource) {
+        this.id = id;
         this.description = description;
         this.dateFinish = dateFinish;
         this.memberInCharge = memberInCharge;
@@ -57,6 +58,17 @@ public class Action {
         this.resource = resource;
     }
     
-    
+    @Override
+    public boolean equals(Object object){
+        boolean value = false;
+            if (object instanceof Action) {
+            Action actionCompare = (Action) object;
+            if( (this.description.equals(actionCompare.getDescription()))&& this.id == actionCompare.getId()) {
+                value=true;
+            }
+
+        }
+        return value;
+    }
     
 }
