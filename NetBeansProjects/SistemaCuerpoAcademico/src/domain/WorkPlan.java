@@ -13,6 +13,12 @@ public class WorkPlan {
         this.goals = goals;
     }
 
+    public WorkPlan(int id,String objetiveGeneral, String timePeriod) {
+       this.id = id;
+       this.objetiveGeneral = objetiveGeneral;
+       this.timePeriod = timePeriod;
+    }
+
     public int getId() {
         return id;
     }

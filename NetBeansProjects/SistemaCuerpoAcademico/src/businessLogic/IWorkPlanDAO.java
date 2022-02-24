@@ -1,6 +1,7 @@
 package businessLogic;
 
 import domain.WorkPlan;
+import java.util.ArrayList;
 import log.BusinessException;
 
 /*
@@ -15,4 +16,5 @@ import log.BusinessException;
  */
 public interface IWorkPlanDAO {
     public WorkPlan getWorkPlan(int idWorkPlan) throws BusinessException;
+    public ArrayList <WorkPlan> getWorkPlans() throws BusinessException;
 }

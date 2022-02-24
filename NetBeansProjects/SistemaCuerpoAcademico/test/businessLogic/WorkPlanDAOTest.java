@@ -7,7 +7,9 @@ package businessLogic;
 
 import domain.Member;
 import domain.WorkPlan;
+import java.util.ArrayList;
 import log.BusinessException;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
@@ -27,5 +29,18 @@ public class WorkPlanDAOTest {
         workPlanExpected.setId(workPlanId);
         assertTrue(workPlan.equals(workPlanExpected));
     }
-    
+    @Test
+    public void getWorkPlansTest() throws BusinessException {
+        System.out.println("getWorkPlans");
+        WorkPlan workPlan = new WorkPlan(1,"Mantener el grado en consolidación del cuerpo academico","2020-2023");
+        WorkPlan workPlan1 = new WorkPlan(2,"Mantener el grado en consolidación del cuerpo academico","2018-2020");
+        ArrayList<WorkPlan> resultExpected = new ArrayList<WorkPlan>();
+        resultExpected.add(workPlan);
+        resultExpected.add(workPlan1);
+        WorkPlanDAO workPlanDao = new WorkPlanDAO();
+        ArrayList<WorkPlan> result = workPlanDao.getWorkPlans();  
+        System.out.println(resultExpected.size());
+        System.out.println(result.size());
+        assertEquals(result.get(0),resultExpected.get(0));
+    }
 }
