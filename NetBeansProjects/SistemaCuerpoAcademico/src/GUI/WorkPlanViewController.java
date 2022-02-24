@@ -9,6 +9,7 @@ import businessLogic.GoalDao;
 import businessLogic.WorkPlanDAO;
 import domain.Goal;
 import domain.Meeting;
+import domain.Member;
 import domain.WorkPlan;
 import java.io.IOException;
 import java.net.URL;
@@ -56,6 +57,7 @@ public class WorkPlanViewController implements Initializable {
     ObservableList<Goal> goalList;
     @FXML
     private TableColumn<Goal, String> tcGoals;
+    private Member member;
 
     /**
      * Initializes the controller class.
@@ -67,7 +69,11 @@ public class WorkPlanViewController implements Initializable {
             clicOnGoal();
         });
     }
-
+    
+    public void setMember(Member member) {
+        this.member = member;
+    }
+     
     public void setWorkPlanId(int idWorkPlan) {
         this.idWorkPlan = idWorkPlan;
         initializeWorkPlan();
@@ -117,7 +123,8 @@ public class WorkPlanViewController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("WorkPlanList.fxml"));
             Parent root = loader.load();
-            WorkPlanActionViewController workPlanListController = loader.getController();
+            WorkPlanListController workPlanListController = loader.getController();
+            workPlanListController.setMember(member);
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);

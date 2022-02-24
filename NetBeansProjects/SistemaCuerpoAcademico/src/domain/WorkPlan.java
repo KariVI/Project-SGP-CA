@@ -63,5 +63,9 @@ public class WorkPlan {
         }
         return value;
     }
-
+    
+    @Override
+      public String toString(){
+          return timePeriod;
+      }
 }

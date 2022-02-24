@@ -108,6 +108,7 @@ public class MenuController implements Initializable {
          options.add("Trabajos recepcionales");
         options.add("Proyectos");
         options.add("Reuniones");
+        options.add("Plan de trabajo");
        
     }
     
@@ -226,7 +227,23 @@ public class MenuController implements Initializable {
                    Log.logException(ex);
                }
             break;
-        
+            
+            case "Plan de trabajo":;
+                try {
+               loader = new FXMLLoader(getClass().getResource("WorkPlanList.fxml"));
+               root = loader.load();
+               WorkPlanListController workPlanListController = loader.getController();
+               String keyGroupAcademic = member.getKeyGroupAcademic();
+               workPlanListController.setMember(member);
+               Scene scene = new Scene(root);
+               Stage stage = new Stage();
+               stage.setScene(scene);
+               stage.initModality(Modality.APPLICATION_MODAL);
+               stage.showAndWait();
+               } catch (IOException ex) {
+                   Log.logException(ex);
+               }
+            break;
         }
     
     }
