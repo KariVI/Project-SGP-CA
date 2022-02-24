@@ -6,7 +6,7 @@
 package businessLogic;
 
 import dataaccess.Connector;
-import domain.Goal;
+import domain.Action;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,26 +17,30 @@ import log.Log;
 
 /**
  *
- * @author Mariana
+ * @author david
  */
-public class GoalDao implements IGoalDAO{
+public class ActionDAO implements IActionDAO{
 
-      public ArrayList <Goal> getGoalsByWorkPlanId(int id) throws BusinessException {
-        ArrayList <Goal> goalList = new ArrayList<Goal>();
+    @Override
+    public ArrayList<Action> getActionsByGoalId(int id) throws BusinessException {
+        ArrayList<Action> actionList = new ArrayList<Action>();
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
             try{
-                PreparedStatement getGoalsStatment;
-                getGoalsStatment = connectionDataBase.prepareStatement("SELECT * FROM Meta where idPlanTrabajo = ?");
-                getGoalsStatment.setInt(1,id);
-                ResultSet goalResultSet;
-                goalResultSet = getGoalsStatment.executeQuery();
-                while(goalResultSet.next()){
-                    int idGoal = goalResultSet.getInt("idMeta");
-                    String description = goalResultSet.getString("descripcion");
-                    Goal goalData = new Goal(idGoal,description);
-                    goalList.add(goalData);
+                PreparedStatement getActionsStatment;
+                getActionsStatment = connectionDataBase.prepareStatement("SELECT * FROM Accion where idMeta = ?");
+                getActionsStatment.setInt(1,id);
+                ResultSet actionResultSet;
+                actionResultSet = getActionsStatment.executeQuery();
+                while(actionResultSet.next()){
+                    int idAction = actionResultSet.getInt("idAccion");
+                    String description = actionResultSet.getString("descripcion");
+                    String dateFinish = actionResultSet.getString("fechaConclusion");
+                    String memberInCharge = actionResultSet.getString("responsable");
+                    String resource = actionResultSet.getString("recurso");
+                    Action actionData = new Action(idAction, description,dateFinish,memberInCharge,resource);
+                    actionList.add(actionData);
                 }
 
                 connectorDataBase.disconnect();
@@ -48,18 +52,18 @@ public class GoalDao implements IGoalDAO{
         }catch(ClassNotFoundException ex) {
             Log.logException(ex);
         }
-
-        return goalList;  
+        
+        return actionList;  
     }
 
     @Override
-    public boolean deletedGoalById(int id) throws BusinessException {
-         boolean deletedSuccess = false;
+    public boolean deletedActionById(int id) throws BusinessException {
+        boolean deletedSuccess = false;
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
             try{
-                PreparedStatement preparedStatement = connectionDataBase.prepareStatement("DELETE FROM Meta Where idMeta = ?");
+                PreparedStatement preparedStatement = connectionDataBase.prepareStatement("DELETE FROM Accion Where idAccion = ?");
                 preparedStatement.setInt(1, id);
                 preparedStatement.executeUpdate();
                 deletedSuccess = true;
@@ -75,17 +79,20 @@ public class GoalDao implements IGoalDAO{
     }
 
     @Override
-    public boolean updatedGoalById(int idWorkPlan, Goal goal) throws BusinessException {
+    public boolean updatedActionById(int idGoal, Action action) throws BusinessException {
         boolean updatedSucess = false;
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
             try{
-                String sql = "UPDATE Meta set idPlanTrabajo = ?, descripcion = ?, WHERE idMeta = ?";
+                String sql = "UPDATE Accion set descripcion = ?, fechaConclusion = ?, responsable = ?, recurso = ?, idMeta = ? WHERE idAccion = ?";
                 PreparedStatement preparedStatement = connectionDataBase.prepareStatement(sql);
-                preparedStatement.setInt(1, idWorkPlan);
-                preparedStatement.setString(2, goal.getDescription());
-                preparedStatement.setInt(3, goal.getId());
+                preparedStatement.setString(1, action.getDescription());
+                preparedStatement.setString(2, action.getDateFinish());
+                preparedStatement.setString(3, action.getMemberInCharge());
+                preparedStatement.setString(4, action.getResource());
+                preparedStatement.setInt(5, idGoal);
+                preparedStatement.setInt(6, action.getId());
                 updatedSucess = true;
                 connectorDataBase.disconnect();
             }catch(SQLException sqlException){
