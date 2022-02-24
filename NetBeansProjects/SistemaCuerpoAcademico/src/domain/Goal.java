@@ -12,7 +12,12 @@ public class Goal {
         this.description = description;
     }
 
+    
     public Goal() {}
+
+    public Goal(String description) {
+        this.description = description;
+    }
     
     public Action[] getActions() {
         return actions;

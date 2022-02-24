@@ -86,5 +86,28 @@ public class GoalDao implements IGoalDAO{
 
         return actionList;  
     }
+
+    @Override
+    public boolean saveSuccesful(Goal goal, int idWorkPlan) throws BusinessException {
+             boolean saveSuccess=false;
+        try {
+                Connector connectorDataBase=new Connector();
+                Connection connectionDataBase = connectorDataBase.getConnection();
+                String insertGoal = "INSERT INTO Meta(idPlanTrabajo, descripcion) VALUES (?, ?)";
+            
+                PreparedStatement preparedStatement = connectionDataBase.prepareStatement(insertGoal);
+                
+                preparedStatement.setInt(1, idWorkPlan);
+                preparedStatement.setString(2, goal.getDescription());
+                preparedStatement.executeUpdate();
+                connectorDataBase.disconnect();
+                saveSuccess=true;
+            } catch (SQLException sqlException) {
+                throw new BusinessException("DataBase connection failed ", sqlException);
+            } catch (ClassNotFoundException ex) {
+               Log.logException(ex);
+            }
+        return saveSuccess; 
+    }
     
 }
