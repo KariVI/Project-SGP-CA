@@ -52,16 +52,17 @@ public class WorkPlanDAO implements IWorkPlanDAO {
         return workPlan;
     }
     
-     public ArrayList <WorkPlan> getWorkPlans() throws BusinessException {
+     public ArrayList <WorkPlan> getWorkPlans(String key) throws BusinessException {
         ArrayList <WorkPlan> workPlanList = new ArrayList<WorkPlan>();
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
             try{
-                PreparedStatement getGoalsStatment;
-                getGoalsStatment = connectionDataBase.prepareStatement("SELECT * FROM PlanTrabajo");
+                PreparedStatement WorkPlansStatment;
+                WorkPlansStatment = connectionDataBase.prepareStatement("SELECT * FROM PlanTrabajo where claveCuerpoAcademico = ?");
+                WorkPlansStatment.setString(1, key);
                 ResultSet workPlanResultSet;
-                workPlanResultSet = getGoalsStatment.executeQuery();
+                workPlanResultSet = WorkPlansStatment.executeQuery();
                 while(workPlanResultSet.next()){
                     int id = workPlanResultSet.getInt("idPlanTrabajo");
                     String objetiveGeneral = workPlanResultSet.getString("objetivo");

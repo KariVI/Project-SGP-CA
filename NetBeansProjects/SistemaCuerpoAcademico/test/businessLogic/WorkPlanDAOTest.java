@@ -38,7 +38,8 @@ public class WorkPlanDAOTest {
         resultExpected.add(workPlan);
         resultExpected.add(workPlan1);
         WorkPlanDAO workPlanDao = new WorkPlanDAO();
-        ArrayList<WorkPlan> result = workPlanDao.getWorkPlans();  
+        String key = "JDOEIJ804";
+        ArrayList<WorkPlan> result = workPlanDao.getWorkPlans(key);  
         System.out.println(resultExpected.size());
         System.out.println(result.size());
         assertEquals(result.get(0),resultExpected.get(0));

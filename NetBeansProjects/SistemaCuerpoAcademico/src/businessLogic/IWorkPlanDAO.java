@@ -16,5 +16,5 @@ import log.BusinessException;
  */
 public interface IWorkPlanDAO {
     public WorkPlan getWorkPlan(int idWorkPlan) throws BusinessException;
-    public ArrayList <WorkPlan> getWorkPlans() throws BusinessException;
+    public ArrayList <WorkPlan> getWorkPlans(String key) throws BusinessException;
 }

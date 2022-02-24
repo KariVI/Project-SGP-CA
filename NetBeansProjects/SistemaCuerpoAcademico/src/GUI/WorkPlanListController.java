@@ -70,7 +70,7 @@ public class WorkPlanListController implements Initializable {
         WorkPlanDAO workPlanDAO = new WorkPlanDAO();
         ArrayList<WorkPlan> WorkPlanList;  
         try {
-            WorkPlanList = workPlanDAO.getWorkPlans();
+            WorkPlanList = workPlanDAO.getWorkPlans(member.getKeyGroupAcademic());
             for(int i=0; i< WorkPlanList.size(); i++){
             planWorks.add(WorkPlanList.get(i));
          }
