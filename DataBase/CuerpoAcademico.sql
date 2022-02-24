@@ -169,9 +169,11 @@ Grant SELECT, UPDATE, DELETE, INSERT on cuerpoAcademico.* TO 'integrante'@'local
 
 CREATE TABLE PlanTrabajo(
   idPlanTrabajo int auto_increment NOT NULL,
+  claveCuerpoAcademico varchar(10) NOT NULL,
   periodo varchar(50) NOT NULL,
   objetivo varchar(500) NOT NULL,
-  PRIMARY KEY (idPlanTrabajo)
+  PRIMARY KEY (idPlanTrabajo),
+  FOREIGN KEY(claveCuerpoAcademico) references cuerpoAcademico(clave)
   );
 
 CREATE TABLE Meta(
@@ -195,20 +197,6 @@ CREATE TABLE Accion(
 
 
 use cuerpoAcademico;
-INSERT INTO PlanTrabajo(periodo, objetivo) VALUES("2020-2023", "Mantener el grado en consolidación del cuerpo academico");
-INSERT INTO Meta(idPlanTrabajo,descripcion) VALUES(1, "Lograr un acuerdo de colaboración con un CA externo");
-INSERT INTO Accion(idMeta,descripcion,fechaConclusion,responsable,recurso) VALUES(1, "Obtener una lista de contactos de los CA", "Diciembre 2020","KVC","Lista de cuerpos académicos de PRODEP");
-
-
-
-
-INSERT INTO PlanTrabajo(periodo,objetivo) VALUES("2018-2020", "Mantener el grado en consolidación del cuerpo académico");
-
-INSERT INTO Meta(idPlanTrabajo, descripcion) VALUES (2, "Para el 2022 el 80 % de los integrantes del CA tiene el grado de doctor");
-INSERT INTO Meta(idPlanTrabajo, descripcion) VALUES (2, "Participar en al menos 1 convocatoria para la obtención de recursos externos");
-
-INSERT INTO Accion (idMeta, descripcion, fechaConclusion, responsable, recurso) VALUES (2, "Integrar a un nuevo PTC con grado de Doctor al CA", "Mayo -Agosto 2019", "KVC y XLR", "Documentación del nuevo PTC");
-INSERT INTO Accion (idMeta, descripcion, fechaConclusion, responsable, recurso) VALUES (3, "Rastrear cuales son los proyectos con financiamiento externo que reportan los CA (dependencias de gobierno, ONGs, Empresas", "Mayo 2018– Septiembre 2020", "JCPA, OOH Y XLR", "Proyectos del CA, , Convocatorias, Información de cuerpos académicos de PRODEP");
 
 INSERT INTO Miembro(cedula, nombre, rol, grado, nombreGrado, universidad, anio, estado) VALUES("7953781","José Rafael Rojano Cáceres","Responsable","Doctorado", "Doctorado en Ciencias Computacionales", "UNAM", "2001", "Activo");
 
@@ -221,6 +209,15 @@ INSERT INTO CuerpoAcademico(clave,nombre, objetivo, mision , vision , gradoConso
 INSERT INTO CuerpoAcademico(clave,nombre, objetivo, mision , vision , gradoConsolidacion) VALUES("UVCA107","Metodología y Aplicaciones de las Técnicas y Modelos Estadísticos",
         "Los miembros del Cuerpo Académico se orientan al estudio y aplicación de los modelos estadísticos y al desarrollo de teorías, métodos y procedimientos para obtener datos, analizarlos y reportar los resultados en el contexto de investigaciones y estudios técnicos.", "Los miembros del Cuerpo Académico se orientan al estudio y aplicación de los modelos estadísticos y al desarrollo de teorías, métodos y procedimientos para obtener datos, analizarlos y reportar los resultados en el contexto de investigaciones y estudios técnicos.",
         "Realizar investigación en los aspectos teóricos y metodológicos del proceso de modelación estadística, promover y realizar aplicaciones de modelos, métodos y técnicas estadísticas ", "En consolidación");
+        
+INSERT INTO PlanTrabajo(claveCuerpoAcademico,periodo, objetivo) VALUES("JDOEIJ804","2020-2023", "Mantener el grado en consolidación del cuerpo academico");
+INSERT INTO Meta(idPlanTrabajo,descripcion) VALUES(1, "Lograr un acuerdo de colaboración con un CA externo");
+INSERT INTO Accion(idMeta,descripcion,fechaConclusion,responsable,recurso) VALUES(1, "Obtener una lista de contactos de los CA", "Diciembre 2020","KVC","Lista de cuerpos académicos de PRODEP");
+INSERT INTO PlanTrabajo(claveCuerpoAcademico,periodo,objetivo) VALUES("JDOEIJ804","2018-2020", "Mantener el grado en consolidación del cuerpo académico");
+INSERT INTO Meta(idPlanTrabajo, descripcion) VALUES (2, "Para el 2022 el 80 % de los integrantes del CA tiene el grado de doctor");
+INSERT INTO Meta(idPlanTrabajo, descripcion) VALUES (2, "Participar en al menos 1 convocatoria para la obtención de recursos externos");
+INSERT INTO Accion (idMeta, descripcion, fechaConclusion, responsable, recurso) VALUES (2, "Integrar a un nuevo PTC con grado de Doctor al CA", "Mayo -Agosto 2019", "KVC y XLR", "Documentación del nuevo PTC");
+INSERT INTO Accion (idMeta, descripcion, fechaConclusion, responsable, recurso) VALUES (3, "Rastrear cuales son los proyectos con financiamiento externo que reportan los CA (dependencias de gobierno, ONGs, Empresas", "Mayo 2018– Septiembre 2020", "JCPA, OOH Y XLR", "Proyectos del CA, , Convocatorias, Información de cuerpos académicos de PRODEP");
 
 INSERT INTO LGAC(nombre,descripcion) VALUES ("Tecnologías de software", "Se orienta al estudio de diversas propiedades, enfoques, métodos de modelado y herramientas que conforman cada una de las diversas tecnologías aplicables al desarrollo del software con vistas a su adaptación, mejora y sustitución en el medio nacional");
 INSERT INTO LGAC(nombre,descripcion) VALUES ("Metodología de la investigación y la estadística", " Se orienta al estudio de los procesos de aplicación de la metodología estadística, considerando los diferentes enfoques, dependiendo de la disciplina de donde proviene el problema");
