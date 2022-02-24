@@ -104,4 +104,29 @@ public class ActionDAO implements IActionDAO{
         return updatedSucess;
     }
     
+    public boolean saveSuccesful(Action action, int idGoal ) throws BusinessException{   
+        boolean saveSuccess=false;
+        try {
+                Connector connectorDataBase=new Connector();
+                Connection connectionDataBase = connectorDataBase.getConnection();
+                String insertGoal = "INSERT INTO Accion(idMeta, descripcion,fechaConclusion,responsable,recurso) VALUES (?,?,?,?,?)";
+            
+                PreparedStatement preparedStatement = connectionDataBase.prepareStatement(insertGoal);
+                //(idMeta,descripcion,fechaConclusion,responsable,recurso)
+                preparedStatement.setInt(1, idGoal);
+                preparedStatement.setString(2, action.getDescription());
+                preparedStatement.setString(3, action.getDateFinish());
+                preparedStatement.setString(4, action.getMemberInCharge());
+                preparedStatement.setString(5, action.getResource());
+                preparedStatement.executeUpdate();
+                connectorDataBase.disconnect();
+                saveSuccess=true;
+            } catch (SQLException sqlException) {
+                throw new BusinessException("DataBase connection failed ", sqlException);
+            } catch (ClassNotFoundException ex) {
+               Log.logException(ex);
+            }
+        return saveSuccess; 
+    }
+    
 }

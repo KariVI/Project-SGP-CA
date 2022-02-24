@@ -6,6 +6,7 @@
 package businessLogic;
 
 import dataaccess.Connector;
+import domain.Action;
 import domain.Goal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,7 +53,6 @@ public class GoalDao implements IGoalDAO{
         return goalList;  
     }
 
-    @Override
     public boolean deletedGoalById(int id) throws BusinessException {
          boolean deletedSuccess = false;
         try{
@@ -74,7 +74,6 @@ public class GoalDao implements IGoalDAO{
         return deletedSuccess;
     }
 
-    @Override
     public boolean updatedGoalById(int idWorkPlan, Goal goal) throws BusinessException {
         boolean updatedSucess = false;
         try{
@@ -99,7 +98,7 @@ public class GoalDao implements IGoalDAO{
 
     @Override
     public boolean saveSuccesful(Goal goal, int idWorkPlan) throws BusinessException {
-             boolean saveSuccess=false;
+        boolean saveSuccess=false;
         try {
                 Connector connectorDataBase=new Connector();
                 Connection connectionDataBase = connectorDataBase.getConnection();
@@ -118,6 +117,18 @@ public class GoalDao implements IGoalDAO{
                Log.logException(ex);
             }
         return saveSuccess; 
+    }
+
+    @Override
+    public ArrayList<Action> getActionsByGoalId(int id) throws BusinessException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getId(Goal goal) throws BusinessException {
+        Integer  id=0;
+        
+        return id;
     }
     
 }
