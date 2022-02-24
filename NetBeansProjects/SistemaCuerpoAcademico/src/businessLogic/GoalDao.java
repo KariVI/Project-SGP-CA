@@ -6,7 +6,6 @@
 package businessLogic;
 
 import dataaccess.Connector;
-import domain.Action;
 import domain.Goal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,39 +51,50 @@ public class GoalDao implements IGoalDAO{
 
         return goalList;  
     }
-        
-    public ArrayList<Action> getActionsByGoalId(int id) throws BusinessException {
-        ArrayList<Action> actionList = new ArrayList<Action>();
+
+    @Override
+    public boolean deletedGoalById(int id) throws BusinessException {
+         boolean deletedSuccess = false;
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
             try{
-                PreparedStatement getActionsStatment;
-                getActionsStatment = connectionDataBase.prepareStatement("SELECT * FROM Accion where idMeta = ?");
-                getActionsStatment.setInt(1,id);
-                ResultSet actionResultSet;
-                actionResultSet = getActionsStatment.executeQuery();
-                while(actionResultSet.next()){
-                    int idAction = actionResultSet.getInt("idAccion");
-                    String description = actionResultSet.getString("descripcion");
-                    String dateFinish = actionResultSet.getString("fechaConclusion");
-                    String memberInCharge = actionResultSet.getString("responsable");
-                    String resource = actionResultSet.getString("recurso");
-                    Action actionData = new Action(idAction, description,dateFinish,memberInCharge,resource);
-                    actionList.add(actionData);
-                }
-
+                PreparedStatement preparedStatement = connectionDataBase.prepareStatement("DELETE FROM Meta Where idMeta = ?");
+                preparedStatement.setInt(1, id);
+                preparedStatement.executeUpdate();
+                deletedSuccess = true;
                 connectorDataBase.disconnect();
-
             }catch(SQLException sqlException) {
-                throw new BusinessException("Parameter index ", sqlException);
-            }
-
+                throw new BusinessException("DataBase connection failed", sqlException);
+            }           
         }catch(ClassNotFoundException ex) {
             Log.logException(ex);
         }
+        
+        return deletedSuccess;
+    }
 
-        return actionList;  
+    @Override
+    public boolean updatedGoalById(int idWorkPlan, Goal goal) throws BusinessException {
+        boolean updatedSucess = false;
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            try{
+                String sql = "UPDATE Meta set idPlanTrabajo = ?, descripcion = ?, WHERE idMeta = ?";
+                PreparedStatement preparedStatement = connectionDataBase.prepareStatement(sql);
+                preparedStatement.setInt(1, idWorkPlan);
+                preparedStatement.setString(2, goal.getDescription());
+                preparedStatement.setInt(3, goal.getId());
+                updatedSucess = true;
+                connectorDataBase.disconnect();
+            }catch(SQLException sqlException){
+                throw new BusinessException("DataBase connection failed", sqlException);
+            }
+        }catch(ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return updatedSucess;
     }
 
     @Override

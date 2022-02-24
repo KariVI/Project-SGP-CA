@@ -15,9 +15,7 @@ public class Action {
         this.memberInCharge = memberInCharge;
         this.resource = resource;
     }
-
-    
-    
+   
     public int getId() {
         return id;
     }
