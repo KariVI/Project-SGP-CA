@@ -42,7 +42,7 @@
                <GridPane.margin>
                   <Insets bottom="50.0" />
                </GridPane.margin></Label>
-            <ComboBox prefHeight="25.0" prefWidth="124.0" promptText="Meses" GridPane.columnIndex="1">
+            <ComboBox fx:id="cbMonths" prefHeight="25.0" prefWidth="124.0" promptText="Meses" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets bottom="10.0" />
                </GridPane.margin>
@@ -50,28 +50,28 @@
                   <Insets />
                </opaqueInsets>
             </ComboBox>
-            <ComboBox prefHeight="25.0" prefWidth="94.0" promptText="Año" GridPane.columnIndex="1">
+            <ComboBox fx:id="cbYears" prefHeight="25.0" prefWidth="94.0" promptText="Año" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets bottom="10.0" left="130.0" />
                </GridPane.margin>
             </ComboBox>
-            <TextArea prefHeight="92.0" prefWidth="228.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextArea fx:id="taObjetive" prefHeight="92.0" prefWidth="228.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             
          </children>
       </GridPane>
-      <Button fx:id="btReturn" layoutX="473.0" layoutY="403.0" mnemonicParsing="false" onAction="#actionReturn" prefHeight="26.0" prefWidth="87.0" text="Regresar" />
-      <Button fx:id="btUpdate" layoutX="386.0" layoutY="404.0" mnemonicParsing="false" onAction="#actionUpdate" text="Siguiente" />
-      <TableView layoutX="84.0" layoutY="223.0" prefHeight="126.0" prefWidth="417.0">
+      <Button fx:id="btReturn" layoutX="473.0" layoutY="403.0" mnemonicParsing="false" onAction="#actionReturn" prefHeight="26.0" prefWidth="87.0" text="Cancelar" />
+      <Button fx:id="btNext" layoutX="365.0" layoutY="404.0" mnemonicParsing="false" onAction="#actionNext" prefHeight="25.0" prefWidth="87.0" text="Siguiente" />
+      <TableView fx:id="tvGoals" layoutX="84.0" layoutY="223.0" prefHeight="126.0" prefWidth="417.0">
         <columns>
-          <TableColumn id="tcGoal" prefWidth="349.0" text="Meta" />
+          <TableColumn id="tcGoal" fx:id="tcGoal" prefWidth="416.0" text="Meta" />
         </columns>
       </TableView>
       <HBox layoutX="87.0" layoutY="348.0" prefHeight="26.0" prefWidth="347.0">
          <children>
-            <TextField prefHeight="25.0" prefWidth="316.0" />
+            <TextField fx:id="tfDescription" prefHeight="25.0" prefWidth="316.0" />
          </children>
       </HBox>
-      <Button layoutX="403.0" layoutY="349.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="98.0" text="Añadir" />
-      <Button layoutX="501.0" layoutY="324.0" mnemonicParsing="false" text="X" />
+      <Button fx:id="btAdd" layoutX="403.0" layoutY="349.0" mnemonicParsing="false" onAction="#addGoal" prefHeight="25.0" prefWidth="98.0" text="Añadir" />
+      <Button fx:id="btDelete" layoutX="501.0" layoutY="324.0" mnemonicParsing="false" text="X" onAction="#actionDelete" />
    </children>
 </AnchorPane>

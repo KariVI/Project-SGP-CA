@@ -125,9 +125,30 @@ public class GoalDao implements IGoalDAO{
     }
 
     @Override
-    public int getId(Goal goal) throws BusinessException {
+    public int getId(Goal goal, int idWorkPlan) throws BusinessException {
         Integer  id=0;
-        
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            try{
+                PreparedStatement getWorkPlanStatment;
+                getWorkPlanStatment = connectionDataBase.prepareStatement("SELECT idMeta FROM Meta WHERE descripcion=? and idPlanTrabajo= ?;");
+                getWorkPlanStatment.setString(1, goal.getDescription()); 
+                getWorkPlanStatment.setInt(2,idWorkPlan );   
+                ResultSet workPlanResultSet;
+                workPlanResultSet = getWorkPlanStatment.executeQuery();
+                if (workPlanResultSet.next()) {
+                    id=Integer.parseInt(workPlanResultSet.getString("idMeta"));
+                } else {
+                    throw new BusinessException("Work plan not found");
+                }
+                connectorDataBase.disconnect();
+            }catch(SQLException sqlException) {
+                throw new BusinessException("Parameter index ", sqlException);
+            }
+        }catch(ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
         return id;
     }
     

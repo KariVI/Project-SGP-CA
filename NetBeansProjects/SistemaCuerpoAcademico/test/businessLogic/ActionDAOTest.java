@@ -44,4 +44,13 @@ public class ActionDAOTest {
         int idGoal = 1;
         assertTrue(actionDAO.updatedActionById(idGoal, newAction));
     }
+    
+    @Test
+    public void testSave() throws BusinessException{
+        System.out.println("saveSuccesful");
+        Action action = new Action(1,"Obtener una lista de los anteproyectos","Diciembre 2022","JOOH","Lista de cuerpos académicos de PRODEP, Anteproyectos disonibles");
+        ActionDAO actionDAO = new ActionDAO();
+        int idGoal=1;
+        assertTrue(actionDAO.saveSuccesful(action, idGoal));
+    }
 }
