@@ -15,6 +15,13 @@ public class Action {
         this.memberInCharge = memberInCharge;
         this.resource = resource;
     }
+
+    public Action(String description, String responsable, String date, String resource) {
+        this.description = description;
+        this.dateFinish = date;
+        this.memberInCharge = responsable;
+        this.resource = resource;
+    }
    
     public int getId() {
         return id;

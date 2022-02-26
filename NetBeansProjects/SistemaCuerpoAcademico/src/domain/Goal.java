@@ -13,6 +13,10 @@ public class Goal {
     }
 
     public Goal() {}
+
+    public Goal(String description) {
+        this.description = description;
+    }
     
     public Action[] getActions() {
         return actions;
@@ -48,5 +52,10 @@ public class Goal {
             }
         }
         return value;
+    }
+       
+    @Override
+    public String toString(){
+        return description;
     }
 }
