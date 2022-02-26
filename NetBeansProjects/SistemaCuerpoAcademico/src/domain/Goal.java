@@ -12,6 +12,7 @@ public class Goal {
         this.description = description;
     }
 
+    
     public Goal() {}
 
     public Goal(String description) {
