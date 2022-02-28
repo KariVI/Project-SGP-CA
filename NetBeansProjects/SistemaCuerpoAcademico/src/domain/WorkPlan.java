@@ -20,7 +20,6 @@ public class WorkPlan {
     }
 
     public WorkPlan() {
-        
     }
 
     public int getId() {

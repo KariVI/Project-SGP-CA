@@ -88,7 +88,7 @@ public class ActionDAO implements IActionDAO{
                 String sql = "UPDATE Accion set descripcion = ?, fechaConclusion = ?, responsable = ?, recurso = ?, idMeta = ? WHERE idAccion = ?";
                 PreparedStatement preparedStatement = connectionDataBase.prepareStatement(sql);
                 preparedStatement.setString(1, action.getDescription());
-                preparedStatement.setString(2, action.getDateFinish());
+                preparedStatement.setString(2, action.getDateEnd());
                 preparedStatement.setString(3, action.getMemberInCharge());
                 preparedStatement.setString(4, action.getResource());
                 preparedStatement.setInt(5, idGoal);
@@ -112,10 +112,9 @@ public class ActionDAO implements IActionDAO{
                 String insertGoal = "INSERT INTO Accion(idMeta, descripcion,fechaConclusion,responsable,recurso) VALUES (?,?,?,?,?)";
             
                 PreparedStatement preparedStatement = connectionDataBase.prepareStatement(insertGoal);
-                //(idMeta,descripcion,fechaConclusion,responsable,recurso)
                 preparedStatement.setInt(1, idGoal);
                 preparedStatement.setString(2, action.getDescription());
-                preparedStatement.setString(3, action.getDateFinish());
+                preparedStatement.setString(3, action.getDateEnd());
                 preparedStatement.setString(4, action.getMemberInCharge());
                 preparedStatement.setString(5, action.getResource());
                 preparedStatement.executeUpdate();

@@ -6,6 +6,7 @@ import domain.Member;
 import domain.WorkPlan;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
@@ -36,6 +37,7 @@ public class WorkPlanRegisterController implements Initializable {
     @FXML Button btReturn = new Button();
     @FXML Button btAdd = new Button();
     @FXML Button btDelete = new Button();
+    WorkPlan workPlan;
     @FXML private TextArea taObjetive;
     @FXML private TextField tfDescription;
     @FXML private ComboBox cbMonths;
@@ -48,9 +50,11 @@ public class WorkPlanRegisterController implements Initializable {
     @FXML private TableColumn tcGoal;
     private String keyGroupAcademic;
     private int indexGoal;
+    private Goal lastGoal;
    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        workPlan = new WorkPlan();
         tcGoal.setCellValueFactory(new PropertyValueFactory<Goal,String>("description"));
         goals= FXCollections.observableArrayList();
         months=FXCollections.observableArrayList();
@@ -62,6 +66,7 @@ public class WorkPlanRegisterController implements Initializable {
         cbMonths.setItems(months);
         cbYears.setItems(years);
         cbMonths.getSelectionModel().selectFirst();
+        cbYears.getSelectionModel().selectFirst();
 
          tvGoals.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -78,8 +83,43 @@ public class WorkPlanRegisterController implements Initializable {
         };
     }
     
-    
-    
+     public void setWorkPlan(WorkPlan workPlan) {
+        this.workPlan = workPlan;
+        taObjetive.setText(workPlan.getObjetiveGeneral());
+        updateGoals();
+        
+    }
+     
+       private void openWorkPlanList(){ 
+         try{ 
+            Stage primaryStage= new Stage();
+            URL url = new File("src/GUI/WorkPlanList.fxml").toURI().toURL();
+           try{
+              FXMLLoader loader = new FXMLLoader(url);
+              loader.setLocation(url);
+              loader.load();
+              WorkPlanListController workPlanListController =loader.getController();   
+              Parent root = loader.getRoot();
+              Scene scene = new Scene(root);        
+              primaryStage.setScene(scene);
+              primaryStage.show();      
+            } catch (IOException ex) {
+                    Log.logException(ex);
+            }
+            primaryStage.show();
+       } catch (MalformedURLException ex) {
+           Log.logException(ex);
+       } 
+    }
+     
+     private void updateGoals(){
+          Goal[] goalsAuxiliar = new Goal[goals.size()];    
+        for(int i=0; i< workPlan.getGoals().length; i++){
+            goals.add(workPlan.getGoals()[i]);
+        }  
+     
+     }
+   
     private Goal getSelectedGoal(){
         Goal goal = null;
         int tamTable = 1;
@@ -125,6 +165,7 @@ public class WorkPlanRegisterController implements Initializable {
     private void actionReturn(){
         Stage stage = (Stage) btReturn.getScene().getWindow();
         stage.close();
+        openWorkPlanList();
     }
     
     @FXML 
@@ -134,6 +175,7 @@ public class WorkPlanRegisterController implements Initializable {
         Goal goal = new Goal(description);  
         if(validateGoal(goal)){
            goals.add(goal);
+           lastGoal=goal;
         }
         cleanFields();
     }
@@ -177,34 +219,53 @@ public class WorkPlanRegisterController implements Initializable {
     
     @FXML
     private void actionDelete(ActionEvent event){
-        goals.remove(indexGoal);
+        goals.remove(lastGoal);
         cleanFields();
     }
+      
+    private void sendAlert(){ 
+          AlertMessage alertMessage= new AlertMessage();
+          if(validateFieldEmpty() ){  
+              alertMessage.showAlertValidateFailed("No se han llenado todos los campos");
+          }
+          if(!validateInformationField()){
+             alertMessage.showAlertValidateFailed("Existen campos con caracteres invalidos");
+          }
+
+      }
     @FXML
     private void actionNext(){
-        try {
-           
-             if(!validateFieldEmpty() && validateInformationField()){
-                WorkPlan workPlan = new WorkPlan();
-                String objetive= taObjetive.getText();
-                workPlan.setObjetiveGeneral(objetive);
-                workPlan.setGoals(saveGoals());
+        try {      
+                Stage stage = (Stage) btNext.getScene().getWindow();
+                stage.close();
+             if(!validateFieldEmpty() && validateInformationField()){           
+                createWorkPlan();
                 Stage primaryStage= new Stage();
                 URL url = new File("src/GUI/ActionRegister.fxml").toURI().toURL();
                 FXMLLoader loader = new FXMLLoader(url);
                 loader.setLocation(url);
                 loader.load();
+                ActionRegisterController actionRegisterController = loader.getController();
+                actionRegisterController.setWorkPlan(workPlan);
                 Parent root = loader.getRoot();
+                
                 Scene scene = new Scene(root);
-                primaryStage.setScene(scene);
-                Stage stage = (Stage) btNext.getScene().getWindow();
-                stage.close();
-                primaryStage.show();        
+                primaryStage.setScene(scene);               
+                primaryStage.show();     
              }
           
         } catch (IOException ex) {
             Log.logException(ex);
         }
+    }
+    
+    private void createWorkPlan(){
+       
+        String objetive= taObjetive.getText();
+        workPlan.setObjetiveGeneral(objetive);
+        String timePeriod = cbMonths.getSelectionModel().getSelectedItem().toString() + " " +  cbYears.getSelectionModel().getSelectedItem().toString();
+        workPlan.setTimePeriod(timePeriod);
+        workPlan.setGoals(saveGoals());
     }
     
     private Goal[] saveGoals(){
@@ -227,7 +288,7 @@ public class WorkPlanRegisterController implements Initializable {
     private boolean validateInformationField(){ 
         boolean value=true;
         Validation validation=new Validation();
-        if(!validation.findInvalidField(taObjetive.getText())){   
+        if(validation.findInvalidField(taObjetive.getText())){   
             value=false;
         }  
         return value;
