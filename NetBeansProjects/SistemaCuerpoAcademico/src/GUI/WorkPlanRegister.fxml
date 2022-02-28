@@ -50,7 +50,7 @@
                   <Insets />
                </opaqueInsets>
             </ComboBox>
-            <ComboBox fx:id="cbYears" prefHeight="25.0" prefWidth="94.0" promptText="Año" GridPane.columnIndex="1">
+            <ComboBox fx:id="cbYears" prefHeight="25.0" prefWidth="117.0" promptText="Año" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets bottom="10.0" left="130.0" />
                </GridPane.margin>
@@ -72,6 +72,6 @@
          </children>
       </HBox>
       <Button fx:id="btAdd" layoutX="403.0" layoutY="349.0" mnemonicParsing="false" onAction="#addGoal" prefHeight="25.0" prefWidth="98.0" text="Añadir" />
-      <Button fx:id="btDelete" layoutX="501.0" layoutY="324.0" mnemonicParsing="false" text="X" onAction="#actionDelete" />
+      <Button fx:id="btDelete" layoutX="501.0" layoutY="324.0" mnemonicParsing="false" onAction="#actionDelete" text="X" />
    </children>
 </AnchorPane>
