@@ -17,7 +17,7 @@
          </font>
       </Text>
       <Label layoutX="59.0" layoutY="98.0" text="Meta:" />
-      <TableView fx:id="tvActions" layoutX="59.0" layoutY="138.0" prefHeight="275.0" prefWidth="743.0">
+      <TableView fx:id="tvActions" layoutX="59.0" layoutY="138.0" onMouseClicked="#fillActionFields" prefHeight="275.0" prefWidth="743.0">
          <columns>
             <TableColumn fx:id="tcAction" prefWidth="237.0" text="Acción" />
             <TableColumn fx:id="tcDate" prefWidth="161.0" text="Fecha Conclusión" />
@@ -25,8 +25,8 @@
             <TableColumn fx:id="tcResource" prefWidth="163.0" text="Recurso" />
          </columns>
       </TableView>
-      <Button fx:id="btReturn" layoutX="761.0" layoutY="497.0" mnemonicParsing="false" onAction="#actionReturn" text="Regresar" />
-      <Button fx:id="btSave" layoutX="688.0" layoutY="497.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar" />
+      <Button fx:id="btReturn" layoutX="669.0" layoutY="503.0" mnemonicParsing="false" onAction="#actionReturn" text="Regresar" />
+      <Button fx:id="btSave" layoutX="649.0" layoutY="94.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar acciones de meta" />
       <ComboBox fx:id="cbGoals" layoutX="114.0" layoutY="94.0" prefHeight="25.0" prefWidth="518.0" style="-fx-background-color: #FFFFFF;" />
       <TextField fx:id="tfAction" layoutX="59.0" layoutY="414.0" prefHeight="25.0" prefWidth="234.0" />
       <TextField fx:id="tfResponsable" layoutX="460.0" layoutY="414.0" prefHeight="25.0" prefWidth="172.0" />
@@ -35,5 +35,6 @@
       <Button fx:id="btAdd" layoutX="675.0" layoutY="439.0" mnemonicParsing="false" onAction="#actionAddAction" text="Añadir" />
       <Button fx:id="btDelete" layoutX="804.0" layoutY="173.0" mnemonicParsing="false" onAction="#actionDeleteAction" text="X" />
       <Button fx:id="btUpdate" layoutX="747.0" layoutY="439.0" mnemonicParsing="false" onAction="#actionUpdateAction" text="Actualizar" />
+      <Button fx:id="btFinish" layoutX="750.0" layoutY="503.0" mnemonicParsing="false" onAction="#actionFinish" text="Terminar" />
    </children>
 </AnchorPane>

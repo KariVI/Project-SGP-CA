@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="440.0" prefWidth="618.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.WorkPlanModifyController">
+<AnchorPane id="AnchorPane" prefHeight="518.0" prefWidth="722.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.WorkPlanModifyController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#171717" height="31.0" layoutX="-1.0" stroke="BLACK" strokeType="INSIDE" width="723.0" />
       <Label layoutX="163.0" layoutY="38.0" text="Plan de Trabajo a modificar">
@@ -18,18 +19,23 @@
       </Label>
       <Label layoutX="43.0" layoutY="99.0" text="Periodo" />
       <Label layoutX="40.0" layoutY="128.0" text="Objetivo General" />
-      <TableView fx:id="tvGoals" layoutX="119.0" layoutY="160.0" onMouseClicked="#fillGoalField" prefHeight="171.0" prefWidth="497.0">
+      <TableView fx:id="tvGoals" layoutX="113.0" layoutY="236.0" onMouseClicked="#fillGoalField" prefHeight="171.0" prefWidth="497.0">
          <columns>
             <TableColumn fx:id="tcGoals" prefWidth="496.0000228881836" resizable="false" text="Metas" />
          </columns>
       </TableView>
-      <Button fx:id="btCancel" layoutX="632.0" layoutY="411.0" mnemonicParsing="false" onAction="#actionCancel" prefHeight="27.0" prefWidth="76.0" text="Cancelar" />
-      <Button fx:id="btNext" layoutX="544.0" layoutY="411.0" mnemonicParsing="false" onAction="#actionNextWindow" prefHeight="27.0" prefWidth="76.0" text="Siguiente" />
-      <TextField fx:id="tfGoal" layoutX="119.0" layoutY="339.0" prefHeight="25.0" prefWidth="411.0" />
-      <Button fx:id="btAdd" layoutX="454.0" layoutY="364.0" mnemonicParsing="false" onAction="#actionAddGoal" prefHeight="27.0" prefWidth="76.0" text="Añadir" />
-      <TextField fx:id="tfTimePeriod" layoutX="155.0" layoutY="95.0" prefHeight="25.0" prefWidth="462.0" />
-      <TextField fx:id="tfObjective" layoutX="155.0" layoutY="124.0" prefHeight="25.0" prefWidth="462.0" />
-      <Button fx:id="btDelete" layoutX="620.0" layoutY="193.0" mnemonicParsing="false" onAction="#actionDeleteGoal" prefHeight="27.0" prefWidth="42.0" text="X" />
-      <Button fx:id="btUpdate" layoutX="540.0" layoutY="338.0" mnemonicParsing="false" onAction="#actionUpdateGoal" prefHeight="27.0" prefWidth="76.0" text="Actualizar" />
+      <Button fx:id="btCancel" layoutX="632.0" layoutY="483.0" mnemonicParsing="false" onAction="#actionCancel" prefHeight="27.0" prefWidth="76.0" text="Cancelar" />
+      <Button fx:id="btNext" layoutX="544.0" layoutY="483.0" mnemonicParsing="false" onAction="#actionNextWindow" prefHeight="27.0" prefWidth="76.0" text="Siguiente" />
+      <TextField fx:id="tfGoal" layoutX="112.0" layoutY="414.0" prefHeight="25.0" prefWidth="411.0" />
+      <Button fx:id="btAdd" layoutX="447.0" layoutY="439.0" mnemonicParsing="false" onAction="#actionAddGoal" prefHeight="27.0" prefWidth="76.0" text="Añadir" />
+      <Button fx:id="btDelete" layoutX="611.0" layoutY="259.0" mnemonicParsing="false" onAction="#actionDeleteGoal" prefHeight="27.0" prefWidth="42.0" text="X" />
+      <Button fx:id="btUpdate" layoutX="528.0" layoutY="413.0" mnemonicParsing="false" onAction="#actionUpdateGoal" prefHeight="27.0" prefWidth="76.0" text="Actualizar" />
+      <ComboBox fx:id="cbMonths" layoutX="155.0" layoutY="95.0" prefHeight="25.0" prefWidth="124.0" promptText="Meses">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </ComboBox>
+      <ComboBox fx:id="cbYears" layoutX="292.0" layoutY="95.0" prefHeight="25.0" prefWidth="94.0" promptText="Año" />
+      <TextArea fx:id="taObjetive" layoutX="155.0" layoutY="128.0" prefHeight="92.0" prefWidth="411.0" />
    </children>
 </AnchorPane>
