@@ -5,13 +5,16 @@
  */
 package GUI;
 
+import businessLogic.ActionDAO;
 import businessLogic.GoalDao;
 import businessLogic.WorkPlanDAO;
+import domain.Action;
 import domain.Goal;
 import domain.Member;
 import domain.WorkPlan;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -62,7 +65,9 @@ public class WorkPlanModifyController implements Initializable {
     int idWorkPlan;
     WorkPlan workPlan;
     ObservableList<Goal> goalList;
-    ObservableList<Goal> oldGoals;
+    ObservableList<Goal> newGoals;
+    ObservableList<Goal> updateGoals;
+    ObservableList<Goal> deleteGoals;
     private Member member;
     @FXML
     private Button btUpdate;
@@ -75,6 +80,8 @@ public class WorkPlanModifyController implements Initializable {
     
     private ObservableList<String> months;
     private ObservableList<String> years;
+    private String currentMonth;
+    private String currentYear;
 
     /**
      * Initializes the controller class.
@@ -89,6 +96,9 @@ public class WorkPlanModifyController implements Initializable {
         getYears(); 
         cbMonths.setItems(months);
         cbYears.setItems(years);
+        newGoals = FXCollections.observableArrayList();
+        updateGoals = FXCollections.observableArrayList();
+        deleteGoals = FXCollections.observableArrayList();
     } 
     
     public void setMember(Member member) {
@@ -116,19 +126,26 @@ public class WorkPlanModifyController implements Initializable {
         WorkPlanDAO workPlanDAO = new WorkPlanDAO();
         try {
             workPlan = workPlanDAO.getWorkPlan(idWorkPlan);
-            //INICIALIZAR COMBO CON PERIODO
+            separatePeriod();
+            cbMonths.getSelectionModel().select(currentMonth);
+            cbYears.getSelectionModel().select(currentYear);
             taObjetive.setText(workPlan.getObjetiveGeneral());
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
     }
     
+    private void separatePeriod(){
+        String period = workPlan.getTimePeriod();
+        String parts[] = period.split(" ");
+        currentMonth = parts[0];
+        currentYear = parts[1];
+    }
+    
     private void initializeGoals() {
         GoalDao goalsDAO = new GoalDao();
         try {
             goalList = FXCollections.observableArrayList(goalsDAO.getGoalsByWorkPlanId(idWorkPlan));
-            oldGoals = FXCollections.observableArrayList();
-            oldGoals = goalList;
             tvGoals.setItems(goalList);
         } catch (BusinessException ex) {
             Log.logException(ex);
@@ -147,9 +164,7 @@ public class WorkPlanModifyController implements Initializable {
     private void actionNextWindow(ActionEvent event) {
         Stage stage = (Stage) btNext.getScene().getWindow();
         stage.close();
-        //Llamar a método para guardar lo del plan y las metas
-        //updateGoals
-        openWorkPlanActionModify();
+        updateWorkPlan();
     }
 
     @FXML
@@ -158,6 +173,7 @@ public class WorkPlanModifyController implements Initializable {
         Goal goal = new Goal(description);
         if(validateGoal(goal)){
             goalList.add(goal);
+            newGoals.add(goal);
             tvGoals.refresh();
             cleanFields();
         }
@@ -169,12 +185,22 @@ public class WorkPlanModifyController implements Initializable {
         if(goal != null){
            int indexGoal = goalList.indexOf(goal);
            String description = tfGoal.getText();
-           if(validateGoal(goal)){
-                goal.setDescription(description);
-                goalList.set(indexGoal, goal);  
+           Goal newGoal = new Goal(goal.getId(), description);
+           if(validateGoal(newGoal)){               
+                if(existsInRecentlyAdded(goal)){
+                    goalList.set(indexGoal, newGoal);
+                    int indexUpdateGoal = newGoals.indexOf(goal);
+                    newGoals.set(indexUpdateGoal, newGoal);
+                }else{
+                    goalList.set(indexGoal, newGoal);
+                    updateGoals.add(newGoal);
+                }
                 tvGoals.refresh();
                 cleanFields();
            }
+        }else{
+            AlertMessage alertMessage = new AlertMessage();
+            alertMessage.showAlertValidateFailed("Selección de meta faltante");
         }
     }
 
@@ -182,9 +208,18 @@ public class WorkPlanModifyController implements Initializable {
     private void actionDeleteGoal(ActionEvent event) {
         Goal goal = tvGoals.getSelectionModel().getSelectedItem();
         if(goal != null){
-            goalList.remove(goal);
+            if(existsInRecentlyAdded(goal)){
+               goalList.remove(goal); 
+               newGoals.remove(goal);
+            }else{
+                goalList.remove(goal);
+                deleteGoals.add(goal);
+            }
             tvGoals.refresh();
             cleanFields();
+        }else{
+            AlertMessage alertMessage = new AlertMessage();
+            alertMessage.showAlertValidateFailed("Selección de meta faltante");
         }
     }
     
@@ -206,18 +241,16 @@ public class WorkPlanModifyController implements Initializable {
     
     private void openWorkPlanActionModify(){
         try {
-            if(!validateFieldEmpty() && validateInformationField()){
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("WorkPlanActionModify.fxml"));
-                Parent root = loader.load();
-                WorkPlanActionModifyController workPlanActionModifyController = loader.getController();
-                workPlanActionModifyController.setWorkPlanId(this.idWorkPlan);
-                workPlanActionModifyController.setMember(member);
-                Scene scene = new Scene(root);
-                Stage stage = new Stage();
-                stage.setScene(scene);
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.showAndWait();
-            }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("WorkPlanActionModify.fxml"));
+            Parent root = loader.load();
+            WorkPlanActionModifyController workPlanActionModifyController = loader.getController();
+            workPlanActionModifyController.setWorkPlanId(this.idWorkPlan);
+            workPlanActionModifyController.setMember(member);
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
         } catch (IOException ex) {
             Log.logException(ex);
         }       
@@ -235,17 +268,41 @@ public class WorkPlanModifyController implements Initializable {
         tfGoal.setText("");
     }
     
+    private void updateWorkPlan(){
+        if(!validateFieldEmpty() && !validateInformationField()){
+            String objetive= taObjetive.getText();
+            String timePeriod = cbMonths.getSelectionModel().getSelectedItem() + " " +  cbYears.getSelectionModel().getSelectedItem();
+            WorkPlan newWorkPlan = new WorkPlan(idWorkPlan, objetive, timePeriod);
+            WorkPlanDAO workPlanDAO = new WorkPlanDAO();
+            try {
+                workPlanDAO.updateWorkPlan(newWorkPlan);
+            } catch (BusinessException ex) {
+                Log.logException(ex);
+            }
+            updateGoals(); 
+            openWorkPlanActionModify();
+        }
+    }
+    
     private void updateGoals(){
         GoalDao goalDAO = new GoalDao();
         try{
-            for (int i = 0; i < oldGoals.size(); i++){
-                goalDAO.deletedGoalById(oldGoals.get(i).getId());
+            for (int i = 0; i < updateGoals.size(); i++){
+                goalDAO.updatedGoalById(idWorkPlan, updateGoals.get(i));
             }
             
-            for (int i = 0; i < goalList.size(); i++){
-                goalDAO.saveSuccesful(goalList.get(i), idWorkPlan);
+            for (int i = 0; i < newGoals.size(); i++){
+                goalDAO.saveSuccesful(newGoals.get(i), idWorkPlan);
             }
-                      
+            
+            ActionDAO actionDAO = new ActionDAO();
+            for (int i = 0; i < deleteGoals.size(); i++){
+                ArrayList<Action> actions = actionDAO.getActionsByGoalId(deleteGoals.get(i).getId());
+                if(actions != null){
+                   actionDAO.deleteAllActionByIdGoal(deleteGoals.get(i).getId());   
+                }
+                goalDAO.deletedGoalById(deleteGoals.get(i).getId());
+            }    
         }catch (BusinessException ex) {
             Log.logException(ex);
          }
@@ -277,6 +334,18 @@ public class WorkPlanModifyController implements Initializable {
         int i = 0;
         while(!value && i<goalList.size()){
             if(goalList.get(i).equals(goal)){
+                value = true;
+            }
+            i++;
+        }
+       return value;
+    }
+    
+    private boolean existsInRecentlyAdded(Goal goal){
+        Boolean value = false;
+        int i = 0;
+        while(!value && i<newGoals.size()){
+            if(newGoals.get(i).equals(goal)){
                 value = true;
             }
             i++;

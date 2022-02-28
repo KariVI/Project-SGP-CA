@@ -107,16 +107,17 @@ public class WorkPlanDAO implements IWorkPlanDAO {
         return saveSuccess;
     }
     
+    @Override
     public boolean updateWorkPlan(WorkPlan workPlan) throws BusinessException{
         boolean updateSuccess = false;
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
-            String sql = "UPDATE PlanTrabajo set objetivo = ?, periodo = ? WHERE idPlanTrabajo = ?";
-            PreparedStatement preparedStatement = connectionDataBase.prepareStatement(sql);
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("UPDATE PlanTrabajo set objetivo = ?, periodo = ? WHERE idPlanTrabajo = ?");
             preparedStatement.setString(1, workPlan.getObjetiveGeneral());
             preparedStatement.setString(2, workPlan.getTimePeriod());
             preparedStatement.setInt(3, workPlan.getId());
+            preparedStatement.executeUpdate();
             updateSuccess = true;
             connectorDataBase.disconnect();
         }catch(SQLException sqlException) {

@@ -30,11 +30,11 @@
       <ComboBox fx:id="cbGoals" layoutX="114.0" layoutY="94.0" prefHeight="25.0" prefWidth="518.0" style="-fx-background-color: #FFFFFF;" />
       <TextField fx:id="tfAction" layoutX="59.0" layoutY="414.0" prefHeight="25.0" prefWidth="234.0" />
       <TextField fx:id="tfResponsable" layoutX="460.0" layoutY="414.0" prefHeight="25.0" prefWidth="172.0" />
-      <TextField fx:id="tfDate" layoutX="300.0" layoutY="414.0" prefHeight="25.0" prefWidth="153.0" />
       <TextField fx:id="tfResource" layoutX="635.0" layoutY="414.0" prefHeight="25.0" prefWidth="165.0" />
       <Button fx:id="btAdd" layoutX="675.0" layoutY="439.0" mnemonicParsing="false" onAction="#actionAddAction" text="Añadir" />
       <Button fx:id="btDelete" layoutX="804.0" layoutY="173.0" mnemonicParsing="false" onAction="#actionDeleteAction" text="X" />
       <Button fx:id="btUpdate" layoutX="747.0" layoutY="439.0" mnemonicParsing="false" onAction="#actionUpdateAction" text="Actualizar" />
       <Button fx:id="btFinish" layoutX="750.0" layoutY="503.0" mnemonicParsing="false" onAction="#actionFinish" text="Terminar" />
+      <DatePicker fx:id="dpDateEnd" layoutX="300.0" layoutY="414.0" prefHeight="25.0" prefWidth="154.0" />
    </children>
 </AnchorPane>
