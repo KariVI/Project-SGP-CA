@@ -225,8 +225,7 @@ public class ActionRegisterController implements Initializable {
     
     @FXML 
     private void returnWorkPlan(){    
-        Stage stage = (Stage) btReturn.getScene().getWindow();
-        stage.close();
+        
         try{ 
 
               Stage primaryStage= new Stage();
@@ -239,7 +238,9 @@ public class ActionRegisterController implements Initializable {
                 workPlanRegisterController.setWorkPlan(workPlan) ;
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
-                primaryStage.setScene(scene);       
+                primaryStage.setScene(scene);   
+                Stage stage = (Stage) btReturn.getScene().getWindow();
+                stage.close();
               } catch (IOException ex) {
                       Log.logException(ex);
               }

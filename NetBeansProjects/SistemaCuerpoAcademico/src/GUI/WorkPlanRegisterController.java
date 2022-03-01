@@ -86,9 +86,13 @@ public class WorkPlanRegisterController implements Initializable {
      public void setWorkPlan(WorkPlan workPlan) {
         this.workPlan = workPlan;
         taObjetive.setText(workPlan.getObjetiveGeneral());
+        String[] timePeriod = workPlan.getTimePeriod().split(" ");
+        cbMonths.setValue(timePeriod[0]);
+        cbYears.setValue(timePeriod[1]);
         updateGoals();
         
     }
+   
      
        private void openWorkPlanList(){ 
          try{ 
@@ -236,8 +240,7 @@ public class WorkPlanRegisterController implements Initializable {
     @FXML
     private void actionNext(){
         try {      
-                Stage stage = (Stage) btNext.getScene().getWindow();
-                stage.close();
+            
              if(!validateFieldEmpty() && validateInformationField()){           
                 createWorkPlan();
                 Stage primaryStage= new Stage();
@@ -247,11 +250,14 @@ public class WorkPlanRegisterController implements Initializable {
                 loader.load();
                 ActionRegisterController actionRegisterController = loader.getController();
                 actionRegisterController.setWorkPlan(workPlan);
-                Parent root = loader.getRoot();
-                
+                Parent root = loader.getRoot();               
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);               
                 primaryStage.show();     
+                Stage stage = (Stage) btNext.getScene().getWindow();
+                stage.close();
+             }else{
+                 sendAlert();
              }
           
         } catch (IOException ex) {
