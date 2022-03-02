@@ -287,16 +287,12 @@ public class WorkPlanActionModifyController implements Initializable {
         Validation validation = new Validation();
         AlertMessage alertMessage = new AlertMessage();
             if(action.getDescription().isEmpty() 
-              ||  action.getMemberInCharge().isEmpty() || action.getResource().isEmpty()
-            ){  
+              ||  action.getMemberInCharge().isEmpty() || action.getResource().isEmpty() || dpDateEnd.getValue()==null ){  
                 value=false;
                 alertMessage.showAlertValidateFailed("Campos vacios");
-            }
-            
-            if(validation.findInvalidField(action.getDescription())
+            } else if (validation.findInvalidField(action.getDescription())
               || validation.findInvalidField(action.getResource())
-              || validation.findInvalidField(action.getMemberInCharge())
-            ){   
+              || validation.findInvalidField(action.getMemberInCharge())){   
                 value=false;
                alertMessage.showAlertValidateFailed("Campos invalidos");
             } 
