@@ -9,6 +9,12 @@ public class Action {
     private String resource;
     private Goal goal;
 
+    public Action(String description, String member, String resource) {
+        this.description = description;
+        this.memberInCharge = memberInCharge;
+        this.resource = resource;
+    }
+
     public Goal getGoal() {
         return goal;
     }

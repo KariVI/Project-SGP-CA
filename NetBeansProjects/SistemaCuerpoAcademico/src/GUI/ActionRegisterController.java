@@ -112,12 +112,14 @@ public class ActionRegisterController implements Initializable {
         String member = tfMemberInCharge.getText();
         String resource = tfResource.getText();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String date= dpDateEnd.getValue().format(formatter);
         
-        Action action = new Action(description, date, member, resource); 
+        
+        Action action = new Action(description, member, resource); 
          Goal goal = (Goal) cbGoals.getSelectionModel().getSelectedItem();
          action.setGoal(goal);
         if(validateAction(action)){
+            String date= dpDateEnd.getValue().format(formatter);
+            action.setDateEnd(date);
            actions.add(action);
            lastAction=action;
         }
@@ -138,16 +140,12 @@ public class ActionRegisterController implements Initializable {
         Validation validation = new Validation();
         AlertMessage alertMessage = new AlertMessage();
             if(action.getDescription().isEmpty() 
-              ||  action.getMemberInCharge().isEmpty() || action.getResource().isEmpty()
-            ){  
+              ||  action.getMemberInCharge().isEmpty() || action.getResource().isEmpty() || dpDateEnd.getValue()==null ){  
                 value=false;
                 alertMessage.showAlertValidateFailed("Campos vacios");
-            }
-            
-            if(validation.findInvalidField(action.getDescription())
+            } else if (validation.findInvalidField(action.getDescription())
               || validation.findInvalidField(action.getResource())
-              || validation.findInvalidField(action.getMemberInCharge())
-            ){   
+              || validation.findInvalidField(action.getMemberInCharge())){   
                 value=false;
                alertMessage.showAlertValidateFailed("Campos invalidos");
             } 
@@ -198,6 +196,15 @@ public class ActionRegisterController implements Initializable {
     }
     
     
+    private boolean optionSave(){
+     boolean value = false;
+     if(workPlan.getGoals().length>0){
+        value = saveGoals(); 
+     }else{
+         value= savePlan();
+     }
+     return value;
+    }
     
     private Action getSelectedAction(){
         Action action= null;
@@ -214,19 +221,25 @@ public class ActionRegisterController implements Initializable {
     
     @FXML 
     private void saveWorkPlan(){
-        if(saveActions()){ 
-            AlertMessage alertMessage = new AlertMessage();
+        boolean saveSucessful = false;
+        AlertMessage alertMessage = new AlertMessage();
+        if(actions.size()>0){
+            saveSucessful= saveActions();
+        }else{  
+            saveSucessful= optionSave();
+        }
+        if(saveSucessful){               
             alertMessage.showAlertSuccesfulSave("El Plan de Trabajo ");
             openWorkPlanList();
-            
+         }else{
+           alertMessage.showAlertValidateFailed("Error en la base de datos");
         }
     
     }
     
     @FXML 
     private void returnWorkPlan(){    
-        Stage stage = (Stage) btReturn.getScene().getWindow();
-        stage.close();
+        
         try{ 
 
               Stage primaryStage= new Stage();
@@ -239,7 +252,9 @@ public class ActionRegisterController implements Initializable {
                 workPlanRegisterController.setWorkPlan(workPlan) ;
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
-                primaryStage.setScene(scene);       
+                primaryStage.setScene(scene);   
+                Stage stage = (Stage) btReturn.getScene().getWindow();
+                stage.close();
               } catch (IOException ex) {
                       Log.logException(ex);
               }
