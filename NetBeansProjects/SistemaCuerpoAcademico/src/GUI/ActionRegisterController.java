@@ -70,7 +70,7 @@ public class ActionRegisterController implements Initializable {
     @FXML private TableColumn tcMember;
     @FXML private TableColumn tcDateEnd;
     @FXML private TableColumn tcResource;
-    @FXML private DatePicker dpDateEnd;
+    @FXML private DatePicker dpDateEnd  = new DatePicker();;
     private String keyGroupAcademic;
     private WorkPlanRegisterController workPlanController;
 
@@ -140,7 +140,7 @@ public class ActionRegisterController implements Initializable {
         Validation validation = new Validation();
         AlertMessage alertMessage = new AlertMessage();
             if(action.getDescription().isEmpty() 
-              ||  action.getMemberInCharge().isEmpty() || action.getResource().isEmpty() || dpDateEnd.getValue()==null || searchEmptyFields() ){  
+              ||  action.getMemberInCharge().isEmpty() || action.getResource().isEmpty()  || searchEmptyFields() ){  
                 value=false;
                 alertMessage.showAlertValidateFailed("Campos vacios");
             } else if (validation.findInvalidField(action.getDescription())
@@ -179,8 +179,10 @@ public class ActionRegisterController implements Initializable {
         goals= FXCollections.observableArrayList();
         actions =FXCollections.observableArrayList();
         tvActions.setItems(actions);
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         dpDateEnd.setConverter(new LocalDateStringConverter(formatter, null));
+        dpDateEnd.setValue(LocalDate.now());
         tcGoal.setCellValueFactory(new PropertyValueFactory<Action,Goal>("goal"));
         tcAction.setCellValueFactory(new PropertyValueFactory<Action,String>("description"));
         tcDateEnd.setCellValueFactory(new PropertyValueFactory<Action,String>("dateEnd"));
