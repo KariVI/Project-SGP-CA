@@ -140,7 +140,7 @@ public class ActionRegisterController implements Initializable {
         Validation validation = new Validation();
         AlertMessage alertMessage = new AlertMessage();
             if(action.getDescription().isEmpty() 
-              ||  action.getMemberInCharge().isEmpty() || action.getResource().isEmpty() || dpDateEnd.getValue()==null ){  
+              ||  action.getMemberInCharge().isEmpty() || action.getResource().isEmpty() || dpDateEnd.getValue()==null || searchEmptyFields() ){  
                 value=false;
                 alertMessage.showAlertValidateFailed("Campos vacios");
             } else if (validation.findInvalidField(action.getDescription())
@@ -157,6 +157,12 @@ public class ActionRegisterController implements Initializable {
         return value;
     }
      
+    private boolean searchEmptyFields(){
+    
+        return emptyField(tfResource.getText()) || emptyField(tfMemberInCharge.getText()) || emptyField(tfAction.getText());
+    }
+    
+    
       public boolean repeatedAction(Action action){
         Boolean value = false;
         int i = 0;
@@ -338,6 +344,18 @@ public class ActionRegisterController implements Initializable {
         
         }    
         return value;  
+    }
+    
+    
+        
+    private boolean emptyField(String field){
+        boolean value = false;
+        
+        if(field.trim().length()==0){
+            value=true;
+        }
+        return value;
+    
     }
     
     private void setSelectedAction(){
