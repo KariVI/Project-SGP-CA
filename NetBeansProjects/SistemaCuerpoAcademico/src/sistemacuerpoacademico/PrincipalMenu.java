@@ -2,8 +2,14 @@
 package sistemacuerpoacademico;
 
 
+import GUI.GroupAcademicShowController;
+import GUI.LoginController;
+import GUI.MenuController;
+import GUI.MinuteRegisterController;
+import GUI.MinuteShowController;
+import GUI.TopicModifyController;
+import GUI.TopicShowController;
 import GUI.WorkPlanRegisterController;
-
 import domain.GroupAcademic;
 import java.io.File;
 import log.Log;
@@ -13,6 +19,7 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
