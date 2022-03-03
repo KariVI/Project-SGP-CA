@@ -134,8 +134,10 @@ public class WorkPlanActionModifyController implements Initializable {
     }
     
     private void clicOnGoal() {
-        idGoalSelected = cbGoals.getSelectionModel().getSelectedItem().getId();
-        initializeActions();
+        if(cbGoals.getSelectionModel().getSelectedIndex() > -1){
+            idGoalSelected = cbGoals.getSelectionModel().getSelectedItem().getId();
+            initializeActions();
+        }
     }
 
     @FXML
@@ -160,6 +162,8 @@ public class WorkPlanActionModifyController implements Initializable {
                     actionDAO.saveSuccesful(actions.get(i), idGoalSelected);
                 }     
             } 
+            cbGoals.setDisable(false);
+            cbGoals.getSelectionModel().clearSelection();
             AlertMessage alertMessage = new AlertMessage();
             alertMessage.showAlertSuccesfulSave("Las acciones  ");
             actions.clear();
@@ -172,13 +176,15 @@ public class WorkPlanActionModifyController implements Initializable {
 
     @FXML
     private void actionAddAction(ActionEvent event) {
+        cbGoals.setDisable(true);
         String description = tfAction.getText();
         String responsable = tfResponsable.getText();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String date= dpDateEnd.getValue().format(formatter);
         String resource = tfResource.getText();
-        Action action = new Action(description, responsable, date, resource);
+        Action action = new Action(description, responsable,resource);
         if(validateAction(action)){
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String date= dpDateEnd.getValue().format(formatter);
+            action.setDateEnd(date);
             actions.add(action);
             tvActions.refresh();
             cleanFields();
@@ -187,6 +193,7 @@ public class WorkPlanActionModifyController implements Initializable {
 
     @FXML
     private void actionDeleteAction(ActionEvent event) {
+        cbGoals.setDisable(true);
         Action action = tvActions.getSelectionModel().getSelectedItem();
         if(action != null){
             actions.remove(action);
@@ -200,16 +207,18 @@ public class WorkPlanActionModifyController implements Initializable {
     
     @FXML
     private void actionUpdateAction(ActionEvent event) {
+        cbGoals.setDisable(true);
         Action action = tvActions.getSelectionModel().getSelectedItem();
         if(action != null){
             int indexAction = actions.indexOf(action);
             String description = tfAction.getText();
             String responsable = tfResponsable.getText();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String date= dpDateEnd.getValue().format(formatter);
             String resource = tfResource.getText();
-            Action newAction = new Action(description, responsable, date, resource);
+            Action newAction = new Action(description, responsable, resource);
             if(validateAction(newAction)){
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                String date= dpDateEnd.getValue().format(formatter);
+                newAction.setDateEnd(date);
                 actions.set(indexAction, newAction);
                 tvActions.refresh();
                 cleanFields();
