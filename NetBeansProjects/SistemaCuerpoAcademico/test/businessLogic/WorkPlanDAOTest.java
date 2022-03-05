@@ -7,12 +7,14 @@ package businessLogic;
 
 import domain.Member;
 import domain.WorkPlan;
+import businessLogic.WorkPlanDAO;
+import domain.Student;
+
 import java.util.ArrayList;
 import log.BusinessException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
-
 /**
  *
  * @author gustavor
@@ -43,5 +45,30 @@ public class WorkPlanDAOTest {
         System.out.println(resultExpected.size());
         System.out.println(result.size());
         assertEquals(result.get(0),resultExpected.get(0));
+    }
+    
+    @Test
+     public void testSave() throws BusinessException {
+        System.out.println("savedSucessful");
+        WorkPlan workPlan= new WorkPlan("Establecer el cuerpo academico a grado de consolidado", "Enero 2022- Agosto 2023",null);
+        WorkPlanDAO workPlanDAO = new WorkPlanDAO();
+        assertTrue(workPlanDAO.saveSuccesful(workPlan));
+    }
+     
+    @Test
+    public void testUpdate() throws BusinessException{
+        System.out.println("updateWorkPlan");
+        WorkPlan newWorkPlan = new WorkPlan(2, "Mantener consolidado el CA", "Enero 2018- Agosto 2020");
+        WorkPlanDAO workPlanDAO = new WorkPlanDAO();
+        assertTrue(workPlanDAO.updateWorkPlan(newWorkPlan));
+    }
+     
+    @Test
+     public void getID() throws BusinessException {
+        System.out.println("getId");
+        WorkPlan workPlan= new WorkPlan("Establecer el cuerpo academico a grado de consolidado", "Enero 2022- Agosto 2023",null);
+        WorkPlanDAO workPlanDAO = new WorkPlanDAO();
+        System.out.println(workPlanDAO.getId(workPlan));
+        assertTrue( (workPlanDAO.getId(workPlan) > 0));
     }
 }

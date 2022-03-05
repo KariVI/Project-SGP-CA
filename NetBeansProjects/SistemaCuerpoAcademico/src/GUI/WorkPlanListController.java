@@ -91,7 +91,7 @@ public class WorkPlanListController implements Initializable {
                 Scene scene = new Scene(root);
                  Stage stage = new Stage();
                  stage.setScene(scene);
-                 stage.initModality(Modality.APPLICATION_MODAL);
+              // stage.initModality(Modality.APPLICATION_MODAL);
                  stage.showAndWait();
         } catch (IOException ex) {
             Log.logException(ex);

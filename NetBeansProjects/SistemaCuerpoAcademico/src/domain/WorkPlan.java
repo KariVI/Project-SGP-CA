@@ -19,6 +19,9 @@ public class WorkPlan {
        this.timePeriod = timePeriod;
     }
 
+    public WorkPlan() {
+    }
+
     public int getId() {
         return id;
     }

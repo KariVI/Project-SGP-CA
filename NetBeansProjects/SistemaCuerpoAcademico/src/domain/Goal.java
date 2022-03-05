@@ -12,7 +12,12 @@ public class Goal {
         this.description = description;
     }
 
+    
     public Goal() {}
+
+    public Goal(String description) {
+        this.description = description;
+    }
     
     public Action[] getActions() {
         return actions;
@@ -43,10 +48,15 @@ public class Goal {
         boolean value = false;
             if (object instanceof Goal) {
             Goal goalCompare = (Goal) object;
-            if( (this.description.equals(goalCompare.getDescription()))&& this.id == goalCompare.getId()) {
+            if( (this.description.equals(goalCompare.getDescription()))) {
                 value=true;
             }
         }
         return value;
+    }
+       
+    @Override
+    public String toString(){
+        return description;
     }
 }

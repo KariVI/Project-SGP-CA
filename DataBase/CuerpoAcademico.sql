@@ -2,6 +2,7 @@ drop database cuerpoAcademico;
 CREATE SCHEMA IF NOT EXISTS CuerpoAcademico;
 USE  CuerpoAcademico;
 
+
  CREATE TABLE IF NOT EXISTS CuerpoAcademico(clave varchar(10) NOT NULL,
 nombre varchar(100) NOT NULL, objetivo varchar(400) NOT NULL,
 mision varchar(500) NOT NULL,vision varchar(500) NOT NULL,

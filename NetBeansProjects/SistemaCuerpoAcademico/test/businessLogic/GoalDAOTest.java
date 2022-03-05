@@ -41,4 +41,23 @@ public class GoalDAOTest {
         ArrayList<Goal> result = goalDao.getGoalsByWorkPlanId(idWorkPlan);   
         assertEquals(result,resultExpected);
     }
+    
+    @Test
+    public void save() throws BusinessException{
+        System.out.println("getGoals");
+        int idWorkPlan = 1;
+        Goal goal = new Goal("Lograr un acuerdo de colaboración con un CA externo");
+        GoalDao goalDao = new GoalDao();
+        assertTrue(goalDao.saveSuccesful(goal, idWorkPlan));
+    }
+    
+      @Test
+    public void getId() throws BusinessException{
+        System.out.println("getGoals");
+        int idWorkPlan = 1;
+        Goal goal = new Goal("Lograr un acuerdo de colaboración con un CA externo");
+        GoalDao goalDao = new GoalDao();
+        assertTrue(goalDao.getId(goal, idWorkPlan) > 0);
+    }
+    
 }

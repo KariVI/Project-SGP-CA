@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import log.BusinessException;
 import log.Log;
 
@@ -83,5 +85,75 @@ public class WorkPlanDAO implements IWorkPlanDAO {
 
         return workPlanList;  
     }
+
+    @Override
+    public boolean saveSuccesful(WorkPlan workPlan) throws BusinessException {
+         boolean saveSuccess = false;
+        try{
+             Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+              PreparedStatement insertWorkPlanStatment;
+                insertWorkPlanStatment = connectionDataBase.prepareStatement("INSERT INTO PlanTrabajo(objetivo,periodo) VALUES(?,?) ");
+                 insertWorkPlanStatment.setString(1, workPlan.getObjetiveGeneral());
+                insertWorkPlanStatment.setString(2, workPlan.getTimePeriod());
+                insertWorkPlanStatment.executeUpdate();
+                connectorDataBase.disconnect();
+                saveSuccess = true;
+        }catch(SQLException sqlException) {
+                throw new BusinessException("Parameter index ", sqlException);
+         } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        
+        return saveSuccess;
+    }
+    
+    @Override
+    public boolean updateWorkPlan(WorkPlan workPlan) throws BusinessException{
+        boolean updateSuccess = false;
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("UPDATE PlanTrabajo set objetivo = ?, periodo = ? WHERE idPlanTrabajo = ?");
+            preparedStatement.setString(1, workPlan.getObjetiveGeneral());
+            preparedStatement.setString(2, workPlan.getTimePeriod());
+            preparedStatement.setInt(3, workPlan.getId());
+            preparedStatement.executeUpdate();
+            updateSuccess = true;
+            connectorDataBase.disconnect();
+        }catch(SQLException sqlException) {
+                throw new BusinessException("Parameter index ", sqlException);
+         } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return updateSuccess;
+    }
+    
+     public int getId (WorkPlan workPlan) throws BusinessException{
+         Integer id=0;
+         try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            try{
+                PreparedStatement getWorkPlanStatment;
+                getWorkPlanStatment = connectionDataBase.prepareStatement("SELECT idPlanTrabajo FROM PlanTrabajo WHERE periodo=? and objetivo= ?;");
+                getWorkPlanStatment.setString(1, workPlan.getTimePeriod()); 
+                getWorkPlanStatment.setString(2,workPlan.getObjetiveGeneral() );   
+                ResultSet workPlanResultSet;
+                workPlanResultSet = getWorkPlanStatment.executeQuery();
+                if (workPlanResultSet.next()) {
+                    id=Integer.parseInt(workPlanResultSet.getString("idPlanTrabajo"));
+                } else {
+                    throw new BusinessException("Work plan not found");
+                }
+                connectorDataBase.disconnect();
+            }catch(SQLException sqlException) {
+                throw new BusinessException("Parameter index ", sqlException);
+            }
+        }catch(ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return id;
+     }
     
 }

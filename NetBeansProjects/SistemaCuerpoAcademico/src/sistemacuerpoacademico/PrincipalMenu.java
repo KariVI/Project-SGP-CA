@@ -9,6 +9,8 @@ import GUI.MinuteRegisterController;
 import GUI.MinuteShowController;
 import GUI.TopicModifyController;
 import GUI.TopicShowController;
+import GUI.WorkPlanListController;
+import GUI.WorkPlanRegisterController;
 import domain.GroupAcademic;
 import java.io.File;
 import log.Log;
