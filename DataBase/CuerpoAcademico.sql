@@ -211,10 +211,10 @@ INSERT INTO CuerpoAcademico(clave,nombre, objetivo, mision , vision , gradoConso
         "Los miembros del Cuerpo Académico se orientan al estudio y aplicación de los modelos estadísticos y al desarrollo de teorías, métodos y procedimientos para obtener datos, analizarlos y reportar los resultados en el contexto de investigaciones y estudios técnicos.", "Los miembros del Cuerpo Académico se orientan al estudio y aplicación de los modelos estadísticos y al desarrollo de teorías, métodos y procedimientos para obtener datos, analizarlos y reportar los resultados en el contexto de investigaciones y estudios técnicos.",
         "Realizar investigación en los aspectos teóricos y metodológicos del proceso de modelación estadística, promover y realizar aplicaciones de modelos, métodos y técnicas estadísticas ", "En consolidación");
         
-INSERT INTO PlanTrabajo(claveCuerpoAcademico,periodo, objetivo) VALUES("JDOEIJ804","2020-2023", "Mantener el grado en consolidación del cuerpo academico");
+INSERT INTO PlanTrabajo(claveCuerpoAcademico,periodo, objetivo) VALUES("JDOEIJ804","Febrero-Julio 2020-2023", "Mantener el grado en consolidación del cuerpo academico");
 INSERT INTO Meta(idPlanTrabajo,descripcion) VALUES(1, "Lograr un acuerdo de colaboración con un CA externo");
 INSERT INTO Accion(idMeta,descripcion,fechaConclusion,responsable,recurso) VALUES(1, "Obtener una lista de contactos de los CA", "Diciembre 2020","KVC","Lista de cuerpos académicos de PRODEP");
-INSERT INTO PlanTrabajo(claveCuerpoAcademico,periodo,objetivo) VALUES("JDOEIJ804","2018-2020", "Mantener el grado en consolidación del cuerpo académico");
+INSERT INTO PlanTrabajo(claveCuerpoAcademico,periodo,objetivo) VALUES("JDOEIJ804","Febrero-Julio 2018-2020", "Mantener el grado en consolidación del cuerpo académico");
 INSERT INTO Meta(idPlanTrabajo, descripcion) VALUES (2, "Para el 2022 el 80 % de los integrantes del CA tiene el grado de doctor");
 INSERT INTO Meta(idPlanTrabajo, descripcion) VALUES (2, "Participar en al menos 1 convocatoria para la obtención de recursos externos");
 INSERT INTO Accion (idMeta, descripcion, fechaConclusion, responsable, recurso) VALUES (2, "Integrar a un nuevo PTC con grado de Doctor al CA", "Mayo -Agosto 2019", "KVC y XLR", "Documentación del nuevo PTC");
