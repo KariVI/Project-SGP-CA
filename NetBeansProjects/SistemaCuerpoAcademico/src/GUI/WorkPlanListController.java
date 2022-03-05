@@ -136,6 +136,7 @@ public class WorkPlanListController implements Initializable {
               loader.setLocation(url);
               loader.load();
               WorkPlanRegisterController workPlanRegisterController =loader.getController();  
+              workPlanRegisterController.setMember(this.member);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);       

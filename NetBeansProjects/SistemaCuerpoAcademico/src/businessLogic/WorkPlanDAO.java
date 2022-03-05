@@ -39,7 +39,8 @@ public class WorkPlanDAO implements IWorkPlanDAO {
                     int id = workPlanResultSet.getInt("idPlanTrabajo");
                     String objetivoGeneral = workPlanResultSet.getString("objetivo");
                     String timePeriod = workPlanResultSet.getString("periodo");
-                    workPlan = new WorkPlan(objetivoGeneral, timePeriod, null);
+                    String key = workPlanResultSet.getString("claveCuerpoAcademico");
+                    workPlan = new WorkPlan(objetivoGeneral,key, timePeriod, null);
                     workPlan.setId(id);
                 } else {
                     throw new BusinessException("Work plan not found");
@@ -69,7 +70,7 @@ public class WorkPlanDAO implements IWorkPlanDAO {
                     int id = workPlanResultSet.getInt("idPlanTrabajo");
                     String objetiveGeneral = workPlanResultSet.getString("objetivo");
                     String timePeriod = workPlanResultSet.getString("periodo");
-                    WorkPlan workPlan = new WorkPlan(id,objetiveGeneral, timePeriod);
+                    WorkPlan workPlan = new WorkPlan(id,key,objetiveGeneral, timePeriod);
                     workPlanList.add(workPlan);
                 }
 
@@ -93,9 +94,10 @@ public class WorkPlanDAO implements IWorkPlanDAO {
              Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
               PreparedStatement insertWorkPlanStatment;
-                insertWorkPlanStatment = connectionDataBase.prepareStatement("INSERT INTO PlanTrabajo(objetivo,periodo) VALUES(?,?) ");
-                 insertWorkPlanStatment.setString(1, workPlan.getObjetiveGeneral());
-                insertWorkPlanStatment.setString(2, workPlan.getTimePeriod());
+                insertWorkPlanStatment = connectionDataBase.prepareStatement("INSERT INTO PlanTrabajo(claveCuerpoAcademico,objetivo,periodo) VALUES(?,?,?) ");
+                insertWorkPlanStatment.setString(1, workPlan.getGroupAcademicKey());
+                insertWorkPlanStatment.setString(2, workPlan.getObjetiveGeneral());
+                insertWorkPlanStatment.setString(3, workPlan.getTimePeriod());
                 insertWorkPlanStatment.executeUpdate();
                 connectorDataBase.disconnect();
                 saveSuccess = true;

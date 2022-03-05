@@ -272,7 +272,7 @@ public class WorkPlanModifyController implements Initializable {
         if(!validateFieldEmpty() && !validateInformationField()){
             String objetive= taObjetive.getText();
             String timePeriod = cbMonths.getSelectionModel().getSelectedItem() + " " +  cbYears.getSelectionModel().getSelectedItem();
-            WorkPlan newWorkPlan = new WorkPlan(idWorkPlan, objetive, timePeriod);
+            WorkPlan newWorkPlan = new WorkPlan(idWorkPlan, member.getKeyGroupAcademic(), objetive, timePeriod);
             WorkPlanDAO workPlanDAO = new WorkPlanDAO();
             try {
                 workPlanDAO.updateWorkPlan(newWorkPlan);

@@ -27,15 +27,15 @@ public class WorkPlanDAOTest {
         WorkPlanDAO workPlanDAO = new WorkPlanDAO();
         int workPlanId = 1;
         WorkPlan workPlan = workPlanDAO.getWorkPlan(workPlanId);
-        WorkPlan workPlanExpected = new WorkPlan("Mantener el grado en consolidación del cuerpo academico","2020-2023",null);
+        WorkPlan workPlanExpected = new WorkPlan("Mantener el grado en consolidación del cuerpo academico","JDOEIJ804","Febrero-Julio 2020-2023",null);
         workPlanExpected.setId(workPlanId);
         assertTrue(workPlan.equals(workPlanExpected));
     }
     @Test
     public void getWorkPlansTest() throws BusinessException {
         System.out.println("getWorkPlans");
-        WorkPlan workPlan = new WorkPlan(1,"Mantener el grado en consolidación del cuerpo academico","2020-2023");
-        WorkPlan workPlan1 = new WorkPlan(2,"Mantener el grado en consolidación del cuerpo academico","2018-2020");
+        WorkPlan workPlan = new WorkPlan(1,"Mantener el grado en consolidación del cuerpo academico","JDOEIJ804","Febrero-Julio 2020-2023");
+        WorkPlan workPlan1 = new WorkPlan(2,"Mantener el grado en consolidación del cuerpo academico","JDOEIJ804","Febrero-Julio 2018-2020");
         ArrayList<WorkPlan> resultExpected = new ArrayList<WorkPlan>();
         resultExpected.add(workPlan);
         resultExpected.add(workPlan1);
@@ -50,7 +50,7 @@ public class WorkPlanDAOTest {
     @Test
      public void testSave() throws BusinessException {
         System.out.println("savedSucessful");
-        WorkPlan workPlan= new WorkPlan("Establecer el cuerpo academico a grado de consolidado", "Enero 2022- Agosto 2023",null);
+        WorkPlan workPlan= new WorkPlan("Establecer el cuerpo academico a grado de consolidado","JDOEIJ804", "Enero 2022- Agosto 2023",null);
         WorkPlanDAO workPlanDAO = new WorkPlanDAO();
         assertTrue(workPlanDAO.saveSuccesful(workPlan));
     }
@@ -58,7 +58,7 @@ public class WorkPlanDAOTest {
     @Test
     public void testUpdate() throws BusinessException{
         System.out.println("updateWorkPlan");
-        WorkPlan newWorkPlan = new WorkPlan(2, "Mantener consolidado el CA", "Enero 2018- Agosto 2020");
+        WorkPlan newWorkPlan = new WorkPlan(2, "Mantener consolidado el CA","JDOEIJ804", "Enero 2018- Agosto 2020");
         WorkPlanDAO workPlanDAO = new WorkPlanDAO();
         assertTrue(workPlanDAO.updateWorkPlan(newWorkPlan));
     }
@@ -66,7 +66,7 @@ public class WorkPlanDAOTest {
     @Test
      public void getID() throws BusinessException {
         System.out.println("getId");
-        WorkPlan workPlan= new WorkPlan("Establecer el cuerpo academico a grado de consolidado", "Enero 2022- Agosto 2023",null);
+        WorkPlan workPlan= new WorkPlan("Establecer el cuerpo academico a grado de consolidado","JDOEIJ804", "Enero 2022- Agosto 2023",null);
         WorkPlanDAO workPlanDAO = new WorkPlanDAO();
         System.out.println(workPlanDAO.getId(workPlan));
         assertTrue( (workPlanDAO.getId(workPlan) > 0));
