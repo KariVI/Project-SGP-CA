@@ -70,7 +70,7 @@ public class WorkPlanListController implements Initializable {
         WorkPlanDAO workPlanDAO = new WorkPlanDAO();
         ArrayList<WorkPlan> WorkPlanList;  
         try {
-            WorkPlanList = workPlanDAO.getWorkPlans();
+            WorkPlanList = workPlanDAO.getWorkPlans(member.getKeyGroupAcademic());
             for(int i=0; i< WorkPlanList.size(); i++){
             planWorks.add(WorkPlanList.get(i));
          }
@@ -91,7 +91,7 @@ public class WorkPlanListController implements Initializable {
                 Scene scene = new Scene(root);
                  Stage stage = new Stage();
                  stage.setScene(scene);
-                 stage.initModality(Modality.APPLICATION_MODAL);
+              // stage.initModality(Modality.APPLICATION_MODAL);
                  stage.showAndWait();
         } catch (IOException ex) {
             Log.logException(ex);
@@ -136,6 +136,7 @@ public class WorkPlanListController implements Initializable {
               loader.setLocation(url);
               loader.load();
               WorkPlanRegisterController workPlanRegisterController =loader.getController();  
+              workPlanRegisterController.setMember(this.member);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);       
