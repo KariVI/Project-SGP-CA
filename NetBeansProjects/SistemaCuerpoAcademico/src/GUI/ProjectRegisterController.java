@@ -269,7 +269,8 @@ public class ProjectRegisterController implements Initializable {
    
    private boolean emptyFields(Project project){
        boolean value = false;
-       if(project.getDescription().isEmpty()||project.getTitle().isEmpty()||
+       Validation validation = new Validation();
+       if(validation.emptyField(project.getDescription())||validation.emptyField(project.getTitle())||
           project.getReceptionWorks().isEmpty() || project.getMembers().isEmpty()||
           project.getStudents().isEmpty()||project.getLGACs().isEmpty()){
            value = true;
