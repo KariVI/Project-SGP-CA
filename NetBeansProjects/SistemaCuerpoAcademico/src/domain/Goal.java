@@ -48,7 +48,7 @@ public class Goal {
         boolean value = false;
             if (object instanceof Goal) {
             Goal goalCompare = (Goal) object;
-            if( (this.description.equals(goalCompare.getDescription()))) {
+            if( (this.description.equals(goalCompare.getDescription()))&& this.id == goalCompare.getId()) {
                 value=true;
             }
         }

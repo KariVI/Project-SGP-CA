@@ -11,7 +11,6 @@ import domain.Goal;
 import domain.Meeting;
 import domain.Member;
 import domain.WorkPlan;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -31,7 +30,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import log.BusinessException;
 import log.Log;
@@ -91,9 +89,6 @@ public class WorkPlanViewController implements Initializable {
 
     @FXML
     private void actionModify(ActionEvent event) {
-        Stage stage = (Stage) btModify.getScene().getWindow();
-        stage.close();
-        openWorkPlanModify();
     }
 
     private void initializeWorkPlan() {
@@ -141,18 +136,13 @@ public class WorkPlanViewController implements Initializable {
 
     private void openWorkPlanModify() {
         try {
-            Stage primaryStage = new Stage();
-            URL url = new File("src/GUI/WorkPlanModify.fxml").toURI().toURL();
-            FXMLLoader loader = new FXMLLoader(url);
-            loader.setLocation(url);
-            loader.load();
-            WorkPlanModifyController workPlanModifyController = loader.getController();
-            workPlanModifyController.setWorkPlanId(idWorkPlan);
-            workPlanModifyController.setMember(member);
-            Parent root = loader.getRoot();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("WorkPlanModify.fxml"));
+            Parent root = loader.load();
+            WorkPlanActionViewController workPlanActionViewController = loader.getController();
             Scene scene = new Scene(root);
-            primaryStage.setScene(scene);
-            primaryStage.show();
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.showAndWait();
         } catch (IOException ex) {
             Log.logException(ex);
         }
