@@ -85,4 +85,23 @@ public class Validation {
         
        return value;
    }
+    
+    public boolean emptyField(String field){
+        boolean value = false;
+        if(field.trim().length() == 0){
+            value = true;
+        }
+        
+        return value;
+    }
+    
+    public boolean existsInvalidCharactersForEmail(String email){
+        boolean invalidCharacters = false;
+        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        Matcher matcher = pattern.matcher(email);
+        if(!matcher.find()){
+           invalidCharacters = true; 
+        }
+        return invalidCharacters;
+    }
 }

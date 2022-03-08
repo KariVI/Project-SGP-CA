@@ -1,7 +1,9 @@
 package GUI;
 
 
+import businessLogic.LoginCredentialDAO;
 import businessLogic.MemberDAO;
+import domain.LoginCredential;
 import domain.Member;
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import log.BusinessException;
 import log.Log;
@@ -30,12 +33,16 @@ public class MemberRegisterController implements Initializable {
     @FXML private ComboBox<Integer> cbYears;
     @FXML private ComboBox<String> cbRoles;
     @FXML private ComboBox<String> cbDegrees;
-    @FXML private TextFieldLimited tfName;
-    @FXML private TextFieldLimited tfProfessionalLicense;
-    @FXML private TextFieldLimited tfNameDegree;
-    @FXML private TextFieldLimited tfUniversity;
+    @FXML private TextField tfName;
+    @FXML private TextField tfProfessionalLicense;
+    @FXML private TextField tfNameDegree;
+    @FXML private TextField tfUniversity;
     @FXML private Button btClose;
     private Member loginMember;
+    @FXML
+    private TextField tfEmail;
+    @FXML
+    private TextField tfCURP;
     
     public void setMember(Member member){
         this.loginMember = member;
@@ -43,10 +50,6 @@ public class MemberRegisterController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tfName.setMaxLength(150);
-        tfNameDegree.setMaxLength(200);
-        tfUniversity.setMaxLength(200);
-        tfProfessionalLicense.setMaxLength(10);
         roles = FXCollections.observableArrayList();
         roles.add("Integrante");
         roles.add("Colaborador");
@@ -83,10 +86,16 @@ public class MemberRegisterController implements Initializable {
        degreeYear = cbYears.getSelectionModel().getSelectedItem();
        universityName = tfUniversity.getText();
        Member newMember = new Member(professionalLicense, name, role, degree,nameDegree,universityName, degreeYear,loginMember.getKeyGroupAcademic());
+       String user = tfEmail.getText();
+       String password = tfCURP.getText();
+       LoginCredential loginCredential = new LoginCredential(user, password, professionalLicense);
        MemberDAO memberDAO = new MemberDAO();
-       if(validateMember(newMember)){
+       LoginCredentialDAO loginCredentialDAO = new LoginCredentialDAO();
+       
+       if(validateCredential(loginCredential) && validateMember(newMember)){
              try { 
               memberDAO.savedSucessfulMember(newMember);
+              loginCredentialDAO.registerSuccesful(loginCredential);
               AlertMessage alertMessage = new AlertMessage();
               alertMessage.showAlertSuccesfulSave("El miembro");
               close();
@@ -133,30 +142,42 @@ public class MemberRegisterController implements Initializable {
     private boolean validateMember(Member member){
         boolean value = true;
         AlertMessage alertMessage = new AlertMessage();
-        if(isEmptyFields(member)){
+        Validation validation = new Validation();
+        if(validation.emptyField(member.getProfessionalLicense()) || validation.emptyField(member.getName()) || validation.emptyField(member.getRole()) || validation.emptyField(member.getDegree()) ||
+           validation.emptyField(member.getNameDegree()) || validation.emptyField(member.getUniversityName()) ||  member.getDegreeYear() == 0 ){
             value = false;
             alertMessage.showAlertValidateFailed("Campos vacios");
         }
         
-        if(isAlreadyRegisterd(member)){
-            value = false;
-            alertMessage.showAlertValidateFailed("El miembro ya se encuentra registrado");
+        if(validation.findInvalidField(member.getName())||validation.findInvalidField(member.getNameDegree())||
+           validation.findInvalidField(member.getUniversityName())){
+           value = false;
+           alertMessage.showAlertValidateFailed("Campos invalidos");
         }
         
-        if(!invalidFields(member)){
+        if(value && isAlreadyRegisterd(member)){
             value = false;
-            alertMessage.showAlertValidateFailed("Campos inválidos");
+            alertMessage.showAlertValidateFailed("El miembro ya se encuentra registrado");
         }
         
         return value;
     }
     
-    private boolean isEmptyFields(Member member){
-        boolean emptyFields = false;
-        if((member.getProfessionalLicense().isEmpty())||(member.getName().isEmpty())||(member.getRole().isEmpty())||(member.getDegree().isEmpty())|| (member.getNameDegree().isEmpty())||(member.getUniversityName().isEmpty())|| member.getDegreeYear() == 0){
-            emptyFields = true;
+        
+    private boolean validateCredential(LoginCredential loginCredential){
+        boolean value = true;
+        AlertMessage alertMessage = new AlertMessage();
+        Validation validation = new Validation();
+        if(validation.emptyField(loginCredential.getUser()) || validation.emptyField(loginCredential.getPassword())){
+            value = false;
+            alertMessage.showAlertValidateFailed("Campos vacios");
         }
-        return emptyFields;
+        
+        if(validation.existsInvalidCharactersForEmail(loginCredential.getUser())){
+            value = false;
+            alertMessage.showAlertValidateFailed("Correo inválido");
+        }
+        return value;
     }
     
     private boolean isAlreadyRegisterd(Member member){
@@ -174,17 +195,5 @@ public class MemberRegisterController implements Initializable {
             }
         }
         return value;
-    }
-    
-    private boolean invalidFields(Member member){
-        boolean value = true;
-        Validation validation = new Validation();
-        if(validation.findInvalidField(member.getName())||validation.findInvalidField(member.getNameDegree())||
-           validation.findInvalidField(member.getUniversityName())){
-           value = false;
-        }
-        
-        return value;
-    }
-    
+    }    
 }
