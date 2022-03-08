@@ -43,6 +43,8 @@ public class MemberViewController implements Initializable {
          lbNameDegree.setText(member.getNameDegree());
          lbDegreeYear.setText(Integer.toString(member.getDegreeYear()));
          lbUniversityName.setText(member.getUniversityName());
+         if (!member.getRole().equalsIgnoreCase("Responsable"))
+             btUpdate.setVisible(false);
     }
    
     @FXML
