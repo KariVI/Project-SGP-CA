@@ -52,7 +52,9 @@ public class GoalDao implements IGoalDAO{
 
         return goalList;  
     }
-
+      
+      
+    @Override
     public boolean deletedGoalById(int id) throws BusinessException {
          boolean deletedSuccess = false;
         try{
@@ -74,17 +76,19 @@ public class GoalDao implements IGoalDAO{
         return deletedSuccess;
     }
 
+    @Override
     public boolean updatedGoalById(int idWorkPlan, Goal goal) throws BusinessException {
         boolean updatedSucess = false;
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
             try{
-                String sql = "UPDATE Meta set idPlanTrabajo = ?, descripcion = ?, WHERE idMeta = ?";
+                String sql = "UPDATE Meta set idPlanTrabajo = ?, descripcion = ? WHERE idMeta = ?";
                 PreparedStatement preparedStatement = connectionDataBase.prepareStatement(sql);
                 preparedStatement.setInt(1, idWorkPlan);
                 preparedStatement.setString(2, goal.getDescription());
                 preparedStatement.setInt(3, goal.getId());
+                preparedStatement.executeUpdate();
                 updatedSucess = true;
                 connectorDataBase.disconnect();
             }catch(SQLException sqlException){

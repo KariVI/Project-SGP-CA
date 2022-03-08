@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -51,6 +52,7 @@ public class WorkPlanRegisterController implements Initializable {
     private String keyGroupAcademic;
     private int indexGoal;
     private Goal lastGoal;
+    private Member member;
    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -103,6 +105,7 @@ public class WorkPlanRegisterController implements Initializable {
               loader.setLocation(url);
               loader.load();
               WorkPlanListController workPlanListController =loader.getController();   
+              workPlanListController.setMember(member);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);        
               primaryStage.setScene(scene);
@@ -250,6 +253,8 @@ public class WorkPlanRegisterController implements Initializable {
                 loader.load();
                 ActionRegisterController actionRegisterController = loader.getController();
                 actionRegisterController.setWorkPlan(workPlan);
+                actionRegisterController.setMember(member);
+                 
                 Parent root = loader.getRoot();               
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);               
@@ -271,6 +276,7 @@ public class WorkPlanRegisterController implements Initializable {
         workPlan.setObjetiveGeneral(objetive);
         String timePeriod = cbMonths.getSelectionModel().getSelectedItem().toString() + " " +  cbYears.getSelectionModel().getSelectedItem().toString();
         workPlan.setTimePeriod(timePeriod);
+        workPlan.setGroupAcademicKey(member.getKeyGroupAcademic());
         workPlan.setGoals(saveGoals());
     }
     
@@ -309,6 +315,10 @@ public class WorkPlanRegisterController implements Initializable {
             value=false;
         }  
         return value;
+    }
+
+    void setMember(Member member) {
+        this.member = member;
     }
     
    

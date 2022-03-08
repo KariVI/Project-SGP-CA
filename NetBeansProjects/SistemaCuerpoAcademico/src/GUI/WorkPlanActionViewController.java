@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import businessLogic.ActionDAO;
 import businessLogic.GoalDao;
 import domain.Action;
 import domain.Goal;
@@ -47,7 +48,7 @@ public class WorkPlanActionViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tcAction.setCellValueFactory(new PropertyValueFactory<Action,String>("description"));
-        tcDate.setCellValueFactory(new PropertyValueFactory<Action,String>("dateFinish"));
+        tcDate.setCellValueFactory(new PropertyValueFactory<Action,String>("dateEnd"));
         tcResponsable.setCellValueFactory(new PropertyValueFactory<Action,String>("memberInCharge"));
         tcResource.setCellValueFactory(new PropertyValueFactory<Action,String>("resource"));
         initializeActionTable();
@@ -71,9 +72,9 @@ public class WorkPlanActionViewController implements Initializable {
     }
 
     private void initializeActions() {
-             GoalDao goalDAO = new GoalDao();
+             ActionDAO actionDAO = new ActionDAO();
         try{
-            ArrayList<Action> actionList = goalDAO.getActionsByGoalId(goal.getId());
+            ArrayList<Action> actionList = actionDAO.getActionsByGoalId(goal.getId());
             for(int i = 0; i < actionList.size(); i++){    
                 actions.add(actionList.get(i));
             }

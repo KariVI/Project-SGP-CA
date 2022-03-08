@@ -3,20 +3,23 @@ package domain;
 public class WorkPlan {
 
     private int id;
+    private String groupAcademicKey;
     private String objetiveGeneral;
     private String timePeriod;
     private Goal[] goals;
 
-    public WorkPlan(String objetiveGeneral, String timePeriod, Goal[] goals) {
+    public WorkPlan(String objetiveGeneral,String groupAcademicKey, String timePeriod, Goal[] goals) {
         this.objetiveGeneral = objetiveGeneral;
         this.timePeriod = timePeriod;
         this.goals = goals;
+        this.groupAcademicKey = groupAcademicKey;
     }
 
-    public WorkPlan(int id,String objetiveGeneral, String timePeriod) {
+    public WorkPlan(int id, String groupAcademicKey, String objetiveGeneral, String timePeriod) {
        this.id = id;
        this.objetiveGeneral = objetiveGeneral;
        this.timePeriod = timePeriod;
+       this.groupAcademicKey = groupAcademicKey;
     }
 
     public WorkPlan() {
@@ -28,6 +31,10 @@ public class WorkPlan {
 
     public void setId(int id) {
         this.id = id;
+    }
+    
+    public void setGroupAcademicKey(String key) {
+        this.groupAcademicKey = key;
     }
 
     public String getObjetiveGeneral() {
@@ -48,6 +55,10 @@ public class WorkPlan {
 
     public Goal[] getGoals() {
         return goals;
+    }
+    
+    public String getGroupAcademicKey(){
+        return groupAcademicKey;
     }
 
     public void setGoals(Goal[] goals) {

@@ -11,7 +11,7 @@ public class Action {
 
     public Action(String description, String member, String resource) {
         this.description = description;
-        this.memberInCharge = memberInCharge;
+        this.memberInCharge = member;
         this.resource = resource;
     }
 
@@ -30,13 +30,20 @@ public class Action {
         this.memberInCharge = memberInCharge;
         this.resource = resource;
     }
+
+    public Action(String description, String responsable, String date, String resource) {
+        this.description = description;
+        this.dateEnd = date;
+        this.memberInCharge = responsable;
+        this.resource = resource;
+    }
    
-      public Action(String description, String dateEnd, String memberInCharge, String resource) {
+  /*    public Action(String description, String dateEnd, String memberInCharge, String resource) {
         this.description = description;
         this.dateEnd = dateEnd;
         this.memberInCharge = memberInCharge;
         this.resource = resource;
-    }
+    }*/
     public int getId() {
         return id;
     }
