@@ -2,6 +2,7 @@
 package GUI;
 
 import businessLogic.GroupAcademicDAO;
+import domain.Goal;
 import domain.GroupAcademic;
 import domain.LGAC;
 import domain.Member;
@@ -11,6 +12,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +24,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import log.BusinessException;
@@ -34,9 +41,13 @@ public class GroupAcademicShowController implements Initializable {
     @FXML private TextArea taObjetive;
     @FXML private TextArea taVision;
     @FXML private TextArea taMision;
-    @FXML private ScrollPane spLgacs;
     @FXML private Button btUpdate;
     @FXML private Button btReturn;
+    @FXML private TableView<LGAC> tvLGACS;
+    private ListChangeListener<LGAC> tableLGACSListener;
+    @FXML private TableColumn tcName;
+    @FXML private TableColumn tcDescription;
+    private ObservableList<LGAC> LGACS;
     private Member member;
     private GroupAcademic groupAcademic;
     
@@ -137,29 +148,19 @@ public class GroupAcademicShowController implements Initializable {
         groupAcademic.setLGACs(lgacs);
         int i=0;
         int numberlgacs=0;
-        int numberRows=3;
-        while (i < ( lgacs.size() * numberRows)){  
-                String name= "Nombre : " +lgacs.get(numberlgacs).getName();
-                Label lbNamelgac = new Label(name);
-                String description= "Descripcion: "+ lgacs.get(numberlgacs).getDescription();
-                TextArea taDescriptionlgac = new TextArea(description);
-                taDescriptionlgac.setPrefHeight(38); 
-                taDescriptionlgac.setPrefWidth(660);
-                String lgacName= "LGAC "+ (numberlgacs + 1);
-                Label label = new Label(lgacName);
-                gridPane.add(label,1,i);
-                gridPane.add(lbNamelgac,1,(i + 1));
-                
-                gridPane.add(taDescriptionlgac,1, (i + 2));
-                i=i+3;
-                numberlgacs++;
+        while (i < lgacs.size() ){  
+          LGACS.add(lgacs.get(i));
+          i++;
         }
-        spLgacs.setContent(gridPane);
+
     }
     
     
     public void initialize(URL url, ResourceBundle rb) {
-       
+        tcName.setCellValueFactory(new PropertyValueFactory<LGAC,String>("name")); 
+        tcDescription.setCellValueFactory(new PropertyValueFactory<LGAC,String>("description"));   
+        LGACS = FXCollections.observableArrayList();
+        tvLGACS.setItems(LGACS);
         
     }    
     
