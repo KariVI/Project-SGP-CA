@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.shape.*?>
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -24,77 +17,80 @@
 <?import javafx.scene.text.Font?>
 <?import GUI.TextFieldLimited?>
 
-<AnchorPane id="AnchorPane" fx:id="scrollBar" prefHeight="521.0" prefWidth="720.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProjectRegisterController">
+<AnchorPane id="AnchorPane" fx:id="scrollBar" prefHeight="521.0" prefWidth="720.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProjectRegisterController">
     <stylesheets>
         <URL value="@projectregister.css" />
     </stylesheets>
    <children>
-    <AnchorPane layoutX="12.0" minHeight="0.0" minWidth="0.0" prefHeight="773.0" prefWidth="1063.0">
-         <children>
-            <GridPane layoutX="71.0" layoutY="109.0" prefHeight="94.0" prefWidth="441.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.2161102294922" minWidth="10.0" prefWidth="101.28585815429688" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="232.40663146972656" minWidth="10.0" prefWidth="186.21414184570312" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+      <ScrollPane layoutY="-10.0" prefHeight="534.0" prefWidth="787.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="907.0" prefWidth="794.0">
                <children>
-                  <Label text="Título:" />
-                  <Label text="Fecha de inicio:" GridPane.rowIndex="1" />
-                  <Label text="Fecha de fin:" GridPane.rowIndex="2" />
-                  <DatePicker fx:id="dpFinishDate" prefHeight="29.0" prefWidth="233.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <DatePicker fx:id="dpStartDate" prefHeight="27.0" prefWidth="233.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextFieldLimited fx:id="tfTitle" prefHeight="27.0" prefWidth="279.0" GridPane.columnIndex="1" />
+                  <GridPane layoutX="79.0" layoutY="71.0" prefHeight="90.0" prefWidth="288.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.2161102294922" minWidth="10.0" prefWidth="101.28585815429688" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="232.40663146972656" minWidth="10.0" prefWidth="186.21414184570312" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Título:" />
+                        <Label text="Fecha de inicio:" GridPane.rowIndex="1" />
+                        <Label text="Fecha de fin:" GridPane.rowIndex="2" />
+                        <DatePicker fx:id="dpFinishDate" prefHeight="29.0" prefWidth="193.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <DatePicker fx:id="dpStartDate" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextFieldLimited fx:id="tfTitle" GridPane.columnIndex="1" />
+                     </children>
+                  </GridPane>
+                  <Label layoutX="68.0" layoutY="24.0" text="Proyecto">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="417.0" layoutY="57.0" text="Descripción:" />
+                  <TextArea fx:id="taDescription" layoutX="401.0" layoutY="79.0" prefHeight="91.0" prefWidth="289.0" />
+                  <TableView fx:id="tvLGAC" layoutX="77.0" layoutY="179.0" prefHeight="90.0" prefWidth="612.0">
+                    <columns>
+                      <TableColumn fx:id="tcLGAC" prefWidth="609.6450805664062" text="LGAC" />
+                    </columns>
+                  </TableView>
+                  <TableView fx:id="tvReceptionWork" layoutX="77.0" layoutY="345.0" prefHeight="90.0" prefWidth="612.0">
+                     <columns>
+                        <TableColumn fx:id="tcReceptionWork" prefWidth="610.5036087036133" text="Trabajo Recepcional" />
+                     </columns>
+                  </TableView>
+                  <TableView fx:id="tvMember" layoutX="77.0" layoutY="512.0" prefHeight="90.0" prefWidth="612.0">
+                     <columns>
+                        <TableColumn fx:id="tcMember" prefWidth="611.0000076293945" text="Participantes del CA" />
+                     </columns>
+                  </TableView>
+                  <TableView fx:id="tvStudent" layoutX="77.0" layoutY="679.0" prefHeight="90.0" prefWidth="612.0">
+                     <columns>
+                        <TableColumn fx:id="tcStudentName" prefWidth="421.9590530395508" text="Nombre" />
+                        <TableColumn fx:id="tcStudentEnrollment" prefWidth="189.04095458984375" text="Matrícula" />
+                     </columns>
+                  </TableView>
+                  <Button fx:id="btAddLGAC" layoutX="698.0" layoutY="269.0" mnemonicParsing="false" onAction="#addLgac" text="+" />
+                  <Button fx:id="btAddRecepcionalWork" layoutX="699.0" layoutY="436.0" mnemonicParsing="false" onAction="#addReceptionWork" text="+" />
+                  <Button fx:id="btAddStudent" layoutX="697.0" layoutY="771.0" mnemonicParsing="false" onAction="#addStudent" text="+" />
+                  <Button fx:id="btAddMember" layoutX="697.0" layoutY="604.0" mnemonicParsing="false" onAction="#addMember" text="+" />
+                  <ComboBox fx:id="cbLGAC" layoutX="77.0" layoutY="270.0" prefHeight="26.0" prefWidth="612.0" />
+                  <ComboBox fx:id="cbReceptionWork" layoutX="77.0" layoutY="436.0" prefHeight="26.0" prefWidth="612.0" />
+                  <ComboBox fx:id="cbMember" layoutX="77.0" layoutY="604.0" prefHeight="26.0" prefWidth="612.0" />
+                  <Button fx:id="btSave" layoutX="595.0" layoutY="847.0" mnemonicParsing="false" onAction="#actionSave" prefHeight="32.0" prefWidth="74.0" text="Guardar" />
+                  <Button fx:id="btCancel" layoutX="677.0" layoutY="847.0" mnemonicParsing="false" onAction="#actionCancel" prefHeight="32.0" prefWidth="75.0" text="Cancelar" />
+                  <TextFieldLimited fx:id="tfName" layoutX="77.0" layoutY="769.0" prefHeight="26.0" prefWidth="423.0" promptText="Nombre" />
+                  <TextFieldLimited fx:id="tfEnrollment" layoutX="502.0" layoutY="769.0" prefHeight="26.0" prefWidth="187.0" promptText="Matrícula" />
+                  <Button fx:id="btDeleteLGAC" layoutX="698.0" layoutY="219.0" mnemonicParsing="false" onAction="#actionDeleteLGAC" text="X" />
+                  <Button fx:id="btDeleteReceptionWork" layoutX="698.0" layoutY="377.0" mnemonicParsing="false" onAction="#actionDeleteReceptionWork" text="X" />
+                  <Button fx:id="btDeleteMember" layoutX="697.0" layoutY="544.0" mnemonicParsing="false" onAction="#actionDeleteMember" text="X" />
+                  <Button fx:id="btDeleteStudent" layoutX="697.0" layoutY="712.0" mnemonicParsing="false" onAction="#actionDeleteStudent" text="X" />
                </children>
-            </GridPane>
-            <Label layoutX="68.0" layoutY="58.0" text="Proyecto">
-               <font>
-                  <Font size="28.0" />
-               </font>
-            </Label>
-            <Label layoutX="541.0" layoutY="73.0" text="Descripción:" />
-            <TextArea fx:id="taDescription" layoutX="544.0" layoutY="113.0" prefHeight="91.0" prefWidth="424.0" />
-            <TableView fx:id="tvLGAC" layoutX="15.0" layoutY="252.0" prefHeight="150.0" prefWidth="450.0">
-              <columns>
-                <TableColumn fx:id="tcLGAC" prefWidth="448.99998474121094" text="LGAC" />
-              </columns>
-            </TableView>
-            <TableView fx:id="tvReceptionWork" layoutX="541.0" layoutY="252.0" prefHeight="150.0" prefWidth="450.0">
-               <columns>
-                  <TableColumn fx:id="tcReceptionWork" prefWidth="449.0000305175781" text="Trabajo Recepcional" />
-               </columns>
-            </TableView>
-            <TableView fx:id="tvMember" layoutX="15.0" layoutY="503.0" prefHeight="150.0" prefWidth="450.0">
-               <columns>
-                  <TableColumn fx:id="tcMember" prefWidth="448.99999809265137" text="Participantes del CA" />
-               </columns>
-            </TableView>
-            <TableView fx:id="tvStudent" layoutX="541.0" layoutY="503.0" prefHeight="150.0" prefWidth="450.0">
-               <columns>
-                  <TableColumn fx:id="tcStudentName" prefWidth="322.8792724609375" text="Nombre" />
-                  <TableColumn fx:id="tcStudentEnrollment" prefWidth="127.1207275390625" text="Matrícula" />
-               </columns>
-            </TableView>
-            <Button fx:id="btAddLGAC" layoutX="469.0" layoutY="403.0" mnemonicParsing="false" onAction="#addLgac" text="+" />
-            <Button fx:id="btAddRecepcionalWork" layoutX="992.0" layoutY="403.0" mnemonicParsing="false" onAction="#addReceptionWork" text="+" />
-            <Button fx:id="btAddStudent" layoutX="994.0" layoutY="655.0" mnemonicParsing="false" onAction="#addStudent" text="+" />
-            <Button fx:id="btAddMember" layoutX="466.0" layoutY="655.0" mnemonicParsing="false" onAction="#addMember" text="+" />
-            <ComboBox fx:id="cbLGAC" layoutX="15.0" layoutY="403.0" prefHeight="27.0" prefWidth="454.0" />
-            <ComboBox fx:id="cbReceptionWork" layoutX="541.0" layoutY="403.0" prefHeight="27.0" prefWidth="450.0" />
-            <ComboBox fx:id="cbMember" layoutX="14.0" layoutY="655.0" prefHeight="27.0" prefWidth="452.0" />
-            <Button fx:id="btSave" layoutX="827.0" layoutY="721.0" mnemonicParsing="false" onAction="#actionSave" prefHeight="32.0" prefWidth="74.0" text="Guardar" />
-            <Button fx:id="btCancel" layoutX="931.0" layoutY="721.0" mnemonicParsing="false" onAction="#actionCancel" prefHeight="32.0" prefWidth="75.0" text="Cancelar" />
-            <TextFieldLimited fx:id="tfName" layoutX="545.0" layoutY="655.0" prefHeight="27.0" prefWidth="342.0" promptText="Nombre" />
-            <TextFieldLimited fx:id="tfEnrollment" layoutX="887.0" layoutY="655.0" prefHeight="27.0" prefWidth="107.0" promptText="Matrícula" />
-            <Button fx:id="btDeleteLGAC" layoutX="503.0" layoutY="403.0" mnemonicParsing="false" onAction="#actionDeleteLGAC" text="X" />
-            <Button fx:id="btDeleteReceptionWork" layoutX="1024.0" layoutY="403.0" mnemonicParsing="false" onAction="#actionDeleteReceptionWork" text="X" />
-            <Button fx:id="btDeleteMember" layoutX="503.0" layoutY="655.0" mnemonicParsing="false" onAction="#actionDeleteMember" text="X" />
-            <Button fx:id="btDeleteStudent" layoutX="1026.0" layoutY="655.0" mnemonicParsing="false" onAction="#actionDeleteStudent" text="X" />
-         </children>
-      </AnchorPane>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="41.0" layoutX="-32.0" stroke="BLACK" strokeType="INSIDE" width="1111.0" />
+            </AnchorPane>
+        </content>
+      </ScrollPane>
    </children>
 </AnchorPane>
