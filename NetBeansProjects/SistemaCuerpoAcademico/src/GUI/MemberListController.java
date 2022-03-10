@@ -60,7 +60,8 @@ public class MemberListController implements  Initializable {
             FXMLLoader loader = new FXMLLoader(url);
             loader.setLocation(url);
             loader.load();
-            MemberViewController memberViewController =loader.getController();      
+            MemberViewController memberViewController =loader.getController();
+            memberViewController.setLoginMember(loginMember);
             memberViewController.initializeMember(selectedMember);
             Parent root = loader.getRoot();
             Scene scene = new Scene(root);

@@ -28,10 +28,15 @@ public class MemberViewController implements Initializable {
     @FXML Label lbDegreeYear = new Label();
     @FXML Label lbUniversityName = new Label();
     private Member member ;
+    private Member loginMember;
   
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         
+    }
+    
+    public void setLoginMember(Member loginMember) {
+        this.loginMember = loginMember;
     }
     
     public void initializeMember(Member member) {
@@ -43,7 +48,7 @@ public class MemberViewController implements Initializable {
          lbNameDegree.setText(member.getNameDegree());
          lbDegreeYear.setText(Integer.toString(member.getDegreeYear()));
          lbUniversityName.setText(member.getUniversityName());
-         if (!member.getRole().equalsIgnoreCase("Responsable"))
+         if (!loginMember.getRole().equalsIgnoreCase("Responsable"))
              btUpdate.setVisible(false);
     }
    
@@ -64,6 +69,7 @@ public class MemberViewController implements Initializable {
             loader.load();
             MemberModifyController memberModifyController = loader.getController();
             memberModifyController.initializeMember(member);
+            memberModifyController.setLoginMember(loginMember);
             Parent root = loader.getRoot();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
@@ -83,7 +89,7 @@ public class MemberViewController implements Initializable {
             loader.setLocation(url);
             loader.load();
             MemberListController memberListController  = loader.getController();
-            memberListController.setMember(member);
+            memberListController.setMember(loginMember);
             Parent root = loader.getRoot();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
