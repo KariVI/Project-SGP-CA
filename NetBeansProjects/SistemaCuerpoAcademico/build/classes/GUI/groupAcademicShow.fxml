@@ -64,10 +64,10 @@
             <Font name="System Bold" size="23.0" />
          </font>
       </Text>
-      <TableView fx:id="tvLGACS" layoutX="35.0" layoutY="285.0" prefHeight="177.0" prefWidth="622.0">
+      <TableView fx:id="tvLGACS" layoutX="41.0" layoutY="308.0" prefHeight="169.0" prefWidth="622.0">
         <columns>
-          <TableColumn fx:id="tcName" prefWidth="257.0" text="C1" />
-          <TableColumn fx:id="tcDescription" prefWidth="364.0" text="C2" />
+          <TableColumn fx:id="tcName" prefWidth="257.0" text="Nombre" />
+          <TableColumn fx:id="tcDescription" minWidth="20.0" prefWidth="364.0" text="Descripción" />
         </columns>
       </TableView>
    </children>

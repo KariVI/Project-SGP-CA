@@ -31,6 +31,7 @@ public class MemberListController implements  Initializable {
     @FXML private ListView<Member> lvMembers = new ListView<Member>();
     private ObservableList <Member> members ;
     private Member loginMember;
+   
     
     public void setMember(Member member){
         this.loginMember = member;
@@ -60,8 +61,9 @@ public class MemberListController implements  Initializable {
             FXMLLoader loader = new FXMLLoader(url);
             loader.setLocation(url);
             loader.load();
-            MemberViewController memberViewController =loader.getController();      
+            MemberViewController memberViewController =loader.getController();     
             memberViewController.initializeMember(selectedMember);
+            memberViewController.setMemberCurrently(loginMember);
             Parent root = loader.getRoot();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);

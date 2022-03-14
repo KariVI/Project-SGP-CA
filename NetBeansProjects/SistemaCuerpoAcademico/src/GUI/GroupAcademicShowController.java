@@ -83,6 +83,12 @@ public class GroupAcademicShowController implements Initializable {
             getLgacs();
         } catch (BusinessException ex) {
             Log.logException(ex);
+            AlertMessage alertMessage  = new AlertMessage();
+            alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+              Stage stage = (Stage) btReturn.getScene().getWindow();
+            stage.close();
+            openViewMenu();
+            
         }
     }
   
@@ -110,7 +116,12 @@ public class GroupAcademicShowController implements Initializable {
               Stage stage = (Stage) btUpdate.getScene().getWindow();
               stage.close();
             } catch (IOException ex) {
-                    Log.logException(ex);
+               Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btReturn.getScene().getWindow();
+                stage.close();
+                openViewMenu();
             }
             primaryStage.show();
        
