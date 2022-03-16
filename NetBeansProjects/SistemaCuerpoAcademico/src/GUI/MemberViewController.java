@@ -76,6 +76,7 @@ public class MemberViewController implements Initializable {
             loader.load();
             MemberModifyController memberModifyController = loader.getController();
             memberModifyController.initializeMember(member);
+            memberModifyController.setCurrentlyMember(memberCurrently);
             Parent root = loader.getRoot();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);

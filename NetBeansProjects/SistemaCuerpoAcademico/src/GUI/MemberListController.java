@@ -69,7 +69,9 @@ public class MemberListController implements  Initializable {
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException ex) {
-            Log.logException(ex);
+              Log.logException(ex);
+              AlertMessage alertMessage  = new AlertMessage();
+              alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
         }       
     }
 
