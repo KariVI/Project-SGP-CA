@@ -209,8 +209,8 @@ public class MemberModifyController implements Initializable {
             loader.setLocation(url);
             loader.load();
             MemberViewController memberViewController = loader.getController();
-            memberViewController.setLoginMember(loginMember);
             memberViewController.initializeMember(member);
+             memberViewController.setMemberCurrently(loginMember);
             Parent root = loader.getRoot();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);

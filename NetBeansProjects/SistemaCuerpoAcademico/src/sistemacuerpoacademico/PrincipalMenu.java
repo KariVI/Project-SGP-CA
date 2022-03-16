@@ -36,12 +36,12 @@ public class PrincipalMenu extends Application {
         
         try{
             
-            URL url = new File("src/GUI/WorkPlanRegister.fxml").toURI().toURL();
+           URL url = new File("src/GUI/Login.fxml").toURI().toURL();
             try{
                 FXMLLoader loader = new FXMLLoader(url);
                 loader.setLocation(url);
                 loader.load();
-                WorkPlanRegisterController login = loader.getController();
+                LoginController login = loader.getController();
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);

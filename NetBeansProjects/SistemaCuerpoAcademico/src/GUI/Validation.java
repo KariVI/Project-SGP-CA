@@ -97,14 +97,7 @@ public class Validation {
        return value;
    }
     
-    public boolean emptyField(String field){
-        boolean value = false;
-        if(field.trim().length() == 0){
-            value = true;
-        }
-        
-        return value;
-    }
+  
     
     public boolean existsInvalidCharactersForEmail(String email){
         boolean invalidCharacters = false;

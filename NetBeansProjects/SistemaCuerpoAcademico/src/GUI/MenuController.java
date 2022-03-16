@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -74,7 +76,7 @@ public class MenuController implements Initializable {
     }
     
     @FXML 
-    private void actionQuery(ActionEvent actionEvent) throws BusinessException{  
+    private void actionQuery(ActionEvent actionEvent) {  
         Stage stage = (Stage) btConsult.getScene().getWindow();
               stage.close(); 
         try{ 
@@ -93,8 +95,13 @@ public class MenuController implements Initializable {
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);
-           }catch (IOException ex) {
+           }catch (IOException ex ) {
                     Log.logException(ex);
+            } catch (BusinessException ex) {
+                Log.logException(ex);
+                AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                
             }
             primaryStage.show();
        } catch (MalformedURLException ex) {
