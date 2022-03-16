@@ -18,5 +18,4 @@ public interface IActionDAO {
    public boolean deletedActionById(int id) throws BusinessException;
    public boolean updatedActionById(int idGoal, Action action) throws BusinessException;
     public boolean saveSuccesful(Action action, int idGoal ) throws BusinessException;
-   public boolean deleteAllActionByIdGoal(int idGoal) throws BusinessException;
 }

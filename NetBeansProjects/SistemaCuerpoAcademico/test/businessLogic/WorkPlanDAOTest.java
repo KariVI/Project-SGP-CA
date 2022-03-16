@@ -55,14 +55,6 @@ public class WorkPlanDAOTest {
     }
      
     @Test
-    public void testUpdate() throws BusinessException{
-        System.out.println("updateWorkPlan");
-        WorkPlan newWorkPlan = new WorkPlan(2, "Mantener consolidado el CA", "Enero 2018- Agosto 2020");
-        WorkPlanDAO workPlanDAO = new WorkPlanDAO();
-        assertTrue(workPlanDAO.updateWorkPlan(newWorkPlan));
-    }
-     
-    @Test
      public void getID() throws BusinessException {
         System.out.println("getId");
         WorkPlan workPlan= new WorkPlan("Establecer el cuerpo academico a grado de consolidado", "Enero 2022- Agosto 2023",null);

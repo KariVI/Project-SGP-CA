@@ -19,5 +19,4 @@ public interface IWorkPlanDAO {
     public ArrayList <WorkPlan> getWorkPlans() throws BusinessException;
     public boolean saveSuccesful(WorkPlan workPlan) throws BusinessException;
     public int getId (WorkPlan workPlan) throws BusinessException;
-    public boolean updateWorkPlan(WorkPlan workPlan) throws BusinessException;
 }
