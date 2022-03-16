@@ -18,6 +18,17 @@ public class Validation {
         return value;  
     }
     
+     public boolean emptyField(String field){
+        boolean value = false;
+        if(field.isEmpty()){
+            value=true;
+        }
+        else if(field.trim().length()==0){
+            value=true;
+        }
+        return value;
+    
+    }
     public boolean validateDate(String date){   
         
         boolean value=false;

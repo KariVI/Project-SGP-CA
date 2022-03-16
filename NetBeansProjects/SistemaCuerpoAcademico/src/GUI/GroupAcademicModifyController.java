@@ -47,26 +47,26 @@ public class GroupAcademicModifyController implements Initializable {
     @FXML private Node groupAcademicPanel;
     @FXML private ScrollPane spLGACs;
     @FXML private ComboBox<String> cbConsolidateGrade;
-     private ObservableList<String> consolidateGrades;
+    private ObservableList<String> consolidateGrades;
     private GroupAcademic groupAcademic= new GroupAcademic();
     private GroupAcademic groupAcademicNew=new GroupAcademic();
     private GridPane gridPane = new GridPane();
     int nextRowPosition=0;
     private Member member;
     private int newLgacs=0;
-
+    private ArrayList<LGAC> lgacsNew = new ArrayList<LGAC>();
+    private ArrayList<LGAC> lgacsOld = new ArrayList<LGAC>();
     public void setMember(Member member) {
         this.member = member;
     }
-  
    
    public void setGroupAcademic(GroupAcademic groupAcademic){
-     this.groupAcademic.setKey(groupAcademic.getKey());
+      this.groupAcademic.setKey(groupAcademic.getKey());
       this.groupAcademic.setConsolidationGrade(groupAcademic.getConsolidationGrade());
       this.groupAcademic.setName(groupAcademic.getName());
       this.groupAcademic.setObjetive(groupAcademic.getObjetive());
       this.groupAcademic.setMission(groupAcademic.getMission());
-       this.groupAcademic.setVision(groupAcademic.getVision());
+      this.groupAcademic.setVision(groupAcademic.getVision());
     }
    
     public void initializeGroupAcademic(){
@@ -84,18 +84,18 @@ public class GroupAcademicModifyController implements Initializable {
          }
     }
 
-     private void getLgacs() throws BusinessException{
+    private void getLgacs() throws BusinessException{
         GroupAcademicDAO groupAcademicDAO =new GroupAcademicDAO();
         groupAcademic.setLGACs(groupAcademicDAO.getLGACs(groupAcademic.getKey()));
-         ArrayList<LGAC> lgacs= groupAcademicDAO.getLGACs(groupAcademic.getKey());
-         int i=0;
+         lgacsOld= groupAcademicDAO.getLGACs(groupAcademic.getKey());
+        int i=0;
         int numberlgacs=0;
         int numberRows=3;
         gridPane.setHgap (5);
         gridPane.setVgap (5);
-        while (i < (numberRows * lgacs.size()  )){  
-                TextField tfNamelgac = new TextField(lgacs.get(numberlgacs).getName());
-                TextArea taDescriptionlgac = new TextArea(lgacs.get(numberlgacs).getDescription());
+        while (i < (numberRows * lgacsOld.size()  )){  
+                TextField tfNamelgac = new TextField(lgacsOld.get(numberlgacs).getName());
+                TextArea taDescriptionlgac = new TextArea(lgacsOld.get(numberlgacs).getDescription());
                 String lgacName= "LGAC "+ (numberlgacs + 1);
                 Label label = new Label(lgacName);
                 taDescriptionlgac.setPrefHeight(80); 
@@ -107,17 +107,15 @@ public class GroupAcademicModifyController implements Initializable {
                 numberlgacs++;
            }
         spLGACs.setContent(gridPane);
+        initializeNextRowPosition();
     }
      
     private void initializeNextRowPosition() {  
         int sizeRows=3;
         GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO();
         int sizeLGACsCurrently=0;
-         try {
-             sizeLGACsCurrently = groupAcademicDAO.getLGACs(groupAcademic.getKey()).size();
-         } catch (BusinessException ex) {
-             Log.logException(ex);
-        }
+        sizeLGACsCurrently = lgacsOld.size() + newLgacs;
+       
        if(sizeLGACsCurrently>0){     
           
             nextRowPosition=  nextRowPosition + ( sizeLGACsCurrently * sizeRows);
@@ -126,9 +124,8 @@ public class GroupAcademicModifyController implements Initializable {
   
       @FXML 
     private void actionAddLGAC(ActionEvent actionEvent){ 
-            initializeNextRowPosition();
-            int sizeRows=3;
             
+            int sizeRows=3;
                TextField tfNamelgac = new TextField();
                 tfNamelgac .setPromptText("Nombre: ");   
                 tfNamelgac.setPrefWidth(200);
@@ -141,11 +138,11 @@ public class GroupAcademicModifyController implements Initializable {
                 gridPane.add(label,1,nextRowPosition);
                 gridPane.add(tfNamelgac,1,(nextRowPosition + 1));
                 gridPane.add(taDescriptionlgac,1, (nextRowPosition + 2));
-             nextRowPosition= nextRowPosition + sizeRows ;
-              spLGACs.setContent(gridPane);
-              newLgacs++;
-
+                nextRowPosition= nextRowPosition + sizeRows ;
+                spLGACs.setContent(gridPane);
+                newLgacs++;   
     }
+    
     @FXML
     private void actionSave (ActionEvent actionEvent){    
         String name = tfName.getText();
@@ -155,7 +152,7 @@ public class GroupAcademicModifyController implements Initializable {
         String mision= taMision.getText();
         String key= tfKey.getText();
         
-        if(!validateFieldEmpty() && validateFields()){  
+        if(!validateFieldEmpty() && validateFields() && validateLGACs()){  
               groupAcademicNew.setKey(key);
               groupAcademicNew.setConsolidationGrade(consolidationGrade);
               groupAcademicNew.setName(name);
@@ -170,9 +167,77 @@ public class GroupAcademicModifyController implements Initializable {
         }
     }
     
+    public void updateGroupAcademic (){    
+        GroupAcademicDAO groupAcademicDAO =new GroupAcademicDAO();
+        AlertMessage alertMessage =new AlertMessage(); 
+        try {
+          
+            if(groupAcademicDAO.updatedSucessful(groupAcademic.getKey(),groupAcademicNew)){
+            
+                deleteLgacs();
+                saveLgacs();
+                alertMessage.showUpdateMessage();
+                Stage stage = (Stage) btSave.getScene().getWindow();
+                stage.close();
+                openShowWindow();
+            }
+        } catch (BusinessException ex) {
+           if(ex.getMessage().equals("DataBase connection failed ")){
+                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
+            }else{  
+                Log.logException(ex);
+            }
+        }                
+    }
+    
+    private void saveLgacs() throws BusinessException{  
+            for(int i = 0; i < lgacsNew.size(); i++){
+                saveLgac(groupAcademicNew,lgacsNew.get(i));
+                
+            }
+                
+    }
+    public boolean validateLGACs(){
+            GridPane gridPane= (GridPane) spLGACs.getContent();
+            int i=1;
+            GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO();
+            int sizeRows=3;
+            int size= (lgacsOld.size() + newLgacs) * sizeRows;
+            boolean valide = true;
+             while (i < size){
+               TextField namelgac = (TextField) getNodeFromGridPane( gridPane, 1, i);
+               TextArea descriptionlgac = (TextArea) getNodeFromGridPane( gridPane, 1, (i + 1));           
+               if(validateFieldslgacs(namelgac,descriptionlgac)){   
+                   String name= namelgac.getText();
+                   String description= descriptionlgac.getText(); 
+                   LGAC lgac = new LGAC(name, description);
+                   lgacsNew.add(lgac);
+               }else{
+                    valide = false;
+               }
+             
+               i=i+3;           
+           }
+           return valide;
+    }
+    
+    private boolean validateFieldslgacs(TextField name, TextArea description){
+        boolean value = true;
+        AlertMessage alertMessage =new AlertMessage();
+        Validation validation = new Validation();
+        if( validation.findInvalidField(name.getText()) || validation.findInvalidField(description.getText())){    
+            value=false;
+            alertMessage.showAlertValidateFailed("Existen campos con caracteres invalidos");
+        }else if( (!validation.emptyField(name.getText()) && validation.emptyField(description.getText())) || (validation.emptyField(name.getText()) && !validation.emptyField(description.getText()))){ 
+            alertMessage.showAlertValidateFailed("Existen campos vacios");
+            value=false;
+        }
+        return value;
+    }
+    
     @FXML 
     private void actionReturn(ActionEvent actionEvent) throws BusinessException{  
-        Stage stage = (Stage) btReturn.getScene().getWindow();
+        Stage stage = (Stage) btSave.getScene().getWindow();
         stage.close();
         openShowWindow();
         
@@ -181,14 +246,14 @@ public class GroupAcademicModifyController implements Initializable {
     private void deleteLgacs() throws BusinessException{ 
         GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO();
         LGACDAO lgacDAO = new LGACDAO();
-         ArrayList<LGAC> lgacsOld = groupAcademicDAO.getLGACs(groupAcademic.getKey());
         int i =0;
-        while(i< lgacsOld.size()){
+        if(!lgacsOld.isEmpty()){
+            while(i< lgacsOld.size()){
             groupAcademicDAO.deletedLGACSuccesful(groupAcademic.getKey(), lgacsOld.get(i));
-           
-            i++;
-            
-        } 
+            i++;  
+            } 
+        }
+        
     
     }
     private void openShowWindow() throws BusinessException{  
@@ -218,63 +283,21 @@ public class GroupAcademicModifyController implements Initializable {
         }
     
     }
-    
-    public void updateGroupAcademic (){    
-        GroupAcademicDAO groupAcademicDAO =new GroupAcademicDAO();
-        AlertMessage alertMessage =new AlertMessage();
-        try {
-            deleteLgacs();
-            if(groupAcademicDAO.updatedSucessful(groupAcademic.getKey(),groupAcademicNew)){
-                recoverLgacs();
-                alertMessage.showUpdateMessage();
-                Stage stage = (Stage) btSave.getScene().getWindow();
-                stage.close();
-                openShowWindow();
-            }
-        } catch (BusinessException ex) {
-           if(ex.getMessage().equals("DataBase connection failed ")){
-                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
-            }else{  
-                Log.logException(ex);
-            }
-        }                
-    }
-    
-    private void recoverLgacs() throws BusinessException{   
-            GridPane gridPane= (GridPane) spLGACs.getContent();
-            int i=1;
-            GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO();
-            ArrayList<LGAC> lgacsOld = groupAcademic.getLGACs();
-            
-            int sizeRows=3;
-            int size= (lgacsOld.size() + newLgacs) * sizeRows;
-           while (i < size){
-               TextField namelgac = (TextField) getNodeFromGridPane( gridPane, 1, i);
-               TextArea descriptionlgac = (TextArea) getNodeFromGridPane( gridPane, 1, (i + 1));
-               if(validateFieldslgacs(namelgac,descriptionlgac)){         
-                 String name= namelgac.getText();
-                 String description= descriptionlgac.getText(); 
-                 LGAC lgac = new LGAC(name, description);
-                 saveLgacs(groupAcademicNew,lgac);
-               }
-               i=i+3;           
-           }
-     
-    }
-    
-
-    
-     private void saveLgacs(GroupAcademic groupAcademic,LGAC lgac){   
+      
+     private void saveLgac(GroupAcademic groupAcademic,LGAC lgac){   
         GroupAcademicDAO groupAcademicDAO= new GroupAcademicDAO();
         LGACDAO lgacDAO =new LGACDAO();
         AlertMessage alertMessage =new AlertMessage();
+        Validation validation = new Validation();
         
         try {
+            if(!validation.emptyField(lgac.getName()) && validation.emptyField(lgac.getName()) ){ 
             if(!searchRepeatedLgac(lgac.getName())){
                 lgacDAO.savedSucessful(lgac);
             }
             if(!searchRepeatedInAcademicGroup(lgac)){
                 groupAcademicDAO.addedLGACSucessful(groupAcademic, lgac);
+            } 
             }
         } catch (BusinessException ex) {
             if(ex.getMessage().equals("DataBase connection failed ")){
@@ -304,12 +327,13 @@ public class GroupAcademicModifyController implements Initializable {
         try {   
             GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO();
              LGACDAO lgacDAO = new LGACDAO();
-            ArrayList<LGAC> lgacsNew = groupAcademicDAO.getLGACs(groupAcademic.getKey());
+            ArrayList<LGAC> lgacsNew2 = groupAcademicDAO.getLGACs(groupAcademic.getKey());
             int i =0;
-            while(i< lgacsNew.size() && value==false){  
-                if(lgacsNew.get(i).equals(lgac)){   
+            while(i< lgacsNew2.size() && value==false){  
+                if(lgacsNew2.get(i).equals(lgac)){   
                     value=true;
                 }
+                i++;
             }
                 
         }catch (BusinessException ex){ 
@@ -326,28 +350,20 @@ public class GroupAcademicModifyController implements Initializable {
     }
      return null;
    }
-  
-    
+     
        
     private boolean validateFieldEmpty(){ 
           boolean value=false;
-          if(tfName.getText().isEmpty() || taObjetive.getText().isEmpty() 
-           || taVision.getText().isEmpty()  || taMision.getText().isEmpty() || tfKey.getText().isEmpty()  
+          Validation validation = new Validation();
+          if(validation.emptyField(tfName.getText()) || validation.emptyField(taObjetive.getText()) 
+           || validation.emptyField(taVision.getText())  || validation.emptyField(taMision.getText()) || validation.emptyField(tfKey.getText())  
            ){
               value=true;
           }
           return value;
       }
       
-      private void sendAlert(){ 
-          AlertMessage alertMessage= new AlertMessage();
-          if(validateFieldEmpty() ){  
-              alertMessage.showAlertValidateFailed("No se han llenado todos los campos");
-          }
-          if(!validateFields()){
-             alertMessage.showAlertValidateFailed("Existen campos con caracteres invalidos");
-          }                  
-    }
+
 
     private boolean validateFields(){    
         boolean value=true;
@@ -361,18 +377,16 @@ public class GroupAcademicModifyController implements Initializable {
         return value;
     }
     
-     private boolean validateFieldslgacs(TextField name, TextArea description){
-        boolean value=true;
-        AlertMessage alertMessage =new AlertMessage();
-        Validation validation=new Validation();
-        if( validation.findInvalidField(name.getText()) || validation.findInvalidField(description.getText())){    
-            value=false;
-            alertMessage.showAlertValidateFailed("Existen campos con caracteres invalidos");
-        }else if( name.getText().isEmpty()|| description.getText().isEmpty()  ){ 
-            alertMessage.showAlertValidateFailed("Existen campos vacios");
-            value=false;
-        }
-     return value;
+
+     
+    private void sendAlert(){ 
+          AlertMessage alertMessage= new AlertMessage();
+          if(validateFieldEmpty() ){  
+              alertMessage.showAlertValidateFailed("No se han llenado todos los campos");
+          }
+          if(!validateFields()){
+             alertMessage.showAlertValidateFailed("Existen campos con caracteres invalidos");
+          }                  
     }
 
     @Override
