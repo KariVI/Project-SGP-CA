@@ -39,8 +39,7 @@ public class WorkPlanDAO implements IWorkPlanDAO {
                     int id = workPlanResultSet.getInt("idPlanTrabajo");
                     String objetivoGeneral = workPlanResultSet.getString("objetivo");
                     String timePeriod = workPlanResultSet.getString("periodo");
-                    String key = workPlanResultSet.getString("claveCuerpoAcademico");
-                    workPlan = new WorkPlan(objetivoGeneral,key, timePeriod, null);
+                    workPlan = new WorkPlan(objetivoGeneral, timePeriod, null);
                     workPlan.setId(id);
                 } else {
                     throw new BusinessException("Work plan not found");
@@ -54,23 +53,22 @@ public class WorkPlanDAO implements IWorkPlanDAO {
         }
         return workPlan;
     }
-    @Override
-     public ArrayList <WorkPlan> getWorkPlans(String key) throws BusinessException {
+    
+     public ArrayList <WorkPlan> getWorkPlans() throws BusinessException {
         ArrayList <WorkPlan> workPlanList = new ArrayList<WorkPlan>();
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
             try{
-                PreparedStatement WorkPlansStatment;
-                WorkPlansStatment = connectionDataBase.prepareStatement("SELECT * FROM PlanTrabajo where claveCuerpoAcademico = ?");
-                WorkPlansStatment.setString(1, key);
+                PreparedStatement getGoalsStatment;
+                getGoalsStatment = connectionDataBase.prepareStatement("SELECT * FROM PlanTrabajo");
                 ResultSet workPlanResultSet;
-                workPlanResultSet = WorkPlansStatment.executeQuery();
+                workPlanResultSet = getGoalsStatment.executeQuery();
                 while(workPlanResultSet.next()){
                     int id = workPlanResultSet.getInt("idPlanTrabajo");
                     String objetiveGeneral = workPlanResultSet.getString("objetivo");
                     String timePeriod = workPlanResultSet.getString("periodo");
-                    WorkPlan workPlan = new WorkPlan(id,key,objetiveGeneral, timePeriod);
+                    WorkPlan workPlan = new WorkPlan(id,objetiveGeneral, timePeriod);
                     workPlanList.add(workPlan);
                 }
 
@@ -94,10 +92,9 @@ public class WorkPlanDAO implements IWorkPlanDAO {
              Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
               PreparedStatement insertWorkPlanStatment;
-                insertWorkPlanStatment = connectionDataBase.prepareStatement("INSERT INTO PlanTrabajo(claveCuerpoAcademico,objetivo,periodo) VALUES(?,?,?) ");
-                insertWorkPlanStatment.setString(1, workPlan.getGroupAcademicKey());
-                insertWorkPlanStatment.setString(2, workPlan.getObjetiveGeneral());
-                insertWorkPlanStatment.setString(3, workPlan.getTimePeriod());
+                insertWorkPlanStatment = connectionDataBase.prepareStatement("INSERT INTO PlanTrabajo(objetivo,periodo) VALUES(?,?) ");
+                 insertWorkPlanStatment.setString(1, workPlan.getObjetiveGeneral());
+                insertWorkPlanStatment.setString(2, workPlan.getTimePeriod());
                 insertWorkPlanStatment.executeUpdate();
                 connectorDataBase.disconnect();
                 saveSuccess = true;
@@ -109,29 +106,6 @@ public class WorkPlanDAO implements IWorkPlanDAO {
         
         return saveSuccess;
     }
-    
-    @Override
-    public boolean updateWorkPlan(WorkPlan workPlan) throws BusinessException{
-        boolean updateSuccess = false;
-        try{
-            Connector connectorDataBase = new Connector();
-            Connection connectionDataBase = connectorDataBase.getConnection();
-            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("UPDATE PlanTrabajo set objetivo = ?, periodo = ? WHERE idPlanTrabajo = ?");
-            preparedStatement.setString(1, workPlan.getObjetiveGeneral());
-            preparedStatement.setString(2, workPlan.getTimePeriod());
-            preparedStatement.setInt(3, workPlan.getId());
-            preparedStatement.executeUpdate();
-            updateSuccess = true;
-            connectorDataBase.disconnect();
-        }catch(SQLException sqlException) {
-                throw new BusinessException("Parameter index ", sqlException);
-         } catch (ClassNotFoundException ex) {
-            Log.logException(ex);
-        }
-        return updateSuccess;
-    }
-    
-   
     
      public int getId (WorkPlan workPlan) throws BusinessException{
          Integer id=0;
@@ -159,6 +133,5 @@ public class WorkPlanDAO implements IWorkPlanDAO {
         }
         return id;
      }
-
     
 }

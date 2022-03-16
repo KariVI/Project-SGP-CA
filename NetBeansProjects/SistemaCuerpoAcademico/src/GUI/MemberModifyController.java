@@ -42,6 +42,11 @@ public class MemberModifyController implements Initializable {
     @FXML private RadioButton rbActive;
     @FXML private RadioButton rbInactive;
     private Member member;
+    private Member currentlyMember;
+
+    public void setCurrentlyMember(Member currentlyMember) {
+        this.currentlyMember = currentlyMember;
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -193,6 +198,7 @@ public class MemberModifyController implements Initializable {
               loader.load();
               MemberViewController memberViewController  = loader.getController();
               memberViewController.initializeMember(member);
+              memberViewController.setMemberCurrently(currentlyMember);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);

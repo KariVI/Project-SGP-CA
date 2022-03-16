@@ -31,6 +31,7 @@ public class MemberListController implements  Initializable {
     @FXML private ListView<Member> lvMembers = new ListView<Member>();
     private ObservableList <Member> members ;
     private Member loginMember;
+   
     
     public void setMember(Member member){
         this.loginMember = member;
@@ -60,14 +61,17 @@ public class MemberListController implements  Initializable {
             FXMLLoader loader = new FXMLLoader(url);
             loader.setLocation(url);
             loader.load();
-            MemberViewController memberViewController =loader.getController();      
+            MemberViewController memberViewController =loader.getController();     
             memberViewController.initializeMember(selectedMember);
+            memberViewController.setMemberCurrently(loginMember);
             Parent root = loader.getRoot();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException ex) {
-            Log.logException(ex);
+              Log.logException(ex);
+              AlertMessage alertMessage  = new AlertMessage();
+              alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
         }       
     }
 
