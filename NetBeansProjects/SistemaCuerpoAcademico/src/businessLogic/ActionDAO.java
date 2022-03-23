@@ -128,4 +128,24 @@ public class ActionDAO implements IActionDAO{
         return saveSuccess; 
     }
     
+     public boolean deleteAllActionByIdGoal(int idGoal) throws BusinessException{
+        boolean deletedSuccess = false;
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            try{
+                PreparedStatement preparedStatement = connectionDataBase.prepareStatement("DELETE FROM Accion Where idMeta = ?");
+                preparedStatement.setInt(1, idGoal);
+                preparedStatement.executeUpdate();
+                deletedSuccess = true;
+                connectorDataBase.disconnect();
+            }catch(SQLException sqlException) {
+                throw new BusinessException("DataBase connection failed", sqlException);
+            }           
+        }catch(ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        
+        return deletedSuccess;
+    }
 }
