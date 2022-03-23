@@ -11,6 +11,7 @@ import businessLogic.WorkPlanDAO;
 import domain.Action;
 import domain.Action;
 import domain.Goal;
+import domain.Member;
 import domain.WorkPlan;
 import java.io.File;
 import java.io.IOException;
@@ -73,6 +74,11 @@ public class ActionRegisterController implements Initializable {
     @FXML private DatePicker dpDateEnd  = new DatePicker();;
     private String keyGroupAcademic;
     private WorkPlanRegisterController workPlanController;
+    private Member member;
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
 
     public void setWorkPlanController(WorkPlanRegisterController workPlanController) {
         this.workPlanController = workPlanController;
@@ -258,6 +264,7 @@ public class ActionRegisterController implements Initializable {
                 loader.load();
                 WorkPlanRegisterController workPlanRegisterController =loader.getController();  
                 workPlanRegisterController.setWorkPlan(workPlan) ;
+                workPlanRegisterController.setMember(member);
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);   
@@ -282,6 +289,7 @@ public class ActionRegisterController implements Initializable {
               loader.setLocation(url);
               loader.load();
               WorkPlanListController workPlanListController =loader.getController();   
+              workPlanListController.setMember(member);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);        
               primaryStage.setScene(scene);

@@ -54,6 +54,11 @@ public class WorkPlanRegisterController implements Initializable {
     private String keyGroupAcademic;
     private int indexGoal;
     private Goal lastGoal;
+    private Member member;
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -105,7 +110,8 @@ public class WorkPlanRegisterController implements Initializable {
               FXMLLoader loader = new FXMLLoader(url);
               loader.setLocation(url);
               loader.load();
-              WorkPlanListController workPlanListController =loader.getController();   
+              WorkPlanListController workPlanListController =loader.getController();  
+              workPlanListController.setMember(member);
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);        
               primaryStage.setScene(scene);
@@ -268,6 +274,7 @@ public class WorkPlanRegisterController implements Initializable {
                 loader.load();
                 ActionRegisterController actionRegisterController = loader.getController();
                 actionRegisterController.setWorkPlan(workPlan);
+                actionRegisterController.setMember(member);
                 Parent root = loader.getRoot();               
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);               
