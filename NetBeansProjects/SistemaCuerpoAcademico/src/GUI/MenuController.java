@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -74,9 +76,9 @@ public class MenuController implements Initializable {
     }
     
     @FXML 
-    private void actionQuery(ActionEvent actionEvent) throws BusinessException{  
+    private void actionQuery(ActionEvent actionEvent) {  
         Stage stage = (Stage) btConsult.getScene().getWindow();
-              stage.close(); 
+        
         try{ 
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/groupAcademicShow.fxml").toURI().toURL();
@@ -90,17 +92,27 @@ public class MenuController implements Initializable {
                 groupAcademicShowController.setGroupAcademic(groupAcademic);
                 groupAcademicShowController.setMember(member);
                 groupAcademicShowController.initializeGroupAcademic();
+                stage.close(); 
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);
-           }catch (IOException ex) {
+           }catch (IOException ex ) {
                     Log.logException(ex);
+            } catch (BusinessException | NullPointerException ex) {
+                Log.logException(ex);
+                AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                stage.close(); 
+                openLogin();
+                
             }
             primaryStage.show();
        } catch (MalformedURLException ex) {
            Log.logException(ex);
        }
     }
+    
+   
          
     private void fillOptions() {   
         options.add("Anteproyectos");
@@ -108,6 +120,7 @@ public class MenuController implements Initializable {
         options.add("Trabajos recepcionales");
         options.add("Proyectos");
         options.add("Reuniones");
+        options.add("Plan de trabajo");
        
     }
     
@@ -226,7 +239,23 @@ public class MenuController implements Initializable {
                    Log.logException(ex);
                }
             break;
-        
+            
+            case "Plan de trabajo":;
+                try {
+               loader = new FXMLLoader(getClass().getResource("WorkPlanList.fxml"));
+               root = loader.load();
+               WorkPlanListController workPlanListController = loader.getController();
+               String keyGroupAcademic = member.getKeyGroupAcademic();
+               workPlanListController.setMember(member);
+               Scene scene = new Scene(root);
+               Stage stage = new Stage();
+               stage.setScene(scene);
+               stage.initModality(Modality.APPLICATION_MODAL);
+               stage.showAndWait();
+               } catch (IOException ex) {
+                   Log.logException(ex);
+               }
+            break;
         }
     
     }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="453.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ActionRegisterController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="184.0" layoutX="-1.0" layoutY="-147.0" stroke="BLACK" strokeType="INSIDE" width="730.0" />
+      <TableView fx:id="tvActions" layoutX="25.0" layoutY="119.0" prefHeight="200.0" prefWidth="659.0">
+        <columns>
+          <TableColumn fx:id="tcGoal" prefWidth="177.0" text="Meta" />
+          <TableColumn fx:id="tcAction" prefWidth="147.0" text="Acción" />
+            <TableColumn fx:id="tcDateEnd" prefWidth="106.0" text="Fecha de fin" />
+            <TableColumn fx:id="tcMember" prefWidth="122.0" text="Responsable" />
+            <TableColumn fx:id="tcResource" prefWidth="106.0" text="Recurso" />
+        </columns>
+      </TableView>
+      <Label layoutX="260.0" layoutY="58.0" text="Acciones por meta">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <HBox layoutX="23.0" layoutY="319.0" prefHeight="64.0" prefWidth="666.0">
+         <children>
+            <ComboBox fx:id="cbGoals" prefHeight="25.0" prefWidth="133.0" />
+            <TextField fx:id="tfAction" />
+            <DatePicker fx:id="dpDateEnd" prefHeight="25.0" prefWidth="119.0" />
+            <TextField fx:id="tfMemberInCharge" prefHeight="25.0" prefWidth="127.0" />
+            <TextField fx:id="tfResource" prefHeight="25.0" prefWidth="130.0" />
+         </children>
+      </HBox>
+      <Button fx:id="btAdd" layoutX="605.0" layoutY="346.0" mnemonicParsing="false" onAction="#addAction" prefHeight="25.0" prefWidth="77.0" text="Añadir" />
+      <Button fx:id="btSave" layoutX="508.0" layoutY="414.0" mnemonicParsing="false" onAction="#saveWorkPlan" prefHeight="25.0" prefWidth="77.0" text="Guardar" />
+      <Button fx:id="btReturn" layoutX="605.0" layoutY="414.0" mnemonicParsing="false" onAction="#returnWorkPlan" prefHeight="25.0" prefWidth="77.0" text="Regresar" />
+      <Button fx:id="btDelete" layoutX="682.0" layoutY="294.0" mnemonicParsing="false" onAction="#delete" prefHeight="25.0" prefWidth="38.0" text="X" />
+   </children>
+</AnchorPane>
