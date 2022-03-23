@@ -2,6 +2,9 @@
 package sistemacuerpoacademico;
 
 
+import GUI.LoginController;
+import GUI.MemberRegisterController;
+import GUI.ProjectListController;
 import GUI.WorkPlanRegisterController;
 
 import domain.GroupAcademic;
@@ -26,15 +29,16 @@ public class PrincipalMenu extends Application {
     
     
     public void start(Stage primaryStage) {
-        
+        //MemberRegister
         try{
             
-            URL url = new File("src/GUI/WorkPlanRegister.fxml").toURI().toURL();
+            URL url = new File("src/GUI/Login.fxml").toURI().toURL();
             try{
                 FXMLLoader loader = new FXMLLoader(url);
                 loader.setLocation(url);
                 loader.load();
-                WorkPlanRegisterController login = loader.getController();
+                LoginController login = loader.getController();
+               
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);
