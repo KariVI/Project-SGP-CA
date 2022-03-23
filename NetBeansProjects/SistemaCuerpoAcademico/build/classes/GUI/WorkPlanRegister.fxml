@@ -34,12 +34,6 @@
           <RowConstraints maxHeight="92.0" minHeight="10.0" prefHeight="78.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-<<<<<<< HEAD
-            <Label text="Periodo:" />
-            <Label text="Rol:" GridPane.rowIndex="1" />
-            <Label text="Cédula:" GridPane.rowIndex="2" />
-            <TextBox GridPane.rowIndex="1"  />
-=======
             <Label text="Periodo:">
                <GridPane.margin>
                   <Insets bottom="10.0" />
@@ -63,7 +57,6 @@
             </ComboBox>
             <TextArea fx:id="taObjetive" prefHeight="92.0" prefWidth="228.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             
->>>>>>> 68b8011ddd1283c3f8e4367bfc1f4edf97f67303
          </children>
       </GridPane>
       <Button fx:id="btReturn" layoutX="473.0" layoutY="403.0" mnemonicParsing="false" onAction="#actionReturn" prefHeight="26.0" prefWidth="87.0" text="Cancelar" />
