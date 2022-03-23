@@ -3,8 +3,36 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/david/Documents/Sexto%20semestre/Desarrollo%20de%20software/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/ProjectShowController.java</file>
             <file>file:/C:/Users/david/Documents/Sexto%20semestre/Desarrollo%20de%20software/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/MemberRegisterController.java</file>
+=======
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/MinuteCheckComment.fxml</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/ProjectDAO.java</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/test/businessLogic/PrerequisiteDAOTest.java</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/IWorkPlanDAO.java</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/TopicRegisterController.java</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/MemberRegister.fxml</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/preliminarprojectshow.css</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/IGoalDAO.java</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/MinuteModify.fxml</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/MeetingRegister.fxml</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/MemberList.fxml</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/WorkPlanRegisterController.java</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/MinuteComment.fxml</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/MeetingShowController.java</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/GoalDao.java</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/WorkPlanRegister.fxml</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/MinuteShow.fxml</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/MinuteRegister.fxml</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/WorkPlanDAO.java</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/MemberView.fxml</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/domain/Action.java</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/domain/WorkPlan.java</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/Menu.fxml</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/domain/Goal.java</file>
+            <file>file:/C:/Users/jack-/Documents/GitHub/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/MeetingShow.fxml</file>
+>>>>>>> 787fa6828ac200ab1c2dc33caa449f2d5e338a0c
         </group>
     </open-files>
 </project-private>

@@ -5,7 +5,6 @@
  */
 package GUI;
 
-import businessLogic.ActionDAO;
 import businessLogic.GoalDao;
 import domain.Action;
 import domain.Goal;
@@ -72,9 +71,9 @@ public class WorkPlanActionViewController implements Initializable {
     }
 
     private void initializeActions() {
-             ActionDAO actionDAO = new ActionDAO();
+             GoalDao goalDAO = new GoalDao();
         try{
-            ArrayList<Action> actionList = actionDAO.getActionsByGoalId(goal.getId());
+            ArrayList<Action> actionList = goalDAO.getActionsByGoalId(goal.getId());
             for(int i = 0; i < actionList.size(); i++){    
                 actions.add(actionList.get(i));
             }

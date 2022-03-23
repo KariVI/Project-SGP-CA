@@ -192,7 +192,7 @@ public class WorkPlanRegisterController implements Initializable {
         boolean value=true;
         Validation validation = new Validation();
         AlertMessage alertMessage = new AlertMessage();
-            if(goal.getDescription().isEmpty()){  
+            if(goal.getDescription().isEmpty() || emptyField(goal.getDescription())){  
                 value=false;
                 alertMessage.showAlertValidateFailed("Campos vacios");
             }
@@ -282,10 +282,21 @@ public class WorkPlanRegisterController implements Initializable {
         return goalsAuxiliar;
     }
     
+    private boolean emptyField(String field){
+        boolean value = false;
+        
+        if(field.trim().length()==0){
+            value=true;
+        }
+        return value;
+    
+    }
    
     private boolean validateFieldEmpty(){ 
           boolean value=false;
           if(taObjetive.getText().isEmpty() ){
+              value=true;
+          }else if(emptyField(taObjetive.getText())){
               value=true;
           }
           return value;

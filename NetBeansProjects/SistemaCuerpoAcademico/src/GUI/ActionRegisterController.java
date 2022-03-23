@@ -70,7 +70,7 @@ public class ActionRegisterController implements Initializable {
     @FXML private TableColumn tcMember;
     @FXML private TableColumn tcDateEnd;
     @FXML private TableColumn tcResource;
-    @FXML private DatePicker dpDateEnd;
+    @FXML private DatePicker dpDateEnd  = new DatePicker();;
     private String keyGroupAcademic;
     private WorkPlanRegisterController workPlanController;
 
@@ -140,7 +140,7 @@ public class ActionRegisterController implements Initializable {
         Validation validation = new Validation();
         AlertMessage alertMessage = new AlertMessage();
             if(action.getDescription().isEmpty() 
-              ||  action.getMemberInCharge().isEmpty() || action.getResource().isEmpty() || dpDateEnd.getValue()==null ){  
+              ||  action.getMemberInCharge().isEmpty() || action.getResource().isEmpty()  || searchEmptyFields() ){  
                 value=false;
                 alertMessage.showAlertValidateFailed("Campos vacios");
             } else if (validation.findInvalidField(action.getDescription())
@@ -157,6 +157,12 @@ public class ActionRegisterController implements Initializable {
         return value;
     }
      
+    private boolean searchEmptyFields(){
+    
+        return emptyField(tfResource.getText()) || emptyField(tfMemberInCharge.getText()) || emptyField(tfAction.getText());
+    }
+    
+    
       public boolean repeatedAction(Action action){
         Boolean value = false;
         int i = 0;
@@ -173,8 +179,10 @@ public class ActionRegisterController implements Initializable {
         goals= FXCollections.observableArrayList();
         actions =FXCollections.observableArrayList();
         tvActions.setItems(actions);
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         dpDateEnd.setConverter(new LocalDateStringConverter(formatter, null));
+        dpDateEnd.setValue(LocalDate.now());
         tcGoal.setCellValueFactory(new PropertyValueFactory<Action,Goal>("goal"));
         tcAction.setCellValueFactory(new PropertyValueFactory<Action,String>("description"));
         tcDateEnd.setCellValueFactory(new PropertyValueFactory<Action,String>("dateEnd"));
@@ -338,6 +346,18 @@ public class ActionRegisterController implements Initializable {
         
         }    
         return value;  
+    }
+    
+    
+        
+    private boolean emptyField(String field){
+        boolean value = false;
+        
+        if(field.trim().length()==0){
+            value=true;
+        }
+        return value;
+    
     }
     
     private void setSelectedAction(){
