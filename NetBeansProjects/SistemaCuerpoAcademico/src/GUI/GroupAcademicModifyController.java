@@ -67,6 +67,7 @@ public class GroupAcademicModifyController implements Initializable {
       this.groupAcademic.setObjetive(groupAcademic.getObjetive());
       this.groupAcademic.setMission(groupAcademic.getMission());
       this.groupAcademic.setVision(groupAcademic.getVision());
+      groupAcademicNew.setKey(groupAcademic.getKey());
     }
    
     public void initializeGroupAcademic(){
@@ -237,10 +238,10 @@ public class GroupAcademicModifyController implements Initializable {
     
     @FXML 
     private void actionReturn(ActionEvent actionEvent) throws BusinessException{  
-        Stage stage = (Stage) btSave.getScene().getWindow();
+        Stage stage = (Stage) btReturn.getScene().getWindow();
         stage.close();
         openShowWindow();
-        
+      
     }
     
     private void deleteLgacs() throws BusinessException{ 
@@ -291,7 +292,7 @@ public class GroupAcademicModifyController implements Initializable {
         Validation validation = new Validation();
         
         try {
-            if(!validation.emptyField(lgac.getName()) && validation.emptyField(lgac.getName()) ){ 
+            if(!validation.emptyField(lgac.getName())){ 
             if(!searchRepeatedLgac(lgac.getName())){
                 lgacDAO.savedSucessful(lgac);
             }
