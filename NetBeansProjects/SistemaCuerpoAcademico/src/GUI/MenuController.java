@@ -78,7 +78,7 @@ public class MenuController implements Initializable {
     @FXML 
     private void actionQuery(ActionEvent actionEvent) {  
         Stage stage = (Stage) btConsult.getScene().getWindow();
-              stage.close(); 
+        
         try{ 
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/groupAcademicShow.fxml").toURI().toURL();
@@ -92,15 +92,18 @@ public class MenuController implements Initializable {
                 groupAcademicShowController.setGroupAcademic(groupAcademic);
                 groupAcademicShowController.setMember(member);
                 groupAcademicShowController.initializeGroupAcademic();
+                stage.close(); 
                 Parent root = loader.getRoot();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);
            }catch (IOException ex ) {
                     Log.logException(ex);
-            } catch (BusinessException ex) {
+            } catch (BusinessException | NullPointerException ex) {
                 Log.logException(ex);
                 AlertMessage alertMessage  = new AlertMessage();
                 alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                stage.close(); 
+                openLogin();
                 
             }
             primaryStage.show();
@@ -108,6 +111,8 @@ public class MenuController implements Initializable {
            Log.logException(ex);
        }
     }
+    
+   
          
     private void fillOptions() {   
         options.add("Anteproyectos");

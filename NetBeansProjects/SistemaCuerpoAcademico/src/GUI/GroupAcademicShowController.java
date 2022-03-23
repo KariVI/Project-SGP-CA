@@ -87,7 +87,7 @@ public class GroupAcademicShowController implements Initializable {
             alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
               Stage stage = (Stage) btReturn.getScene().getWindow();
             stage.close();
-            openViewMenu();
+            openLogin();
             
         }
     }
@@ -121,7 +121,7 @@ public class GroupAcademicShowController implements Initializable {
                 alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
                 Stage stage = (Stage) btReturn.getScene().getWindow();
                 stage.close();
-                openViewMenu();
+                openLogin();
             }
             primaryStage.show();
        
@@ -166,6 +166,29 @@ public class GroupAcademicShowController implements Initializable {
 
     }
     
+      private void  openLogin(){   
+        Stage primaryStage =  new Stage();
+        try{
+            
+            URL url = new File("src/GUI/Login.fxml").toURI().toURL();
+            try{
+                FXMLLoader loader = new FXMLLoader(url);
+                loader.setLocation(url);
+                loader.load();
+                LoginController login = loader.getController();
+                Parent root = loader.getRoot();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+                
+            } catch (IOException ex) {
+                Log.logException(ex);
+            }
+            primaryStage.show();
+            
+        } catch (MalformedURLException ex) {
+                Log.logException(ex);
+        }
+    }
     
     public void initialize(URL url, ResourceBundle rb) {
         tcName.setCellValueFactory(new PropertyValueFactory<LGAC,String>("name")); 

@@ -1,6 +1,7 @@
 
 package GUI;
 
+import businessLogic.WorkPlanDAO;
 import domain.Goal;
 import domain.Member;
 import domain.WorkPlan;
@@ -8,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -29,6 +31,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import log.BusinessException;
 import log.Log;
 
 
@@ -123,6 +126,21 @@ public class WorkPlanRegisterController implements Initializable {
         }  
      
      }
+     
+     private void getWorkPlans() {   
+        WorkPlanDAO workPlanDAO = new WorkPlanDAO();
+        ArrayList<WorkPlan> WorkPlanList;  
+        try {
+            WorkPlanList = workPlanDAO.getWorkPlans();
+            for(int i=0; i< WorkPlanList.size(); i++){
+            
+         }
+           
+       } catch (BusinessException ex) {
+            Log.logException(ex);
+       }
+        
+    }
    
     private Goal getSelectedGoal(){
         Goal goal = null;
