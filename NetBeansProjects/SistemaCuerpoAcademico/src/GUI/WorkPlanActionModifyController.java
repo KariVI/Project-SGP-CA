@@ -16,6 +16,8 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -56,11 +58,7 @@ public class WorkPlanActionModifyController implements Initializable {
     @FXML
     private TableColumn<Action, String> tcResource;
     @FXML
-    private Button btReturn;
-    @FXML
     private Button btSave;
-    @FXML
-    private ComboBox<Goal> cbGoals;
     @FXML
     private TextField tfAction;
     @FXML
@@ -81,9 +79,9 @@ public class WorkPlanActionModifyController implements Initializable {
     @FXML
     private Button btUpdate;
     @FXML
-    private Button btFinish;
-    @FXML
     private DatePicker dpDateEnd;
+    @FXML
+    private Button btCancel;
     
     /**
      * Initializes the controller class.
@@ -94,9 +92,6 @@ public class WorkPlanActionModifyController implements Initializable {
         tcDate.setCellValueFactory(new PropertyValueFactory<Action,String>("dateEnd"));
         tcResponsable.setCellValueFactory(new PropertyValueFactory<Action,String>("memberInCharge"));
         tcResource.setCellValueFactory(new PropertyValueFactory<Action,String>("resource"));
-        cbGoals.setOnAction(e -> {
-            clicOnGoal();    
-        });
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         dpDateEnd.setConverter(new LocalDateStringConverter(formatter, null));
     }    
@@ -106,20 +101,19 @@ public class WorkPlanActionModifyController implements Initializable {
     }
     
     public void setWorkPlanId(int idWorkPlan) {
-        this.idWorkPlan = idWorkPlan;
-        initializeGoals();
+        this.idWorkPlan = idWorkPlan;       
     }   
     
-    private void initializeGoals(){
-        GoalDao goalsDAO = new GoalDao();
-        try{
-            goalList = FXCollections.observableArrayList(goalsDAO.getGoalsByWorkPlanId(idWorkPlan));
-            cbGoals.setItems(goalList);
-        }catch(BusinessException ex){
+    public void setGoalOfActions(Goal goal){
+        try {
+            GoalDao goalDAO = new GoalDao();
+            idGoalSelected = goalDAO.getId(goal, idWorkPlan);
+            initializeActions();
+        } catch (BusinessException ex) {
             Log.logException(ex);
         }
     }
-    
+     
     private void initializeActions() {
         ActionDAO actionDAO = new ActionDAO();
         try{
@@ -131,20 +125,6 @@ public class WorkPlanActionModifyController implements Initializable {
         }catch(BusinessException ex){
             Log.logException(ex);
         }
-    }
-    
-    private void clicOnGoal() {
-        if(cbGoals.getSelectionModel().getSelectedIndex() > -1){
-            idGoalSelected = cbGoals.getSelectionModel().getSelectedItem().getId();
-            initializeActions();
-        }
-    }
-
-    @FXML
-    private void actionReturn(ActionEvent event) {
-        Stage stage = (Stage) btReturn.getScene().getWindow();
-        stage.close();
-        openWorkPlanModify();
     }
 
     @FXML
@@ -162,12 +142,9 @@ public class WorkPlanActionModifyController implements Initializable {
                     actionDAO.saveSuccesful(actions.get(i), idGoalSelected);
                 }     
             } 
-            cbGoals.setDisable(false);
-            cbGoals.getSelectionModel().clearSelection();
             AlertMessage alertMessage = new AlertMessage();
             alertMessage.showAlertSuccesfulSave("Las acciones  ");
-            actions.clear();
-            oldActions.clear();
+            openWorkPlanModify();
         }catch (BusinessException ex) {
             Log.logException(ex);
         }
@@ -175,8 +152,7 @@ public class WorkPlanActionModifyController implements Initializable {
     }
 
     @FXML
-    private void actionAddAction(ActionEvent event) {
-        cbGoals.setDisable(true);
+    private void actionAddAction(ActionEvent event) {       
         String description = tfAction.getText();
         String responsable = tfResponsable.getText();
         String resource = tfResource.getText();
@@ -193,7 +169,6 @@ public class WorkPlanActionModifyController implements Initializable {
 
     @FXML
     private void actionDeleteAction(ActionEvent event) {
-        cbGoals.setDisable(true);
         Action action = tvActions.getSelectionModel().getSelectedItem();
         if(action != null){
             actions.remove(action);
@@ -207,7 +182,6 @@ public class WorkPlanActionModifyController implements Initializable {
     
     @FXML
     private void actionUpdateAction(ActionEvent event) {
-        cbGoals.setDisable(true);
         Action action = tvActions.getSelectionModel().getSelectedItem();
         if(action != null){
             int indexAction = actions.indexOf(action);
@@ -265,38 +239,19 @@ public class WorkPlanActionModifyController implements Initializable {
         dpDateEnd.setValue(null);
         tfResource.setText("");
     }
-
+    
     @FXML
-    private void actionFinish(ActionEvent event) {
-        Stage stage = (Stage) btFinish.getScene().getWindow();
+    private void actionCancel(ActionEvent event) {  
+        Stage stage = (Stage) btCancel.getScene().getWindow();
         stage.close();
-        openMenu();
-    }
-        
-    private void openMenu(){
-        Stage primaryStage= new Stage();
-            try{
-                URL url = new File("src/GUI/Menu.fxml").toURI().toURL();
-                FXMLLoader loader = new FXMLLoader(url);
-                loader.setLocation(url);
-                loader.load();
-                MenuController menu = loader.getController();
-                menu.initializeMenu(member);
-                Parent root = loader.getRoot();
-                Scene scene = new Scene(root);
-                primaryStage.setScene(scene);
-                primaryStage.show();
-            }catch (IOException ex) {
-                Log.logException(ex);
-            }
+        openWorkPlanModify();
     }
     
     private boolean validateAction(Action action){ 
         boolean value=true;
         Validation validation = new Validation();
         AlertMessage alertMessage = new AlertMessage();
-            if(action.getDescription().isEmpty() 
-              ||  action.getMemberInCharge().isEmpty() || action.getResource().isEmpty() || dpDateEnd.getValue()==null ){  
+            if(action.getDescription().isEmpty() ||  action.getMemberInCharge().isEmpty() || action.getResource().isEmpty() || dpDateEnd.getValue()==null ){  
                 value=false;
                 alertMessage.showAlertValidateFailed("Campos vacios");
             } else if (validation.findInvalidField(action.getDescription())

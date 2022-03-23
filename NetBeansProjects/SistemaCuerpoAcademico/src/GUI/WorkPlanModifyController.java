@@ -12,6 +12,7 @@ import domain.Action;
 import domain.Goal;
 import domain.Member;
 import domain.WorkPlan;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -64,6 +65,7 @@ public class WorkPlanModifyController implements Initializable {
     
     int idWorkPlan;
     WorkPlan workPlan;
+    Goal goalSelected;
     ObservableList<Goal> goalList;
     ObservableList<Goal> newGoals;
     ObservableList<Goal> updateGoals;
@@ -82,6 +84,8 @@ public class WorkPlanModifyController implements Initializable {
     private ObservableList<String> years;
     private String currentMonth;
     private String currentYear;
+    @FXML
+    private Button btFinish;
 
     /**
      * Initializes the controller class.
@@ -159,12 +163,31 @@ public class WorkPlanModifyController implements Initializable {
         stage.close();
         openWorkPlan();
     }
+    
+    @FXML
+    private void actionFinish(ActionEvent event) {
+        if(updateWorkPlan()){
+            AlertMessage alertMessage = new AlertMessage();
+            alertMessage.showAlertSuccesfulSave("El plan de trabajo  ");
+            Stage stage = (Stage) btFinish.getScene().getWindow();
+            stage.close();
+            openMenu();
+        }
+    }
 
     @FXML
     private void actionNextWindow(ActionEvent event) {
-        Stage stage = (Stage) btNext.getScene().getWindow();
-        stage.close();
-        updateWorkPlan();
+        if(updateWorkPlan()){
+            goalSelected = tvGoals.getSelectionModel().getSelectedItem();
+            if(goalSelected != null){
+                Stage stage = (Stage) btNext.getScene().getWindow();
+                stage.close();
+                openWorkPlanActionModify();
+            }else{
+                AlertMessage alertMessage = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Selecciona una meta para modificar sus acciones");
+            }          
+        }       
     }
 
     @FXML
@@ -193,6 +216,7 @@ public class WorkPlanModifyController implements Initializable {
                     newGoals.set(indexUpdateGoal, newGoal);
                 }else{
                     goalList.set(indexGoal, newGoal);
+                    System.out.println(newGoal.getId());
                     updateGoals.add(newGoal);
                 }
                 tvGoals.refresh();
@@ -246,6 +270,7 @@ public class WorkPlanModifyController implements Initializable {
             WorkPlanActionModifyController workPlanActionModifyController = loader.getController();
             workPlanActionModifyController.setWorkPlanId(this.idWorkPlan);
             workPlanActionModifyController.setMember(member);
+            workPlanActionModifyController.setGoalOfActions(goalSelected);
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
@@ -254,6 +279,24 @@ public class WorkPlanModifyController implements Initializable {
         } catch (IOException ex) {
             Log.logException(ex);
         }       
+    }
+    
+    private void openMenu(){
+        Stage primaryStage= new Stage();
+            try{
+                URL url = new File("src/GUI/Menu.fxml").toURI().toURL();
+                FXMLLoader loader = new FXMLLoader(url);
+                loader.setLocation(url);
+                loader.load();
+                MenuController menu = loader.getController();
+                menu.initializeMenu(member);
+                Parent root = loader.getRoot();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+                primaryStage.show();
+            }catch (IOException ex) {
+                Log.logException(ex);
+            }
     }
 
     @FXML
@@ -268,20 +311,22 @@ public class WorkPlanModifyController implements Initializable {
         tfGoal.setText("");
     }
     
-    private void updateWorkPlan(){
-        if(!validateFieldEmpty() && !validateInformationField()){
+    private boolean updateWorkPlan(){
+        boolean isSaved = false;
+        if(!validateFieldEmpty() && validateInformationField()){
             String objetive= taObjetive.getText();
             String timePeriod = cbMonths.getSelectionModel().getSelectedItem() + " " +  cbYears.getSelectionModel().getSelectedItem();
             WorkPlan newWorkPlan = new WorkPlan(idWorkPlan, member.getKeyGroupAcademic(), objetive, timePeriod);
             WorkPlanDAO workPlanDAO = new WorkPlanDAO();
+            isSaved = true;
             try {
                 workPlanDAO.updateWorkPlan(newWorkPlan);
             } catch (BusinessException ex) {
                 Log.logException(ex);
             }
             updateGoals(); 
-            openWorkPlanActionModify();
         }
+        return isSaved;
     }
     
     private void updateGoals(){
@@ -289,6 +334,7 @@ public class WorkPlanModifyController implements Initializable {
         try{
             for (int i = 0; i < updateGoals.size(); i++){
                 goalDAO.updatedGoalById(idWorkPlan, updateGoals.get(i));
+                System.out.println(updateGoals.get(i).getId());
             }
             
             for (int i = 0; i < newGoals.size(); i++){
@@ -353,9 +399,21 @@ public class WorkPlanModifyController implements Initializable {
        return value;
     }
     
+    private boolean emptyField(String field){
+        boolean value = false;
+        
+        if(field.trim().length()==0){
+            value=true;
+        }
+        return value;
+    
+    }
+    
     private boolean validateFieldEmpty(){ 
           boolean value=false;
           if(taObjetive.getText().isEmpty() ){
+              value=true;
+          }else if(emptyField(taObjetive.getText())){
               value=true;
           }
           return value;
@@ -364,7 +422,7 @@ public class WorkPlanModifyController implements Initializable {
     private boolean validateInformationField(){ 
         boolean value=true;
         Validation validation=new Validation();
-        if(!validation.findInvalidField(taObjetive.getText())){   
+        if(validation.findInvalidField(taObjetive.getText())){   
             value=false;
         }  
         return value;

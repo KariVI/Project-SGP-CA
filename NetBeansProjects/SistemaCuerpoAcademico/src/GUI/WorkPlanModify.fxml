@@ -24,8 +24,8 @@
             <TableColumn fx:id="tcGoals" prefWidth="496.0000228881836" resizable="false" text="Metas" />
          </columns>
       </TableView>
-      <Button fx:id="btCancel" layoutX="632.0" layoutY="483.0" mnemonicParsing="false" onAction="#actionCancel" prefHeight="27.0" prefWidth="76.0" text="Cancelar" />
-      <Button fx:id="btNext" layoutX="544.0" layoutY="483.0" mnemonicParsing="false" onAction="#actionNextWindow" prefHeight="27.0" prefWidth="76.0" text="Siguiente" />
+      <Button fx:id="btCancel" layoutX="14.0" layoutY="477.0" mnemonicParsing="false" onAction="#actionCancel" prefHeight="27.0" prefWidth="76.0" text="Cancelar" />
+      <Button fx:id="btNext" layoutX="505.0" layoutY="483.0" mnemonicParsing="false" onAction="#actionNextWindow" prefHeight="27.0" prefWidth="106.0" text="Ir a acciones" />
       <TextField fx:id="tfGoal" layoutX="112.0" layoutY="414.0" prefHeight="25.0" prefWidth="411.0" />
       <Button fx:id="btAdd" layoutX="610.0" layoutY="308.0" mnemonicParsing="false" onAction="#actionAddGoal" prefHeight="27.0" prefWidth="42.0" text="+" />
       <Button fx:id="btDelete" layoutX="611.0" layoutY="259.0" mnemonicParsing="false" onAction="#actionDeleteGoal" prefHeight="27.0" prefWidth="42.0" text="X" />
@@ -37,5 +37,6 @@
       </ComboBox>
       <ComboBox fx:id="cbYears" layoutX="292.0" layoutY="95.0" prefHeight="25.0" prefWidth="94.0" promptText="Año" />
       <TextArea fx:id="taObjetive" layoutX="155.0" layoutY="128.0" prefHeight="92.0" prefWidth="411.0" />
+      <Button fx:id="btFinish" layoutX="620.0" layoutY="483.0" mnemonicParsing="false" onAction="#actionFinish" prefHeight="27.0" prefWidth="94.0" text="Terminar" />
    </children>
 </AnchorPane>

@@ -16,7 +16,6 @@
             <Font name="System Bold" size="27.0" />
          </font>
       </Text>
-      <Label layoutX="59.0" layoutY="98.0" text="Meta:" />
       <TableView fx:id="tvActions" layoutX="59.0" layoutY="138.0" onMouseClicked="#fillActionFields" prefHeight="275.0" prefWidth="743.0">
          <columns>
             <TableColumn fx:id="tcAction" prefWidth="237.0" text="Acción" />
@@ -25,9 +24,7 @@
             <TableColumn fx:id="tcResource" prefWidth="163.0" text="Recurso" />
          </columns>
       </TableView>
-      <Button fx:id="btReturn" layoutX="669.0" layoutY="503.0" mnemonicParsing="false" onAction="#actionReturn" text="Regresar" />
-      <Button fx:id="btSave" layoutX="377.0" layoutY="446.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar acciones de esta meta" />
-      <ComboBox fx:id="cbGoals" layoutX="114.0" layoutY="94.0" prefHeight="25.0" prefWidth="518.0" style="-fx-background-color: #FFFFFF;" />
+      <Button fx:id="btSave" layoutX="610.0" layoutY="503.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar acciones" />
       <TextField fx:id="tfAction" layoutX="59.0" layoutY="414.0" prefHeight="25.0" prefWidth="234.0" />
       <TextField fx:id="tfResponsable" layoutX="460.0" layoutY="414.0" prefHeight="25.0" prefWidth="172.0" />
       <TextField fx:id="tfResource" layoutX="635.0" layoutY="414.0" prefHeight="25.0" prefWidth="165.0" />
@@ -37,7 +34,7 @@
          </font></Button>
       <Button fx:id="btDelete" layoutX="804.0" layoutY="173.0" mnemonicParsing="false" onAction="#actionDeleteAction" text="X" />
       <Button fx:id="btUpdate" layoutX="802.0" layoutY="414.0" mnemonicParsing="false" onAction="#actionUpdateAction" text="Actualizar" />
-      <Button fx:id="btFinish" layoutX="750.0" layoutY="503.0" mnemonicParsing="false" onAction="#actionFinish" text="Terminar" />
+      <Button fx:id="btCancel" layoutX="750.0" layoutY="503.0" mnemonicParsing="false" onAction="#actionCancel" text="Cancelar" />
       <DatePicker fx:id="dpDateEnd" layoutX="300.0" layoutY="414.0" prefHeight="25.0" prefWidth="154.0" />
    </children>
 </AnchorPane>
