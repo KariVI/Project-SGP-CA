@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import GUI.TextFieldLimited?>
 
-<AnchorPane id="AnchorPane" prefHeight="411.0" prefWidth="608.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MinuteRegisterController">
+<AnchorPane id="AnchorPane" prefHeight="500" prefWidth="700" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MinuteRegisterController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#050505" height="98.0" layoutY="-55.0" stroke="BLACK" strokeType="INSIDE" width="608.0" />
       <TableView fx:id="tvAgreement" layoutX="38.0" layoutY="84.0" prefHeight="129.0" prefWidth="508.0">
