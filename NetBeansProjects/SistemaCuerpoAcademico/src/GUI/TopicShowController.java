@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,10 +41,10 @@ public class TopicShowController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tcTopic.setCellValueFactory(new PropertyValueFactory<Topic,String>("topicName"));
-        tcStartTime.setCellValueFactory(new PropertyValueFactory<Topic,String>("startTime"));
-        tcFinishTime.setCellValueFactory(new PropertyValueFactory<Topic,String>("finishTime"));
-        tcMember.setCellValueFactory(new PropertyValueFactory<Topic,String>("professionalLicense"));
+        tcTopic.setCellValueFactory(new PropertyValueFactory<>("topicName"));
+        tcStartTime.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        tcFinishTime.setCellValueFactory(new PropertyValueFactory<>("finishTime"));
+        tcMember.setCellValueFactory(new PropertyValueFactory<>("professionalLicense"));
         topics = FXCollections.observableArrayList();      
         tvTopic.setItems(topics);        
     }  
@@ -67,8 +65,7 @@ public class TopicShowController implements Initializable {
             topicList = topicDAO.getAgendaTopics(meeting.getKey());
             for(int i = 0; i < topicList.size(); i++){
                 topics.add(topicList.get(i));   
-            }
-            
+            }   
         } catch (BusinessException ex) {
             Log.logException(ex);
         }       
@@ -126,5 +123,4 @@ public class TopicShowController implements Initializable {
             Log.logException(ex);
         }
     }
-    
 }
