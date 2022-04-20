@@ -80,7 +80,7 @@ public class ReceptionWorkShowController implements Initializable {
     }
     
     @FXML
-    private void actionUpdate(ActionEvent actionEvent){ 
+    private void actionUpdate(ActionEvent actionEvent) throws BusinessException{ 
         Stage stage = (Stage) btUpdate.getScene().getWindow();
         stage.close();
         try{ 
@@ -92,10 +92,10 @@ public class ReceptionWorkShowController implements Initializable {
               loader.load();
               ReceptionWorkModifyController receptionWorkController =loader.getController(); 
               receptionWorkController.setReceptionWork(receptionWork);
-              receptionWorkController.setPreliminarProjects(preliminarProjectsUnassigned);
               receptionWorkController.setKeyGroupAcademic(keyGroupAcademic);
               receptionWorkController.setMember(member);
               receptionWorkController.initializeReceptionWork();
+              receptionWorkController.initializeProjects();
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);       
@@ -143,12 +143,12 @@ public class ReceptionWorkShowController implements Initializable {
        lbEndDate.setText("Fecha fin: "+receptionWork.getDateEnd());
        lbType.setText("Tipo:   " +receptionWork.getType());
        taDescription.setText("Descripción: " + receptionWork.getDescription());
-       lbPreliminarProject. setText("Anteproyecto: "+ receptionWork.getPreliminarProject());
+       lbPreliminarProject. setText("Proyecto: "+ receptionWork.getProject());
        lbState.setText("Estado: "+ receptionWork.getActualState());
        recoverColaborators ();
            try {
                getStudents();
-               getLGACS();
+
            } catch (BusinessException ex) {
                Log.logException(ex);
            }
@@ -197,32 +197,7 @@ public class ReceptionWorkShowController implements Initializable {
     }
     
     
-      private void getLGACS() throws BusinessException{
-        ReceptionWorkDAO receptionWorkDAO =new ReceptionWorkDAO();
-        if(receptionWorkDAO.getLGACs(receptionWork.getKey() ) != null){
-            ArrayList<LGAC> lgacsReceptionWork= receptionWorkDAO.getLGACs(receptionWork.getKey() );
-            receptionWork.setLGACs(lgacsReceptionWork);          
-        }
-         ArrayList<LGAC> lgacs= receptionWork.getLGACs();
-         int i=0;
-         int indexGridPane=1;
-        GridPane gridPane= new GridPane();
-        gridPane.setHgap (2);
-        gridPane.setVgap (2);
-        gridPane.add(new Label("LGACs relacionadas: "),1,0);
-
-        if(lgacs.size()> 0){
-            while (i <lgacs.size()){ 
-                    Label lbLGAC = new Label("-"+lgacs.get(i).getName());
-                    gridPane.add(lbLGAC,1,indexGridPane);
-                    i++;
-                    indexGridPane++;
-                    
-            }
-            lgacsPane.getChildren().add(gridPane);
-        }
-    }
-      
+  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         preliminarProjectsUnassigned= FXCollections.observableArrayList();

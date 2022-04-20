@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import GUI.TextFieldLimited?>
-<AnchorPane id="AnchorPane" prefHeight="669.0" prefWidth="779.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ReceptionWorkModifyController">
+<AnchorPane id="AnchorPane" prefHeight="669.0" prefWidth="779.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ReceptionWorkModifyController">
     <stylesheets>
         <URL value="@receptionworkmodify.css" />
     </stylesheets>
@@ -24,9 +24,9 @@
       <Label layoutX="19.0" layoutY="101.0" text="Título " />
       <Label layoutX="11.0" layoutY="135.0" text="Fecha de inicio:" />
       <Label layoutX="16.0" layoutY="165.0" text="Fecha de fin: " />
-      <Label layoutX="21.0" layoutY="361.0" text="Descripción:" />
+      <Label layoutX="6.0" layoutY="268.0" text="Descripción:" />
       <TextFieldLimited fx:id="tfTitle" layoutX="150.0" layoutY="89.0" prefHeight="25.0" prefWidth="252.0" />
-      <TextArea fx:id="taDescription" layoutX="132.0" layoutY="350.0" prefHeight="82.0" prefWidth="277.0" wrapText="true" />
+      <TextArea fx:id="taDescription" layoutX="132.0" layoutY="274.0" prefHeight="158.0" prefWidth="277.0" wrapText="true" />
       <Button fx:id="btSave" layoutX="619.0" layoutY="629.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar" />
       <Button fx:id="btExit" layoutX="697.0" layoutY="630.0" mnemonicParsing="false" onAction="#actionExit" prefHeight="25.0" prefWidth="59.0" text="Salir" />
       <Label layoutX="25.0" layoutY="41.0" text="Actualización de Trabajo Recepcional ">
@@ -38,8 +38,8 @@
       <DatePicker fx:id="dpEndDate" layoutX="236.0" layoutY="161.0" prefHeight="25.0" prefWidth="166.0" />
       <Label layoutX="12.0" layoutY="195.0" text="Tipo:" />
       <ComboBox fx:id="cbType" layoutX="190.0" layoutY="191.0" prefHeight="25.0" prefWidth="218.0" />
-      <ComboBox fx:id="cbPreliminarProject" layoutX="475.0" layoutY="119.0" prefHeight="25.0" prefWidth="277.0" />
-      <Label layoutX="462.0" layoutY="93.0" text="Anteproyecto:" />
+      <ComboBox fx:id="cbProject" layoutX="475.0" layoutY="119.0" prefHeight="25.0" prefWidth="277.0" />
+      <Label layoutX="462.0" layoutY="93.0" text="Proyecto:" />
       <ComboBox fx:id="cbState" layoutX="190.0" layoutY="228.0" prefHeight="24.0" prefWidth="218.0" />
        <ComboBox fx:id="cbDirector" layoutX="152.0" layoutY="453.0" prefHeight="25.0" prefWidth="260.0" />
       <TableView fx:id="tvCodirectors" layoutX="86.0" layoutY="490.0" prefHeight="139.0" prefWidth="326.0">
@@ -51,7 +51,6 @@
       <ComboBox fx:id="cbCodirectors" layoutX="89.0" layoutY="629.0" prefHeight="25.0" prefWidth="243.0" />
       <Button fx:id="btAddCodirector1" layoutX="332.0" layoutY="630.0" mnemonicParsing="false" onAction="#actionAddCodirector" prefHeight="7.0" prefWidth="70.0" text="Añadir" />
       <Label layoutX="11.0" layoutY="232.0" text="Estado:" />
-      <ScrollPane fx:id="spLgacs" layoutX="12.0" layoutY="261.0" prefHeight="82.0" prefWidth="397.0" />
       <ScrollPane fx:id="spStudents" layoutX="452.0" layoutY="152.0" prefHeight="413.0" prefWidth="304.0" />
       <Button fx:id="btAddStudent" layoutX="626.0" layoutY="579.0" mnemonicParsing="false" onAction="#actionAddStudent" prefHeight="25.0" prefWidth="127.0" text="Añadir estudiante" />
    </children>
