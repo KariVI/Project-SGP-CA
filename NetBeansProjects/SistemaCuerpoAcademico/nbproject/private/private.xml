@@ -6,6 +6,10 @@
         <group>
             <file>file:/C:/Users/david/Documents/Sexto%20semestre/Desarrollo%20de%20software/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/domain/Action.java</file>
             <file>file:/C:/Users/david/Documents/Sexto%20semestre/Desarrollo%20de%20software/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/MemberRegisterController.java</file>
+<<<<<<< HEAD
+=======
+            <file>file:/C:/Users/david/Documents/Sexto%20semestre/Desarrollo%20de%20software/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/businessLogic/ActionDAO.java</file>
+>>>>>>> main
             <file>file:/C:/Users/david/Documents/Sexto%20semestre/Desarrollo%20de%20software/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/GUI/MenuController.java</file>
             <file>file:/C:/Users/david/Documents/Sexto%20semestre/Desarrollo%20de%20software/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/sistemacuerpoacademico/PrincipalMenu.java</file>
             <file>file:/C:/Users/david/Documents/Sexto%20semestre/Desarrollo%20de%20software/Project-SGP-CA/NetBeansProjects/SistemaCuerpoAcademico/src/domain/Member.java</file>

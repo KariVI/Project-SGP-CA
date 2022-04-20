@@ -6,6 +6,7 @@ public class WorkPlan {
     private String objetiveGeneral;
     private String timePeriod;
     private Goal[] goals;
+    private String groupAcademicKey;
 
     public WorkPlan(String objetiveGeneral, String timePeriod, Goal[] goals) {
         this.objetiveGeneral = objetiveGeneral;
@@ -13,10 +14,17 @@ public class WorkPlan {
         this.goals = goals;
     }
 
-    public WorkPlan(int id,String objetiveGeneral, String timePeriod) {
-       this.id = id;
-       this.objetiveGeneral = objetiveGeneral;
-       this.timePeriod = timePeriod;
+    public WorkPlan(int id, String groupAcademicKey, String objetiveGeneral, String timePeriod) {
+        this.id = id;
+        this.objetiveGeneral = objetiveGeneral;
+        this.timePeriod = timePeriod;
+        this.groupAcademicKey = groupAcademicKey;
+    }
+
+    public WorkPlan(int id, String objetiveGeneral, String timePeriod) {
+        this.id = id;
+        this.objetiveGeneral = objetiveGeneral;
+        this.timePeriod = timePeriod;
     }
 
     public WorkPlan() {
@@ -66,9 +74,9 @@ public class WorkPlan {
         }
         return value;
     }
-    
+
     @Override
-      public String toString(){
-          return timePeriod;
-      }
+    public String toString() {
+        return timePeriod;
+    }
 }

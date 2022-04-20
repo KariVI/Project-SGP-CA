@@ -84,6 +84,26 @@ public class WorkPlanDAO implements IWorkPlanDAO {
 
         return workPlanList;  
     }
+     
+    public boolean updateWorkPlan(WorkPlan workPlan) throws BusinessException{
+        boolean updateSuccess = false;
+        try{
+            Connector connectorDataBase = new Connector();
+            Connection connectionDataBase = connectorDataBase.getConnection();
+            PreparedStatement preparedStatement = connectionDataBase.prepareStatement("UPDATE PlanTrabajo set objetivo = ?, periodo = ? WHERE idPlanTrabajo = ?");
+            preparedStatement.setString(1, workPlan.getObjetiveGeneral());
+            preparedStatement.setString(2, workPlan.getTimePeriod());
+            preparedStatement.setInt(3, workPlan.getId());
+            preparedStatement.executeUpdate();
+            updateSuccess = true;
+            connectorDataBase.disconnect();
+        }catch(SQLException sqlException) {
+                throw new BusinessException("Parameter index ", sqlException);
+         } catch (ClassNotFoundException ex) {
+            Log.logException(ex);
+        }
+        return updateSuccess;
+    }
 
     @Override
     public boolean saveSuccesful(WorkPlan workPlan) throws BusinessException {

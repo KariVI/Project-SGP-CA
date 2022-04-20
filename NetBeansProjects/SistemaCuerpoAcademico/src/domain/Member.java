@@ -69,7 +69,7 @@ public class Member {
             if (object instanceof Member) {
             Member memberCompare = (Member) object;
 
-            if ((this.professionalLicense.equals(memberCompare.getProfessionalLicense())) && (this.name.equals(memberCompare.getName()))){
+            if ((this.professionalLicense.equals(memberCompare.getProfessionalLicense())) || (this.name.equals(memberCompare.getName()))){
 
                 value=true;
             }

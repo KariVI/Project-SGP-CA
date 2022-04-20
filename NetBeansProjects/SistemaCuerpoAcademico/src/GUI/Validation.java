@@ -9,7 +9,7 @@ import javafx.scene.control.DatePicker;
 
 public class Validation {
     public boolean findInvalidField(String field){ 
-        boolean value=false;
+        boolean value = false;
         Pattern pattern = Pattern.compile("[!#$%'*+/=?^_`{|}~]");
         Matcher mather = pattern.matcher(field);
         if(mather.find()){  
@@ -18,6 +18,17 @@ public class Validation {
         return value;  
     }
     
+     public boolean emptyField(String field){
+        boolean value = false;
+        if(field.isEmpty()){
+            value=true;
+        }
+        else if(field.trim().length()==0){
+            value=true;
+        }
+        return value;
+    
+    }
     public boolean validateDate(String date){   
         
         boolean value=false;
@@ -86,14 +97,7 @@ public class Validation {
        return value;
    }
     
-    public boolean emptyField(String field){
-        boolean value = false;
-        if(field.trim().length() == 0){
-            value = true;
-        }
-        
-        return value;
-    }
+  
     
     public boolean existsInvalidCharactersForEmail(String email){
         boolean invalidCharacters = false;

@@ -187,9 +187,7 @@ public class GroupAcademicRegisterController implements Initializable  {
         }
      return value;
     }
-    
-    
-    
+        
     private void recoverLgacs(GroupAcademic groupAcademic){   
         GridPane gridPane= (GridPane) spLgac.getContent();
             int i=1;
@@ -240,10 +238,19 @@ public class GroupAcademicRegisterController implements Initializable  {
     }
      return null;
    }
+    
+    private boolean verifyEmptySpaces() {
+        boolean value = false;
+        Validation validation = new Validation();
+        if (validation.emptyField(tfName.getText()) || validation.emptyField(tAObjetive.getText()) || validation.emptyField(tAVision.getText()) || validation.emptyField(tAMision.getText()) || validation.emptyField(tfKey.getText())) {
+            value = true;
+        }
+        return value;
+    }
   
     private boolean validateFieldEmpty(){ 
           boolean value=false;
-          if(tfName.getText().isEmpty() || tAObjetive.getText().isEmpty() 
+          if(verifyEmptySpaces() || tfName.getText().isEmpty() || tAObjetive.getText().isEmpty() 
            || tAVision.getText().isEmpty()  || tAMision.getText().isEmpty() || tfKey.getText().isEmpty()  
            ){
               value=true;
