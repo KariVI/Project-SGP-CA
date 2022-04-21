@@ -7,8 +7,15 @@ import domain.Topic;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -49,9 +56,38 @@ public class TopicShowController implements Initializable {
         tvTopic.setItems(topics);        
     }  
     
+    private void  disableButtonModify(){  
+        Date currentDay = getCurrentDay();
+        Date meetingDay = getMeetingDay();
+        if(currentDay.after(meetingDay)){
+            btUpdate.setOpacity(0);
+            btUpdate.setDisable(true);
+        }
+    }
+    
+    private Date getMeetingDay(){
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Date meetingDay = null;
+        System.out.println(meeting.getDate());
+        try {
+            meetingDay = format.parse(meeting.getDate());
+        } catch (ParseException ex) {
+            Log.logException(ex);
+        }
+        return meetingDay;
+    }
+    
+    private Date getCurrentDay(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        return date;
+    }
+    
     public void setMeeting(Meeting meeting){
         this.meeting = meeting;
         initializeTopics();
+        disableButtonModify();
     }
     
     public void setMember(Member member){
