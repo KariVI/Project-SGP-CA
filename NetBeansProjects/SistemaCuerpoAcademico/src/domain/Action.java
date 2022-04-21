@@ -11,7 +11,7 @@ public class Action {
 
     public Action(String description, String member, String resource) {
         this.description = description;
-        this.memberInCharge = memberInCharge;
+        this.memberInCharge = member;
         this.resource = resource;
     }
 

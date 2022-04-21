@@ -1,10 +1,12 @@
 /*
         *@author Karina Valdes
     */
+/*
+        *@author Karina Valdes
+    */
 package businessLogic;
 
 import dataaccess.Connector;
-import domain.LGAC;
 import domain.Member;
 import domain.ReceptionWork;
 import domain.Student;
@@ -26,11 +28,11 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
     */
     public boolean savedSucessful(ReceptionWork receptionWork) throws BusinessException {
         boolean value=false;
-        int idPreliminarProject= receptionWork.getPreliminarProject().getKey();
+        int idProject = receptionWork.getProject().getIdProject();
             try {
                 Connector connectorDataBase=new Connector();
                 Connection connectionDataBase = connectorDataBase.getConnection();
-                String insertPreliminarProject = "INSERT INTO TrabajoRecepcional(titulo, tipo, descripcion, fechaInicio,fechaFin, estadoActual, idAnteproyecto ,clave_CA) VALUES (?,?,?,?,?,?,?,?)";
+                String insertPreliminarProject = "INSERT INTO TrabajoRecepcional(titulo, tipo, descripcion, fechaInicio,fechaFin, estadoActual, idProyecto ,clave_CA) VALUES (?,?,?,?,?,?,?,?)";
             
                 PreparedStatement preparedStatement = connectionDataBase.prepareStatement(insertPreliminarProject );
                 preparedStatement.setString(1, receptionWork.getTitle());
@@ -39,7 +41,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
                 preparedStatement.setString(4, receptionWork.getDateStart());
                 preparedStatement.setString(5, receptionWork.getDateEnd());
                 preparedStatement.setString(6, receptionWork.getActualState());
-                preparedStatement.setInt(7,idPreliminarProject );
+                preparedStatement.setInt(7,idProject );
                 preparedStatement.setString(8, receptionWork.getKeyGroupAcademic());
                 
                 preparedStatement.executeUpdate();
@@ -62,12 +64,12 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
     
     public boolean updatedSucessful(int id, ReceptionWork receptionWork) throws BusinessException {
         boolean updateSuccess=false;
-        int idPreliminarProject= receptionWork.getPreliminarProject().getKey();
+        int idProject = receptionWork.getProject().getIdProject();
        
         try{
             Connector connectorDataBase=new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
-            String updateReceptionWork= "UPDATE TrabajoRecepcional set titulo =?, tipo=?,descripcion=?, fechaInicio=?,fechaFin=?, estadoActual=?, idAnteproyecto=? where idTrabajoRecepcional=? ";
+            String updateReceptionWork= "UPDATE TrabajoRecepcional set titulo =?, tipo=?,descripcion=?, fechaInicio=?,fechaFin=?, estadoActual=?, idProyecto=? where idTrabajoRecepcional=? ";
      
             PreparedStatement preparedStatement = connectionDataBase.prepareStatement(updateReceptionWork );
             preparedStatement.setString(1, receptionWork.getTitle());
@@ -76,7 +78,7 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
             preparedStatement.setString(4, receptionWork.getDateStart());
             preparedStatement.setString(5, receptionWork.getDateEnd());
             preparedStatement.setString(6, receptionWork.getActualState());
-            preparedStatement.setInt(7,idPreliminarProject );
+            preparedStatement.setInt(7,idProject);
             preparedStatement.setInt(8,id);
             
             preparedStatement.executeUpdate();
@@ -116,12 +118,12 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
                 String dateStart= resultSet.getString("fechaInicio");
                 String dateEnd= resultSet.getString("fechaFin");
                 String actualState= resultSet.getString("estadoActual");
-                int idPreliminarProject = resultSet.getInt("idAnteproyecto");
+                int idProject = resultSet.getInt("idProyecto");
                 String keyGroupAcademic = resultSet.getString("clave_CA");
                 receptionWork=new ReceptionWork(title,type, description, dateStart, dateEnd, actualState,keyGroupAcademic);
                 receptionWork.setKey(idReceptionWork);
-                PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
-                receptionWork.setPreliminarProject(preliminarProjectDAO.getById(idPreliminarProject));
+                ProjectDAO projectDAO = new ProjectDAO();
+                receptionWork.setProject(projectDAO.getProjectById(idProject));
             }else{  
                 throw new BusinessException("ReceptionWork not found ");
             }
@@ -195,13 +197,13 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
                     String dateStart=resultSet.getString("fechaInicio");
                     String dateEnd=resultSet.getString("fechaFin");
                     String actualState = resultSet.getString("estadoActual");
-                    int idPreliminarProject = resultSet.getInt("idAnteproyecto");
+                    int idProject = resultSet.getInt("idProyecto");
                      String keyGroup = resultSet.getString("clave_CA");
                    
                     ReceptionWork receptionWorkAuxiliar = new ReceptionWork(title,type, description, dateStart, dateEnd, actualState, keyGroup);
                     receptionWorkAuxiliar.setKey(key);
-                   PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
-                   receptionWorkAuxiliar.setPreliminarProject(preliminarProjectDAO.getById(idPreliminarProject));
+                    ProjectDAO projectDAO = new ProjectDAO();
+                    receptionWorkAuxiliar.setProject(projectDAO.getProjectById(idProject));
                     receptionWorkList.add(receptionWorkAuxiliar);
                 }
                 connectorDataBase.disconnect();
@@ -426,106 +428,8 @@ public class ReceptionWorkDAO implements IReceptionWorkDAO {
 
     }
 
-    /*
-        *@params receptionWork Trabajo recepcional al cual se le añaden las LGACs
-        *@return Si el trabajo recepcional pudo ser guardar sus LGACs  (true) o no (false) en la base de datos 
-        *@throws Se cacho una excepción de tipo SQLException
-        *@see ReceptionWork
-    */
-    
-    public boolean addedSucessfulLGACs(ReceptionWork receptionWork) throws BusinessException {
-        boolean addLGACSucces = false;
-        int idReceptionWork = receptionWork.getKey();
-        ArrayList<LGAC> lgacs = receptionWork.getLGACs();
-         try {
-                Connector connectorDataBase = new Connector();
-                Connection connectionDataBase = connectorDataBase.getConnection();
-                int i=0;
-                while(i< lgacs.size()){
-                    PreparedStatement preparedStatement = connectionDataBase.prepareStatement("INSERT INTO CultivaTrabajoRecepcional(idTrabajoRecepcional,nombreLGAC) VALUES (?,?)");
-                    preparedStatement.setInt(1, idReceptionWork);
-                    preparedStatement.setString(2, lgacs.get(i).getName());
-                    preparedStatement.executeUpdate();
-                    i++;
-                } 
-                addLGACSucces = true; 
-               connectorDataBase.disconnect();
-            } catch (SQLException sqlException) {
-                throw new BusinessException("DataBase connection failed ", sqlException);
-            } catch (ClassNotFoundException ex) {
-                Log.logException(ex);
-            }
-        return addLGACSucces;
 
-    }
-    
-     /*
-        *@params idReceptionWork Identificador del trabajo recepcional del cual se buscan sus LGACs
-        *@return Listado de LGACs del trabajo recepcional
-        *@throws Se cacho una excepción de tipo SQLException 
-    */
 
-    public ArrayList<LGAC> getLGACs(int idReceptionWork) throws BusinessException {
-        ArrayList<LGAC> lgacs = new ArrayList<LGAC>();
-        LGACDAO lgacDAO= new LGACDAO();
-        try{
-            Connector connectorDataBase = new Connector();
-            Connection connectionDataBase = connectorDataBase.getConnection();
-               PreparedStatement preparedStatement = connectionDataBase.prepareStatement("SELECT nombreLGAC FROM CultivaTrabajoRecepcional where idTrabajoRecepcional = ?");
-               preparedStatement.setInt(1, idReceptionWork);
-               ResultSet resultSet;
-               resultSet = preparedStatement.executeQuery();
-               while(resultSet.next()){
-                    String name = resultSet.getString("nombreLGAC");
-                    LGAC lgac = lgacDAO.getLgacByName(name);
-                    lgacs.add(lgac);
-                }
-                connectorDataBase.disconnect();
-            }catch(SQLException sqlException) {
-                   throw new BusinessException("Database failed ", sqlException);         
-            }catch(ClassNotFoundException ex) {
-                        Log.logException(ex);
-            }
-
-        return lgacs;
-    }
-
-     /*
-        *@params receptionWork Trabajo recepcional al cual se le eliminan las LGACs
-        *@return Si fue posible eliminar las LGACs de un trabajo recepcional (true) o no (false) en la base de datos 
-        *@throws Se cacho una excepción de tipo SQLException 
-        *@see ReceptionWork
-    */
-    
-    @Override
-    public boolean deletedSucessfulLGACs(ReceptionWork receptionWork) throws BusinessException {
-        boolean deleteSucess=false;
-        int idReceptionWork=receptionWork.getKey();
-        ArrayList<LGAC> lgacs= receptionWork.getLGACs();
-        try{
-            Connector connectorDataBase=new Connector();
-            Connection connectionDataBase = connectorDataBase.getConnection();
-            String delete = "delete from CultivaTrabajoRecepcional where nombreLGAC=? and idTrabajoRecepcional=?";
-     
-            PreparedStatement preparedStatement = connectionDataBase.prepareStatement(delete);
-            int i=0;
-            while(i< lgacs.size()){
-               preparedStatement.setString(1, lgacs.get(i).getName());
-               preparedStatement.setInt(2, idReceptionWork);
-               preparedStatement.executeUpdate();
-               i++;
-            }
-            deleteSucess=true;
-            connectorDataBase.disconnect();         
-        }catch(SQLException sqlException) {
-            throw new BusinessException("DataBase connection failed ", sqlException);
-        } catch (ClassNotFoundException ex) {
-            Log.logException(ex);
-        }
-        return deleteSucess; 
-    }
-
-   
-    
+  
    
 }

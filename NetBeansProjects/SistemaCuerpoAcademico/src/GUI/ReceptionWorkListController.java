@@ -5,6 +5,7 @@ import businessLogic.PreliminarProjectDAO;
 import businessLogic.ReceptionWorkDAO;
 import domain.Member;
 import domain.PreliminarProject;
+import domain.Project;
 import domain.ReceptionWork;
 import java.io.File;
 import java.io.IOException;
@@ -34,8 +35,6 @@ public class ReceptionWorkListController implements Initializable {
      @FXML private Button btRegisterReceptionWork;
      @FXML private Button btReturn;
      private ObservableList<ReceptionWork> receptionWorks ;
-     private ObservableList <PreliminarProject> preliminarProjectsAssigned ;
-     private ObservableList <PreliminarProject> preliminarProjectsUnassigned ;
      private String keyGroupAcademic;
      private Member member;
 
@@ -47,15 +46,11 @@ public class ReceptionWorkListController implements Initializable {
     public void setKeyGroupAcademic(String keyGroupAcademic) {
         this.keyGroupAcademic = keyGroupAcademic;
         getReceptionWorks();   
-        fillPreliminarProjectsAssigned();
-        fillPreliminarProjectsUnassigned();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         receptionWorks  = FXCollections.observableArrayList();
-        preliminarProjectsAssigned= FXCollections.observableArrayList();
-        preliminarProjectsUnassigned= FXCollections.observableArrayList();
       lvReceptionWorks.setItems(receptionWorks);
       lvReceptionWorks.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ReceptionWork>() {
           public void changed(ObservableValue<? extends ReceptionWork> observaleValue, ReceptionWork oldValue, ReceptionWork newValue) {
@@ -77,7 +72,6 @@ public class ReceptionWorkListController implements Initializable {
                  receptionWorkShowController.setReceptionWork(receptionWork);
                  receptionWorkShowController.setMember(member);
                  receptionWorkShowController.setKeyGroupAcademic(keyGroupAcademic);   
-                 receptionWorkShowController.setPreliminarProjectsUnassigned(preliminarProjectsUnassigned);
                  receptionWorkShowController.initializeReceptionWork(); 
                  Scene scene = new Scene(root);
                  Stage stage = new Stage();
@@ -105,49 +99,10 @@ public class ReceptionWorkListController implements Initializable {
         }
         
     }
-       
-    private void fillPreliminarProjectsAssigned(){   
-         for(int i=0; i< receptionWorks.size(); i++){
-            PreliminarProject preliminarProject = receptionWorks.get(i).getPreliminarProject();
-            preliminarProjectsAssigned.add(preliminarProject);
-           
-           }
-    }
     
-     private void fillPreliminarProjectsUnassigned() {   
-         PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
-         ArrayList<PreliminarProject> preliminarProjects = null;
-         try {
-
-             preliminarProjects = preliminarProjectDAO.getPreliminarProjects(keyGroupAcademic);
-
-         } catch (BusinessException ex) {
-             Log.logException(ex);
-         }
-         for(int i=0; i< preliminarProjects.size(); i++){
-            PreliminarProject preliminarProject = preliminarProjects.get(i);
-                if(!repeatedPreliminarProject(preliminarProject)){
-                    preliminarProjectsUnassigned.add(preliminarProject);
-                }
-           }
-    }
-    
-    private boolean repeatedPreliminarProject(PreliminarProject preliminarProject){ 
-        int id = preliminarProject.getKey();
-        int i=0;
-        boolean value=false;
-        while((value==false) &&  i< preliminarProjectsAssigned.size()){ 
-            int idAuxiliar = preliminarProjectsAssigned.get(i).getKey();
-            if(id==idAuxiliar){
-             value=true;
-            }           
-            i++;
-        }        
-        return value;     
-    }
     
     @FXML 
-    public void actionRegisterReceptionWork(ActionEvent actionEvent){    
+    public void actionRegisterReceptionWork(ActionEvent actionEvent) throws BusinessException{    
           Stage stage = (Stage) btRegisterReceptionWork.getScene().getWindow();
         stage.close();     
         try{ 
@@ -159,9 +114,9 @@ public class ReceptionWorkListController implements Initializable {
               loader.setLocation(url);
               loader.load();
               ReceptionWorkRegisterController receptionWorkController =loader.getController();  
-              receptionWorkController.setPreliminarProjects(preliminarProjectsUnassigned);
               receptionWorkController.setKeyGroupAcademic(keyGroupAcademic);
               receptionWorkController.setMember(member);
+             // receptionWorkController.initializeProjects();
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);       

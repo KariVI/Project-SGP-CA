@@ -134,12 +134,11 @@ public class ReceptionWorkModifyController implements Initializable {
        dpEndDate.setValue(localEndDate);
        cbType.setValue(receptionWorkRecover.getType());
        cbState.setValue(receptionWorkRecover.getActualState());
-       cbPreliminarProject.setValue(receptionWorkRecover.getPreliminarProject());
+    //   cbPreliminarProject.setValue(receptionWorkRecover.getPreliminarProject());
        taDescription.setText( receptionWorkRecover.getDescription());
            try {
                initializeColaborators();
                getStudents();
-               getLGACS();
            } catch (BusinessException ex) {
                Log.logException(ex);
            }
@@ -178,7 +177,6 @@ public class ReceptionWorkModifyController implements Initializable {
                 receptionWorkNew.setDateStart(startDate);
                 receptionWorkNew.setDateEnd(endDate);
                 receptionWorkNew.setType(type);
-                receptionWorkNew.setPreliminarProject(preliminarProject);
                 receptionWorkNew.setActualState(state);
                 receptionWorkNew.setKeyGroupAcademic(receptionWorkRecover.getKeyGroupAcademic());
                 updateReceptionWork ();                
@@ -193,7 +191,7 @@ public class ReceptionWorkModifyController implements Initializable {
       private void updateReceptionWork (){   
         ReceptionWorkDAO receptionWorkDAO =  new ReceptionWorkDAO();
         try{  
-          if(deleteColaborators() && deleteStudents() && receptionWorkDAO.deletedSucessfulLGACs(receptionWorkRecover)){
+          if(deleteColaborators() && deleteStudents() ){
                 if(receptionWorkDAO.updatedSucessful(receptionWorkRecover.getKey(), receptionWorkNew)){  
                 if(validateColaborators()){  
                     saveColaborators();
@@ -338,33 +336,7 @@ public class ReceptionWorkModifyController implements Initializable {
     }
     
  
-    private void getLGACS() throws BusinessException{    
-        ReceptionWorkDAO receptionWorkDAO =new ReceptionWorkDAO();
-        ArrayList<LGAC> lgacsReceptionWork=null; 
-        if(receptionWorkDAO.getLGACs(receptionWorkRecover.getKey())!= null){  
-            lgacsReceptionWork= receptionWorkDAO.getLGACs(receptionWorkRecover.getKey());
-            receptionWorkRecover.setLGACs(lgacsReceptionWork); 
-        }         
-        GridPane gridPane= new GridPane();
-        GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO ();
-        gridPane.setHgap(2);
-        gridPane.setVgap(2);
-            int i=0;
-            gridPane.add(new Label ("Selecciona LGAC relacionadas: "),1,0);
-            int indexGridPane=1;
-            ArrayList <LGAC> lgacs = groupAcademicDAO.getLGACs(keyGroupAcademic);
-           while (i < lgacs.size()){  
-                CheckBox checkBox = new CheckBox(lgacs.get(i).getName());                
-                if(lgacsReceptionWork!= null && searchLgacs(lgacs.get(i), lgacsReceptionWork)){      
-                    checkBox.setSelected(true);
-                }
-                gridPane.add(checkBox,1,indexGridPane);
-                i++;
-                indexGridPane++;
-           }  
-            spLgacs.setContent(gridPane);
-        
-    }
+   
       
     private boolean searchLgacs(LGAC lgac, ArrayList<LGAC> lgacs){  
         boolean value= false;
@@ -560,14 +532,10 @@ public class ReceptionWorkModifyController implements Initializable {
                }
                i++;
            }
-           receptionWorkNew.setLGACs(lgacs);
-           addLGACs();
+ 
     }
     
-    private void addLGACs() throws BusinessException{
-        ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
-        receptionWorkDAO.addedSucessfulLGACs(receptionWorkNew);
-    }
+   
     
        private int calculateSize(int sizeStudents){    
         int sizeRowsGridPane=3;

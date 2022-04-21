@@ -126,20 +126,23 @@ public class MeetingDAO implements IMeetingDAO{
 
     /*
         *@params keyGroupAcademic Clave del cuerpo académico para filtrar las reuniones que le corresponden
+        *@params professionalLicense Cedula para identificar las reuniones a las que asiste
         *@return Reuniones relacionadas a un cuerpo académico
         *@throws Se cacho una excepción de tipo SQLException
     */
-    public ArrayList<Meeting>  getMeetings(String keyGroupAcademic){
+    public ArrayList<Meeting>  getMeetings(String keyGroupAcademic, String professionalLicense ){
         ArrayList<Meeting> meetingList = new ArrayList<Meeting>();
         try{
             Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
-            String queryMeeting="SELECT * FROM Reunion where clave_CA=?";
+            String queryMeeting="select Reunion.idReunion, asunto,hora,fecha,estado from Reunion INNER JOIN ParticipaReunion ON Reunion.idReunion= ParticipaReunion.idReunion"
+                    + " where cedula=? and clave_CA=? ;";
 
                PreparedStatement preparedStatement;
                preparedStatement = connectionDataBase.prepareStatement(queryMeeting);
                ResultSet resultSet;
-               preparedStatement.setString(1, keyGroupAcademic);
+               preparedStatement.setString(1,professionalLicense);
+               preparedStatement.setString(2, keyGroupAcademic);
                resultSet = preparedStatement.executeQuery();
                while(resultSet.next()){
                     int keyMeeting=resultSet.getInt(1);
