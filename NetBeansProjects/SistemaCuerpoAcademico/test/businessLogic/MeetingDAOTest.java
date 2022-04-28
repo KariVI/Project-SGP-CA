@@ -89,8 +89,8 @@ public class MeetingDAOTest {
     public void testGetMeetings()throws BusinessException{
         ArrayList<Meeting> arrayMeetings;
         MeetingDAO meetingDAO=new MeetingDAO();
-        arrayMeetings=meetingDAO.getMeetings("JDOEIJ804");
-        int idExpected=1;
+        arrayMeetings=meetingDAO.getMeetings("JDOEIJ804", "7938268");
+        int idExpected=2;
         int result=arrayMeetings.get(0).getKey();
         assertEquals(idExpected, result);
     }

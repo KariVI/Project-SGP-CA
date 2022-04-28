@@ -5,6 +5,7 @@ import businessLogic.PreliminarProjectDAO;
 import businessLogic.ReceptionWorkDAO;
 import domain.LGAC;
 import domain.Member;
+import domain.Participant;
 import domain.PreliminarProject;
 import domain.ReceptionWork;
 import domain.Student;
@@ -26,7 +27,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -34,26 +38,27 @@ import log.BusinessException;
 import log.Log;
 
 
+
 public class ReceptionWorkShowController implements Initializable {
 
  
     @FXML private Label lbTitle;
-    @FXML private  Label lbDirector;
     @FXML private TextArea taDescription;
+    @FXML private TableView<Participant> tvMember;
     @FXML private TextArea taCodirectors;
     @FXML private Label lbStartDate;
     @FXML private Label lbEndDate;
     @FXML private  Label lbType;
-    @FXML private  Label lbPreliminarProject;
     @FXML  private Label lbState;
+    @FXML  private Label lbProject;
     @FXML private Button btUpdate;
     @FXML private Button btReturn;
-    @FXML private Pane studentPane;
-    @FXML  private Pane lgacsPane;
+    @FXML private TableColumn<Participant, String> tcName;
+    @FXML private TableColumn<Participant, String> tcRole;
+    private ObservableList<Participant> assistants;
+    
     private String codirectors="";  
-    private PreliminarProject preliminarProject;
     private ReceptionWork receptionWork;
-    private ObservableList<PreliminarProject> preliminarProjectsUnassigned;
     private String keyGroupAcademic;
     private Member member;
 
@@ -65,11 +70,7 @@ public class ReceptionWorkShowController implements Initializable {
         this.keyGroupAcademic = keyGroupAcademic;
     }
 
-    public void setPreliminarProjectsUnassigned(ObservableList<PreliminarProject> preliminarProjectsUnassigned) {
-          for( int i = 0; i<preliminarProjectsUnassigned.size(); i++) {
-                  this.preliminarProjectsUnassigned.add(preliminarProjectsUnassigned.get(i));
-            }
-    }
+ 
  
     @FXML 
     private void actionReturn(ActionEvent actionEvent) throws BusinessException{  
@@ -143,7 +144,9 @@ public class ReceptionWorkShowController implements Initializable {
        lbEndDate.setText("Fecha fin: "+receptionWork.getDateEnd());
        lbType.setText("Tipo:   " +receptionWork.getType());
        taDescription.setText("Descripción: " + receptionWork.getDescription());
+
        lbPreliminarProject. setText("Proyecto: "+ receptionWork.getProject());
+
        lbState.setText("Estado: "+ receptionWork.getActualState());
        recoverColaborators ();
            try {
@@ -161,46 +164,31 @@ public class ReceptionWorkShowController implements Initializable {
         try {
              colaborators=receptionWorkDAO.getColaborators(receptionWork.getKey());
              for(int i=0; i< colaborators.size(); i++){ 
-                 if(colaborators.get(i).getRole().equals("Director")){  
-                     lbDirector.setText(colaborators.get(i).getName());
-                 }else{ 
-                     codirectors= codirectors + colaborators.get(i).getName();
-                     codirectors= codirectors + ",";
-                 }
+                 Participant auxiliar = new Participant (colaborators.get(i).getName(),colaborators.get(i).getRole());
+                 assistants.add(auxiliar);
              }
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
-        taCodirectors.setText("Codirectores: "+ codirectors);
     }
     
     private void getStudents() throws BusinessException{
         ReceptionWorkDAO receptionWorkDAO =new ReceptionWorkDAO();
          receptionWork.setStudents(receptionWorkDAO.getStudents(receptionWork.getKey()));
          ArrayList<Student> students= receptionWork.getStudents();
-         int i=1;
-        int numberStudent=0;
-        GridPane gridPane= new GridPane();
-        gridPane.setHgap (5);
-        gridPane.setVgap (5);
-        if(students.size()> 0){
-            Label label = new Label("Estudiantes");
-            gridPane.add(label,1, 0 );
-            while (i <= students.size()){ 
-                    Label lbNameStudent = new Label("-"+ students.get(numberStudent).getName());
-                    gridPane.add(lbNameStudent,1, i );
-                    i++;
-                    numberStudent++;
-            }
-            studentPane.getChildren().add(gridPane);
-        }
+         for(int i=0; i< students.size(); i++){ 
+                 Participant auxiliar = new Participant (students.get(i).getName(),"Estudiante");
+                 assistants.add(auxiliar);
+             }
     }
     
-    
-  
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        preliminarProjectsUnassigned= FXCollections.observableArrayList();
+        tcName.setCellValueFactory(new PropertyValueFactory<Participant,String>("name"));
+        tcRole.setCellValueFactory(new PropertyValueFactory<Participant,String>("role"));
+        assistants = FXCollections.observableArrayList(); 
+        tvMember.setItems(assistants);
     }    
     
 }

@@ -133,8 +133,10 @@ public class ReceptionWorkModifyController implements Initializable {
        dpEndDate.setValue(localEndDate);
        cbType.setValue(receptionWorkRecover.getType());
        cbState.setValue(receptionWorkRecover.getActualState());
+
        cbProject.setValue(receptionWorkRecover.getProject());
        cbProject.setItems(projects);
+
        taDescription.setText( receptionWorkRecover.getDescription());
            try {
                initializeColaborators();
@@ -176,7 +178,9 @@ public class ReceptionWorkModifyController implements Initializable {
                 receptionWorkNew.setDateStart(startDate);
                 receptionWorkNew.setDateEnd(endDate);
                 receptionWorkNew.setType(type);
+
                 receptionWorkNew.setProject(project);
+
                 receptionWorkNew.setActualState(state);
                 receptionWorkNew.setKeyGroupAcademic(receptionWorkRecover.getKeyGroupAcademic());
                 updateReceptionWork ();                
@@ -191,7 +195,8 @@ public class ReceptionWorkModifyController implements Initializable {
       private void updateReceptionWork (){   
         ReceptionWorkDAO receptionWorkDAO =  new ReceptionWorkDAO();
         try{  
-          if(deleteColaborators() && deleteStudents()){
+          if(deleteColaborators() && deleteStudents() ){
+
                 if(receptionWorkDAO.updatedSucessful(receptionWorkRecover.getKey(), receptionWorkNew)){  
                 if(validateColaborators()){  
                     saveColaborators();
@@ -334,6 +339,7 @@ public class ReceptionWorkModifyController implements Initializable {
         }
     }
     
+
     private boolean deleteColaborators() throws BusinessException{  
         ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
         ArrayList<Member> colaborators = receptionWorkDAO.getColaborators(receptionWorkRecover.getKey());

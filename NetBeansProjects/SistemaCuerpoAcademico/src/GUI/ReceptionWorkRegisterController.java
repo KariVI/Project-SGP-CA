@@ -147,6 +147,7 @@ public class ReceptionWorkRegisterController implements Initializable {
                 receptionWork.setDateStart(startDate);
                 receptionWork.setDateEnd(endDate);
                 receptionWork.setType(type);
+
                 receptionWork.setProject(project);
                 receptionWork.setActualState(state);
                 receptionWork.setKeyGroupAcademic(keyGroupAcademic);
@@ -518,6 +519,7 @@ public class ReceptionWorkRegisterController implements Initializable {
        return value;
     }
      
+
 
     
     

@@ -29,7 +29,7 @@ public class ReceptionWorkDAOTest {
         "La Secretaría de Medio Ambiente y Recursos Naturales, a través de la Subsecretaría de Fomento y Normatividad Ambiental en coordinación con las áreas del sector ambiental y con la Secretaría de Marina (SEMAR)",
         "13/01/2021", "13/07/2021","JDOEIJ804");
         preliminarProject.setKey(1);
-        receptionWork.setPreliminarProject(preliminarProject);
+        //receptionWork.setPreliminarProject(preliminarProject);
         ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
         boolean result = receptionWorkDAO .savedSucessful(receptionWork);
         assertTrue(result);
@@ -48,7 +48,7 @@ public class ReceptionWorkDAOTest {
         "Una arquitectura de software define no sólo la estructura o estructuras de un sistema de software, sino las características de calidad del propio sistema. Una característica o atributo de calidad altamente crítico en nuestros días es la seguridad. Esta característica, por supuesto que también es importante considerar en el desarrollo de la plataforma de comunicación y educación", 
         "13/11/2019", "13/07/2020","JDOEIJ804");
         preliminarProject.setKey(4);
-        receptionWork.setPreliminarProject(preliminarProject);
+       // receptionWork.setPreliminarProject(preliminarProject);
         ReceptionWorkDAO instance = new ReceptionWorkDAO();
         boolean result = instance.updatedSucessful(id, receptionWork);
         assertTrue( result);
@@ -65,6 +65,8 @@ public class ReceptionWorkDAOTest {
         assertTrue(receptionWork.equals(instance.getReceptionWorkById(id)));
     
     }
+   
+    
     
     @Test
      public void testGetReceptionWorks() throws BusinessException {  
@@ -171,36 +173,6 @@ public class ReceptionWorkDAOTest {
         assertTrue(receptionWorkDAO.deletedSucessfulStudents(receptionWork));
     }
  
-        @Test
-    public void testAddLGAC() throws BusinessException {
-        ReceptionWork receptionWork = new ReceptionWork ("Propuesta de Aplicación de Aprendizaje Máquina y Cómputo Evolutivo en la Clasificación de Requisitos de Calidad", "Tesis",
-        "Propuesta de uso de aprendizaje máquina en la clasificación de requisitos", "14/11/2019", "14/05/2021", "Concluido","JDOEIJ804");
-        receptionWork.setKey(2);
-        LGAC lgac = new LGAC("Tecnologías de software", "Se orienta al estudio de diversas propiedades, enfoques, métodos de modelado y herramientas que conforman cada una de las diversas tecnologías aplicables al desarrollo del software con vistas a su adaptación, mejora y sustitución en el medio nacional");
-        receptionWork.addLGAC(lgac);
-        ReceptionWorkDAO receptionWorkDAO= new ReceptionWorkDAO();
-        assertTrue(receptionWorkDAO.addedSucessfulLGACs(receptionWork));
-    }
     
-    @Test
-    public void testGetLGAC() throws BusinessException {
-        ReceptionWork receptionWork = new ReceptionWork("Prácticas automatizadas sobre la elicitación de requisitos", "Tesis",
-        "Propuesta de uso de aprendizaje máquina en elicitación de requisitos y fases posteriores", "18/02/2019", "14/05/2020", "Concluido","JDOEIJ804");
-        int idReceptionWork = 3;
-        LGAC lgac = new LGAC("Tecnologías de software", "Se orienta al estudio de diversas propiedades, enfoques, métodos de modelado y herramientas que conforman cada una de las diversas tecnologías aplicables al desarrollo del software con vistas a su adaptación, mejora y sustitución en el medio nacional");
-        receptionWork.addLGAC(lgac);
-        ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO ();
-        assertEquals(receptionWorkDAO.getLGACs(idReceptionWork),receptionWork.getLGACs());
-    }
-    
-    public void testDeleteLGAC () throws BusinessException{
-       ReceptionWork receptionWork = new ReceptionWork ("Los microservicios enfocados en la ingeniería de software", "Tesis",
-        "Los microservicios enfocados en la ingeniería de software y sus distintas aplicaciones", "14/11/2019", "14/05/2021", "Concluido","JDOEIJ804");
-        receptionWork.setKey(4);
-        LGAC lgac = new LGAC("Tecnologías de software", "Se orienta al estudio de diversas propiedades, enfoques, métodos de modelado y herramientas que conforman cada una de las diversas tecnologías aplicables al desarrollo del software con vistas a su adaptación, mejora y sustitución en el medio nacional");
-        receptionWork.addLGAC(lgac);
-        ReceptionWorkDAO receptionWorkDAO= new ReceptionWorkDAO();
-        assertTrue(receptionWorkDAO.deletedSucessfulLGACs(receptionWork));
-    }
     
 }

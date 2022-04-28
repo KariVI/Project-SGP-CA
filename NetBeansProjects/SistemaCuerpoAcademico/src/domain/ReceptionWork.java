@@ -14,9 +14,8 @@ public class ReceptionWork {
     private String dateEnd;
     private String actualState;
     private Project project;
-    private ArrayList<Student> students;
+    private ArrayList<Student> students;  
 
-  
     private ArrayList<Member> members;
 
     private String keyGroupAcademic;
@@ -25,6 +24,19 @@ public class ReceptionWork {
         this.members = members;
     }
       
+
+   
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+
+  
 
     public String getKeyGroupAcademic() {
         return keyGroupAcademic;
@@ -108,15 +120,10 @@ public class ReceptionWork {
     public void setActualState(String actualState){ 
         this.actualState=actualState;
     }
+
+   
     
-    public Project getProject(){
-        return project;
-    }
-    
-    public void setProject(Project project){ 
-        this.project = project;
-    }
-    
+
      public ArrayList<Member> getMembers(){
         return  members;
     }
@@ -173,7 +180,6 @@ public class ReceptionWork {
         this.students= students;
     }
 
-  
-    
+
 }
 

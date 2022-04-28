@@ -338,6 +338,7 @@ public class MeetingRegisterController implements Initializable {
        tfHour.setPromptText("HH:MM");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         dpDate.setConverter(new LocalDateStringConverter(formatter, null));
+        dpDate.setValue(LocalDate.now());
         tcDescription.setCellValueFactory(new PropertyValueFactory<Prerequisite,String>("description"));
         tcMandated.setCellValueFactory(new PropertyValueFactory<Prerequisite,Member>("mandated"));
         members = FXCollections.observableArrayList();

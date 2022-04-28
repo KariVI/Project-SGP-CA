@@ -143,7 +143,7 @@ public class MeetingListController implements Initializable {
     private void getMeetings( String keyGroupAcademic) {   
         MeetingDAO meetingDAO = new MeetingDAO();
         ArrayList<Meeting> meetingList;  
-        meetingList = meetingDAO.getMeetings(keyGroupAcademic);
+        meetingList = meetingDAO.getMeetings(keyGroupAcademic,  member.getProfessionalLicense());
         for(int i=0; i< meetingList.size(); i++){
             meetings.add(meetingList.get(i));
         }
