@@ -155,7 +155,9 @@ public class TopicRegisterController implements Initializable {
    @FXML
    private void actionSave(){ 
        if(!topics.isEmpty()){   
-           meetingRegisterController.setTopics(topics);       
+           meetingRegisterController.setTopics(topics);   
+           AlertMessage alertMessage = new AlertMessage();
+           alertMessage.showAlertSuccesfulSave("La agenda");
            Stage stage = (Stage)btSave.getScene().getWindow();
            stage.close();
        }else{
