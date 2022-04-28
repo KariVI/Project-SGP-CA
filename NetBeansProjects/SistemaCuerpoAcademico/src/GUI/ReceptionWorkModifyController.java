@@ -2,13 +2,13 @@
 package GUI;
 
 import businessLogic.GroupAcademicDAO;
-import businessLogic.LGACDAO;
 import businessLogic.MemberDAO;
+import businessLogic.ProjectDAO;
 import businessLogic.ReceptionWorkDAO;
 import businessLogic.StudentDAO;
-import domain.LGAC;
 import domain.Member;
 import domain.PreliminarProject;
+import domain.Project;
 import domain.ReceptionWork;
 import domain.Student;
 import java.io.File;
@@ -54,15 +54,14 @@ public class ReceptionWorkModifyController implements Initializable {
     @FXML private Button btSave;
     @FXML private Button btExit;
     @FXML private ScrollPane spStudents;
-    @FXML private ScrollPane spLgacs;
     @FXML private ComboBox cbType;
-    @FXML private ComboBox cbPreliminarProject;
+    @FXML private ComboBox cbProject;
     @FXML private ComboBox cbState;
     @FXML private DatePicker dpStartDate;
     @FXML private  DatePicker dpEndDate;
     private ObservableList<String> types;
     private ObservableList<String> states;
-    private ObservableList<PreliminarProject> preliminarProjects;
+    private ObservableList<Project> projects;
     private ObservableList<Member> codirectors ;
     private ObservableList<Member> members ;
     private ObservableList <Member> codirectorsNew;
@@ -134,7 +133,10 @@ public class ReceptionWorkModifyController implements Initializable {
        dpEndDate.setValue(localEndDate);
        cbType.setValue(receptionWorkRecover.getType());
        cbState.setValue(receptionWorkRecover.getActualState());
-    //   cbPreliminarProject.setValue(receptionWorkRecover.getPreliminarProject());
+
+       cbProject.setValue(receptionWorkRecover.getProject());
+       cbProject.setItems(projects);
+
        taDescription.setText( receptionWorkRecover.getDescription());
            try {
                initializeColaborators();
@@ -163,7 +165,7 @@ public class ReceptionWorkModifyController implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String type = (String) cbType.getSelectionModel().getSelectedItem();
         String state = (String) cbState.getSelectionModel().getSelectedItem();
-        PreliminarProject preliminarProject = (PreliminarProject) cbPreliminarProject.getSelectionModel().getSelectedItem();        
+        Project project = (Project) cbProject.getSelectionModel().getSelectedItem();        
         String startDate;
         String endDate;
         if(((!validateFieldEmpty())) && validateInformationField() ){
@@ -173,10 +175,12 @@ public class ReceptionWorkModifyController implements Initializable {
                 receptionWorkNew.setKey(receptionWorkRecover.getKey());
                 receptionWorkNew.setTitle(title);
                 receptionWorkNew.setDescription(description);
-
                 receptionWorkNew.setDateStart(startDate);
                 receptionWorkNew.setDateEnd(endDate);
                 receptionWorkNew.setType(type);
+
+                receptionWorkNew.setProject(project);
+
                 receptionWorkNew.setActualState(state);
                 receptionWorkNew.setKeyGroupAcademic(receptionWorkRecover.getKeyGroupAcademic());
                 updateReceptionWork ();                
@@ -192,11 +196,11 @@ public class ReceptionWorkModifyController implements Initializable {
         ReceptionWorkDAO receptionWorkDAO =  new ReceptionWorkDAO();
         try{  
           if(deleteColaborators() && deleteStudents() ){
+
                 if(receptionWorkDAO.updatedSucessful(receptionWorkRecover.getKey(), receptionWorkNew)){  
                 if(validateColaborators()){  
                     saveColaborators();
                     recoverStudents();
-                    recoverLgacs();
                     AlertMessage alertMessage = new AlertMessage();
                     alertMessage.showUpdateMessage();
                     Stage stage = (Stage) btSave.getScene().getWindow();
@@ -259,7 +263,7 @@ public class ReceptionWorkModifyController implements Initializable {
           boolean value=false;
           if(tfTitle.getText().isEmpty() 
            || taDescription.getText().isEmpty()  || dpStartDate == null 
-            || dpEndDate==null  || cbPreliminarProject.getSelectionModel().getSelectedItem()==null
+            || dpEndDate==null  || cbProject.getSelectionModel().getSelectedItem()==null
            ){
               value=true;
           }
@@ -335,23 +339,7 @@ public class ReceptionWorkModifyController implements Initializable {
         }
     }
     
- 
-   
-      
-    private boolean searchLgacs(LGAC lgac, ArrayList<LGAC> lgacs){  
-        boolean value= false;
-        int i=0;
-        while(i< lgacs.size() && (value==false)){   
-            if(lgacs.get(i).equals(lgac)){ 
-                value=true;
-            }
-            i++;
-        }
-        
-        return value;
-    }
-      
-      
+
     private boolean deleteColaborators() throws BusinessException{  
         ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
         ArrayList<Member> colaborators = receptionWorkDAO.getColaborators(receptionWorkRecover.getKey());
@@ -395,12 +383,14 @@ public class ReceptionWorkModifyController implements Initializable {
         return value;
     }
     
-    public void setPreliminarProjects(ObservableList<PreliminarProject> preliminarProjects) {  
-         for( int i = 0; i<preliminarProjects.size(); i++) {
-                  this.preliminarProjects.add(preliminarProjects.get(i));
+    
+      public void initializeProjects() throws BusinessException{   
+            ProjectDAO projectDAO = new ProjectDAO();
+                ArrayList <Project> projectList = projectDAO.getProjects();
+               
+            for( int i = 0; i<projectList.size(); i++) {
+                  projects.add(projectList.get(i));
             }
-        cbPreliminarProject.getSelectionModel().selectFirst();
-
     }
       
     @Override
@@ -420,9 +410,9 @@ public class ReceptionWorkModifyController implements Initializable {
             cbState.setItems(states);
             cbType.getSelectionModel().selectFirst();
             cbState.getSelectionModel().selectFirst();
-            preliminarProjects = FXCollections.observableArrayList();
-            cbPreliminarProject.setItems(preliminarProjects);
-            cbPreliminarProject.getSelectionModel().selectFirst();
+            projects = FXCollections.observableArrayList();
+            cbProject.setItems(projects);
+            cbProject.getSelectionModel().selectFirst();
             tcCodirector.setCellValueFactory(new PropertyValueFactory<Member,String>("name"));
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             dpStartDate.setConverter(new LocalDateStringConverter(formatter, null));
@@ -516,38 +506,7 @@ public class ReceptionWorkModifyController implements Initializable {
         
     }
     
-        private void recoverLgacs() throws BusinessException{    
-        GridPane gridPane= (GridPane) spLgacs.getContent();
-        ArrayList<LGAC> lgacs = new ArrayList<LGAC>();
-        LGACDAO lgacDAO = new LGACDAO();
-            int i=1;
-            int indexLGACs =0;
-            GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO ();
-            ArrayList <LGAC> lgacsAuxiliar = groupAcademicDAO.getLGACs(keyGroupAcademic);
-           while (i ==lgacsAuxiliar.size() ){
-               CheckBox checkBox = (CheckBox) getNodeFromGridPane( gridPane, 1, i);
-               if(checkBox.isSelected()){   
-                 LGAC lgac= lgacDAO.getLgacByName(checkBox.getText());
-                 lgacs.add(lgac);
-               }
-               i++;
-           }
- 
-    }
-    
-   
-    
-       private int calculateSize(int sizeStudents){    
-        int sizeRowsGridPane=3;
-        int size=0;
-        if(nextRowPosition>0){ 
-            size=nextRowPosition;
-        }else{  
-            size= sizeStudents;
-        }
-        
-        return size;
-    }
+
     
     private void recoverStudents() throws BusinessException{   
         ArrayList<Student> studentsOld = receptionWorkRecover.getStudents();

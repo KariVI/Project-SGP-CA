@@ -11,33 +11,32 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import GUI.TextFieldLimited?>
-
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="663.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GroupAcademicModifyController">
+<AnchorPane id="AnchorPane" prefHeight="557.0" prefWidth="736.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GroupAcademicModifyController">
     <stylesheets>
         <URL value="@groupacademicmodify.css" />
     </stylesheets>
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#212122" height="34.0" layoutY="-4.0" stroke="BLACK" strokeType="INSIDE" width="662.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#212122" height="34.0" layoutY="-4.0" stroke="BLACK" strokeType="INSIDE" width="736.0" />
       <Label layoutX="21.0" layoutY="46.0" text="Modificar Cuerpo Académico">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
       </Label>
       <Label layoutX="21.0" layoutY="99.0" text="Nombre: " />
-      <Label layoutX="21.0" layoutY="129.0" text="Clave: " />
-      <Label layoutX="14.0" layoutY="174.0" text="Grado de consolidación:" />
-      <Label layoutX="22.0" layoutY="212.0" text="Objetivo:" />
-      <Label layoutX="29.0" layoutY="313.0" text="Visión:" />
-      <Label layoutX="37.0" layoutY="387.0" text="Misión:" />
-      <Button fx:id="btSave" layoutX="480.0" layoutY="450.0" mnemonicParsing="false" onAction="#actionSave" text="Guardar" />
-      <Button fx:id="btReturn" layoutX="557.0" layoutY="450.0" mnemonicParsing="false" onAction="#actionReturn" text="Regresar" />
-      <TextFieldLimited fx:id="tfName" layoutX="160.0" layoutY="95.0" prefHeight="25.0" prefWidth="185.0" />
-      <TextFieldLimited fx:id="tfKey" editable="false" layoutX="160.0" layoutY="134.0" prefHeight="25.0" prefWidth="185.0" />
-      <TextArea fx:id="taObjetive" layoutX="160.0" layoutY="210.0" prefHeight="75.0" prefWidth="185.0" wrapText="true" />
-      <TextArea fx:id="taVision" layoutX="160.0" layoutY="300.0" prefHeight="75.0" prefWidth="185.0" wrapText="true" />
-      <TextArea fx:id="taMision" layoutX="163.0" layoutY="387.0" prefHeight="84.0" prefWidth="185.0" wrapText="true" />
-      <ComboBox fx:id="cbConsolidateGrade" layoutX="160.0" layoutY="170.0" prefHeight="25.0" prefWidth="185.0" />
-      <ScrollPane fx:id="spLGACs" layoutX="357.0" layoutY="95.0" prefHeight="314.0" prefWidth="279.0" />
-      <Button fx:id="btAddLGAC" layoutX="557.0" layoutY="417.0" mnemonicParsing="false" onAction="#actionAddLGAC" text="Añadir LGAC" />
+      <Label layoutX="21.0" layoutY="136.0" text="Clave: " />
+      <Label layoutX="21.0" layoutY="175.0" text="Grado de consolidación:" />
+      <Label layoutX="22.0" layoutY="217.0" text="Objetivo:" />
+      <Label layoutX="28.0" layoutY="324.0" text="Visión:" />
+      <Label layoutX="27.0" layoutY="431.0" text="Misión:" />
+      <Button fx:id="btSave" layoutX="526.0" layoutY="510.0" mnemonicParsing="false" onAction="#actionSave" prefHeight="26.0" prefWidth="66.0" text="Guardar" />
+      <Button fx:id="btReturn" layoutX="613.0" layoutY="510.0" mnemonicParsing="false" onAction="#actionReturn" text="Regresar" />
+      <TextFieldLimited fx:id="tfName" layoutX="160.0" layoutY="91.0" prefHeight="26.0" prefWidth="212.0" />
+      <TextFieldLimited fx:id="tfKey" editable="false" layoutX="160.0" layoutY="131.0" prefHeight="25.0" prefWidth="212.0" />
+      <TextArea fx:id="taObjetive" layoutX="160.0" layoutY="210.0" prefHeight="94.0" prefWidth="212.0" wrapText="true" />
+      <TextArea fx:id="taVision" layoutX="160.0" layoutY="324.0" prefHeight="94.0" prefWidth="212.0" wrapText="true" />
+      <TextArea fx:id="taMision" layoutX="160.0" layoutY="435.0" prefHeight="94.0" prefWidth="212.0" wrapText="true" />
+      <ComboBox fx:id="cbConsolidateGrade" layoutX="160.0" layoutY="170.0" prefHeight="25.0" prefWidth="212.0" />
+      <ScrollPane fx:id="spLGACs" layoutX="424.0" layoutY="91.0" prefHeight="348.0" prefWidth="279.0" />
+      <Button fx:id="btAddLGAC" layoutX="590.0" layoutY="445.0" mnemonicParsing="false" onAction="#actionAddLGAC" text="Añadir LGAC" />
    </children>
 </AnchorPane>

@@ -81,7 +81,7 @@ public class ReceptionWorkShowController implements Initializable {
     }
     
     @FXML
-    private void actionUpdate(ActionEvent actionEvent){ 
+    private void actionUpdate(ActionEvent actionEvent) throws BusinessException{ 
         Stage stage = (Stage) btUpdate.getScene().getWindow();
         stage.close();
         try{ 
@@ -96,6 +96,7 @@ public class ReceptionWorkShowController implements Initializable {
               receptionWorkController.setKeyGroupAcademic(keyGroupAcademic);
               receptionWorkController.setMember(member);
               receptionWorkController.initializeReceptionWork();
+              receptionWorkController.initializeProjects();
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);       
@@ -143,10 +144,14 @@ public class ReceptionWorkShowController implements Initializable {
        lbEndDate.setText("Fecha fin: "+receptionWork.getDateEnd());
        lbType.setText("Tipo:   " +receptionWork.getType());
        taDescription.setText("Descripción: " + receptionWork.getDescription());
+
+       lbPreliminarProject. setText("Proyecto: "+ receptionWork.getProject());
+
        lbState.setText("Estado: "+ receptionWork.getActualState());
        recoverColaborators ();
            try {
                getStudents();
+
            } catch (BusinessException ex) {
                Log.logException(ex);
            }
@@ -177,9 +182,7 @@ public class ReceptionWorkShowController implements Initializable {
              }
     }
     
-    
 
-      
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tcName.setCellValueFactory(new PropertyValueFactory<Participant,String>("name"));

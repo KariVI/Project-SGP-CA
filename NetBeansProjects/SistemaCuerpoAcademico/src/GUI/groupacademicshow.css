@@ -26,6 +26,19 @@
   
   }
   
+  
+  .table-row-cell {
+    -fx-cell-size: 50px;
+    -fx-wrap-text: true;
+}
+
+
+.table-view .cell{ 
+-fx-wrap-text: true;  
+-fx-cell-size: 60px ;
+
+
+ }
 .label {    
     -fx-background-color: transparent;
     -fx-font-family: System;

@@ -15,6 +15,7 @@ public class ReceptionWork {
     private String actualState;
     private Project project;
     private ArrayList<Student> students;  
+
     private ArrayList<Member> members;
 
     private String keyGroupAcademic;
@@ -23,6 +24,7 @@ public class ReceptionWork {
         this.members = members;
     }
       
+
    
 
     public Project getProject() {
@@ -32,6 +34,7 @@ public class ReceptionWork {
     public void setProject(Project project) {
         this.project = project;
     }
+
 
   
 
@@ -117,7 +120,10 @@ public class ReceptionWork {
     public void setActualState(String actualState){ 
         this.actualState=actualState;
     }
- 
+
+   
+    
+
      public ArrayList<Member> getMembers(){
         return  members;
     }
@@ -126,7 +132,7 @@ public class ReceptionWork {
          members.add(assistant);
     }
     
-    
+
     
     public Student getStudent( String enrollment){
         Student student=null;
@@ -173,6 +179,7 @@ public class ReceptionWork {
     public void setStudents(ArrayList<Student> students) {
         this.students= students;
     }
+
 
 }
 

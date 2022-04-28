@@ -11,6 +11,7 @@ import domain.Goal;
 import domain.Meeting;
 import domain.Member;
 import domain.WorkPlan;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -89,6 +90,9 @@ public class WorkPlanViewController implements Initializable {
 
     @FXML
     private void actionModify(ActionEvent event) {
+        Stage stage = (Stage) btModify.getScene().getWindow();
+        stage.close();
+        openWorkPlanModify();
     }
 
     private void initializeWorkPlan() {
@@ -136,13 +140,18 @@ public class WorkPlanViewController implements Initializable {
 
     private void openWorkPlanModify() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("WorkPlanModify.fxml"));
-            Parent root = loader.load();
-            WorkPlanActionViewController workPlanActionViewController = loader.getController();
+            Stage primaryStage = new Stage();
+            URL url = new File("src/GUI/WorkPlanModify.fxml").toURI().toURL();
+            FXMLLoader loader = new FXMLLoader(url);
+            loader.setLocation(url);
+            loader.load();
+            WorkPlanModifyController workPlanModifyController = loader.getController();
+            workPlanModifyController.setWorkPlanId(idWorkPlan);
+            workPlanModifyController.setMember(member);
+            Parent root = loader.getRoot();
             Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.showAndWait();
+            primaryStage.setScene(scene);
+            primaryStage.show();
         } catch (IOException ex) {
             Log.logException(ex);
         }

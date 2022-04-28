@@ -28,10 +28,23 @@ public class MemberViewController implements Initializable {
     @FXML Label lbDegreeYear = new Label();
     @FXML Label lbUniversityName = new Label();
     private Member member ;
+    private Member memberCurrently;
   
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         
+    }
+    
+    public void setMemberCurrently(Member memberCurrently){ 
+        this.memberCurrently=memberCurrently;
+         disableButtonUpdate();
+    }   
+    
+    private void disableButtonUpdate(){   
+        if(!memberCurrently.getName().equals(member.getName())){  
+            btUpdate.setOpacity(0);//! ()) 
+            btUpdate.setDisable(true);
+        }
     }
     
     public void initializeMember(Member member) {
@@ -43,6 +56,7 @@ public class MemberViewController implements Initializable {
          lbNameDegree.setText(member.getNameDegree());
          lbDegreeYear.setText(Integer.toString(member.getDegreeYear()));
          lbUniversityName.setText(member.getUniversityName());
+        
     }
    
     @FXML
@@ -62,6 +76,7 @@ public class MemberViewController implements Initializable {
             loader.load();
             MemberModifyController memberModifyController = loader.getController();
             memberModifyController.initializeMember(member);
+            memberModifyController.setLoginMember(memberCurrently);
             Parent root = loader.getRoot();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
@@ -81,7 +96,7 @@ public class MemberViewController implements Initializable {
             loader.setLocation(url);
             loader.load();
             MemberListController memberListController  = loader.getController();
-            memberListController.setMember(member);
+            memberListController.setMember(memberCurrently);
             Parent root = loader.getRoot();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
