@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import log.BusinessException;
@@ -27,9 +28,9 @@ public class TopicRegisterController implements Initializable {
     private ObservableList<Member> members;
     private ObservableList<Topic> topics;
     @FXML ComboBox<Member> cbMember;
-    @FXML TextFieldLimited tfTopic;
-    @FXML TextFieldLimited tfStartTime;
-    @FXML TextFieldLimited tfFinishTime;
+    @FXML TextField tfTopic;
+    @FXML TextField tfStartTime;
+    @FXML TextField tfFinishTime;
     @FXML TableColumn<Topic,String>  tcFinishTime;
     @FXML TableColumn<Topic,String>  tcStartTime;
     @FXML TableColumn<Topic,String>  tcMember;
@@ -47,9 +48,6 @@ public class TopicRegisterController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tfTopic.setMaxLength(200);
-        tfStartTime.setMaxLength(5);
-        tfFinishTime.setMaxLength(5);
         tcTopic.setCellValueFactory(new PropertyValueFactory<Topic,String>("topicName"));
         tcStartTime.setCellValueFactory(new PropertyValueFactory<Topic,String>("startTime"));
         tcFinishTime.setCellValueFactory(new PropertyValueFactory<Topic,String>("finishTime"));
@@ -96,8 +94,7 @@ public class TopicRegisterController implements Initializable {
         if(validateTopic(topic)){
             topics.add(topic);
             cleanFields();
-        }
-      
+        }      
     }
     
     @FXML
@@ -106,7 +103,6 @@ public class TopicRegisterController implements Initializable {
         cleanFields();
     }
     
-    @FXML
     private void cleanFields(){
         tfTopic.setText("");
         tfFinishTime.setText("");
@@ -120,10 +116,8 @@ public class TopicRegisterController implements Initializable {
             List<Topic> topicTable = tvTopic.getSelectionModel().getSelectedItems();
             if(topicTable.size() == tableSize){
                 topic = topicTable.get(0);
-            }
-            
+            }   
         }
-        
         return topic;
     }
     
@@ -137,13 +131,11 @@ public class TopicRegisterController implements Initializable {
                 tfTopic.setText(topic.getTopicName());
                 tfFinishTime.setText(topic.getFinishTime());
                 tfStartTime.setText(topic.getStartTime());
-                cbMember.getSelectionModel().select(newMember);
-                
+                cbMember.getSelectionModel().select(newMember);                
             } catch (BusinessException ex) {
                 Log.logException(ex);
             }
         }
-        
     }
     
     private void initializeMembers() {
@@ -162,10 +154,12 @@ public class TopicRegisterController implements Initializable {
    
    @FXML
    private void actionSave(){ 
-       if(!topics.isEmpty()){
-        meetingRegisterController.setTopics(topics);       
-        Stage stage = (Stage)btSave.getScene().getWindow();
-        stage.close();
+       if(!topics.isEmpty()){   
+           meetingRegisterController.setTopics(topics);   
+           AlertMessage alertMessage = new AlertMessage();
+           alertMessage.showAlertSuccesfulSave("La agenda");
+           Stage stage = (Stage)btSave.getScene().getWindow();
+           stage.close();
        }else{
            AlertMessage alertMessage = new AlertMessage();
            alertMessage.showAlertValidateFailed("Campos vacios");
@@ -241,7 +235,6 @@ public class TopicRegisterController implements Initializable {
             
             i++;
         }
-        
        return value;
     }    
     
