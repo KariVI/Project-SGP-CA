@@ -37,8 +37,6 @@ public class ProjectShowController implements Initializable {
     @FXML private TextArea taDescription;
     @FXML private TableView<LGAC> tvLGAC;
     @FXML private TableColumn<LGAC, String> tcLGAC;
-    @FXML private TableView<ReceptionWork> tvReceptionWork;
-    @FXML private TableColumn<ReceptionWork, String> tcReceptionWork;
     @FXML private TableView<Member> tvMember;
     @FXML private TableColumn<Member, String> tcMember;
     @FXML private TableView<Student> tvStudent;
@@ -48,7 +46,6 @@ public class ProjectShowController implements Initializable {
     private ObservableList<LGAC> lgacs;
     private ObservableList<Member> members;
     private ObservableList<Student> students;
-    private ObservableList<ReceptionWork> receptionWorks;
     private Project project;
     private Member member;
 
@@ -56,15 +53,12 @@ public class ProjectShowController implements Initializable {
         tcLGAC.setCellValueFactory(new PropertyValueFactory<LGAC,String>("name"));
         tcMember.setCellValueFactory(new PropertyValueFactory<Member,String>("name"));
         tcStudent.setCellValueFactory(new PropertyValueFactory<Student,String>("name"));
-        tcReceptionWork.setCellValueFactory(new PropertyValueFactory<ReceptionWork,String>("title"));
         lgacs = FXCollections.observableArrayList();     
         members = FXCollections.observableArrayList();  
-        students = FXCollections.observableArrayList();  
-        receptionWorks = FXCollections.observableArrayList();  
+        students = FXCollections.observableArrayList();    
         tvLGAC.setItems(lgacs);
         tvMember.setItems(members);
         tvStudent.setItems(students);
-        tvReceptionWork.setItems(receptionWorks);
     }    
     
     public void setProject(Project project){
@@ -131,9 +125,6 @@ public class ProjectShowController implements Initializable {
         try {
             ArrayList<ReceptionWork> receptionWorkList = new ArrayList<ReceptionWork>();
             receptionWorkList = projectDAO.getReceptionWorks(project);
-            for(int i = 0; i< receptionWorkList.size(); i++){
-                receptionWorks.add(receptionWorkList.get(i));
-            }
         } catch (BusinessException ex) {
             Log.logException(ex);
         }

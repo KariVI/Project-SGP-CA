@@ -2,14 +2,14 @@
 package GUI;
 
 import businessLogic.GroupAcademicDAO;
-import businessLogic.LGACDAO;
 import businessLogic.MemberDAO;
 import businessLogic.PreliminarProjectDAO;
+import businessLogic.ProjectDAO;
 import businessLogic.ReceptionWorkDAO;
 import businessLogic.StudentDAO;
-import domain.LGAC;
 import domain.Member;
 import domain.PreliminarProject;
+import domain.Project;
 import domain.ReceptionWork;
 import domain.Student;
 import java.io.File;
@@ -58,9 +58,8 @@ public class ReceptionWorkRegisterController implements Initializable {
     @FXML private Button btSave;
     @FXML private Button btExit;
     @FXML private ScrollPane spStudent = new ScrollPane();
-    @FXML private ScrollPane spLgacs;
     @FXML private ComboBox cbType;
-    @FXML private ComboBox cbPreliminarProject;
+    @FXML private ComboBox cbProject;
     @FXML private ComboBox cbState;
     @FXML DatePicker dpStartDate;
     @FXML DatePicker dpEndDate;
@@ -76,7 +75,7 @@ public class ReceptionWorkRegisterController implements Initializable {
     private int indexCodirectors;
     private ObservableList<Member> codirectors ;
     private ObservableList<Member> members ;
-    private ObservableList<PreliminarProject> preliminarProjects;
+    private ObservableList<Project> projects;
     private ReceptionWork receptionWork = new ReceptionWork();
     private String keyGroupAcademic;
     private Member member;
@@ -86,11 +85,6 @@ public class ReceptionWorkRegisterController implements Initializable {
         initializeMembers();
         cbDirector.getSelectionModel().selectFirst();
        cbCodirectors.getSelectionModel().selectFirst();
-        try {
-            getlgacs();
-        } catch (BusinessException ex) {
-            Log.logException(ex);
-        }
     }
 
     public void setMember(Member member) {
@@ -98,11 +92,11 @@ public class ReceptionWorkRegisterController implements Initializable {
     }
     
     
-    public void setPreliminarProjects(ObservableList<PreliminarProject> preliminarProjects) {  
-         for( int i = 0; i<preliminarProjects.size(); i++) {
-                  this.preliminarProjects.add(preliminarProjects.get(i));
+    public void setProject(ObservableList<Project> projects) {  
+         for( int i = 0; i<projects.size(); i++) {
+                  this.projects.add(projects.get(i));
             }
-        cbPreliminarProject.getSelectionModel().selectFirst();
+        cbProject.getSelectionModel().selectFirst();
 
     }
     
@@ -141,7 +135,7 @@ public class ReceptionWorkRegisterController implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String type = (String) cbType.getSelectionModel().getSelectedItem();
         String state = (String) cbState.getSelectionModel().getSelectedItem();
-        PreliminarProject preliminarProject = (PreliminarProject) cbPreliminarProject.getSelectionModel().getSelectedItem();        
+        Project project = (Project) cbProject.getSelectionModel().getSelectedItem();        
         String startDate;
         String endDate;
         if((!validateFieldEmpty()) && validateInformationField() ){
@@ -153,7 +147,7 @@ public class ReceptionWorkRegisterController implements Initializable {
                 receptionWork.setDateStart(startDate);
                 receptionWork.setDateEnd(endDate);
                 receptionWork.setType(type);
-                receptionWork.setPreliminarProject(preliminarProject);
+                receptionWork.setProject(project);
                 receptionWork.setActualState(state);
                 receptionWork.setKeyGroupAcademic(keyGroupAcademic);
 
@@ -234,9 +228,9 @@ public class ReceptionWorkRegisterController implements Initializable {
             cbState.setItems(states);
             cbType.getSelectionModel().selectFirst();
             cbState.getSelectionModel().selectFirst();
-            preliminarProjects=FXCollections.observableArrayList();
-            cbPreliminarProject.setItems(preliminarProjects);
-            cbPreliminarProject.getSelectionModel().selectFirst();
+            projects = FXCollections.observableArrayList();
+            cbProject.setItems(projects);
+            cbProject.getSelectionModel().selectFirst();
              tcCodirector.setCellValueFactory(new PropertyValueFactory<Member,String>("name"));
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             dpStartDate.setConverter(new LocalDateStringConverter(formatter, null));
@@ -293,7 +287,6 @@ public class ReceptionWorkRegisterController implements Initializable {
                    if((! tfNumberStudents.getText().isEmpty())){   
                         recoverStudents();
                     }
-                    recoverLgacs();
                     AlertMessage alertMessage = new AlertMessage();
                     alertMessage.showAlertSuccesfulSave("Trabajo recepcional");
                     Stage stage = (Stage) btSave.getScene().getWindow();
@@ -491,7 +484,7 @@ public class ReceptionWorkRegisterController implements Initializable {
           boolean value=false;
           if(tfTitle.getText().isEmpty() 
            || taDescription.getText().isEmpty()  || dpStartDate == null 
-            || dpEndDate==null  || cbPreliminarProject.getSelectionModel().getSelectedItem() == null
+            || dpEndDate==null  || cbProject.getSelectionModel().getSelectedItem() == null
            ){
               value=true;
           }
@@ -525,49 +518,7 @@ public class ReceptionWorkRegisterController implements Initializable {
        return value;
     }
      
-    
-    private void getlgacs() throws BusinessException{    
-        
-         GridPane gridPane= new GridPane();
-         GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO ();
-            gridPane.setHgap (2);
-            gridPane.setVgap (2);
-            int i=0;
-            gridPane.add(new Label ("Selecciona LGAC relacionadas: "),1,0);
-            int indexGridPane=1;
-            ArrayList <LGAC> lgacs = groupAcademicDAO.getLGACs(keyGroupAcademic);
-           while (i < lgacs.size()){  
-                CheckBox checkBox = new CheckBox(lgacs.get(i).getName());
-                gridPane.add(checkBox,1,indexGridPane);
-                i++;
-                indexGridPane++;
-           }  
-        
 
-           spLgacs.setContent(gridPane);
-    }
-    
-    private void recoverLgacs() throws BusinessException{    
-        GridPane gridPane= (GridPane) spLgacs.getContent();
-        ArrayList<LGAC> lgacs = new ArrayList<LGAC>();
-        LGACDAO lgacDAO = new LGACDAO();
-            int i=1;
-            int indexLGACs =0;
-            GroupAcademicDAO groupAcademicDAO = new GroupAcademicDAO ();
-            ArrayList <LGAC> lgacsAuxiliar = groupAcademicDAO.getLGACs(keyGroupAcademic);
-           while (i ==lgacsAuxiliar.size() ){
-               CheckBox checkBox = (CheckBox) getNodeFromGridPane( gridPane, 1, i);
-               if(checkBox.isSelected()){   
-                 LGAC lgac= lgacDAO.getLgacByName(checkBox.getText());
-                 lgacs.add(lgac);
-               }
-               i++;
-           }
-            ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
-           receptionWork.setLGACs(lgacs);
-           receptionWorkDAO.addedSucessfulLGACs(receptionWork);
-           
-    }
     
     
      private boolean searchRepeateReceptionWork()   { 
@@ -587,12 +538,12 @@ public class ReceptionWorkRegisterController implements Initializable {
         return value;
     }
      
-    public void initializePreliminarProjects() throws BusinessException{   
-            PreliminarProjectDAO preliminarProjectDAO = new PreliminarProjectDAO();
-                ArrayList <PreliminarProject> preliminarProjectList = preliminarProjectDAO.getPreliminarProjects(keyGroupAcademic) ;
+    public void initializeProjects() throws BusinessException{   
+            ProjectDAO projectDAO = new ProjectDAO();
+                ArrayList <Project> projectList = projectDAO.getProjects();
                
-            for( int i = 0; i<preliminarProjectList.size(); i++) {
-                  preliminarProjects.add(preliminarProjectList.get(i));
+            for( int i = 0; i<projectList.size(); i++) {
+                  projects.add(projectList.get(i));
             }
     }
     

@@ -45,8 +45,6 @@ public class ProjectModifyController implements Initializable {
     @FXML private TextArea taDescription;
     @FXML private TableView<LGAC> tvLGAC;
     @FXML private TableColumn<LGAC, String> tcLGAC;
-    @FXML private TableView<ReceptionWork> tvReceptionWork;
-    @FXML private TableColumn<ReceptionWork, String> tcReceptionWork;
     @FXML private TableView<Member> tvMember;
     @FXML private TableColumn<Member, String> tcMember;
     @FXML private TableView<Student> tvStudent;
@@ -57,7 +55,6 @@ public class ProjectModifyController implements Initializable {
     @FXML private TextFieldLimited tfName;
     @FXML private TextFieldLimited tfEnrollment;
     @FXML private ComboBox<Member> cbMember;
-    @FXML private ComboBox<ReceptionWork> cbReceptionWork;
     @FXML private ComboBox<LGAC> cbLGAC;
     private ObservableList<LGAC> lgacs;
     private ObservableList<LGAC> lgacsTable;
@@ -67,13 +64,9 @@ public class ProjectModifyController implements Initializable {
     private ObservableList<Student> studentsTable;
     private ObservableList<Member> membersTableOld;
     private ObservableList<Student> studentsTableOld;
-    private ObservableList<ReceptionWork> receptionWorks;
-    private ObservableList<ReceptionWork> receptionWorksTable;
-    private ObservableList<ReceptionWork> receptionWorksTableOld;
     private String groupAcademicKey;
     private int indexMember;
     private int indexLGAC;
-    private int indexReceptionWork;
     private int indexStudent;
     private Project projectRetrieved;
     private Member member;
@@ -87,23 +80,17 @@ public class ProjectModifyController implements Initializable {
         tcMember.setCellValueFactory(new PropertyValueFactory<Member,String>("name"));
         tcStudentName.setCellValueFactory(new PropertyValueFactory<Student,String>("name"));
         tcStudentEnrollment.setCellValueFactory(new PropertyValueFactory<Student,String>("enrollment"));
-        tcReceptionWork.setCellValueFactory(new PropertyValueFactory<ReceptionWork,String>("title"));
         lgacs = FXCollections.observableArrayList();  
         lgacsTable = FXCollections.observableArrayList(); 
         lgacsTableOld = FXCollections.observableArrayList(); 
         members = FXCollections.observableArrayList();  
         membersTable = FXCollections.observableArrayList(); 
         membersTableOld = FXCollections.observableArrayList(); 
-        receptionWorks = FXCollections.observableArrayList();  
-        receptionWorksTable = FXCollections.observableArrayList();  
-        receptionWorksTableOld = FXCollections.observableArrayList();
         studentsTable = FXCollections.observableArrayList(); 
         studentsTableOld = FXCollections.observableArrayList(); 
         cbLGAC.setItems(lgacs);
         cbMember.setItems(members);
-        cbReceptionWork.setItems(receptionWorks);
         tvMember.setItems(membersTable);
-        tvReceptionWork.setItems(receptionWorksTable);
         tvLGAC.setItems(lgacsTable);
         tvStudent.setItems(studentsTable);
         
@@ -121,12 +108,6 @@ public class ProjectModifyController implements Initializable {
             }
         );
         
-       tvReceptionWork.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                 setSelectedReceptionWork();
-             }
-            }
-        );
        
         tvLGAC.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -272,10 +253,6 @@ public class ProjectModifyController implements Initializable {
            project.setStudent(studentsTable.get(i));
        }
        
-       for(int i = 0; i < receptionWorksTable.size(); i++){
-           project.setReceptionWork(receptionWorksTable.get(i));
-       } 
-       
        for(int i = 0; i < membersTable.size(); i++){
            project.setMember(membersTable.get(i));
        } 
@@ -306,7 +283,7 @@ public class ProjectModifyController implements Initializable {
    private boolean emptyFields(Project project){
        boolean value = false;
        if(project.getDescription().isEmpty()||project.getTitle().isEmpty()||
-          project.getReceptionWorks().isEmpty() || project.getMembers().isEmpty()||
+          project.getMembers().isEmpty()||
           project.getStudents().isEmpty()||project.getLGACs().isEmpty()){
            value = true;
        }
@@ -424,54 +401,6 @@ public class ProjectModifyController implements Initializable {
         lgacsTable.remove(indexLGAC);
     }
     
-   @FXML
-    private void addReceptionWork(ActionEvent event){
-        ReceptionWork receptionWork = cbReceptionWork.getSelectionModel().getSelectedItem();
-        if(validateReceptionWork(receptionWork)){
-           receptionWorksTable.add(receptionWork);           
-        }else{
-            AlertMessage alertMessage = new AlertMessage();
-            alertMessage.showAlertValidateFailed("Trabajo recepcional repetido");
-        }  
-    } 
-    
-    private ReceptionWork getSelectedReceptionWork(){
-        ReceptionWork receptionWork = null;
-        int tableSize = 1;
-        if(tvReceptionWork != null){
-            List<ReceptionWork> receptionWorkTable = tvReceptionWork.getSelectionModel().getSelectedItems();
-            if(receptionWorkTable.size() == tableSize){
-                receptionWork = receptionWorkTable.get(0);
-            }
-        }
-        return receptionWork;
-    }
-    
-    private void setSelectedReceptionWork(){
-        ReceptionWork receptionWork = getSelectedReceptionWork();
-        indexReceptionWork = receptionWorksTable.indexOf(receptionWork);
-        if(receptionWork != null){
-            cbReceptionWork.getSelectionModel().select(receptionWork);
-        }
-    }    
-    
-    @FXML
-    private void actionDeleteReceptionWork(ActionEvent event){
-       receptionWorksTable.remove(indexReceptionWork);
-    }
-    
-    private boolean validateReceptionWork(ReceptionWork receptionWork){
-        Boolean value = true;
-        int i = 0;
-        while(value && i<receptionWorksTable.size()){
-            if(receptionWorksTable.get(i).equals(receptionWork)){
-                value = false;
-            }
-            i++;
-        }
-       return value;
-    }
-     
    @FXML
     private void addStudent(ActionEvent event){
         String name = "";
@@ -602,32 +531,15 @@ public class ProjectModifyController implements Initializable {
         }
     }
     
-    private void initializeReceptionWorks(){
-        ReceptionWorkDAO  receptionWorkDAO  = new  ReceptionWorkDAO ();
-        try {
-            ArrayList<ReceptionWork> receptionWorkList = new ArrayList<ReceptionWork>();
-            receptionWorkList  = receptionWorkDAO.getReceptionWorks(groupAcademicKey);
-            for(int i = 0; i< receptionWorkList .size(); i++){
-                     receptionWorks.add(receptionWorkList.get(i));   
-            }
-            
-            cbReceptionWork.getSelectionModel().selectFirst();      
-        } catch (BusinessException ex) {
-            Log.logException(ex);
-        }
-    }
-    
     public void setProject(Project projectRetrieved){
         this.projectRetrieved = projectRetrieved;
         this.groupAcademicKey = projectRetrieved.getGroupAcademicKey();
         initializeMembers();
         initializeLGACs();
-        initializeReceptionWorks();
         initializeProject(projectRetrieved);
         initializeLGACs(projectRetrieved);
         initializeMembers(projectRetrieved);
         initializeStudents(projectRetrieved);
-        initializeReceptionWorks(projectRetrieved);
     }
     
     public void setMember(Member member){
@@ -688,19 +600,5 @@ public class ProjectModifyController implements Initializable {
         }
     }
     
-    private void initializeReceptionWorks(Project projectRetrieved){
-        ProjectDAO projectDAO = new ProjectDAO();
-        try {
-            ArrayList<ReceptionWork> receptionWorkList = new ArrayList<ReceptionWork>();
-            receptionWorkList = projectDAO.getReceptionWorks(projectRetrieved);
-            for(int i = 0; i< receptionWorkList.size(); i++){
-                receptionWorksTableOld.add(receptionWorkList.get(i));
-                receptionWorksTable.add(receptionWorkList.get(i));
-            }
-            
-        } catch (BusinessException ex) {
-            Log.logException(ex);
-        }
-    }
     
 }

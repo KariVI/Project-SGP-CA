@@ -13,25 +13,18 @@ public class ReceptionWork {
     private String dateStart;
     private String dateEnd;
     private String actualState;
-    private PreliminarProject preliminarProject;
+    private Project project;
     private ArrayList<Student> students;
 
   
     private ArrayList<Member> members;
-    private ArrayList<LGAC> lgacs;
+
     private String keyGroupAcademic;
 
       public void setMembers(ArrayList<Member> members) {
         this.members = members;
     }
       
-    public ArrayList<LGAC> getLgacs() {
-        return lgacs;
-    }
-
-    public void setLgacs(ArrayList<LGAC> lgacs) {
-        this.lgacs = lgacs;
-    }
 
     public String getKeyGroupAcademic() {
         return keyGroupAcademic;
@@ -51,7 +44,6 @@ public class ReceptionWork {
         this.actualState=actualState;
         students=new ArrayList<Student>();
         members=new ArrayList<Member>();
-        lgacs=new ArrayList<LGAC>();
         this.keyGroupAcademic = keyGroupAcademic;
          
     }
@@ -59,7 +51,6 @@ public class ReceptionWork {
     public ReceptionWork() {
         students=new ArrayList<Student>();
         members=new ArrayList<Member>();
-        lgacs=new ArrayList<LGAC>();
     }
     
     public int getKey(){
@@ -118,12 +109,12 @@ public class ReceptionWork {
         this.actualState=actualState;
     }
     
-    public PreliminarProject getPreliminarProject(){
-        return preliminarProject;
+    public Project getProject(){
+        return project;
     }
     
-    public void setPreliminarProject(PreliminarProject preliminarProject){ 
-        this.preliminarProject=preliminarProject;
+    public void setProject(Project project){ 
+        this.project = project;
     }
     
      public ArrayList<Member> getMembers(){
@@ -134,17 +125,7 @@ public class ReceptionWork {
          members.add(assistant);
     }
     
-     public void setLGAC(LGAC lgac){
-        lgacs.add(lgac);
-    }
-    
-    public ArrayList<LGAC> getLGACs(){
-        return lgacs;
-    }
-    
-    public void addLGAC(LGAC lgac){ 
-         lgacs.add(lgac);
-    }
+
     
     public Student getStudent( String enrollment){
         Student student=null;
@@ -192,9 +173,7 @@ public class ReceptionWork {
         this.students= students;
     }
 
-    public void setLGACs(ArrayList<LGAC> lgacs) {
-        this.lgacs=lgacs;
-    }
+  
     
 }
 
