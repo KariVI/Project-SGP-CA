@@ -190,7 +190,7 @@ public class MeetingShowController implements Initializable {
     }
     
     private void disableButtonUpdate(){   
-        if(member.getRole().equals("Integrante")){  
+        if(member.getRole().equals("Asistente")){  
             btUpdate.setOpacity(0);
             btUpdate.setDisable(true);
         
