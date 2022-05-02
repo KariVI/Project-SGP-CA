@@ -24,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import log.BusinessException;
@@ -35,9 +36,9 @@ public class TopicModifyController implements Initializable {
     private ObservableList<Topic> topics;
     private ObservableList<Topic> oldTopics;
     @FXML private ComboBox<Member> cbMember;
-    @FXML private TextFieldLimited tfTopic;
-    @FXML private TextFieldLimited tfStartTime;
-    @FXML private TextFieldLimited tfFinishTime;
+    @FXML private TextField tfTopic;
+    @FXML private TextField tfStartTime;
+    @FXML private TextField tfFinishTime;
     @FXML private TableColumn tcFinishTime;
     @FXML private TableColumn tcStartTime;
     @FXML private TableColumn tcMember;
@@ -55,9 +56,6 @@ public class TopicModifyController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tfTopic.setMaxLength(200);
-        tfStartTime.setMaxLength(5);
-        tfFinishTime.setMaxLength(5);
         tcTopic.setCellValueFactory(new PropertyValueFactory<Topic,String>("topicName"));
         tcStartTime.setCellValueFactory(new PropertyValueFactory<Topic,String>("startTime"));
         tcFinishTime.setCellValueFactory(new PropertyValueFactory<Topic,String>("finishTime"));
@@ -70,10 +68,9 @@ public class TopicModifyController implements Initializable {
         cbMember.setItems(members);
         tvTopic.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                 setSelectedTopic();
-             }
+                setSelectedTopic();
             }
-        );
+        });
 
         tableTopicListener = new ListChangeListener<Topic>(){
             @Override
@@ -122,7 +119,6 @@ public class TopicModifyController implements Initializable {
             topics.add(topic);
             cleanFields();
         }
-
     }
     
     @FXML
@@ -144,10 +140,8 @@ public class TopicModifyController implements Initializable {
             List<Topic> topicTable = tvTopic.getSelectionModel().getSelectedItems();
             if(topicTable.size() == tableSize){
                 topic = topicTable.get(0);
-            }
-            
+            }   
         }
-        
         return topic;
     }
     
@@ -161,8 +155,7 @@ public class TopicModifyController implements Initializable {
                 tfTopic.setText(topic.getTopicName());
                 tfFinishTime.setText(topic.getFinishTime());
                 tfStartTime.setText(topic.getStartTime());
-                cbMember.getSelectionModel().select(newMember);
-                
+                cbMember.getSelectionModel().select(newMember);       
             } catch (BusinessException ex) {
                 Log.logException(ex);
             }
@@ -179,7 +172,7 @@ public class TopicModifyController implements Initializable {
             }
             cbMember.getSelectionModel().selectFirst();
         } catch (BusinessException ex) {
-          Log.logException(ex);
+            Log.logException(ex);
         }
     }
     
@@ -197,10 +190,10 @@ public class TopicModifyController implements Initializable {
            
            AlertMessage alertMessage = new AlertMessage();
            alertMessage.showAlertSuccesfulSave("La agenda");
-           
-         } catch (BusinessException ex) {
-             Log.logException(ex);
-         }
+      
+        } catch (BusinessException ex) {
+            Log.logException(ex);
+        }
         
         Stage stage = (Stage)btSave.getScene().getWindow();
         stage.close();
@@ -209,9 +202,9 @@ public class TopicModifyController implements Initializable {
    
   @FXML
    private void actionCancel(){
-      Stage stage = (Stage)btCancel.getScene().getWindow();
-      stage.close(); 
-      openTopicShow();
+       Stage stage = (Stage)btCancel.getScene().getWindow();
+       stage.close(); 
+       openTopicShow();
    }
    
   @FXML
@@ -227,7 +220,6 @@ public class TopicModifyController implements Initializable {
         if(validateTopic(topic)){    
             topics.set(indexTopic,topic);
         }
-        
         cleanFields();
    }
    
@@ -235,20 +227,20 @@ public class TopicModifyController implements Initializable {
     private void openTopicShow(){   
         Stage primaryStage = new Stage();
         try{
-              URL url = new File("src/GUI/topicShow.fxml").toURI().toURL();
-              FXMLLoader loader = new FXMLLoader(url);
-              loader.setLocation(url);
-              loader.load();
-              TopicShowController topicShowController  = loader.getController();
-              topicShowController.setMember(member);
-              topicShowController.setMeeting(meeting);
-              Parent root = loader.getRoot();
-              Scene scene = new Scene(root);
-              primaryStage.setScene(scene);
-              primaryStage.show();
-            }catch (IOException ex) {
-                Log.logException(ex);
-            }
+            URL url = new File("src/GUI/topicShow.fxml").toURI().toURL();
+            FXMLLoader loader = new FXMLLoader(url);
+            loader.setLocation(url);
+            loader.load();
+            TopicShowController topicShowController  = loader.getController();
+            topicShowController.setMember(member);
+            topicShowController.setMeeting(meeting);
+            Parent root = loader.getRoot();
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        }catch (IOException ex) {
+            Log.logException(ex);
+        }
     }
     
     private boolean validateTopic(Topic topic){
@@ -317,7 +309,7 @@ public class TopicModifyController implements Initializable {
             i++;
         }
         
-       return value;
+        return value;
     }
     
 }

@@ -8,8 +8,17 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+    <jar href="SistemaCuerpoAcademico.jar" size="357339" download="eager" />
+=======
+    <jar href="SistemaCuerpoAcademico.jar" size="351108" download="eager" />
+>>>>>>> Stashed changes
+    <jar href="lib\mysql-connector-java-8.0.23.jar" size="2415211" download="eager" />
+=======
     <jar href="SistemaCuerpoAcademico.jar" size="355805" download="eager" />
     <jar href="lib/mysql-connector-java-8.0.23.jar" size="2415211" download="eager" />
+>>>>>>> main
   </resources>
   <jfx:javafx-desc  width="800" height="600" main-class="sistemacuerpoacademico.PrincipalMenu"  name="SistemaCuerpoAcademico" />
   <update check="always"/>
