@@ -145,7 +145,7 @@ public class ReceptionWorkShowController implements Initializable {
        lbType.setText("Tipo:   " +receptionWork.getType());
        taDescription.setText("Descripción: " + receptionWork.getDescription());
 
-       lbPreliminarProject. setText("Proyecto: "+ receptionWork.getProject());
+       //lbPreliminarProject. setText("Proyecto: "+ receptionWork.getProject());
 
        lbState.setText("Estado: "+ receptionWork.getActualState());
        recoverColaborators ();
