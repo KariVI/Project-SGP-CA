@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -13,7 +19,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="756.0" prefWidth="783.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProjectShowController">
+<AnchorPane id="AnchorPane" prefHeight="756.0" prefWidth="783.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ProjectShowController">
     <stylesheets>
         <URL value="@projectregister.css" />
     </stylesheets>
@@ -44,23 +50,23 @@
       </Label>
       <Label layoutX="326.0" layoutY="76.0" text="Descripción:" />
       <TextArea fx:id="taDescription" editable="false" layoutX="327.0" layoutY="96.0" prefHeight="117.0" prefWidth="371.0" />
-      <TableView fx:id="tvLGAC" layoutX="34.0" layoutY="239.0" prefHeight="118.0" prefWidth="668.0">
+      <TableView fx:id="tvLGAC" layoutX="35.0" layoutY="224.0" prefHeight="118.0" prefWidth="668.0">
         <columns>
           <TableColumn fx:id="tcLGAC" prefWidth="667.0000038146973" text="LGAC" />
         </columns>
       </TableView>
-      <TableView fx:id="tvMember" layoutX="36.0" layoutY="379.0" prefHeight="140.0" prefWidth="666.0">
+      <TableView fx:id="tvMember" layoutX="36.0" layoutY="352.0" prefHeight="140.0" prefWidth="666.0">
          <columns>
             <TableColumn fx:id="tcMember" prefWidth="664.9999885559082" text="Participantes del CA" />
          </columns>
       </TableView>
-      <TableView fx:id="tvStudent" layoutX="37.0" layoutY="542.0" prefHeight="141.0" prefWidth="673.0">
+      <TableView fx:id="tvStudent" layoutX="36.0" layoutY="506.0" prefHeight="141.0" prefWidth="673.0">
          <columns>
             <TableColumn fx:id="tcStudent" prefWidth="369.0" text="Participantes estudiante" />
          </columns>
       </TableView>
-      <Button fx:id="btReturn" layoutX="695.0" layoutY="702.0" mnemonicParsing="false" onAction="#actionReturn" prefHeight="32.0" prefWidth="75.0" text="Regresar" />
-      <Button fx:id="btUpdate" layoutX="609.0" layoutY="703.0" mnemonicParsing="false" onAction="#actionUpdate" prefHeight="32.0" prefWidth="75.0" text="Modificar" />
+      <Button fx:id="btReturn" layoutX="698.0" layoutY="657.0" mnemonicParsing="false" onAction="#actionReturn" prefHeight="32.0" prefWidth="75.0" text="Regresar" />
+      <Button fx:id="btUpdate" layoutX="609.0" layoutY="657.0" mnemonicParsing="false" onAction="#actionUpdate" prefHeight="32.0" prefWidth="75.0" text="Modificar" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2c2c2c" height="31.0" layoutY="-4.0" stroke="BLACK" strokeType="INSIDE" width="792.0" />
    </children>
 </AnchorPane>
