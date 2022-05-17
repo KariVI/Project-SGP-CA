@@ -13,9 +13,8 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import GUI.TextFieldLimited?>
 
-<AnchorPane id="AnchorPane" prefHeight="507.0" prefWidth="733.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MeetingRegisterController">
+<AnchorPane id="AnchorPane" prefHeight="636.0" prefWidth="733.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MeetingRegisterController">
     <stylesheets>
         <URL value="@meetingregister.css" />
     </stylesheets>
@@ -27,32 +26,38 @@
          </font>
       </Text>
       <Label layoutX="14.0" layoutY="85.0" text="Asunto:" />
-      <TextFieldLimited fx:id="tfSubject" layoutX="139.0" layoutY="81.0" prefHeight="25.0" prefWidth="387.0" />
+      <TextField fx:id="tfSubject" layoutX="139.0" layoutY="81.0" prefHeight="25.0" prefWidth="387.0" />
       <Label layoutX="20.0" layoutY="117.0" text="Hora:" />
       <Label layoutX="18.0" layoutY="156.0" text="Fecha:" />
       <DatePicker fx:id="dpDate" layoutX="281.0" layoutY="152.0" prefHeight="25.0" prefWidth="245.0" />
-      <Label layoutX="21.0" layoutY="189.0" text="Lider:" />
-      <ComboBox fx:id="cbLeader" layoutX="281.0" layoutY="185.0" prefHeight="25.0" prefWidth="245.0" />
-      <Label layoutX="14.0" layoutY="218.0" prefHeight="17.0" prefWidth="71.0" text="Secretario:" />
-      <ComboBox fx:id="cbSecretary" layoutX="281.0" layoutY="223.0" prefHeight="25.0" prefWidth="245.0" />
-      <TextFieldLimited fx:id="tfHour" layoutX="377.0" layoutY="113.0" />
-      <TableView fx:id="tvPrerequisite" layoutX="13.0" layoutY="262.0" prefHeight="121.0" prefWidth="520.0">
+      <ComboBox fx:id="cbAssistants" layoutX="10.0" layoutY="316.0" prefHeight="25.0" prefWidth="354.0" />
+      <TextField fx:id="tfHour" layoutX="377.0" layoutY="113.0" />
+      <TableView fx:id="tvPrerequisite" layoutX="14.0" layoutY="389.0" prefHeight="131.0" prefWidth="526.0">
         <columns>
           <TableColumn fx:id="tcDescription" prefWidth="259.0" text="Descripción" />
-          <TableColumn fx:id="tcMandated" prefWidth="260.0" text="Encargado" />
+          <TableColumn fx:id="tcMandated" prefWidth="266.0" text="Encargado" />
         </columns>
       </TableView>
-      <Button fx:id="btAddPrerequisite" layoutX="479.0" layoutY="416.0" mnemonicParsing="false" onAction="#actionAddPrerequisite" prefHeight="20.0" prefWidth="59.0" text="Añadir" />
-      <Button fx:id="btAddTopic" layoutX="479.0" layoutY="474.0" mnemonicParsing="false" onAction="#actionAddTopics" text="Añadir agenda" />
-      <Button fx:id="btSave" layoutX="590.0" layoutY="474.0" mnemonicParsing="false" onAction="#actionSave" prefHeight="25.0" prefWidth="59.0" text="Guardar" />
-      <Button fx:id="btExit" layoutX="664.0" layoutY="474.0" mnemonicParsing="false" onAction="#actionExit" prefHeight="25.0" prefWidth="59.0" text="Salir" />
-      <Label layoutX="17.0" layoutY="245.0" prefHeight="17.0" prefWidth="94.0" text="Prerequisitos:" />
-      <HBox layoutX="11.0" layoutY="385.0" prefHeight="31.0" prefWidth="526.0">
+      <Button fx:id="btAddPrerequisite" layoutX="478.0" layoutY="551.0" mnemonicParsing="false" onAction="#actionAddPrerequisite" prefHeight="20.0" prefWidth="59.0" text="Añadir" />
+      <Button fx:id="btAddTopic" layoutX="479.0" layoutY="592.0" mnemonicParsing="false" onAction="#actionAddTopics" text="Añadir agenda" />
+      <Button fx:id="btSave" layoutX="589.0" layoutY="592.0" mnemonicParsing="false" onAction="#actionSave" prefHeight="25.0" prefWidth="59.0" text="Guardar" />
+      <Button fx:id="btExit" layoutX="660.0" layoutY="592.0" mnemonicParsing="false" onAction="#actionExit" prefHeight="25.0" prefWidth="59.0" text="Salir" />
+      <Label layoutX="239.0" layoutY="367.0" prefHeight="0.0" prefWidth="94.0" text="Prerequisitos:" />
+      <HBox layoutX="14.0" layoutY="520.0" prefHeight="31.0" prefWidth="526.0">
          <children>
-            <TextFieldLimited fx:id="tfDescription" prefHeight="31.0" prefWidth="265.0" />
+            <TextField fx:id="tfDescription" prefHeight="31.0" prefWidth="260.0" />
             <ComboBox fx:id="cbMember" prefHeight="31.0" prefWidth="270.0" />
          </children>
       </HBox>
-      <Button fx:id="btDelete" layoutX="537.0" layoutY="388.0" mnemonicParsing="false" onAction="#actionDelete" text="X" />
+      <Button fx:id="btDelete" layoutX="540.0" layoutY="495.0" mnemonicParsing="false" onAction="#actionDelete" text="X" />
+      <TableView fx:id="tvAssistants" layoutX="10.0" layoutY="195.0" prefHeight="121.0" prefWidth="526.0">
+         <columns>
+            <TableColumn fx:id="tcAssistant" prefWidth="350.0" text="Asistente" />
+            <TableColumn fx:id="tcRol" prefWidth="169.0" text="Rol" />
+         </columns>
+      </TableView>
+      <ComboBox fx:id="cbRole" layoutX="364.0" layoutY="316.0" prefHeight="25.0" prefWidth="172.0" />
+      <Button fx:id="btAddAssistant" layoutX="478.0" layoutY="341.0" mnemonicParsing="false" onAction="#actionAddAssistant" prefHeight="20.0" prefWidth="59.0" text="Añadir" />
+      <Button fx:id="btDeleteAssistant" layoutX="536.0" layoutY="293.0" mnemonicParsing="false" onAction="#actionDeleteAssistant" text="X" />
    </children>
 </AnchorPane>
