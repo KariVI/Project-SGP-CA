@@ -155,8 +155,9 @@ public class MeetingShowController implements Initializable {
               loader.load();
               MeetingModifyController meetingModifyController =loader.getController();      
                meetingModifyController.setMeeting(meeting);
-               meetingModifyController.initializeMeeting();
                meetingModifyController.setMember(member);
+               meetingModifyController.initializeMeeting();
+               
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);

@@ -204,7 +204,7 @@ public class MeetingRegisterController implements Initializable {
         cleanFields();
     }
     
-      @FXML
+    @FXML
     private void actionDeleteAssistant(ActionEvent event){
         assistants.remove(indexAssistant);
         cleanFields();
@@ -217,17 +217,16 @@ public class MeetingRegisterController implements Initializable {
         role = (String) cbRole.getSelectionModel().getSelectedItem();
        
         Assistant assistant = new Assistant(role,member);
-        assistants.add(assistant);
-        /*if(validatePrerequisite(prerequisite)){
-            prerequisites.add(prerequisite);
-        }*/
-        cleanFields();
+        assistant.getMember().setRole(role);
+        if(validateAssistant(assistant)){
+            assistants.add(assistant);
+        }
     }
     
     private void save(Meeting meeting){ 
         MeetingDAO meetingDAO = new MeetingDAO ();
         try {
-            if( validateAssistants()){
+            
                 if(meetingDAO.savedSucessful(meeting)){
                     idMeeting= meetingDAO.getId(meeting);
                     savePrerequisite();
@@ -240,19 +239,32 @@ public class MeetingRegisterController implements Initializable {
                     stage.close();
                     openMeetingList();
                  }
-            }
+            
         } catch (BusinessException ex) {
             exceptionShow(ex);
         }
     }
     
-    private boolean validateAssistants(){  
+    private boolean validateAssistant(Assistant assistant){  
         boolean value = true;
-        Member secretary = (Member) cbAssistants.getSelectionModel().getSelectedItem();
-        
-            value = false;
-            AlertMessage alertMessage = new AlertMessage();
-            alertMessage.showAlertValidateFailed("El lider y secretario no pueden ser el mismo");
+            int i=0;
+            while(value && i< assistants.size()){ 
+                String professionalLicense = assistants.get(i).getMember().getProfessionalLicense();
+                String role = assistants.get(i).getRole();
+                if(professionalLicense.equals(assistant.getMember().getProfessionalLicense())){ 
+                    value= false;
+                    AlertMessage alertMessage = new AlertMessage();
+                    alertMessage.showAlertValidateFailed("El miembro ya se encuentra registrado en la reunión");
+           
+                }else if((!assistant.getRole().equals("Assistente")) && role.equals(assistant.getRole())){
+                     value= false;
+                    AlertMessage alertMessage = new AlertMessage();
+                    alertMessage.showAlertValidateFailed("El rol de lider o secretario solo se puede repetir una vez");
+                }
+          
+                i++;
+            }
+
         
         
         return value;
@@ -278,14 +290,11 @@ public class MeetingRegisterController implements Initializable {
     
     private void saveAssistants(Meeting meeting) throws BusinessException{  
         MeetingDAO meetingDAO = new MeetingDAO();
-        ArrayList<Member> assistants= new ArrayList<Member> ();
-        Member memberAuxiliar = new Member();
-        for(int i=0; i< members.size(); i++){
-           
-                assistants.add(memberAuxiliar);
-            
+        ArrayList<Member> assistantsMeeting= new ArrayList<Member> ();
+        for(int i=0; i< assistants.size(); i++){          
+            assistantsMeeting.add(assistants.get(i).getMember());
         }  
-        meeting.setAssistants(assistants);
+        meeting.setAssistants(assistantsMeeting);
         meetingDAO.addedSucessfulAssistants(meeting);
     }
     
@@ -374,7 +383,7 @@ public class MeetingRegisterController implements Initializable {
         cbAssistants.setItems(members);
         cbRole.setItems(roles);
         cbRole.getSelectionModel().selectFirst();
-        
+        cbAssistants.getSelectionModel().selectFirst();
         tvPrerequisite.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                  setSelectedPrerequisite();
@@ -445,10 +454,9 @@ public class MeetingRegisterController implements Initializable {
         Assistant assistant = getSelectedAssistant();
         indexAssistant = assistants.indexOf(assistant);
         if(assistant != null){
-            MemberDAO memberDAO = new MemberDAO();
-            //Member member =prerequisite.getMandated();
-            //tfDescription.setText(prerequisite.getDescription());
-            cbMember.getSelectionModel().select(member);
+
+            cbMember.getSelectionModel().select(assistant.getMember());
+            cbRole.getSelectionModel().select(assistant.getRole());
         }
     }
     private boolean validateFieldEmpty(){ 

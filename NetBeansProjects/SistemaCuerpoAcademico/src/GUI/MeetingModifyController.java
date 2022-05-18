@@ -7,6 +7,7 @@ import businessLogic.PrerequisiteDAO;
 import domain.Meeting;
 import domain.Member;
 import domain.Prerequisite;
+import domain.Assistant;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -45,20 +46,32 @@ public class MeetingModifyController implements Initializable {
     private ObservableList<Member> members;
     private ObservableList<Prerequisite> prerequisites;
     private ObservableList<Prerequisite> oldPrerequisites;
-    @FXML private TextFieldLimited tfSubject;
-    @FXML private TextFieldLimited tfHour;
+    @FXML private TextField tfSubject;
+    @FXML private TextField tfHour;
     @FXML private Button btExit;
-    @FXML private ComboBox cbLeader;
-    @FXML private ComboBox cbSecretary;
+  
     @FXML private DatePicker dpDate;
     @FXML private TableColumn tcDescription;
     @FXML private TableColumn tcMandated;
-    @FXML private TextFieldLimited tfDescription;
+    @FXML private TextField tfDescription;
     @FXML private ComboBox cbMember;
+    @FXML private ComboBox cbRole;
+    @FXML private ComboBox cbAssistants;
     private int indexPrerequisite;
-    @FXML private TableView<Prerequisite> tvPrerequisites;
+    @FXML TableView<Prerequisite> tvPrerequisites;
     private ListChangeListener<Prerequisite> tablePrerequisiteListener;
+    @FXML TableView<Assistant> tvAssistants;
+    private ListChangeListener<Assistant> tableAssistantListener;
+    @FXML private TableColumn tcAssistant;
+    @FXML private TableColumn tcRol;
+    private int indexAssistant;
+    private ObservableList<Assistant> assistants;  
+    private ObservableList<String> roles;
+    @FXML private Button btAddTopic;
     @FXML private Button btSave;
+    @FXML private Button btAddPrerequisite;
+     @FXML private Button btAddAssistant;
+    @FXML private Button btDeleteAssistant;
     @FXML private Button btDelete;
     private Meeting oldMeeting= new Meeting();
     private Meeting newMeeting=new Meeting();
@@ -67,9 +80,11 @@ public class MeetingModifyController implements Initializable {
     public void setMember(Member member) {
         this.member = member;
         initializeMembers(); 
+        cbMember.setItems(members);
+        cbAssistants.setItems(members);
         cbMember.getSelectionModel().selectFirst();
-        cbLeader.getSelectionModel().selectFirst();
-        cbSecretary.getSelectionModel().selectFirst();
+        cbAssistants.getSelectionModel().selectFirst();
+      
     }
          
     @FXML 
@@ -174,6 +189,50 @@ public class MeetingModifyController implements Initializable {
             }
         return value;
     }
+        
+    @FXML
+    private void actionDeleteAssistant(ActionEvent event){
+        assistants.remove(indexAssistant);
+        cleanFields();
+    }
+    
+    @FXML 
+    private void actionAddAssistant(ActionEvent actionEvent){    
+        String role="";
+        Member member = (Member) cbAssistants.getSelectionModel().getSelectedItem();
+        role = (String) cbRole.getSelectionModel().getSelectedItem();
+       
+        Assistant assistant = new Assistant(role,member);
+        assistant.getMember().setRole(role);
+        if(validateAssistant(assistant)){
+            assistants.add(assistant);
+        }
+    }
+    
+    private boolean validateAssistant(domain.Assistant assistant){  
+        boolean value = true;
+            int i=0;
+            while(value && i< assistants.size()){ 
+                String professionalLicense = assistants.get(i).getMember().getProfessionalLicense();
+                String role = assistants.get(i).getRole();
+                if(professionalLicense.equals(assistant.getMember().getProfessionalLicense())){ 
+                    value= false;
+                    AlertMessage alertMessage = new AlertMessage();
+                    alertMessage.showAlertValidateFailed("El miembro ya se encuentra registrado en la reunión");
+           
+                }else if((!assistant.getRole().equals("Assistente")) && role.equals(assistant.getRole())){
+                     value= false;
+                    AlertMessage alertMessage = new AlertMessage();
+                    alertMessage.showAlertValidateFailed("El rol de lider o secretario solo se puede repetir una vez");
+                }
+          
+                i++;
+            }
+
+        
+        
+        return value;
+    }
     
     public void setMeeting(Meeting meeting){
         this.oldMeeting.setKey(meeting.getKey());
@@ -196,16 +255,14 @@ public class MeetingModifyController implements Initializable {
         dpDate.setValue(localDate);
         initializePrerequisites();
         tvPrerequisites.setItems(prerequisites);
-        cbMember.setItems(members);
-        cbLeader.setItems(members);
-        cbSecretary.setItems(members);  
+   
         recoverAssistants();
     }
     
     private void update(){ 
          AlertMessage alertMessage = new AlertMessage();
         try {
-            if(validateAssistants()){  
+             
                 MeetingDAO meetingDAO = new MeetingDAO();
                 if( meetingDAO.updatedSucessful(newMeeting)){   
                    savePrerequisite(); 
@@ -215,7 +272,7 @@ public class MeetingModifyController implements Initializable {
                     stage.close();
                     openWindow();
                 }
-            }
+            
             } catch (BusinessException ex) {
                 if(ex.getMessage().equals("DataBase connection failed ")){
                 alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
@@ -253,17 +310,7 @@ public class MeetingModifyController implements Initializable {
         return value;
     }
     
-     private boolean validateAssistants(){  
-        boolean value = true;
-        Member leader= (Member) cbLeader.getSelectionModel().getSelectedItem();
-        Member secretary = (Member) cbSecretary.getSelectionModel().getSelectedItem();
-       if(leader.getProfessionalLicense().equals(secretary.getProfessionalLicense())){
-            value = false;
-            AlertMessage alertMessage = new AlertMessage();
-            alertMessage.showAlertValidateFailed("El lider y secretario no pueden ser el mismo");
-        }
-        return value;
-    }
+ 
     
     private void savePrerequisite() throws BusinessException{ 
     PrerequisiteDAO prerequisiteDAO = new PrerequisiteDAO();
@@ -325,36 +372,16 @@ public class MeetingModifyController implements Initializable {
             oldMeeting.setAssistants(assistantsList);
             for(int i = 0; i < assistantsList.size(); i++){
                 Member memberAuxiliar = assistantsList.get(i);
-                if(memberAuxiliar.getRole().equals("Lider")){ 
-                    cbLeader.setValue(memberAuxiliar);
-                }else if (memberAuxiliar.getRole().equals("Secretario")){
-                    cbSecretary.setValue(memberAuxiliar);
-                } 
+               String role = assistantsList.get(i).getRole();
+               Assistant assistant = new Assistant( role,memberAuxiliar);
+               assistants.add(assistant);
             }
         } catch (BusinessException ex) {
             Log.logException(ex);
         }
     }    
     
-    private void saveAssistants() throws BusinessException{  
-        MeetingDAO meetingDAO = new MeetingDAO();
-        Member leader= (Member) cbLeader.getSelectionModel().getSelectedItem();
-        leader.setRole("Lider");
-        Member secretary = (Member) cbSecretary.getSelectionModel().getSelectedItem();
-        secretary.setRole("Secretario");
-        ArrayList<Member> assistants= new ArrayList<Member> ();
-        assistants.add(leader);
-        assistants.add(secretary);
-        for(int i=0; i< members.size(); i++){
-            Member memberAuxiliar = (Member) members.get(i);
-            if((! memberAuxiliar.equals(leader)) && (! memberAuxiliar.equals(secretary))){
-                memberAuxiliar.setRole("Asistente");
-                assistants.add(memberAuxiliar);
-            }
-        }  
-        newMeeting.setAssistants(assistants);
-        meetingDAO.addedSucessfulAssistants(newMeeting);
-    }
+  
     
     private Prerequisite getSelectedPrerequisite(){
         Prerequisite prerequisite = null;
@@ -380,6 +407,16 @@ public class MeetingModifyController implements Initializable {
         }
     }
     
+     private void saveAssistants() throws BusinessException{  
+         MeetingDAO meetingDAO = new MeetingDAO();
+        ArrayList<Member> assistantsMeeting= new ArrayList<Member> ();
+        for(int i=0; i< assistants.size(); i++){          
+            assistantsMeeting.add(assistants.get(i).getMember());
+        }  
+        newMeeting.setAssistants(assistantsMeeting);
+        meetingDAO.addedSucessfulAssistants(newMeeting);
+    }
+     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        tfHour.setPromptText("HH:MM");
@@ -389,6 +426,19 @@ public class MeetingModifyController implements Initializable {
         tcMandated.setCellValueFactory(new PropertyValueFactory<Prerequisite,Member>("mandated"));
         members = FXCollections.observableArrayList();
         prerequisites = FXCollections.observableArrayList();
+        tcAssistant.setCellValueFactory(new PropertyValueFactory<Assistant,Member>("member"));
+        tcRol.setCellValueFactory(new PropertyValueFactory<Assistant,String>("role"));
+        members = FXCollections.observableArrayList();
+        prerequisites = FXCollections.observableArrayList();
+        assistants =FXCollections.observableArrayList();
+        roles= FXCollections.observableArrayList();
+        roles.add("Lider");
+        roles.add("Secretario");
+        roles.add("Asistente");
+        tvAssistants.setItems(assistants);
+        
+        cbRole.setItems(roles);
+        cbRole.getSelectionModel().selectFirst();
         tvPrerequisites.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                  setSelectedPrerequisite();
@@ -400,6 +450,20 @@ public class MeetingModifyController implements Initializable {
             @Override
             public void onChanged(ListChangeListener.Change<? extends Prerequisite> prerequisite) {
                 setSelectedPrerequisite();
+            }
+        };
+        
+          tvAssistants.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                 setSelectedAssistant();
+             }
+            }
+        );
+
+        tableAssistantListener = new ListChangeListener<Assistant>(){
+            @Override
+            public void onChanged(ListChangeListener.Change<? extends Assistant> assistant) {
+                setSelectedAssistant();
             }
         };
     }    
@@ -414,6 +478,27 @@ public class MeetingModifyController implements Initializable {
          }
         }
         return value;
+    }
+    
+    private Assistant getSelectedAssistant(){
+        Assistant assistant = null;
+        int tamTable = 1;
+        if(tvPrerequisites != null){
+            List<Assistant> assistantTable = tvAssistants.getSelectionModel().getSelectedItems();
+            if(assistantTable.size() == tamTable){
+                assistant = assistantTable.get(0);
+            }
+        }
+        return assistant;
+    }
+    
+    private void setSelectedAssistant(){
+        Assistant assistant = getSelectedAssistant();
+        indexAssistant = assistants.indexOf(assistant);
+        if(assistant != null){
+           cbMember.getSelectionModel().select(assistant.getMember());
+            cbRole.getSelectionModel().select(assistant.getRole());
+        }
     }
     
     public boolean repeatedPrerequisite(Prerequisite prerequisite){
