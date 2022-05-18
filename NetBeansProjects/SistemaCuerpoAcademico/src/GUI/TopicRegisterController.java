@@ -41,6 +41,7 @@ public class TopicRegisterController implements Initializable {
     @FXML Button btSave;
     @FXML Button btCancel;
     private int idMeeting;
+    private String hourMeeting;
     private Member member;
     private int indexTopic;
     private MeetingRegisterController meetingRegisterController;
@@ -51,7 +52,7 @@ public class TopicRegisterController implements Initializable {
         tcTopic.setCellValueFactory(new PropertyValueFactory<Topic,String>("topicName"));
         tcStartTime.setCellValueFactory(new PropertyValueFactory<Topic,String>("startTime"));
         tcFinishTime.setCellValueFactory(new PropertyValueFactory<Topic,String>("finishTime"));
-        tcMember.setCellValueFactory(new PropertyValueFactory<Topic,String>("professionalLicense"));
+        tcMember.setCellValueFactory(new PropertyValueFactory<Topic,String>("member"));
         topics = FXCollections.observableArrayList();
         tvTopic.setItems(topics);
         members = FXCollections.observableArrayList();
@@ -71,9 +72,10 @@ public class TopicRegisterController implements Initializable {
         };
     }
     
-    public void initializeMeeting(int idMeeting, MeetingRegisterController meetingRegisterController){
+    public void initializeMeeting(int idMeeting, MeetingRegisterController meetingRegisterController, String hour){
         this.idMeeting = idMeeting;
         this.meetingRegisterController = meetingRegisterController;
+        this.hourMeeting = hour;
     }
     
     public void setMember(Member member){
@@ -90,7 +92,7 @@ public class TopicRegisterController implements Initializable {
         finishTime = tfFinishTime.getText();
         startTime = tfStartTime.getText();
         topicName = tfTopic.getText();
-        Topic topic = new Topic(topicName,startTime,finishTime,memberSelected.getProfessionalLicense(), idMeeting);
+        Topic topic = new Topic(topicName,startTime,finishTime,memberSelected.getName(),memberSelected.getProfessionalLicense(), idMeeting);
         if(validateTopic(topic)){
             topics.add(topic);
             cleanFields();
@@ -189,6 +191,9 @@ public class TopicRegisterController implements Initializable {
         if(!validateHours(topic)){
             value = false;
             alertMessage.showAlertValidateFailed("Hora inválida");
+        }else if(validateStartTime(topic)){
+            value = false;
+            alertMessage.showAlertValidateFailed("La agenda no puede iniciar antes que la reunión programada a las: " + hourMeeting);
         }
         
         if(repeatedTopic(topic)){
@@ -225,6 +230,15 @@ public class TopicRegisterController implements Initializable {
         return value;
     }
     
+    private boolean validateStartTime(Topic topic){
+        boolean value = false;
+        Validation validation = new Validation();
+        if(validation.validateCorrectHours(hourMeeting, topic.getStartTime())){
+            value = true;
+        }
+        return value;
+    }
+    
     private boolean repeatedTopic(Topic topic){
         Boolean value = false;
         int i = 0;
@@ -237,5 +251,4 @@ public class TopicRegisterController implements Initializable {
         }
        return value;
     }    
-    
 }

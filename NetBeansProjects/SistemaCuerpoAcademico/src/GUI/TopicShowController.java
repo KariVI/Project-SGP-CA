@@ -51,7 +51,7 @@ public class TopicShowController implements Initializable {
         tcTopic.setCellValueFactory(new PropertyValueFactory<>("topicName"));
         tcStartTime.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         tcFinishTime.setCellValueFactory(new PropertyValueFactory<>("finishTime"));
-        tcMember.setCellValueFactory(new PropertyValueFactory<>("professionalLicense"));
+        tcMember.setCellValueFactory(new PropertyValueFactory<>("member"));
         topics = FXCollections.observableArrayList();      
         tvTopic.setItems(topics);        
     }  
