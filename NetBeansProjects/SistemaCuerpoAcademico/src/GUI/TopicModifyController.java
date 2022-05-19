@@ -59,7 +59,7 @@ public class TopicModifyController implements Initializable {
         tcTopic.setCellValueFactory(new PropertyValueFactory<Topic,String>("topicName"));
         tcStartTime.setCellValueFactory(new PropertyValueFactory<Topic,String>("startTime"));
         tcFinishTime.setCellValueFactory(new PropertyValueFactory<Topic,String>("finishTime"));
-        tcMember.setCellValueFactory(new PropertyValueFactory<Topic,String>("professionalLicense"));
+        tcMember.setCellValueFactory(new PropertyValueFactory<Topic,String>("member"));
         topics = FXCollections.observableArrayList();
         oldTopics = FXCollections.observableArrayList();
         tvTopic.setItems(topics);
@@ -114,7 +114,7 @@ public class TopicModifyController implements Initializable {
         finishTime = tfFinishTime.getText();
         startTime = tfStartTime.getText();
         topicName = tfTopic.getText();
-        Topic topic = new Topic(topicName,startTime,finishTime,selectedMemmber.getProfessionalLicense(),meeting.getKey());
+        Topic topic = new Topic(topicName,startTime,finishTime,selectedMemmber.getName(),selectedMemmber.getProfessionalLicense(),meeting.getKey());
         if(validateTopic(topic)){
             topics.add(topic);
             cleanFields();
@@ -193,6 +193,7 @@ public class TopicModifyController implements Initializable {
       
         } catch (BusinessException ex) {
             Log.logException(ex);
+            exceptionShow(ex);
         }
         
         Stage stage = (Stage)btSave.getScene().getWindow();
@@ -216,7 +217,7 @@ public class TopicModifyController implements Initializable {
         finishTime = tfFinishTime.getText();
         startTime = tfStartTime.getText();
         topicName = tfTopic.getText();
-        Topic topic = new Topic(topics.get(indexTopic).getIdTopic(),topicName,startTime,finishTime,newMember.getProfessionalLicense(),meeting.getKey());
+        Topic topic = new Topic(topics.get(indexTopic).getIdTopic(),topicName,startTime,finishTime,newMember.getName(),newMember.getProfessionalLicense(),meeting.getKey());
         if(validateTopic(topic)){    
             topics.set(indexTopic,topic);
         }
@@ -259,6 +260,9 @@ public class TopicModifyController implements Initializable {
         if(!validateHours(topic)){
             value = false;
             alertMessage.showAlertValidateFailed("Hora inválida");
+        }else if(validateStartTime(topic)){
+            value = false;
+            alertMessage.showAlertValidateFailed("La agenda no puede iniciar antes que la reunión programada a las: " + meeting.getHourStart());
         }
         
         if(repeatedTopic(topic)){
@@ -298,6 +302,15 @@ public class TopicModifyController implements Initializable {
         return value;
     }
     
+    private boolean validateStartTime(Topic topic){
+        boolean value = false;
+        Validation validation = new Validation();
+        if(validation.validateCorrectHours(meeting.getHourStart(), topic.getStartTime())){
+            value = true;
+        }
+        return value;
+    }
+    
     private boolean repeatedTopic(Topic topic){
         Boolean value = false;
         int i = 0;
@@ -311,5 +324,15 @@ public class TopicModifyController implements Initializable {
         
         return value;
     }
+        
+    private void exceptionShow(BusinessException ex){ 
+         if(ex.getMessage().equals("DataBase connection failed ")){
+                AlertMessage alertMessage = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
+            }else{  
+                Log.logException(ex);
+            }
+    }
+    
     
 }

@@ -96,7 +96,8 @@ public class MeetingRegisterController implements Initializable {
     
     @FXML
     private void actionAddTopics(ActionEvent actionEvent){  
-         try{ 
+        if(!validateFieldEmpty() && validateInformationField() && validateDate()){
+           try{ 
             Stage primaryStage= new Stage();
             URL url = new File("src/GUI/topicRegister.fxml").toURI().toURL();
            try{
@@ -105,7 +106,7 @@ public class MeetingRegisterController implements Initializable {
               loader.load();
               TopicRegisterController topicRegisterController =loader.getController(); 
               topicRegisterController.setMember(member);
-              topicRegisterController.initializeMeeting(idMeeting,this);          
+              topicRegisterController.initializeMeeting(idMeeting,this, tfHour.getText());          
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);
@@ -113,9 +114,12 @@ public class MeetingRegisterController implements Initializable {
                     Log.logException(ex);
             }
             primaryStage.show();
-       } catch (MalformedURLException ex) {
-           Log.logException(ex);
-       }
+            } catch (MalformedURLException ex) {
+                Log.logException(ex);
+            }
+        }else{  
+            sendAlert();
+        }
     }
     
     
