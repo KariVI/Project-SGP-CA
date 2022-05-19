@@ -51,9 +51,9 @@ import log.Log;
 
 public class ReceptionWorkRegisterController implements Initializable {
 
-    @FXML private TextFieldLimited tfTitle;
+    @FXML private TextField tfTitle;
     @FXML private TextArea taDescription;
-    @FXML private TextFieldLimited tfNumberStudents;
+    @FXML private TextField tfNumberStudents;
     @FXML private Button btOk;
     @FXML private Button btSave;
     @FXML private Button btExit;
@@ -67,12 +67,7 @@ public class ReceptionWorkRegisterController implements Initializable {
     private ObservableList<String> states;
     @FXML private ComboBox cbDirector;
     @FXML private ComboBox cbCodirectors;
-    @FXML private TableColumn tcCodirector;
-    @FXML private Button btAddCodirector;
-    @FXML private Button btDelete;
-    @FXML private TableView<Member> tvCodirectors;
-    private ListChangeListener<Member> tableCodirectorsListener;
-    private int indexCodirectors;
+    private TableColumn tcCodirector;
     private ObservableList<Member> codirectors ;
     private ObservableList<Member> members ;
     private ObservableList<Project> projects;
@@ -106,25 +101,30 @@ public class ReceptionWorkRegisterController implements Initializable {
          GridPane gridPane= new GridPane();
         Validation validation =new Validation();
         if(!tfNumberStudents.getText().isEmpty() && (validation.validateNumberField(tfNumberStudents.getText()))){
-            Integer students=Integer.parseInt(tfNumberStudents.getText());  
-            gridPane.setHgap (5);
-            gridPane.setVgap (5);
-            int i=0;
-            int sizeRows=3;
-           while (i < ( students * sizeRows)){  
-                TextField tfEnrollmentStudent = new TextField();
-                tfEnrollmentStudent .setPromptText("Matricula: ");   
-                TextField tfNameStudent = new TextField();
-                tfNameStudent.setPrefWidth(200);
-                tfNameStudent.setPromptText("Nombre: ");
-                Label label = new Label("Estudiante");
-                gridPane.add(label,1,i);
-                gridPane.add(tfEnrollmentStudent,1,(i + 1));
-                gridPane.add(tfNameStudent,1, (i + 2));
-                i=i+3;
-           }  
+            Integer students=Integer.parseInt(tfNumberStudents.getText());   
+            if(students > 3){
+               AlertMessage alertMessage = new AlertMessage();
+               alertMessage.showAlertValidateFailed("Solo pueden haber máximo 3 estudiantes");
+            }else{
+               gridPane.setHgap (5);
+               gridPane.setVgap (5);
+               int i=0;
+               int sizeRows=3;
+               while (i < ( students * sizeRows)){  
+                    TextField tfEnrollmentStudent = new TextField();
+                    tfEnrollmentStudent .setPromptText("Matricula: ");   
+                    TextField tfNameStudent = new TextField();
+                    tfNameStudent.setPrefWidth(200);
+                    tfNameStudent.setPromptText("Nombre: ");
+                    Label label = new Label("Estudiante");
+                    gridPane.add(label,1,i);
+                    gridPane.add(tfEnrollmentStudent,1,(i + 1));
+                    gridPane.add(tfNameStudent,1, (i + 2));
+                    i=i+3;
+               }  
+               spStudent.setContent(gridPane);
+            }
         }
-        spStudent.setContent(gridPane);
     }
     
     
@@ -195,26 +195,8 @@ public class ReceptionWorkRegisterController implements Initializable {
        } 
     }
     
-     @FXML 
-    private void actionAddCodirector(ActionEvent actionEvent){    
-        Member codirector = (Member) cbCodirectors.getSelectionModel().getSelectedItem();    
-        if(!repeatedCodirector(codirector)){
-           codirectors.add(codirector);
-        }else{  
-            AlertMessage alertMessage = new AlertMessage();
-            alertMessage.showAlertValidateFailed("Codirector repetido");
-        }
-    }
-    
-    @FXML
-    private void actionDelete(ActionEvent event){
-        codirectors.remove(indexCodirectors);
-    }
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-            tfTitle.setMaxLength(200);
-            tfNumberStudents.setMaxLength(2);
             types=FXCollections.observableArrayList();
             states = FXCollections.observableArrayList();
             types.add("Práctico técnico");
@@ -224,6 +206,7 @@ public class ReceptionWorkRegisterController implements Initializable {
             types.add("Monografía");
             states.add("Concluido");
             states.add("Abandonado");
+            states.add("Asginado");
             states.add("Registrado");
             cbType.setItems(types);
             cbState.setItems(states);
@@ -232,7 +215,6 @@ public class ReceptionWorkRegisterController implements Initializable {
             projects = FXCollections.observableArrayList();
             cbProject.setItems(projects);
             cbProject.getSelectionModel().selectFirst();
-             tcCodirector.setCellValueFactory(new PropertyValueFactory<Member,String>("name"));
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             dpStartDate.setConverter(new LocalDateStringConverter(formatter, null));
             dpEndDate.setConverter(new LocalDateStringConverter(formatter, null));
@@ -240,52 +222,20 @@ public class ReceptionWorkRegisterController implements Initializable {
             codirectors= FXCollections.observableArrayList();
             cbDirector.setItems(members);
             cbCodirectors.setItems(members);
-            tvCodirectors.setItems(codirectors);
-            tvCodirectors.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-                if (newSelection != null) {
-                     setSelectedCodirector();
-                 }
-                }
-            );
-
-            tableCodirectorsListener = new ListChangeListener<Member>(){
-                @Override
-                public void onChanged(ListChangeListener.Change<? extends Member> codirector) {
-                    setSelectedCodirector();
-                }
-            };
-        
     }    
-    
-     private Member getSelectedCodirector(){
-        Member codirector = null;
-        int tamTable = 1;
-        if(tvCodirectors != null){
-            List<Member> codirectorTable = tvCodirectors.getSelectionModel().getSelectedItems();
-            if(codirectorTable.size() == tamTable){
-                codirector = codirectorTable.get(0);
-            }
-        }
-        return codirector;
-    }
-    
-    private void setSelectedCodirector(){
-        Member codirector = getSelectedCodirector();
-        indexCodirectors = codirectors.indexOf(codirector);
-            if(codirector != null){
-                cbCodirectors.getSelectionModel().select(codirector);
-            }
-    }
-    
     
     private void saveReceptionWork(){   
          ReceptionWorkDAO receptionWorkDAO =  new ReceptionWorkDAO();
         try{  
             if(validateColaborators()){
+                if((! tfNumberStudents.getText().isEmpty()) && (cbState.getSelectionModel().getSelectedItem().equals("Registrado"))){ 
+                    cbState.getSelectionModel().select("Asignado");
+                    receptionWork.setActualState("Asignado");
+                }
                 if(receptionWorkDAO.savedSucessful(receptionWork)){  
                     receptionWork.setKey(receptionWorkDAO.getId(receptionWork));
                     saveColaborators();
-                   if((! tfNumberStudents.getText().isEmpty())){   
+                   if((! tfNumberStudents.getText().isEmpty())){ 
                         recoverStudents();
                     }
                     AlertMessage alertMessage = new AlertMessage();
@@ -324,6 +274,8 @@ public class ReceptionWorkRegisterController implements Initializable {
     public boolean validateColaborators(){  
         boolean value = true;
         Member director = (Member) cbDirector.getSelectionModel().getSelectedItem();
+        Member codirector = (Member) cbCodirectors.getSelectionModel().getSelectedItem();
+        codirectors.add(codirector);
         if(repeatedCodirector(director)){
                  value=false; 
                 AlertMessage alertMessage = new AlertMessage();

@@ -1,6 +1,7 @@
 package businessLogic;
 
 import dataaccess.Connector;
+import domain.Member;
 import domain.Topic;
 import log.BusinessException;
 import log.Log;
@@ -74,7 +75,9 @@ public class TopicDAO implements ITopicDAO{
                     String topicName = agendaResultSet.getString("tema");
                     String startTime = agendaResultSet.getString("horaInicio");
                     String finishTime = agendaResultSet.getString("horaFin");
-                    Topic agendaData = new Topic(idTopic, topicName, startTime, finishTime,professionalLicense, idMeeting);
+                    MemberDAO memberDAO = new MemberDAO();
+                    Member member = memberDAO.getMemberByLicense(professionalLicense);
+                    Topic agendaData = new Topic(idTopic, topicName, startTime, finishTime,member.getName(),professionalLicense, idMeeting);
                     agendaList.add(agendaData);
                 }
                              

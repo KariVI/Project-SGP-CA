@@ -144,9 +144,7 @@ public class ReceptionWorkShowController implements Initializable {
        lbEndDate.setText("Fecha fin: "+receptionWork.getDateEnd());
        lbType.setText("Tipo:   " +receptionWork.getType());
        taDescription.setText("Descripción: " + receptionWork.getDescription());
-
        lbProject. setText("Proyecto: "+ receptionWork.getProject());
-
        lbState.setText("Estado: "+ receptionWork.getActualState());
        recoverColaborators ();
            try {
