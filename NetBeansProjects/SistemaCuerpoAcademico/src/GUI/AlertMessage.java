@@ -18,7 +18,7 @@ public class AlertMessage {
     @FXML
      public  void showAlertSuccesfulSave(String message){    
     
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
         alert.setTitle("Información guardada");
         alert.setContentText(message + " ha sido guardado con exito");

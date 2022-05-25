@@ -540,7 +540,7 @@ public class ReceptionWorkModifyController implements Initializable {
             
             int i =0;
             while(i < students.size() && value==false){ 
-                if(students.get(i).equals(student)){    
+                if(students.get(i).getEnrollment().equals(student.getEnrollment())){    
                     value=true;
                 }
                 i++;
@@ -556,7 +556,7 @@ public class ReceptionWorkModifyController implements Initializable {
         if( validation.findInvalidField(name.getText()) || validation.findInvalidKeyAlphanumeric(enrollment.getText())){    
             value=false;
             alertMessage.showAlertValidateFailed("Existen campos con caracteres invalidos");
-        }else if( name.getText().isEmpty()|| enrollment.getText().isEmpty()  ){ 
+        }else if( name.getText().isEmpty() && enrollment.getText().isEmpty()  ){ 
             alertMessage.showAlertValidateFailed("Existen campos vacios");
             value=false;
         }
