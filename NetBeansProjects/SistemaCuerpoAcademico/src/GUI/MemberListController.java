@@ -5,6 +5,7 @@ import businessLogic.MemberDAO;
 import domain.Member;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -86,7 +87,7 @@ public class MemberListController implements  Initializable {
             }
             
         } catch (BusinessException ex) {
-            Log.logException(ex);
+            exceptionShow(ex);
         }      
     }
     
@@ -133,6 +134,41 @@ public class MemberListController implements  Initializable {
             primaryStage.show();
         } catch (IOException ex) {
             Log.logException(ex);
+        }
+    }
+    
+    
+    private void exceptionShow(BusinessException ex){ 
+        Log.logException(ex);
+        AlertMessage alertMessage = new AlertMessage();
+        alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
+        Stage stage = (Stage) btClose.getScene().getWindow();
+        stage.close();
+        openLogin();
+            
+    }
+    
+        private void  openLogin(){   
+        Stage primaryStage =  new Stage();
+        try{
+            
+            URL url = new File("src/GUI/Login.fxml").toURI().toURL();
+            try{
+                FXMLLoader loader = new FXMLLoader(url);
+                loader.setLocation(url);
+                loader.load();
+                LoginController login = loader.getController();
+                Parent root = loader.getRoot();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+                
+            } catch (IOException ex) {
+                Log.logException(ex);
+            }
+            primaryStage.show();
+            
+        } catch (MalformedURLException ex) {
+                Log.logException(ex);
         }
     }
     

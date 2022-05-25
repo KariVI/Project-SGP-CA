@@ -44,6 +44,7 @@ public class WorkPlanListController implements Initializable {
      @FXML private Button btReturn;
      private ObservableList<WorkPlan> planWorks ;
      private Member member;
+     private String keyGroupAcademic;
       
     public void setMember(Member member) {
         this.member = member;
@@ -136,7 +137,8 @@ public class WorkPlanListController implements Initializable {
               loader.setLocation(url);
               loader.load();
               WorkPlanRegisterController workPlanRegisterController =loader.getController();  
-              workPlanRegisterController.setMember(member);
+              workPlanRegisterController.setMember(member); 
+              workPlanRegisterController.setKeyGroupAcademic(member.getKeyGroupAcademic());
               Parent root = loader.getRoot();
               Scene scene = new Scene(root);
               primaryStage.setScene(scene);       

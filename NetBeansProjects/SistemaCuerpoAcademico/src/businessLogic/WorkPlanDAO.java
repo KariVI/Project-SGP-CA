@@ -112,9 +112,10 @@ public class WorkPlanDAO implements IWorkPlanDAO {
              Connector connectorDataBase = new Connector();
             Connection connectionDataBase = connectorDataBase.getConnection();
               PreparedStatement insertWorkPlanStatment;
-                insertWorkPlanStatment = connectionDataBase.prepareStatement("INSERT INTO PlanTrabajo(objetivo,periodo) VALUES(?,?) ");
+                insertWorkPlanStatment = connectionDataBase.prepareStatement("INSERT INTO PlanTrabajo(objetivo, claveCuerpoAcademico, periodo) VALUES(?,?,?) ");
                  insertWorkPlanStatment.setString(1, workPlan.getObjetiveGeneral());
-                insertWorkPlanStatment.setString(2, workPlan.getTimePeriod());
+                 insertWorkPlanStatment.setString(2, workPlan.getGroupAcademicKey());
+                insertWorkPlanStatment.setString(3, workPlan.getTimePeriod());
                 insertWorkPlanStatment.executeUpdate();
                 connectorDataBase.disconnect();
                 saveSuccess = true;

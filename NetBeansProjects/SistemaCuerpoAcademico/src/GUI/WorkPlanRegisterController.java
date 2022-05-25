@@ -91,6 +91,7 @@ public class WorkPlanRegisterController implements Initializable {
         };
     }
     
+    
      public void setWorkPlan(WorkPlan workPlan) {
         this.workPlan = workPlan;
         taObjetive.setText(workPlan.getObjetiveGeneral());
@@ -117,11 +118,21 @@ public class WorkPlanRegisterController implements Initializable {
               primaryStage.setScene(scene);
               primaryStage.show();      
             } catch (IOException ex) {
-                    Log.logException(ex);
+                Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btReturn.getScene().getWindow();
+                stage.close();
+                openLogin();
             }
             primaryStage.show();
        } catch (MalformedURLException ex) {
-           Log.logException(ex);
+            Log.logException(ex);
+            AlertMessage alertMessage  = new AlertMessage();
+            alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+            Stage stage = (Stage) btReturn.getScene().getWindow();
+            stage.close();
+            openLogin();
        } 
     }
      
@@ -143,7 +154,12 @@ public class WorkPlanRegisterController implements Initializable {
          }
            
        } catch (BusinessException ex) {
-            Log.logException(ex);
+             Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btReturn.getScene().getWindow();
+                stage.close();
+                openLogin();
        }
         
     }
@@ -275,6 +291,7 @@ public class WorkPlanRegisterController implements Initializable {
                 ActionRegisterController actionRegisterController = loader.getController();
                 actionRegisterController.setWorkPlan(workPlan);
                 actionRegisterController.setMember(member);
+                actionRegisterController.setKeyGroupAcademic(member.getKeyGroupAcademic());
                 Parent root = loader.getRoot();               
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);               
@@ -286,7 +303,12 @@ public class WorkPlanRegisterController implements Initializable {
              }
           
         } catch (IOException ex) {
-            Log.logException(ex);
+             Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btReturn.getScene().getWindow();
+                stage.close();
+                openLogin();
         }
     }
     
@@ -297,6 +319,7 @@ public class WorkPlanRegisterController implements Initializable {
         String timePeriod = cbMonths.getSelectionModel().getSelectedItem().toString() + " " +  cbYears.getSelectionModel().getSelectedItem().toString();
         workPlan.setTimePeriod(timePeriod);
         workPlan.setGoals(saveGoals());
+        workPlan.setGroupAcademicKey(member.getKeyGroupAcademic());
     }
     
     private Goal[] saveGoals(){
@@ -336,6 +359,28 @@ public class WorkPlanRegisterController implements Initializable {
         return value;
     }
     
-   
+   private void  openLogin(){   
+        Stage primaryStage =  new Stage();
+        try{
+            
+            URL url = new File("src/GUI/Login.fxml").toURI().toURL();
+            try{
+                FXMLLoader loader = new FXMLLoader(url);
+                loader.setLocation(url);
+                loader.load();
+                LoginController login = loader.getController();
+                Parent root = loader.getRoot();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+                
+            } catch (IOException ex) {
+                Log.logException(ex);
+            }
+            primaryStage.show();
+            
+        } catch (MalformedURLException ex) {
+                Log.logException(ex);
+        }
+    }
 
 }
