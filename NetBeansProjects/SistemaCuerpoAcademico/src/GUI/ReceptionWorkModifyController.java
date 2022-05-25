@@ -62,17 +62,9 @@ public class ReceptionWorkModifyController implements Initializable {
     private ObservableList<String> types;
     private ObservableList<String> states;
     private ObservableList<Project> projects;
-    private ObservableList<Member> codirectors ;
     private ObservableList<Member> members ;
-    private ObservableList <Member> codirectorsNew;
     @FXML private ComboBox cbDirector;
     @FXML private ComboBox cbCodirectors;
-    @FXML private TableColumn tcCodirector;
-    @FXML private Button btAddCodirector;
-    @FXML private Button btDelete;
-    @FXML private TableView<Member> tvCodirectors;
-    private ListChangeListener<Member> tableCodirectorsListener;
-    private int indexCodirectors;
     private ReceptionWork receptionWorkRecover;
     private ReceptionWork receptionWorkNew= new ReceptionWork();    
     private Member member;
@@ -80,7 +72,7 @@ public class ReceptionWorkModifyController implements Initializable {
     private GridPane gridPane= new GridPane();
     private int nextRowPosition=0;
     private int newStudents=0;
-    
+    private int numberStudents = 0; 
     public void setMember(Member member) {
         this.member = member;
     }
@@ -94,8 +86,7 @@ public class ReceptionWorkModifyController implements Initializable {
     }
      
      @FXML 
-    private void actionAddStudent(ActionEvent actionEvent){ 
-            initializeNextRowPosition();
+    private void actionAddStudent(ActionEvent actionEvent){     
             gridPane.setHgap (5);
             gridPane.setVgap (5);
             int sizeRows=3;
@@ -105,20 +96,28 @@ public class ReceptionWorkModifyController implements Initializable {
             tfNameStudent.setPrefWidth(200);
             tfNameStudent.setPromptText("Nombre: ");
             Label label = new Label("Estudiante");
-            gridPane.add(label,1,nextRowPosition);
-            gridPane.add(tfEnrollmentStudent,1,(nextRowPosition + 1));
-            gridPane.add(tfNameStudent,1, (nextRowPosition + 2));
-            nextRowPosition= nextRowPosition + sizeRows ;
-              spStudents.setContent(gridPane);
-              newStudents++;
-
+            if(numberStudents <=2){
+                 gridPane.add(label,1,nextRowPosition);
+                 gridPane.add(tfEnrollmentStudent,1,(nextRowPosition + 1));
+                 gridPane.add(tfNameStudent,1, (nextRowPosition + 2));
+                 nextRowPosition= nextRowPosition + sizeRows ;
+                 spStudents.setContent(gridPane);
+                 newStudents++;
+                 numberStudents++;
+            }else{
+                AlertMessage alertMessage = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Solo es posible agregar 3 estudiantes"); 
+            }
+           
+            
+            
     }
 
     public void setKeyGroupAcademic(String keyGroupAcademic) {
         this.keyGroupAcademic = keyGroupAcademic;
         initializeMembers();
         cbDirector.getSelectionModel().selectFirst();
-       cbCodirectors.getSelectionModel().selectFirst();
+        cbCodirectors.getSelectionModel().selectFirst();
     }
 
      public void setReceptionWork(ReceptionWork receptionWork){
@@ -136,7 +135,7 @@ public class ReceptionWorkModifyController implements Initializable {
 
        cbProject.setValue(receptionWorkRecover.getProject());
        cbProject.setItems(projects);
-
+        initializeNextRowPosition();
        taDescription.setText( receptionWorkRecover.getDescription());
            try {
                initializeColaborators();
@@ -150,7 +149,8 @@ public class ReceptionWorkModifyController implements Initializable {
     public boolean validateColaborators(){  
         boolean value = true;
         Member director = (Member) cbDirector.getSelectionModel().getSelectedItem();
-        if(repeatedCodirector(director)){
+        Member codirector = (Member) cbCodirectors.getSelectionModel().getSelectedItem();
+        if(director.getName().equals(codirector.getName())){
                  value=false; 
                 AlertMessage alertMessage = new AlertMessage();
                 alertMessage.showAlertValidateFailed("El director y el codirector no pueden ser el mismo");  
@@ -178,11 +178,17 @@ public class ReceptionWorkModifyController implements Initializable {
                 receptionWorkNew.setDateStart(startDate);
                 receptionWorkNew.setDateEnd(endDate);
                 receptionWorkNew.setType(type);
-
+                
                 receptionWorkNew.setProject(project);
 
                 receptionWorkNew.setActualState(state);
                 receptionWorkNew.setKeyGroupAcademic(receptionWorkRecover.getKeyGroupAcademic());
+                if(receptionWorkNew.getActualState().equals("Asignado")&&receptionWorkNew.getStudents().isEmpty()){
+                    receptionWorkNew.setActualState("Registrado");
+                }
+                if(receptionWorkNew.getActualState().equals("Registrado")&&!receptionWorkNew.getStudents().isEmpty()){
+                    receptionWorkNew.setActualState("Asignado");
+                }
                 updateReceptionWork ();                
             }else{  
                 sendAlert();
@@ -227,22 +233,7 @@ public class ReceptionWorkModifyController implements Initializable {
         stage.close();
         openShowView();
     }
-    
-     @FXML 
-    private void actionAddCodirector(ActionEvent actionEvent){    
-        Member codirector = (Member) cbCodirectors.getSelectionModel().getSelectedItem();    
-        if(!repeatedCodirector(codirector)){
-           codirectorsNew.add(codirector);
-        }else{  
-            AlertMessage alertMessage = new AlertMessage();
-            alertMessage.showAlertValidateFailed("Codirector repetido");
-        }
-    }
-    
-    @FXML
-    private void actionDelete(ActionEvent event){
-        codirectorsNew.remove(indexCodirectors);
-    }
+ 
     
     private boolean validateDates(){
         boolean value=false;
@@ -322,21 +313,24 @@ public class ReceptionWorkModifyController implements Initializable {
          ArrayList<Student> students= receptionWorkRecover.getStudents();
          int i=0;
         int numberStudent=0;
-        int numberRows=2;
-       
+        int numberRows=3;
+          numberStudents = students.size();
         gridPane.setHgap (5);
         gridPane.setVgap (5);
         if(students.size()> 0){
             while (i < ( students.size() * numberRows)){ 
                     TextField tfEnrollmentStudent = new TextField( students.get(numberStudent).getEnrollment());
                     TextField tfNameStudent = new TextField(students.get(numberStudent).getName());
-                    gridPane.add(tfEnrollmentStudent,1,i);
-                    gridPane.add(tfNameStudent,1, (i + 1));
-                    i=i+2;
+                    Label label = new Label("Estudiante");
+                    gridPane.add(label,1,i);
+                    gridPane.add(tfEnrollmentStudent,1,(i+1));
+                    gridPane.add(tfNameStudent,1, (i + 2));
+                    i=i+3;
                     numberStudent++;
             }
             spStudents.setContent(gridPane);
         }
+        numberStudents = numberStudent;
     }
     
 
@@ -350,8 +344,7 @@ public class ReceptionWorkModifyController implements Initializable {
     private boolean deleteStudents() throws BusinessException{  
         ReceptionWorkDAO receptionWorkDAO = new ReceptionWorkDAO();
         ArrayList<Student> students = receptionWorkDAO.getStudents(receptionWorkRecover.getKey());
-        receptionWorkRecover.setStudents(students);
-    
+        receptionWorkRecover.setStudents(students);   
         return receptionWorkDAO.deletedSucessfulStudents(receptionWorkRecover);
     }
     
@@ -364,11 +357,9 @@ public class ReceptionWorkModifyController implements Initializable {
             Member director=(Member) cbDirector.getSelectionModel().getSelectedItem();
             director.setRole("Director");
             members.add(director);
-            
-            for(int i=0; i < codirectorsNew.size(); i++){   
-                codirectorsNew.get(i).setRole("Codirector");
-                 members.add(codirectorsNew.get(i));
-            }
+            Member codirector = (Member) cbCodirectors.getSelectionModel().getSelectedItem();
+            codirector.setRole("Codirector");
+            members.add(codirector);
             receptionWorkNew.setMembers(members);
             receptionWorkDAO.addedSucessfulColaborators(receptionWorkNew);
             
@@ -403,9 +394,10 @@ public class ReceptionWorkModifyController implements Initializable {
             types.add("Tesis");
             types.add("Tesina");
             types.add("Monografía");
+            states.add("Registrado");
             states.add("Concluido");
             states.add("Abandonado");
-            states.add("Registrado");
+            states.add("Asignado");
             cbType.setItems(types);
             cbState.setItems(states);
             cbType.getSelectionModel().selectFirst();
@@ -413,66 +405,21 @@ public class ReceptionWorkModifyController implements Initializable {
             projects = FXCollections.observableArrayList();
             cbProject.setItems(projects);
             cbProject.getSelectionModel().selectFirst();
-            tcCodirector.setCellValueFactory(new PropertyValueFactory<Member,String>("name"));
+            
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             dpStartDate.setConverter(new LocalDateStringConverter(formatter, null));
             dpEndDate.setConverter(new LocalDateStringConverter(formatter, null));
             members = FXCollections.observableArrayList();
-            codirectors= FXCollections.observableArrayList();
-            codirectorsNew= FXCollections.observableArrayList();
-            cbDirector.setItems(members);
             
+            cbDirector.setItems(members);
             cbCodirectors.setItems(members);
-            tvCodirectors.setItems(codirectorsNew);
-            tvCodirectors.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-                if (newSelection != null) {
-                     setSelectedCodirector();
-                 }
-                }
-            );
-
-            tableCodirectorsListener = new ListChangeListener<Member>(){
-                @Override
-                public void onChanged(ListChangeListener.Change<? extends Member> codirector) {
-                    setSelectedCodirector();
-                }
-            };
+        
+         
            
     }    
     
-     private Member getSelectedCodirector(){
-        Member codirector = null;
-        int tamTable = 1;
-        if(tvCodirectors != null){
-            List<Member> codirectorTable = tvCodirectors.getSelectionModel().getSelectedItems();
-            if(codirectorTable.size() == tamTable){
-                codirector = codirectorTable.get(0);
-            }
-        }
-        return codirector;
-    }
-    
-    private void setSelectedCodirector(){
-        Member codirector = getSelectedCodirector();
-        indexCodirectors = codirectorsNew.indexOf(codirector);
-            if(codirector != null){
-                cbCodirectors.getSelectionModel().select(codirector);
-            }
-    }
-    
-     public boolean repeatedCodirector(Member codirector){
-        Boolean value = false;
-        int i = 0;
-        while((value==false) && (i<codirectorsNew.size())){
-            String enrollmentCodirector= codirectorsNew.get(i).getProfessionalLicense();
-            if(enrollmentCodirector.equals(codirector.getProfessionalLicense())){
-                value = true;
-            }
-            i++;
-        }
-       return value;
-    }
-     
+
+
     private void initializeMembers() {
         try {
             MemberDAO memberDAO = new MemberDAO();
@@ -496,9 +443,9 @@ public class ReceptionWorkModifyController implements Initializable {
         while(i< members.size()){  
             if(members.get(i).getRole().equals("Director")){
                 cbDirector.setValue(members.get(i));
-            }else{  
-                codirectors.add(members.get(i));
-                codirectorsNew.add(members.get(i));
+            }
+            if(members.get(i).getRole().equals("Codirector")){
+                cbCodirectors.setValue(members.get(i));
             }
             
             i++;
@@ -512,7 +459,8 @@ public class ReceptionWorkModifyController implements Initializable {
         ArrayList<Student> studentsOld = receptionWorkRecover.getStudents();
         if(nextRowPosition>0){
         GridPane gridPane= (GridPane) spStudents.getContent();
-        ArrayList<Student> students = new ArrayList<Student>();       
+        ArrayList<Student> studentsNew = new ArrayList<Student>();   
+ 
         int i=1;
         int sizeRows=3;
         int size= (studentsOld.size() + newStudents) * sizeRows;
@@ -524,13 +472,14 @@ public class ReceptionWorkModifyController implements Initializable {
                 String enrollmentStudent= enrollment.getText();
                 String nameStudent= name.getText(); 
                 Student student = new Student(enrollmentStudent,nameStudent);
-                 if(!findRepeteadedStudents(students,student)) {  
-                        students.add(student);
+                 if(!findRepeteadedStudents(studentsNew,student)) {  
+                        studentsNew.add(student);
                         saveStudent(student);
                 }
             }
+           
         }
-        receptionWorkNew.setStudents(students);
+        receptionWorkNew.setStudents(studentsNew);
         addStudentsInReceptionWork();
         }
     }

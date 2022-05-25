@@ -283,8 +283,7 @@ public class ProjectModifyController implements Initializable {
    private boolean emptyFields(Project project){
        boolean value = false;
        if(project.getDescription().isEmpty()||project.getTitle().isEmpty()||
-          project.getMembers().isEmpty()||
-          project.getStudents().isEmpty()||project.getLGACs().isEmpty()){
+          project.getMembers().isEmpty()||project.getLGACs().isEmpty()){
            value = true;
        }
        

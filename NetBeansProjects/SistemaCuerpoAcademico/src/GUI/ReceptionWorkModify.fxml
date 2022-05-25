@@ -6,14 +6,13 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-<?import GUI.TextFieldLimited?>
+<?import GUI.TextFieldLimited?> 
+
 <AnchorPane id="AnchorPane" prefHeight="669.0" prefWidth="779.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ReceptionWorkModifyController">
     <stylesheets>
         <URL value="@receptionworkmodify.css" />
@@ -42,17 +41,12 @@
       <Label layoutX="462.0" layoutY="93.0" text="Proyecto:" />
       <ComboBox fx:id="cbState" layoutX="190.0" layoutY="228.0" prefHeight="24.0" prefWidth="218.0" />
        <ComboBox fx:id="cbDirector" layoutX="152.0" layoutY="453.0" prefHeight="25.0" prefWidth="260.0" />
-      <TableView fx:id="tvCodirectors" layoutX="86.0" layoutY="490.0" prefHeight="139.0" prefWidth="326.0">
-         <columns>
-            <TableColumn fx:id="tcCodirector" prefWidth="325.0" text="Codirectores" />
-         </columns>
-      </TableView>
-      <Button fx:id="btDelete" layoutX="412.0" layoutY="604.0" mnemonicParsing="false" onAction="#actionDelete" text="X" />
-      <ComboBox fx:id="cbCodirectors" layoutX="89.0" layoutY="629.0" prefHeight="25.0" prefWidth="243.0" />
-      <Button fx:id="btAddCodirector1" layoutX="332.0" layoutY="630.0" mnemonicParsing="false" onAction="#actionAddCodirector" prefHeight="7.0" prefWidth="70.0" text="Añadir" />
+      <ComboBox fx:id="cbCodirectors" layoutX="149.0" layoutY="495.0" prefHeight="26.0" prefWidth="260.0" />
       <Label layoutX="11.0" layoutY="232.0" text="Estado:" />
       <ScrollPane fx:id="spStudents" layoutX="452.0" layoutY="152.0" prefHeight="413.0" prefWidth="304.0" />
       <Button fx:id="btAddStudent" layoutX="626.0" layoutY="579.0" mnemonicParsing="false" onAction="#actionAddStudent" prefHeight="25.0" prefWidth="127.0" text="Añadir estudiante" />
+      <Label layoutX="40.0" layoutY="458.0" text="Director:" />
+      <Label layoutX="25.0" layoutY="499.0" text="Coodirector:" />
    </children>
     
 </AnchorPane>

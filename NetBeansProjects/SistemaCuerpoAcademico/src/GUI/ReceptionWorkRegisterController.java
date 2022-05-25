@@ -204,10 +204,11 @@ public class ReceptionWorkRegisterController implements Initializable {
             types.add("Tesis");
             types.add("Tesina");
             types.add("Monografía");
+            states.add("Registrado");
             states.add("Concluido");
             states.add("Abandonado");
             states.add("Asginado");
-            states.add("Registrado");
+            
             cbType.setItems(types);
             cbState.setItems(states);
             cbType.getSelectionModel().selectFirst();

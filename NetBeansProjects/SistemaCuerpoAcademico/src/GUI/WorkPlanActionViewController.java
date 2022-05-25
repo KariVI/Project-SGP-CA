@@ -48,7 +48,7 @@ public class WorkPlanActionViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tcAction.setCellValueFactory(new PropertyValueFactory<Action,String>("description"));
-        tcDate.setCellValueFactory(new PropertyValueFactory<Action,String>("dateFinish"));
+        tcDate.setCellValueFactory(new PropertyValueFactory<Action,String>("dateEnd"));
         tcResponsable.setCellValueFactory(new PropertyValueFactory<Action,String>("memberInCharge"));
         tcResource.setCellValueFactory(new PropertyValueFactory<Action,String>("resource"));
         initializeActionTable();
