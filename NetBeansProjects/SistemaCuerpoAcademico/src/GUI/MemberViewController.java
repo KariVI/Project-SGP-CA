@@ -4,6 +4,7 @@ package GUI;
 import domain.Member;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import log.BusinessException;
 import log.Log;
 
 
@@ -105,5 +107,7 @@ public class MemberViewController implements Initializable {
         Log.logException(ex);
      }
    }  
+    
+   
 
 }

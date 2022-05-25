@@ -317,7 +317,7 @@ public class ActionRegisterController implements Initializable {
             workPlan.setGroupAcademicKey(keyGroupAcademic);
             value= workPlanDAO.saveSuccesful(workPlan);
         } catch (BusinessException ex) {
-            Log.logException(ex);
+            exceptionShow(ex);
         }
          return value;
     }
@@ -336,7 +336,7 @@ public class ActionRegisterController implements Initializable {
                 }
                  value= true;    
             } catch (BusinessException ex) {
-                Log.logException(ex);
+               exceptionShow(ex);
             }
         }
         return value;
@@ -353,7 +353,7 @@ public class ActionRegisterController implements Initializable {
                     actionDAO.saveSuccesful(actions.get(i), idGoal);
                     value=true;
                 } catch (BusinessException ex) {
-                    Log.logException(ex);
+                    exceptionShow(ex);
                 }
             }
         
@@ -379,6 +379,39 @@ public class ActionRegisterController implements Initializable {
         if(action!= null){
             actions.add(action);
         
+        }
+    }
+   private void exceptionShow(BusinessException ex){ 
+        Log.logException(ex);
+        AlertMessage alertMessage = new AlertMessage();
+        alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
+        Stage stage = (Stage) btSave.getScene().getWindow();
+        stage.close();
+        openLogin();
+            
+    }
+    
+        private void  openLogin(){   
+        Stage primaryStage =  new Stage();
+        try{
+            
+            URL url = new File("src/GUI/Login.fxml").toURI().toURL();
+            try{
+                FXMLLoader loader = new FXMLLoader(url);
+                loader.setLocation(url);
+                loader.load();
+                LoginController login = loader.getController();
+                Parent root = loader.getRoot();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+                
+            } catch (IOException ex) {
+                Log.logException(ex);
+            }
+            primaryStage.show();
+            
+        } catch (MalformedURLException ex) {
+                Log.logException(ex);
         }
     }
     
