@@ -91,6 +91,10 @@ public class ActionRegisterController implements Initializable {
         this.workPlan = workPlan;
         initializeGoals(); 
     }
+
+    public void setKeyGroupAcademic(String keyGroupAcademic) {
+        this.keyGroupAcademic = keyGroupAcademic;
+    }
     
     
     private void initializeGoals(){
@@ -310,6 +314,7 @@ public class ActionRegisterController implements Initializable {
         WorkPlanDAO workPlanDAO = new WorkPlanDAO();   
         
         try {
+            workPlan.setGroupAcademicKey(keyGroupAcademic);
             value= workPlanDAO.saveSuccesful(workPlan);
         } catch (BusinessException ex) {
             Log.logException(ex);

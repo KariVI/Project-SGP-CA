@@ -75,6 +75,16 @@ public class WorkPlan {
         return value;
     }
 
+    public String getGroupAcademicKey() {
+        return groupAcademicKey;
+    }
+
+    public void setGroupAcademicKey(String groupAcademicKey) {
+        this.groupAcademicKey = groupAcademicKey;
+    }
+    
+    
+
     @Override
     public String toString() {
         return timePeriod;

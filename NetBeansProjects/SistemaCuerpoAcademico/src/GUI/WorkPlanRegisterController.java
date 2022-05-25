@@ -91,6 +91,7 @@ public class WorkPlanRegisterController implements Initializable {
         };
     }
     
+    
      public void setWorkPlan(WorkPlan workPlan) {
         this.workPlan = workPlan;
         taObjetive.setText(workPlan.getObjetiveGeneral());
@@ -275,6 +276,7 @@ public class WorkPlanRegisterController implements Initializable {
                 ActionRegisterController actionRegisterController = loader.getController();
                 actionRegisterController.setWorkPlan(workPlan);
                 actionRegisterController.setMember(member);
+                actionRegisterController.setKeyGroupAcademic(member.getKeyGroupAcademic());
                 Parent root = loader.getRoot();               
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);               
@@ -297,6 +299,7 @@ public class WorkPlanRegisterController implements Initializable {
         String timePeriod = cbMonths.getSelectionModel().getSelectedItem().toString() + " " +  cbYears.getSelectionModel().getSelectedItem().toString();
         workPlan.setTimePeriod(timePeriod);
         workPlan.setGoals(saveGoals());
+        workPlan.setGroupAcademicKey(member.getKeyGroupAcademic());
     }
     
     private Goal[] saveGoals(){
