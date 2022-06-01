@@ -86,8 +86,8 @@ public class MemberListController implements  Initializable {
                     members.add(memberList.get(i));     
             }
             
-        } catch (BusinessException ex) {
-            exceptionShow(ex);
+        } catch (BusinessException | NullPointerException ex) {
+            exceptionShow((BusinessException) ex);
         }      
     }
     

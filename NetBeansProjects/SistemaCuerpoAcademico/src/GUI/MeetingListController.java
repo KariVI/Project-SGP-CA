@@ -139,7 +139,7 @@ public class MeetingListController implements Initializable {
     
     private void getMeetings( String keyGroupAcademic) {   
         MeetingDAO meetingDAO = new MeetingDAO();
-        ArrayList<Meeting> meetingList;  
+        ArrayList<Meeting> meetingList = null;  
           try {
                 meetingList = meetingDAO.getMeetings(keyGroupAcademic,  member.getProfessionalLicense());
             } catch (BusinessException | NullPointerException ex) {

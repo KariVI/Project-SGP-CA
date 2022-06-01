@@ -53,7 +53,7 @@ public class LoginController implements Initializable {
                     
                }
                
-            } catch (BusinessException ex) {
+            } catch (BusinessException | NullPointerException ex) {
                Log.logException(ex);
                 AlertMessage alertMessage  = new AlertMessage();
                 alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
@@ -124,7 +124,7 @@ public class LoginController implements Initializable {
                 value = false;      
             }           
             
-        } catch (BusinessException ex) {
+        } catch (BusinessException | NullPointerException ex) {
             Log.logException(ex);
                  AlertMessage alertMessage  = new AlertMessage();
                 alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");

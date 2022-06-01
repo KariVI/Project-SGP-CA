@@ -335,8 +335,8 @@ public class ActionRegisterController implements Initializable {
                     goalDAO.saveSuccesful(workPlan.getGoals()[i], idWorkPlan);
                 }
                  value= true;    
-            } catch (BusinessException ex) {
-               exceptionShow(ex);
+            } catch (BusinessException | NullPointerException ex) {
+               exceptionShow((BusinessException) ex);
             }
         }
         return value;
@@ -352,8 +352,8 @@ public class ActionRegisterController implements Initializable {
                     int idGoal = goalDAO.getId(actions.get(i).getGoal(), workPlan.getId());
                     actionDAO.saveSuccesful(actions.get(i), idGoal);
                     value=true;
-                } catch (BusinessException ex) {
-                    exceptionShow(ex);
+                } catch (BusinessException | NullPointerException ex) {
+                    exceptionShow((BusinessException) ex);
                 }
             }
         
