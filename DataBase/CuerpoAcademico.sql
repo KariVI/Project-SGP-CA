@@ -1,7 +1,8 @@
 drop database cuerpoAcademico;
 CREATE SCHEMA IF NOT EXISTS CuerpoAcademico;
 USE  CuerpoAcademico;
-
+/*create user 'integrante'@'localhost' identified by 'password';
+Grant SELECT, UPDATE, DELETE, INSERT on cuerpoAcademico.* TO 'integrante'@'localhost'; */
 
  CREATE TABLE IF NOT EXISTS CuerpoAcademico(clave varchar(10) NOT NULL,
 nombre varchar(100) NOT NULL, objetivo varchar(400) NOT NULL,
@@ -167,8 +168,7 @@ CREATE TABLE ProyectoTrabajoRecepcional(
   FOREIGN KEY (idTrabajoRecepcional) REFERENCES TrabajoRecepcional(idTrabajoRecepcional)
 );
 
-/*create user 'integrante'@'localhost' identified by 'password';
-Grant SELECT, UPDATE, DELETE, INSERT on cuerpoAcademico.* TO 'integrante'@'localhost'; */
+
 
 CREATE TABLE PlanTrabajo(
   idPlanTrabajo int auto_increment NOT NULL,
@@ -237,20 +237,7 @@ INSERT INTO Miembro(cedula, nombre, rol, grado, nombreGrado, universidad, anio, 
 INSERT INTO Miembro(cedula, nombre, rol, grado, nombreGrado, universidad, anio, estado, clave) VALUES('8325134', 'Juan Carlos Perez Arriaga', 'Integrante', 'Maestria', 'Maestria en ciencias de la computacion', 'Fundacion Arturo Rosenbulth', '2013','Activo',"JDOEIJ804");
 INSERT INTO Miembro(cedula, nombre, rol, grado, nombreGrado, universidad, anio, estado, clave) VALUES('7938268', 'Maria Karen Cortes Verdin', 'Responsable', 'Doctorado', 'Ciencias de la Computación', 'Centro de Investigación en Matemáticas A.C', '2005', 'Activo',"JDOEIJ804");
 
-INSERT INTO Anteproyecto(titulo,descripcion, fechaInicio,fechaFin, clave_CA ) VALUES ("Revisión de la Literatura acerca de Varamiento de Mamíferos Marinos",
-        "La Secretaría de Medio Ambiente y Recursos Naturales, a través de la Subsecretaría de Fomento y Normatividad Ambiental en coordinación con las áreas del sector ambiental y con la Secretaría de Marina (SEMAR)",
-        "13/01/2021", "13/07/2021","JDOEIJ804");
-INSERT INTO Anteproyecto(titulo,descripcion, fechaInicio,fechaFin, clave_CA ) VALUES ("Métricas de Cohesión y Acoplamiento", "La facilidad de evolución permite al software adaptarse a distintas necesidades conforme pasa el tiempo y suceden cambios tanto en el mercado como en la organización",
-        "13/09/2020" , "17/05/2021","JDOEIJ804");
-INSERT INTO Anteproyecto(titulo,descripcion, fechaInicio,fechaFin, clave_CA )   VALUES("Revisión de articulos sobre microservicios ",
-        "Revisión de articulos relacionados al apartado de microservicios",
-        "13/01/2021", "13/07/2021","JDOEIJ804");
 
-INSERT INTO Anteproyecto(titulo,descripcion, fechaInicio,fechaFin, clave_CA )   VALUES ("Evaluación del modelo de calidad de seguridad para arquitecturas de software", "Una arquitectura de software define no sólo la estructura o estructuras de un sistema de software, sino las características de calidad del propio sistema. Una característica o atributo de calidad altamente crítico en nuestros días es la seguridad. Esta característica, por supuesto que también es importante considerar en el desarrollo de la plataforma de comunicación y educación",
-        "13/11/2019","13/07/2020","JDOEIJ804");
-
-INSERT INTO Anteproyecto(titulo,descripcion, fechaInicio,fechaFin, clave_CA )   VALUES ("Evaluación de investigaciones sobre lenguaje máquina", "Investigaciones recientes sobre los hallazgos de el aprendizake del lenguajes máquina",
-"13/11/2019","13/07/2020","JDOEIJ804");
 
 
 
@@ -268,11 +255,11 @@ INSERT INTO Credenciales(cedula,usuario,contrasenia) VALUES("7938268","KarenCor"
 INSERT INTO Credenciales(cedula,usuario,contrasenia) VALUES("7953781","JoseRoj",hex(AES_ENCRYPT("Jose11Rafael",'Key')));
 
 
-INSERT INTO Reunion(asunto,hora, fecha, estado,clave_CA) VALUES ("Revisión de avances en proyectos actuales" ,"11:30","04/08/2021","Registrada", "JDOEIJ804");
-INSERT INTO Reunion(asunto,hora, fecha, estado,clave_CA) VALUES( "Organizar agenda de actividades del seminario" ,"15:30","15/09/2021","Concluida","JDOEIJ804");
+INSERT INTO Reunion(asunto,hora, fecha, estado,clave_CA) VALUES ("Revisión de avances en proyectos actuales" ,"11:30","01/06/2022","Proxima", "JDOEIJ804");
+INSERT INTO Reunion(asunto,hora, fecha, estado,clave_CA) VALUES( "Organizar agenda de actividades del seminario" ,"15:30","01/09/2021","Concluida","JDOEIJ804");
 INSERT INTO Reunion(asunto,hora, fecha, estado,clave_CA) VALUES("Actualizar plan de trabajo de la LIS","13:00","11/08/2021", "Concluida","JDOEIJ804");
 INSERT INTO Reunion(asunto,hora, fecha, estado,clave_CA) VALUES("Lanzamiento FEIBook" ,"12:30","11/11/2021","Concluida","JDOEIJ804");
-INSERT INTO Reunion(asunto,hora, fecha, estado,clave_CA) VALUES("Lanzamiento del GastroCafe" ,"12:30","21/06/2021","´Proxima","JDOEIJ804");
+INSERT INTO Reunion(asunto,hora, fecha, estado,clave_CA) VALUES("Lanzamiento del GastroCafe" ,"12:30","01/05/2022","Concluida","JDOEIJ804");
 
 INSERT INTO Tema(tema,horaInicio,idReunion,horaFin,cedula) VALUES("Agenda","11:00",2,"14:00","8325134");
 

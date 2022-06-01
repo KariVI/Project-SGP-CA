@@ -101,8 +101,13 @@ public class MeetingModifyController implements Initializable {
             try {
                 deleteOldPrerequisites();
                 deleteOldAssistants();
-            } catch (BusinessException ex) {
+            } catch (BusinessException | NullPointerException ex) {
                 Log.logException(ex);
+                AlertMessage alertMessage = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
+                Stage stage = (Stage) btSave.getScene().getWindow();
+                stage.close();
+                openLogin();
             }
                 update();
                  
@@ -117,8 +122,12 @@ public class MeetingModifyController implements Initializable {
         stage.close();
          try {
              openWindow();
-         } catch (BusinessException ex) {
-             Log.logException(ex);
+         } catch (BusinessException | NullPointerException ex) {
+               Log.logException(ex);
+                AlertMessage alertMessage = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
+
+                openLogin();
          }          
     }
     
@@ -273,11 +282,15 @@ public class MeetingModifyController implements Initializable {
                     openWindow();
                 }
             
-            } catch (BusinessException ex) {
+            } catch (BusinessException | NullPointerException ex) {
                 if(ex.getMessage().equals("DataBase connection failed ")){
                 alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
                  }else{  
                     Log.logException(ex);
+                    alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
+                    Stage stage = (Stage) btSave.getScene().getWindow();
+                    stage.close();
+                    openLogin();
                 }
             }
         
@@ -285,6 +298,29 @@ public class MeetingModifyController implements Initializable {
         
     }
     
+         private void  openLogin(){   
+        Stage primaryStage =  new Stage();
+        try{
+            
+            URL url = new File("src/GUI/Login.fxml").toURI().toURL();
+            try{
+                FXMLLoader loader = new FXMLLoader(url);
+                loader.setLocation(url);
+                loader.load();
+                LoginController login = loader.getController();
+                Parent root = loader.getRoot();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+                
+            } catch (IOException ex) {
+                Log.logException(ex);
+            }
+            primaryStage.show();
+            
+        } catch (MalformedURLException ex) {
+                Log.logException(ex);
+        }
+     }
 
     
     private void deleteOldPrerequisites() throws BusinessException{ 
@@ -361,7 +397,7 @@ public class MeetingModifyController implements Initializable {
                 members.add(memberList.get(i));
             }
         } catch (BusinessException ex) {
-            Logger.getLogger(MemberListController.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
     }
     
