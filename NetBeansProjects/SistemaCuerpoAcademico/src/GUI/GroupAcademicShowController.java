@@ -81,7 +81,7 @@ public class GroupAcademicShowController implements Initializable {
         disableButtonUpdate();
         try {
             getLgacs();
-        } catch (BusinessException ex) {
+        } catch (BusinessException | NullPointerException ex ) {
             Log.logException(ex);
             AlertMessage alertMessage  = new AlertMessage();
             alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");

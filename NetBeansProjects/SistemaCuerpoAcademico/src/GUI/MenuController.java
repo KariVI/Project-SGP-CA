@@ -115,7 +115,6 @@ public class MenuController implements Initializable {
    
          
     private void fillOptions() {   
-        options.add("Anteproyectos");
         options.add("Miembros");
         options.add("Trabajos recepcionales");
         options.add("Proyectos");
@@ -153,24 +152,7 @@ public class MenuController implements Initializable {
         FXMLLoader loader;
         Parent root;
         switch(option){ 
-            case "Anteproyectos": ;
-                try {
-               loader = new FXMLLoader(getClass().getResource("PreliminarProjectList.fxml"));
-               root = loader.load();
-               PreliminarProjectListController preliminarProjectListController = loader.getController();
-                preliminarProjectListController.setMember(member);
-               String keyGroupAcademic = member.getKeyGroupAcademic();
-               preliminarProjectListController.setKeyGroupAcademic(keyGroupAcademic);
-              
-               Scene scene = new Scene(root);
-               Stage stage = new Stage();
-               stage.setScene(scene);
-               stage.initModality(Modality.APPLICATION_MODAL);
-               stage.showAndWait();
-               } catch (IOException ex) {
-                   Log.logException(ex);
-               }
-            break;
+
             
             case "Miembros":;
                    try {

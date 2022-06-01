@@ -244,7 +244,7 @@ public class MeetingRegisterController implements Initializable {
                     openMeetingList();
                  }
             
-        } catch (BusinessException ex) {
+        } catch (BusinessException | NullPointerException ex) {
             exceptionShow(ex);
         }
     }
@@ -287,7 +287,7 @@ public class MeetingRegisterController implements Initializable {
               topics.get(i).setIdMeeting(idMeeting);
               topicDAO.savedSucessful(topics.get(i));           
            }   
-        } catch (BusinessException ex) {
+        } catch (BusinessException | NullPointerException ex) {
             Log.logException(ex);
         }    
     }
@@ -332,7 +332,7 @@ public class MeetingRegisterController implements Initializable {
             MeetingDAO preliminarProjectDAO= new MeetingDAO();
             preliminarProjectDAO.getId(meeting);
             value=true;
-        }catch (BusinessException ex){ 
+        }catch (BusinessException | NullPointerException ex){ 
             if(ex.getMessage().equals("DataBase connection failed ")){
                 AlertMessage alertMessage = new AlertMessage();
                 alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
@@ -355,7 +355,7 @@ public class MeetingRegisterController implements Initializable {
             for( int i = 0; i<memberList.size(); i++) {
                 members.add(memberList.get(i));
             }
-        } catch (BusinessException ex) {
+        } catch (BusinessException | NullPointerException ex) {
             Log.logException(ex);
         }
     }
@@ -483,15 +483,41 @@ public class MeetingRegisterController implements Initializable {
         return value;
     }
     
-    private void exceptionShow(BusinessException ex){ 
+    private void exceptionShow(Exception ex){ 
          if(ex.getMessage().equals("DataBase connection failed ")){
-                AlertMessage alertMessage = new AlertMessage();
+                 AlertMessage alertMessage = new AlertMessage();
                 alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
+                Stage stage = (Stage) btSave.getScene().getWindow();
+                stage.close();
+                openLogin();
             }else{  
                 Log.logException(ex);
             }
     }
     
+     private void  openLogin(){   
+        Stage primaryStage =  new Stage();
+        try{
+            
+            URL url = new File("src/GUI/Login.fxml").toURI().toURL();
+            try{
+                FXMLLoader loader = new FXMLLoader(url);
+                loader.setLocation(url);
+                loader.load();
+                LoginController login = loader.getController();
+                Parent root = loader.getRoot();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+                
+            } catch (IOException ex) {
+                Log.logException(ex);
+            }
+            primaryStage.show();
+            
+        } catch (MalformedURLException ex) {
+                Log.logException(ex);
+        }
+     }
     private boolean validateDate(){
         boolean value=false;
         

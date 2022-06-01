@@ -288,7 +288,7 @@ public class MeetingShowController implements Initializable {
             for(int i = 0; i < assistantsList.size(); i++){
                 assistants.add(assistantsList.get(i));
             }
-        } catch (BusinessException ex) {
+        } catch (BusinessException | NullPointerException ex) {
                 Log.logException(ex);
                  Stage stage = (Stage) btUpdate.getScene().getWindow();
                 stage.close();
@@ -305,7 +305,7 @@ public class MeetingShowController implements Initializable {
             for(int i = 0; i < prerequisitesList.size(); i++){    
                 prerequisites.add(prerequisitesList.get(i));
             }
-        } catch (BusinessException ex) {
+        } catch (BusinessException | NullPointerException ex) {
             Log.logException(ex);
             Stage stage = (Stage) btUpdate.getScene().getWindow();
             stage.close();
