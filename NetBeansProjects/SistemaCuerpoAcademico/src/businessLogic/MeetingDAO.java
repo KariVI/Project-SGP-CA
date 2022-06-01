@@ -42,7 +42,7 @@ public class MeetingDAO implements IMeetingDAO{
                 preparedStatement.executeUpdate();
                 saveSuccess=true;
                 connectorDataBase.disconnect();
-            } catch (SQLException sqlException) {
+            } catch (SQLException  sqlException) {
                 throw new BusinessException("DataBase connection failed ", sqlException);
             } catch (ClassNotFoundException ex) {
                 Log.logException(ex);
@@ -130,7 +130,7 @@ public class MeetingDAO implements IMeetingDAO{
         *@return Reuniones relacionadas a un cuerpo académico
         *@throws Se cacho una excepción de tipo SQLException
     */
-    public ArrayList<Meeting>  getMeetings(String keyGroupAcademic, String professionalLicense ){
+    public ArrayList<Meeting>  getMeetings(String keyGroupAcademic, String professionalLicense ) throws BusinessException{
         ArrayList<Meeting> meetingList = new ArrayList<Meeting>();
         try{
             Connector connectorDataBase = new Connector();
@@ -158,7 +158,7 @@ public class MeetingDAO implements IMeetingDAO{
                 }
                 connectorDataBase.disconnect();
             }catch(SQLException sqlException) {
-                   throw new IllegalStateException("Parameter index ", sqlException);         
+                   throw new BusinessException("DataBase connection failed ", sqlException);      
             }catch(ClassNotFoundException ex) {
                         Log.logException(ex);
             }
