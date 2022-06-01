@@ -124,8 +124,9 @@ public class MeetingListController implements Initializable {
             meetingShowController.setMeeting(meeting); 
             try {
                 meetingShowController.initializeMeeting();
-            } catch (BusinessException ex) {
+            } catch (BusinessException | NullPointerException ex) {
                 Log.logException(ex);
+                openLogin();
             }
             Scene scene = new Scene(root);
             Stage stage = new Stage();
@@ -139,7 +140,12 @@ public class MeetingListController implements Initializable {
     private void getMeetings( String keyGroupAcademic) {   
         MeetingDAO meetingDAO = new MeetingDAO();
         ArrayList<Meeting> meetingList;  
-        meetingList = meetingDAO.getMeetings(keyGroupAcademic,  member.getProfessionalLicense());
+          try {
+                meetingList = meetingDAO.getMeetings(keyGroupAcademic,  member.getProfessionalLicense());
+            } catch (BusinessException | NullPointerException ex) {
+                Log.logException(ex);
+                openLogin();
+            }
         for(int i=0; i< meetingList.size(); i++){
             meetings.add(meetingList.get(i));
         }    

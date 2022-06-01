@@ -17,5 +17,5 @@ public interface IMeetingDAO {
     public boolean updatedSucessful(Meeting meeting) throws BusinessException;
     public boolean changedStateSucessful(Meeting meeting) throws BusinessException;
     public boolean deletedSucessfulAssistants(Meeting meeting, Member assistant) throws BusinessException;
-    public ArrayList<Meeting>  getMeetings(String keyGroupAcademic, String professionalLicense );
+    public ArrayList<Meeting>  getMeetings(String keyGroupAcademic, String professionalLicense ) throws BusinessException;
 }
