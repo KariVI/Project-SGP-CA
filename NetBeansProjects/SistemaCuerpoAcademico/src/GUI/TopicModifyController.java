@@ -52,6 +52,7 @@ public class TopicModifyController implements Initializable {
     private Meeting meeting;
     private Member member;
     private int indexTopic;
+    private int idTopicSelected;
     private ListChangeListener<Topic> tableTopicListener;
     
     @Override
@@ -136,16 +137,14 @@ public class TopicModifyController implements Initializable {
     private Topic getSelectedTopic(){
        Topic topic = null;
         topic = tvTopic.getSelectionModel().getSelectedItem();
+        idTopicSelected = topic.getIdTopic();
         getIndexTopic(topic);
         return topic;
     }
     
     private void getIndexTopic(Topic topicSelected){
-        
         for(int i = 0; i < topics.size(); i++){
-            topics.get(i).getTopicName();
-            topicSelected.getTopicName();
-            if(topics.get(i).equals(topicSelected)){
+            if(topics.get(i).getTopicName().equals(topicSelected.getTopicName())){
                 indexTopic = i;
             }
         }
@@ -153,7 +152,6 @@ public class TopicModifyController implements Initializable {
     
     private void setSelectedTopic(){
         Topic topic = getSelectedTopic();
-        indexTopic = topics.indexOf(topic);
         if(topic != null){
             try {
                 MemberDAO memberDAO = new MemberDAO();
@@ -223,7 +221,7 @@ public class TopicModifyController implements Initializable {
         finishTime = tfFinishTime.getText();
         startTime = tfStartTime.getText();
         topicName = tfTopic.getText();
-        Topic topic = new Topic(topics.get(indexTopic).getIdTopic(),topicName,startTime,finishTime,newMember.getName(),newMember.getProfessionalLicense(),meeting.getKey());
+        Topic topic = new Topic(idTopicSelected,topicName,startTime,finishTime,newMember.getName(),newMember.getProfessionalLicense(),meeting.getKey());
         if(validateTopic(topic)){    
             topics.set(indexTopic,topic);
         }

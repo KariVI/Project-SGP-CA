@@ -160,6 +160,11 @@ public class MemberRegisterController implements Initializable {
             alertMessage.showAlertValidateFailed("El miembro ya se encuentra registrado");
         }
         
+        if(validation.existsInvalidCharactersForCurp(tfCURP.getText())){
+            value = false;
+            alertMessage.showAlertValidateFailed("CURP inválida");
+        }
+        
         return value;
     }
     
