@@ -11,7 +11,7 @@ public class TopicDAOTest {
     @Test
     public void testSave() throws BusinessException{
         System.out.println("save");
-        Topic topic = new Topic("Tema gastrocafe","11:00","12:00","4065161",1);
+        Topic topic = new Topic("Tema gastrocafe","11:00","12:00","Maria de los Angeles Arenas Valdez", "4065161",1);
         TopicDAO topicDAO = new TopicDAO();
         assertTrue(topicDAO.savedSucessful(topic));
     }
@@ -20,7 +20,7 @@ public class TopicDAOTest {
     public void testGetAgendaTopics()throws BusinessException {
         System.out.println("getAgendaTopics");
         int idMeeting = 2;
-        Topic topic = new Topic("Agenda","11:00","14:00","8325134",2);
+        Topic topic = new Topic("Agenda","11:00","14:00","Maria de los Angeles Arenas Valdez","8325134",2);
         ArrayList<Topic> resultExpected = new ArrayList<Topic>();
         resultExpected.add(topic);
         TopicDAO agendaTopicDAO = new TopicDAO();
@@ -31,7 +31,7 @@ public class TopicDAOTest {
     @Test 
     public void testUpdate() throws BusinessException {
         System.out.println("update");
-        Topic newTopic = new Topic("Tema gastrocafe","12:00","13:00","4065161",1);
+        Topic newTopic = new Topic("Tema gastrocafe","12:00","13:00","Maria de los Angeles Arenas Valdez","4065161",1);
         TopicDAO topicDAO = new TopicDAO();
         assertTrue(topicDAO.updatedSucessful( newTopic));
     }
@@ -39,7 +39,7 @@ public class TopicDAOTest {
     @Test 
     public void testDelete() throws BusinessException {
         System.out.println("delete");
-        Topic topic = new Topic(2,"Tema gastrocafe","12:00","13:00","4065161",1);
+        Topic topic = new Topic(2,"Tema gastrocafe","12:00","13:00","Maria de los Angeles Arenas Valdez","4065161",1);
         TopicDAO topicDAO = new TopicDAO();
         assertTrue(topicDAO.deletedSucessful(topic));
     }

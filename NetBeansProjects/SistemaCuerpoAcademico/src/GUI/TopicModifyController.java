@@ -134,15 +134,21 @@ public class TopicModifyController implements Initializable {
     }
     
     private Topic getSelectedTopic(){
-        Topic topic = null;
-        int tableSize = 1;
-        if(tvTopic != null){
-            List<Topic> topicTable = tvTopic.getSelectionModel().getSelectedItems();
-            if(topicTable.size() == tableSize){
-                topic = topicTable.get(0);
-            }   
-        }
+       Topic topic = null;
+        topic = tvTopic.getSelectionModel().getSelectedItem();
+        getIndexTopic(topic);
         return topic;
+    }
+    
+    private void getIndexTopic(Topic topicSelected){
+        
+        for(int i = 0; i < topics.size(); i++){
+            topics.get(i).getTopicName();
+            topicSelected.getTopicName();
+            if(topics.get(i).equals(topicSelected)){
+                indexTopic = i;
+            }
+        }
     }
     
     private void setSelectedTopic(){
@@ -305,7 +311,7 @@ public class TopicModifyController implements Initializable {
     private boolean validateStartTime(Topic topic){
         boolean value = false;
         Validation validation = new Validation();
-        if(validation.validateCorrectHours(meeting.getHourStart(), topic.getStartTime())){
+        if(!validation.validateCorrectHours(meeting.getHourStart(), topic.getStartTime())){
             value = true;
         }
         return value;

@@ -44,6 +44,7 @@ public class TopicRegisterController implements Initializable {
     private String hourMeeting;
     private Member member;
     private int indexTopic;
+    private Topic topicSelected;
     private MeetingRegisterController meetingRegisterController;
     private ListChangeListener<Topic> tableTopicListener;
     
@@ -102,7 +103,9 @@ public class TopicRegisterController implements Initializable {
     @FXML
     private void delete(ActionEvent event){
         topics.remove(indexTopic);
+        tvTopic.refresh();
         cleanFields();
+
     }
     
     private void cleanFields(){
@@ -113,20 +116,25 @@ public class TopicRegisterController implements Initializable {
     
     private Topic getSelectedTopic(){
         Topic topic = null;
-        int tableSize = 1;
-        if(tvTopic != null){
-            List<Topic> topicTable = tvTopic.getSelectionModel().getSelectedItems();
-            if(topicTable.size() == tableSize){
-                topic = topicTable.get(0);
-            }   
-        }
+        topic = tvTopic.getSelectionModel().getSelectedItem();
+        getIndexTopic(topic);
         return topic;
+    }
+    
+    private void getIndexTopic(Topic topicSelected){
+        
+        for(int i = 0; i < topics.size(); i++){
+            topics.get(i).getTopicName();
+            topicSelected.getTopicName();
+            if(topics.get(i).equals(topicSelected)){
+                indexTopic = i;
+            }
+        }
     }
     
     private void setSelectedTopic(){
         Topic topic = getSelectedTopic();
         if(topic != null){
-            indexTopic = topics.indexOf(topic);
             try {
                 MemberDAO memberDAO = new MemberDAO();
                 Member newMember = memberDAO.getMemberByLicense(topic.getProfessionalLicense());
@@ -233,7 +241,7 @@ public class TopicRegisterController implements Initializable {
     private boolean validateStartTime(Topic topic){
         boolean value = false;
         Validation validation = new Validation();
-        if(validation.validateCorrectHours(hourMeeting, topic.getStartTime())){
+        if(!validation.validateCorrectHours(hourMeeting, topic.getStartTime())){
             value = true;
         }
         return value;
@@ -251,4 +259,13 @@ public class TopicRegisterController implements Initializable {
         }
        return value;
     }    
+    
+    private void exceptionShow(BusinessException ex){ 
+         if(ex.getMessage().equals("DataBase connection failed ")){
+                AlertMessage alertMessage = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexion con la base de datos");
+            }else{  
+                Log.logException(ex);
+            }
+    }
 }
