@@ -9,6 +9,7 @@ import domain.Member;
 import domain.Minute;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +76,11 @@ public class MinuteModifyController implements Initializable {
             }
         } catch (BusinessException ex) {
             Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btReturn.getScene().getWindow();
+                stage.close();
+                openLogin();
         }
     }
     
@@ -93,7 +99,12 @@ public class MinuteModifyController implements Initializable {
             tvAgreement.setItems(agreements);
 
         } catch (BusinessException ex) {
-            Log.logException(ex);
+             Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btReturn.getScene().getWindow();
+                stage.close();
+                openLogin();
         }
     }
         
@@ -159,7 +170,12 @@ public class MinuteModifyController implements Initializable {
                 cbMember.getSelectionModel().select(member);
                 
             } catch (BusinessException ex) {
-                Log.logException(ex);
+                 Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btReturn.getScene().getWindow();
+                stage.close();
+                openLogin();
             }
         }
     }
@@ -174,7 +190,12 @@ public class MinuteModifyController implements Initializable {
             }
             cbMember.getSelectionModel().selectFirst();
         } catch (BusinessException ex) {
-            Log.logException(ex);
+             Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btReturn.getScene().getWindow();
+                stage.close();
+                openLogin();
         }
     }
     
@@ -223,7 +244,12 @@ public class MinuteModifyController implements Initializable {
                Stage stage = (Stage)btSave.getScene().getWindow();
                stage.close();
            } catch (BusinessException ex) {
-                Log.logException(ex);
+                 Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btReturn.getScene().getWindow();
+                stage.close();
+                openLogin();
            }          
        }
     }
@@ -233,7 +259,12 @@ public class MinuteModifyController implements Initializable {
             MinuteDAO minuteDAO = new MinuteDAO();
             minuteDAO.deletedSucessfulMinutesComments(idMinute);
         } catch (BusinessException ex) {
-            Log.logException(ex);
+             Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btReturn.getScene().getWindow();
+                stage.close();
+                openLogin();
         }
     }
     
@@ -250,7 +281,12 @@ public class MinuteModifyController implements Initializable {
               
            }
           } catch (BusinessException ex) {
-                  Log.logException(ex);
+                   Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btReturn.getScene().getWindow();
+                stage.close();
+                openLogin();
               }
     }
 
@@ -350,6 +386,30 @@ public class MinuteModifyController implements Initializable {
             stage.close();
         }catch (IOException ex) {
             Log.logException(ex);
+        }
+    }
+    
+    private void  openLogin(){   
+        Stage primaryStage =  new Stage();
+        try{
+            
+            URL url = new File("src/GUI/Login.fxml").toURI().toURL();
+            try{
+                FXMLLoader loader = new FXMLLoader(url);
+                loader.setLocation(url);
+                loader.load();
+                LoginController login = loader.getController();
+                Parent root = loader.getRoot();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+                
+            } catch (IOException ex) {
+                Log.logException(ex);
+            }
+            primaryStage.show();
+            
+        } catch (MalformedURLException ex) {
+                Log.logException(ex);
         }
     }
     

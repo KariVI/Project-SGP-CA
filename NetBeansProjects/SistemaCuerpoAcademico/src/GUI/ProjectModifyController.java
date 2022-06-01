@@ -12,6 +12,7 @@ import domain.ReceptionWork;
 import domain.Student;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -169,6 +170,11 @@ public class ProjectModifyController implements Initializable {
             projectDAO.deletedSucessfulReceptionWorks(project);            
         } catch (BusinessException ex) {
             Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btCancel.getScene().getWindow();
+                stage.close();
+                openLogin();
         }
    }
    
@@ -181,6 +187,11 @@ public class ProjectModifyController implements Initializable {
            projectDAO.addReceptionWork(project);          
         } catch (BusinessException ex) {
             Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btCancel.getScene().getWindow();
+                stage.close();
+                openLogin();
         }
    }
    
@@ -241,7 +252,12 @@ public class ProjectModifyController implements Initializable {
                 value = true;
             }
         } catch (BusinessException ex) {
-            Log.logException(ex);          
+            Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btCancel.getScene().getWindow();
+                stage.close();
+                openLogin();
         }
         
         return value;
@@ -511,7 +527,12 @@ public class ProjectModifyController implements Initializable {
             
             cbMember.getSelectionModel().selectFirst();
         } catch (BusinessException ex) {
-            Log.logException(ex);
+             Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btCancel.getScene().getWindow();
+                stage.close();
+                openLogin();
         }
     }
     
@@ -526,7 +547,12 @@ public class ProjectModifyController implements Initializable {
             
             cbLGAC.getSelectionModel().selectFirst();
         } catch (BusinessException ex) {
-            Log.logException(ex);
+             Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btCancel.getScene().getWindow();
+                stage.close();
+                openLogin();
         }
     }
     
@@ -565,7 +591,12 @@ public class ProjectModifyController implements Initializable {
             }
             
         } catch (BusinessException ex) {
-            Log.logException(ex);
+             Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btCancel.getScene().getWindow();
+                stage.close();
+                openLogin();
         }
     }
     
@@ -580,7 +611,12 @@ public class ProjectModifyController implements Initializable {
             }
             
         } catch (BusinessException ex) {
-            Log.logException(ex);
+             Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btCancel.getScene().getWindow();
+                stage.close();
+                openLogin();
         }
     }
     
@@ -595,7 +631,36 @@ public class ProjectModifyController implements Initializable {
             }
             
         } catch (BusinessException ex) {
-            Log.logException(ex);
+             Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btCancel.getScene().getWindow();
+                stage.close();
+                openLogin();
+        }
+    }
+    
+    private void  openLogin(){   
+        Stage primaryStage =  new Stage();
+        try{
+            
+            URL url = new File("src/GUI/Login.fxml").toURI().toURL();
+            try{
+                FXMLLoader loader = new FXMLLoader(url);
+                loader.setLocation(url);
+                loader.load();
+                LoginController login = loader.getController();
+                Parent root = loader.getRoot();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+                
+            } catch (IOException ex) {
+                Log.logException(ex);
+            }
+            primaryStage.show();
+            
+        } catch (MalformedURLException ex) {
+                Log.logException(ex);
         }
     }
     

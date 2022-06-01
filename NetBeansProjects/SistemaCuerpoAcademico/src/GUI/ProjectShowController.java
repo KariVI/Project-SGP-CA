@@ -90,7 +90,12 @@ public class ProjectShowController implements Initializable {
                 lgacs.add(lgacList.get(i));
             }
         } catch (BusinessException ex) {
-            Log.logException(ex);
+           Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btReturn.getScene().getWindow();
+                stage.close();
+                openLogin();
         }
     }
     
@@ -104,6 +109,11 @@ public class ProjectShowController implements Initializable {
             }
         } catch (BusinessException ex) {
             Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btReturn.getScene().getWindow();
+                stage.close();
+                openLogin();
         }
     }
     
@@ -117,6 +127,11 @@ public class ProjectShowController implements Initializable {
             }
         } catch (BusinessException ex) {
             Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btReturn.getScene().getWindow();
+                stage.close();
+                openLogin();
         }
     }
     
@@ -127,6 +142,11 @@ public class ProjectShowController implements Initializable {
             receptionWorkList = projectDAO.getReceptionWorks(project);
         } catch (BusinessException ex) {
             Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage) btReturn.getScene().getWindow();
+                stage.close();
+                openLogin();
         }
     }
     
@@ -178,6 +198,30 @@ public class ProjectShowController implements Initializable {
             primaryStage.show();
         } catch (MalformedURLException ex) {
             Log.logException(ex);
+        }
+    }
+    
+            private void  openLogin(){   
+        Stage primaryStage =  new Stage();
+        try{
+            
+            URL url = new File("src/GUI/Login.fxml").toURI().toURL();
+            try{
+                FXMLLoader loader = new FXMLLoader(url);
+                loader.setLocation(url);
+                loader.load();
+                LoginController login = loader.getController();
+                Parent root = loader.getRoot();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+                
+            } catch (IOException ex) {
+                Log.logException(ex);
+            }
+            primaryStage.show();
+            
+        } catch (MalformedURLException ex) {
+                Log.logException(ex);
         }
     }
 }

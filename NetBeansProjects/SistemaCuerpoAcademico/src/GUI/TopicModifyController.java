@@ -102,6 +102,7 @@ public class TopicModifyController implements Initializable {
             }
         } catch (BusinessException ex) {
             Log.logException(ex);
+            exceptionShow(ex);
         }
         
     }
@@ -162,6 +163,7 @@ public class TopicModifyController implements Initializable {
                 cbMember.getSelectionModel().select(newMember);       
             } catch (BusinessException ex) {
                 Log.logException(ex);
+                exceptionShow(ex);
             }
         }
     }
@@ -177,6 +179,7 @@ public class TopicModifyController implements Initializable {
             cbMember.getSelectionModel().selectFirst();
         } catch (BusinessException ex) {
             Log.logException(ex);
+            exceptionShow(ex);
         }
     }
     

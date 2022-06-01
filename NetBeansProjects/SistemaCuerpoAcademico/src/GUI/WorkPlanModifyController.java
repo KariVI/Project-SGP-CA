@@ -14,6 +14,7 @@ import domain.Member;
 import domain.WorkPlan;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -136,6 +137,11 @@ public class WorkPlanModifyController implements Initializable {
             taObjetive.setText(workPlan.getObjetiveGeneral());
         } catch (BusinessException ex) {
             Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage)  btFinish.getScene().getWindow();
+                stage.close();
+                openLogin();
         }
     }
     
@@ -153,6 +159,11 @@ public class WorkPlanModifyController implements Initializable {
             tvGoals.setItems(goalList);
         } catch (BusinessException ex) {
             Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage)  btFinish.getScene().getWindow();
+                stage.close();
+                openLogin();
         }
 
     }
@@ -351,6 +362,11 @@ public class WorkPlanModifyController implements Initializable {
             }    
         }catch (BusinessException ex) {
             Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
+                Stage stage = (Stage)  btFinish.getScene().getWindow();
+                stage.close();
+                openLogin();
          }
     }
     
@@ -426,5 +442,29 @@ public class WorkPlanModifyController implements Initializable {
             value=false;
         }  
         return value;
+    }
+    
+             private void  openLogin(){   
+        Stage primaryStage =  new Stage();
+        try{
+            
+            URL url = new File("src/GUI/Login.fxml").toURI().toURL();
+            try{
+                FXMLLoader loader = new FXMLLoader(url);
+                loader.setLocation(url);
+                loader.load();
+                LoginController login = loader.getController();
+                Parent root = loader.getRoot();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+                
+            } catch (IOException ex) {
+                Log.logException(ex);
+            }
+            primaryStage.show();
+            
+        } catch (MalformedURLException ex) {
+                Log.logException(ex);
+        }
     }
 }

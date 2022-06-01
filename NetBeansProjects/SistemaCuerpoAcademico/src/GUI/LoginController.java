@@ -55,6 +55,8 @@ public class LoginController implements Initializable {
                
             } catch (BusinessException ex) {
                Log.logException(ex);
+                AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
             }  
             
        }else{
@@ -82,6 +84,8 @@ public class LoginController implements Initializable {
               primaryStage.show();
             }catch (IOException ex) {
                Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
             }
             
     }
@@ -104,6 +108,8 @@ public class LoginController implements Initializable {
               primaryStage.show();
             }catch (IOException ex) {
              Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
             }
             
     }
@@ -119,8 +125,9 @@ public class LoginController implements Initializable {
             }           
             
         } catch (BusinessException ex) {
-            value = false;
             Log.logException(ex);
+                 AlertMessage alertMessage  = new AlertMessage();
+                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
         }   
        return value;
     }
