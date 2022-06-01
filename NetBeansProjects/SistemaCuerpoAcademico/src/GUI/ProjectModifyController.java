@@ -253,11 +253,7 @@ public class ProjectModifyController implements Initializable {
             }
         } catch (BusinessException ex) {
             Log.logException(ex);
-                 AlertMessage alertMessage  = new AlertMessage();
-                alertMessage.showAlertValidateFailed("Error en la conexión con la base de datos");
-                Stage stage = (Stage) btCancel.getScene().getWindow();
-                stage.close();
-                openLogin();
+             
         }
         
         return value;
